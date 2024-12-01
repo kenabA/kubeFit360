@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+  font-family: "Wix Madefor Text", serif;
+}
+
+@layer base {
+  .light {
+    /* Primary Color  */
+    --primary: 28 80% 52%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 28 80% 48%;
+
+    /* Secondary Color  */
+    --secondary: 23 73% 84%;
+    --secondary-foreground: 27, 89%, 21%;
+
+    /* Tertiary Color  */
+    --tertiary: 29 71% 92%;
+    --tertiary-foreground: 28 80% 52%;
+    --tertiary-hover: 40 100% 88%;
+
+    /* Accent Color  */
+    --accent: 184 58% 25%;
+    --accent-foreground: 60 99% 98%;
+    --accent-hover: 184 59% 20%;
+    --accent-light-hover: 185 60% 92%;
+    --accent-light: 184 59% 94%;
+
+    /* Success Color  */
+    --success: 121 42% 48%;
+    --success-hover: 121 42% 44%;
+    --success-light: 142 70% 91%;
+    --success-foreground: 0 0% 100%;
+
+    /* Destructive Color  */
+    --destructive: 3 80% 56%;
+    --destructive-hover: 3 80% 52%;
+    --destructive-light: 2 90% 92%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Info Color  */
+    --info: 207 89% 37%;
+    --info-hover: 207 89% 33%;
+    --info-light: 212 76% 90%;
+    --info-foreground: 0 0% 100%;
+
+    /* Warning Color  */
+    --warn: 35 95% 55%;
+    --warn-hover: 35 95% 51%;
+    --warn-light: 40 100% 92%;
+    --warn-foreground: 0 0% 100%;
+
+    /* Text Gray Color */
+    --gray-primary: 205 25% 9%;
+    --gray-secondary: 210 1% 29%;
+    --gray-tertiary: 220 9% 46%;
+
+    /* Shadows */
+    --button-shadow: 4px 4px 16px 0 rgba(0, 0, 0, 0.12);
+    --elevation-shadow: 6px 6px 24px 0 rgba(0, 0, 0, 0.06);
+    
+  }
+  :root {
+    --radius: 0.5rem;
+  }
+}
