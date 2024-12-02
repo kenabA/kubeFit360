@@ -27,7 +27,7 @@ export default function Navbar() {
       animate={hidden ? "hidden" : "visible"}
       transition={{ duration: 0.35, ease: "easeInOut" }}
       id="header"
-      className="fixed top-0 left-0 w-full flex items-center justify-between px-[32px] py-4 bg-white shadow-elevation"
+      className="fixed top-0 left-0 w-full flex items-center justify-between px-[32px] py-4 bg-white shadow-elevation h-[72px]"
     >
       <Link
         to="home"
@@ -37,7 +37,7 @@ export default function Navbar() {
       >
         <img src={kubeFitLogo} alt="kubeFit Logo Light Mode" />
       </Link>
-      <nav>
+      <nav className="hidden md:block">
         <ul className="flex items-center gap-6">
           {navItems.map((item) => (
             <li key={item.label}>
@@ -55,7 +55,7 @@ export default function Navbar() {
           ))}
         </ul>
       </nav>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 hidden md:block">
         <Button variant={"ghost"} className="hover:text-primary">
           Login
         </Button>
