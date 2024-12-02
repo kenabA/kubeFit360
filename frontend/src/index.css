@@ -76,3 +76,13 @@
     --radius: 0.5rem;
   }
 }
+
+@layer components {
+  
+  .para-md {
+    @apply  text-[18px] text-gray-tertiary leading-[1.8];
+  }
+  .para-sm {
+    @apply  text-[16px] text-gray-tertiary leading-[1.8];
+  }
+}
