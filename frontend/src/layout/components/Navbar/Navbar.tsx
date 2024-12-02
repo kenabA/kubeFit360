@@ -4,19 +4,20 @@ import { Link } from "react-scroll";
 import { navItems } from "./data";
 import { motion, useMotionValueEvent, useScroll } from "motion/react";
 import { useState } from "react";
+import NavbarMenu from "./NavbarMenu";
 
 export default function Navbar() {
   const { scrollY } = useScroll();
-  const [hidden, setHidden] = useState(false);
+  const [navbarHidden, setNavbarHidden] = useState(false);
 
   // Listens to the scroll event on the Y axis and calls the callbackFn
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previousScrollValue = scrollY.getPrevious();
     if (previousScrollValue) {
       if (latest > previousScrollValue && latest > 72) {
-        setHidden(true);
+        setNavbarHidden(true);
       } else {
-        setHidden(false);
+        setNavbarHidden(false);
       }
     }
   });
@@ -24,7 +25,7 @@ export default function Navbar() {
   return (
     <motion.header
       variants={{ visible: { y: 0 }, hidden: { y: "-100%" } }}
-      animate={hidden ? "hidden" : "visible"}
+      animate={navbarHidden ? "hidden" : "visible"}
       transition={{ duration: 0.35, ease: "easeInOut" }}
       id="header"
       className="fixed top-0 left-0 w-full flex items-center justify-between px-[32px] py-4 bg-white shadow-elevation h-[72px]"
@@ -55,12 +56,13 @@ export default function Navbar() {
           ))}
         </ul>
       </nav>
-      <div className="flex items-center gap-2 hidden md:block">
+      <div className="items-center gap-2 hidden md:flex">
         <Button variant={"ghost"} className="hover:text-primary">
           Login
         </Button>
         <Button variant={"primary"}>Sign Up</Button>
       </div>
+      <NavbarMenu />
     </motion.header>
   );
 }
