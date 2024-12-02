@@ -5,6 +5,8 @@
 * {
   box-sizing: border-box;
   font-family: "Wix Madefor Text", serif;
+  padding: 0%;
+  margin: 0%;
 }
 
 @layer base {
