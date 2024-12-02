@@ -71,6 +71,15 @@ export default {
         button: "var(--button-shadow)",
         elevation: "var(--elevation-shadow)",
       },
+      spacing: {
+        navbar: "72px",
+      },
+      lineHeight: {
+        header: "var(--header-lineheight)",
+      },
+      letterSpacing: {
+        sm: "var(--sm-letterspacing)",
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],
