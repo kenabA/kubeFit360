@@ -1,8 +1,8 @@
-import gymshark from "../../../public/gymshark.svg";
-import muscleblaze from "../../../public/muscleblaze.svg";
-import on from "../../../public/omptimumnutrition.svg";
-import nike from "../../../public/nike.svg";
-import therabody from "../../../public/therabody.svg";
+import gymshark from "@/assets/svg/gymshark.svg";
+import muscleblaze from "@/assets/svg/muscleblaze.svg";
+import on from "@/assets/svg/omptimumnutrition.svg";
+import nike from "@/assets/svg/nike.svg";
+import therabody from "@/assets/svg/therabody.svg";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";

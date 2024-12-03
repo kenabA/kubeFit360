@@ -1,5 +1,5 @@
 import CountUp from "react-countup";
-import heroBg from "../../../../public/hero-bg.jpg";
+import heroBg from "@/assets/images/hero-bg.jpg";
 import { Button } from "@/components/ui/button";
 import { Heading } from "@/layout/components/Heading";
 
