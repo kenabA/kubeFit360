@@ -8,10 +8,10 @@ import NavbarMenu from "./NavbarMenu";
 
 export default function Navbar() {
   const { scrollY } = useScroll();
-  const [navbarHidden, setNavbarHidden] = useState(false);
+  const [navbarHidden, setNavbarHidden] = useState<boolean>(false);
 
   // Listens to the scroll event on the Y axis and calls the callbackFn
-  useMotionValueEvent(scrollY, "change", (latest) => {
+  useMotionValueEvent<number, "change">(scrollY, "change", (latest) => {
     const previousScrollValue = scrollY.getPrevious();
     if (previousScrollValue) {
       if (latest > previousScrollValue && latest > 72) {

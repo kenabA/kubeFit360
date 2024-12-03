@@ -8,6 +8,8 @@ const headingVariants = cva("capitalize", {
     variant: {
       primary:
         "font-bold leading-header tracking-sm text-[clamp(2.375rem,1.5637rem+3.4161vw,3.75rem)]",
+      secondary:
+        "font-bold tracking-sm text-[clamp(2rem,1.5575rem+1.8634vw,2.75rem)]",
     },
   },
   defaultVariants: {

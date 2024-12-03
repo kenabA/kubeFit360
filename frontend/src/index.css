@@ -95,6 +95,11 @@
     @apply text-[clamp(0.875rem,0.7275rem+0.6211vw,1.125rem)]
   }
 
+  .para-3xl {
+    /* max : 18px, min : 16px */
+    @apply text-[clamp(1rem,0.9262rem+0.3106vw,1.125rem)]
+  }
+
   .para-xl {
     /* max : 16px, min : 12px */
     @apply text-[clamp(0.875rem,0.7275rem+0.6211vw,1.125rem)]
