@@ -37,7 +37,7 @@ export default function Hero() {
               </Button>
             </div>
             <div className="flex items-center gap-4 justify-evenly md:justify-normal">
-              <div className="flex flex-col gap-2  md:min-w-[142px] text-center">
+              <div className="flex flex-col gap-2  text-center md:text-left md:min-w-[142px]">
                 <p className="font-bold text-accent numeric">
                   <CountUp
                     startOnMount={false}
@@ -54,7 +54,7 @@ export default function Hero() {
                   Members
                 </p>
               </div>
-              <div className="flex flex-col gap-2 ">
+              <div className="flex flex-col gap-2 text-center md:text-left">
                 <p className="numeric font-bold text-accent">
                   <CountUp
                     startOnMount={false}
