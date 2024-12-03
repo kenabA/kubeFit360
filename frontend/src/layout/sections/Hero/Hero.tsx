@@ -12,7 +12,7 @@ export default function Hero() {
     >
       <div className="w-full">
         <div
-          className="pb-12 px-6 pt-6 md:pb-0 md:ms-[10%]  w-fit h-full flex justify-center
+          className="pb-12 px-6 pt-6 md:pb-0 md:ms-[10%] w-fit h-full flex justify-center
        flex-col"
         >
           <article className="flex flex-col gap-8">

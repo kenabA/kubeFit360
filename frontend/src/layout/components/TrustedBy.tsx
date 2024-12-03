@@ -1,8 +1,8 @@
-import gymshark from "@/assets/svg/gymshark.svg";
-import muscleblaze from "@/assets/svg/muscleblaze.svg";
-import on from "@/assets/svg/omptimumnutrition.svg";
-import nike from "@/assets/svg/nike.svg";
-import therabody from "@/assets/svg/therabody.svg";
+import gymshark from "@/assets/svg/TrustedBy/gymshark.svg";
+import muscleblaze from "@/assets/svg/TrustedBy/muscleblaze.svg";
+import on from "@/assets/svg/TrustedBy/omptimumnutrition.svg";
+import nike from "@/assets/svg/TrustedBy/nike.svg";
+import therabody from "@/assets/svg/TrustedBy/therabody.svg";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
@@ -11,7 +11,7 @@ import { Autoplay } from "swiper/modules";
 
 export default function TrustedBy() {
   return (
-    <section className="max-w-[90%] mx-auto py-12" id="trusted-by">
+    <section className="px-6 md:max-w-[90%] md:mx-auto py-12" id="trusted-by">
       <h3 className="uppercase font-semibold text-accent leading-[22px] para-3xl text-center mb-12">
         trusted by
       </h3>
