@@ -8,10 +8,10 @@ import NavbarMenu from "./NavbarMenu";
 
 export default function Navbar() {
   const { scrollY } = useScroll();
-  const [navbarHidden, setNavbarHidden] = useState(false);
+  const [navbarHidden, setNavbarHidden] = useState<boolean>(false);
 
   // Listens to the scroll event on the Y axis and calls the callbackFn
-  useMotionValueEvent(scrollY, "change", (latest) => {
+  useMotionValueEvent<number, "change">(scrollY, "change", (latest) => {
     const previousScrollValue = scrollY.getPrevious();
     if (previousScrollValue) {
       if (latest > previousScrollValue && latest > 72) {
@@ -28,7 +28,7 @@ export default function Navbar() {
       animate={navbarHidden ? "hidden" : "visible"}
       transition={{ duration: 0.35, ease: "easeInOut" }}
       id="header"
-      className="fixed top-0 left-0 w-full flex items-center justify-between px-[32px] py-4 bg-white shadow-elevation h-[72px]"
+      className="fixed top-0 left-0 w-full flex items-center justify-between px-[32px] py-4 bg-white shadow-elevation h-[72px] z-50"
     >
       <Link
         to="home"

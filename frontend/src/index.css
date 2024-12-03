@@ -4,9 +4,9 @@
 
 * {
   box-sizing: border-box;
-  font-family: "Wix Madefor Text", serif;
-  padding: 0%;
-  margin: 0%;
+  font-family: "Wix Madefor Display", serif;
+  padding: 0;
+  margin: 0;
 }
 
 @layer base {
@@ -64,9 +64,52 @@
     /* Shadows */
     --button-shadow: 4px 4px 16px 0 rgba(0, 0, 0, 0.12);
     --elevation-shadow: 6px 6px 24px 0 rgba(0, 0, 0, 0.06);
+
+    /* Line Height */
+    --header-lineheight: 105%;
+
+    /* Letter Spacing */
+    --sm-letterspacing: -0.5px;
     
   }
   :root {
     --radius: 0.5rem;
   }
 }
+
+@layer components {
+  
+  .para-md {
+    @apply  para-2xl text-gray-tertiary leading-[1.8];
+    
+  }
+  .para-sm {
+    @apply  para-xl text-gray-tertiary leading-[1.8];
+  }
+}
+
+@layer ftsize {
+
+  .para-2xl {
+    /* max : 18px, min : 14px */
+    @apply text-[clamp(0.875rem,0.7275rem+0.6211vw,1.125rem)]
+  }
+
+  .para-3xl {
+    /* max : 18px, min : 16px */
+    @apply text-[clamp(1rem,0.9262rem+0.3106vw,1.125rem)]
+  }
+
+  .para-xl {
+    /* max : 16px, min : 12px */
+    @apply text-[clamp(0.875rem,0.7275rem+0.6211vw,1.125rem)]
+  }
+  
+  .numeric {
+    /* max : 24px, min : 20px */
+    @apply text-[clamp(1.25rem,1.1025rem+0.6211vw,1.5rem)];
+    
+  }
+  
+}
+
