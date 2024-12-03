@@ -6,12 +6,12 @@ import { Heading } from "@/layout/components/Heading";
 export default function Hero() {
   return (
     <section
-      className="flex h-screen gap-12 flex-col-reverse
-       lg:flex-row pt-navbar"
+      className="flex md:h-screen  flex-col-reverse
+       md:flex-row pt-navbar relative"
       id="home"
     >
       <div
-        className="px-[32px] lg:px-[0px] lg:ps-[132px] w-full flex justify-center
+        className="pb-12 px-6 pt-6 md:pb-0 md:ps-[32px] w-full flex justify-center
        flex-col"
       >
         <article className="flex flex-col gap-8">
@@ -26,33 +26,36 @@ export default function Hero() {
           </p>
         </article>
         <div className="flex flex-col gap-12">
-          <div className="flex items-center gap-[14px] flex-col lg:flex-row">
-            <Button>join now</Button>
-            <Button variant={"ghost"} className="hover:text-primary">
+          <div className="flex items-center gap-[14px] flex-col md:flex-row">
+            <Button className="w-full md:w-auto">join now</Button>
+            <Button
+              variant={"ghost"}
+              className="hover:text-primary w-full md:w-auto"
+            >
               get insights
             </Button>
           </div>
-          <div className="flex items-center gap-4">
-            <div className="flex flex-col gap-2 justify-start min-w-[142px]">
-              <p className="text-2xl font-bold text-accent">
+          <div className="flex items-center gap-4 justify-evenly md:justify-normal">
+            <div className="flex flex-col gap-2  md:min-w-[142px] text-center">
+              <p className="font-bold text-accent numeric">
                 <CountUp startOnMount={false} start={0} end={30} duration={2} />
                 +
               </p>
               <p
                 className="uppercase font-normal
-             text-[16px] text-gray-tertiary"
+             text-[clamp(0.75rem,0.6025rem+0.6211vw,1rem)] text-gray-tertiary"
               >
                 Members
               </p>
             </div>
-            <div className="flex flex-col gap-2 justify-start">
-              <p className="text-2xl font-bold text-accent">
+            <div className="flex flex-col gap-2 ">
+              <p className="numeric font-bold text-accent">
                 <CountUp startOnMount={false} start={0} end={10} duration={2} />
                 +
               </p>
               <p
                 className="uppercase font-normal
-             text-[16px] text-gray-tertiary"
+             text-[clamp(0.75rem,0.6025rem+0.6211vw,1rem)] text-gray-tertiary"
               >
                 trainers
               </p>
