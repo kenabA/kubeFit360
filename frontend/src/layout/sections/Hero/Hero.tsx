@@ -19,7 +19,7 @@ export default function Hero() {
             shape up & <br /> change your{" "}
             <span className="text-accent">life.</span>
           </Heading>
-          <p className="para-md mb-[42px] max-w-[484px]">
+          <p className="para-md mb-[42px] md:max-w-[484px]">
             Join a gym that’s more than just workouts. Experience expert
             training, cutting-edge equipment, and an all-in-one platform to
             track and achieve your fitness goals.
