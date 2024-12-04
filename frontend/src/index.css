@@ -77,43 +77,70 @@
 }
 
 @layer components {
+
+  .primary {
+        /*  min : 38px, max: 60px,*/
+      @apply text-[clamp(2.375rem,1.5637rem+3.4161vw,3.75rem)];
+  }
+
+  .secondary {
+        /*  min : 32px, max: 44*/
+      @apply text-[clamp(2rem,1.5575rem+1.8634vw,2.75rem)];
+  }
+
+  .tertiary {
+        /*  min : 28px, max: 38px,*/
+    @apply text-[clamp(1.75rem,1.3812rem+1.5528vw,2.375rem)];
+  }
+
+    /* TEXT SIZES DEFINITIONS */
+
+     .para-2xl {
+       /*  min : 14px, max: 18px,*/
+       @apply text-[clamp(0.875rem,0.7275rem+0.6211vw,1.125rem)];
+     }
+  
+     .para-3xl {
+       /* min: 16px, max : 20px */
+       @apply text-[clamp(1rem,0.8525rem+0.6211vw,1.25rem)];
+     }
+  
+     .para-xl {
+       /* min: 12px, max : 16px  */
+       @apply text-[clamp(0.875rem,0.7275rem+0.6211vw,1rem)];
+     }
+  
+     .para-large {
+       /* min : 10px, max: 14px */
+       @apply text-[clamp(0.625rem,0.4775rem+0.6211vw,0.875rem)];
+     }
+  
+     .para-subtitle {
+       /* min : 14px, max: 16px */
+       @apply text-[clamp(0.875rem,0.8012rem+0.3106vw,1rem)];
+     }
+
+     .numeric {
+       /* min: 20px, max : 24px */
+       @apply text-[clamp(1.25rem,1.1025rem+0.6211vw,1.5rem)];
+     }
+
+  /* TEXT STYLES DEFINITIONS */
+
   .para-lg {
     @apply para-3xl text-gray-secondary;
   }
+
   .para-md {
     @apply para-2xl text-gray-tertiary leading-[1.8];
   }
+
   .para-sm {
     @apply para-xl text-gray-tertiary leading-[1.8];
   }
+
   .subtitle {
     @apply para-subtitle text-gray-tertiary leading-[1.6];
   }
-}
 
-@layer ftSize {
-  .para-2xl {
-    /* max : 18px, min : 14px */
-    @apply text-[clamp(0.875rem,0.7275rem+0.6211vw,1.125rem)];
-  }
-
-  .para-3xl {
-    /* max : 18px, min : 16px */
-    @apply text-[clamp(1rem,0.9262rem+0.3106vw,1.125rem)];
-  }
-
-  .para-xl {
-    /* max : 16px, min : 12px */
-    @apply text-[clamp(0.875rem,0.7275rem+0.6211vw,1rem)];
-  }
-
-  .para-subtitle {
-    /* max : 16px, min : 14px */
-    @apply text-[clamp(0.875rem,0.8012rem+0.3106vw,1rem)];
-  }
-
-  .numeric {
-    /* max : 24px, min : 20px */
-    @apply text-[clamp(1.25rem,1.1025rem+0.6211vw,1.5rem)];
-  }
 }

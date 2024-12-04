@@ -8,13 +8,19 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
 import "swiper/modules";
 import { Autoplay } from "swiper/modules";
+import { Heading } from "./Heading";
 
 export default function TrustedBy() {
   return (
     <section className="px-6 md:max-w-[90%] md:mx-auto py-12" id="trusted-by">
-      <h3 className="uppercase font-semibold text-accent leading-[22px] para-3xl text-center mb-12">
+      <Heading
+        variant={"quinary"}
+        level={5}
+        className="text-center uppercase text-accent
+      mb-12"
+      >
         trusted by
-      </h3>
+      </Heading>
       <Swiper
         modules={[Autoplay]}
         autoplay={{ delay: 1000, disableOnInteraction: false }}

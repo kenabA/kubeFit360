@@ -6,10 +6,10 @@ import { cn } from "@/lib/utils";
 const headingVariants = cva("capitalize", {
   variants: {
     variant: {
-      primary:
-        "font-bold leading-header tracking-sm text-[clamp(2.375rem,1.5637rem+3.4161vw,3.75rem)]",
-      secondary:
-        "font-bold tracking-sm text-[clamp(2rem,1.5575rem+1.8634vw,2.75rem)]",
+      primary: "font-bold leading-header tracking-sm primary",
+      secondary: "font-bold tracking-sm secondary",
+      tertiary: "font-bold tertiary",
+      quinary: "font-semibold leading-[22px] para-3xl",
     },
   },
   defaultVariants: {
