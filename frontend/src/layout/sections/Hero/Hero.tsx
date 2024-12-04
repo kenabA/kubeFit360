@@ -1,5 +1,5 @@
 import CountUp from "react-countup";
-import heroBg from "../../../../public/hero-bg.jpg";
+import heroBg from "@/assets/images/hero-bg.jpg";
 import { Button } from "@/components/ui/button";
 import { Heading } from "@/layout/components/Heading";
 
@@ -12,7 +12,7 @@ export default function Hero() {
     >
       <div className="w-full">
         <div
-          className="pb-12 px-6 pt-6 md:pb-0 md:ms-[10%]  w-fit h-full flex justify-center
+          className="pb-12 px-6 pt-6 md:pb-0 md:ms-[10%] w-fit h-full flex justify-center
        flex-col"
         >
           <article className="flex flex-col gap-8">

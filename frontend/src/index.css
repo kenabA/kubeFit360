@@ -70,7 +70,6 @@
 
     /* Letter Spacing */
     --sm-letterspacing: -0.5px;
-    
   }
   :root {
     --radius: 0.5rem;
@@ -78,38 +77,43 @@
 }
 
 @layer components {
-  
+  .para-lg {
+    @apply para-3xl text-gray-secondary;
+  }
   .para-md {
-    @apply  para-2xl text-gray-tertiary leading-[1.8];
-    
+    @apply para-2xl text-gray-tertiary leading-[1.8];
   }
   .para-sm {
-    @apply  para-xl text-gray-tertiary leading-[1.8];
+    @apply para-xl text-gray-tertiary leading-[1.8];
+  }
+  .subtitle {
+    @apply para-subtitle text-gray-tertiary leading-[1.6];
   }
 }
 
-@layer ftsize {
-
+@layer ftSize {
   .para-2xl {
     /* max : 18px, min : 14px */
-    @apply text-[clamp(0.875rem,0.7275rem+0.6211vw,1.125rem)]
+    @apply text-[clamp(0.875rem,0.7275rem+0.6211vw,1.125rem)];
   }
 
   .para-3xl {
     /* max : 18px, min : 16px */
-    @apply text-[clamp(1rem,0.9262rem+0.3106vw,1.125rem)]
+    @apply text-[clamp(1rem,0.9262rem+0.3106vw,1.125rem)];
   }
 
   .para-xl {
     /* max : 16px, min : 12px */
-    @apply text-[clamp(0.875rem,0.7275rem+0.6211vw,1.125rem)]
+    @apply text-[clamp(0.875rem,0.7275rem+0.6211vw,1rem)];
   }
-  
+
+  .para-subtitle {
+    /* max : 16px, min : 14px */
+    @apply text-[clamp(0.875rem,0.8012rem+0.3106vw,1rem)];
+  }
+
   .numeric {
     /* max : 24px, min : 20px */
     @apply text-[clamp(1.25rem,1.1025rem+0.6211vw,1.5rem)];
-    
   }
-  
 }
-

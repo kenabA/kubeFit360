@@ -10,11 +10,11 @@ export const navItems: TNavItem[] = [
     to: "about",
   },
   {
-    label: "Pricing",
-    to: "pricing",
-  },
-  {
     label: "Services",
     to: "services",
+  },
+  {
+    label: "Pricing",
+    to: "pricing",
   },
 ];
