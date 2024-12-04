@@ -4,8 +4,14 @@ import imageOne from "@/assets/images/rolling-woman.jpg";
 import imageTwo from "@/assets/images/deadlifting.jpg";
 import imageThree from "@/assets/images/stretching-man.jpg";
 import { ArrowRight } from "lucide-react";
+import { useNavigate } from "react-router";
 
 export default function About() {
+  const navigate = useNavigate();
+
+  function handleNavigate() {
+    navigate("/about");
+  }
   return (
     <section
       className="px-5 md:max-w-[90%] md:mx-auto py-12 flex flex-col md:flex-row gap-6 md:gap-12"
@@ -54,7 +60,7 @@ export default function About() {
           achieve their goals effortlessly.
         </p>
 
-        <Button>
+        <Button onClick={handleNavigate}>
           read more <ArrowRight strokeWidth={3} />
         </Button>
       </div>
