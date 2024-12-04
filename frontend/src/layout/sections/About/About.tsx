@@ -52,7 +52,7 @@ export default function About() {
 
         <p className="para-sm max-w-[584px]">
           Welcome to{" "}
-          <span className="font-medium text-gray-secondary">kubeFit 360°</span>,
+          <span className="font-medium text-gray-secondary">kubeFit360°</span>,
           your all-in-one fitness solution designed to simplify and enhance your
           fitness journey. Whether you're tracking workouts, managing
           memberships, or shopping for gym essentials, we've got you covered.
