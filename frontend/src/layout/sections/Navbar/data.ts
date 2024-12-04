@@ -14,7 +14,7 @@ export const navItems: TNavItem[] = [
     to: "services",
   },
   {
-    label: "Pricing",
-    to: "pricing",
+    label: "Membership",
+    to: "membership",
   },
 ];
