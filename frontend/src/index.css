@@ -120,6 +120,11 @@
        @apply text-[clamp(0.875rem,0.8012rem+0.3106vw,1rem)];
      }
 
+     .span {
+      /* min : 12px, max: 10px */
+      @apply text-[clamp(0.625rem,0.5512rem+0.3106vw,0.75rem)];
+     }
+
      .numeric {
        /* min: 20px, max : 24px */
        @apply text-[clamp(1.25rem,1.1025rem+0.6211vw,1.5rem)];
