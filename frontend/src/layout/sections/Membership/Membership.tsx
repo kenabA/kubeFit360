@@ -49,7 +49,7 @@ export default function Membership({
               <Heading
                 variant={"tertiary"}
                 level={3}
-                className="text-gray-primary text-center mb-[18px]"
+                className="text-gray text-center mb-[18px]"
               >
                 rs. 2,500
               </Heading>
@@ -96,7 +96,7 @@ export default function Membership({
               <Heading
                 variant={"tertiary"}
                 level={3}
-                className="text-gray-primary text-center mb-[18px]"
+                className="text-gray text-center mb-[18px]"
               >
                 rs. 2,500
               </Heading>
