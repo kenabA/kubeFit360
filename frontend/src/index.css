@@ -93,6 +93,11 @@
     @apply text-[clamp(1.75rem,1.3812rem+1.5528vw,2.375rem)];
   }
 
+  .quaternary {
+        /*  min : 26px, max: 32px,*/
+    @apply text-[clamp(1.625rem,1.4037rem+0.9317vw,2rem)];
+  }
+
     /* TEXT SIZES DEFINITIONS */
 
      .para-2xl {

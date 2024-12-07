@@ -5,6 +5,7 @@ import About from "@/layout/sections/About/About";
 import Services from "@/layout/sections/Services/Services";
 import Membership from "@/layout/sections/Membership/Membership";
 import Footer from "@/layout/sections/Footer/Footer";
+import CTA from "@/layout/sections/CTA/CTA";
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
         <About />
         <Services />
         <Membership variant="website" />
+        <CTA />
         <hr />
         <Footer />
       </main>
