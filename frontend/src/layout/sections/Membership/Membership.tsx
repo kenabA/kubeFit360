@@ -34,7 +34,7 @@ export default function Membership({
           convenience.
         </p>
       </div>
-      <div className=" md:bg-white rounded-3xl md:shadow-elevation p-6 flex gap-12 flex-col md:flex-row">
+      <div className=" md:bg-white rounded-3xl md:shadow-elevation md:p-6 flex gap-12 flex-col md:flex-row">
         <div className="flex-1 p-12 rounded-[18px] bg-white shadow-lg md:bg-none md:shadow-none">
           <div className="space-y-12">
             <div>

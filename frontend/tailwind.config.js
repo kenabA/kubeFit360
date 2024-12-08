@@ -70,6 +70,8 @@ export default {
       boxShadow: {
         button: "var(--button-shadow)",
         elevation: "var(--elevation-shadow)",
+        userPanel: "var(--cta-user-panel)",
+        cta: "var(--cta-shadow)",
       },
       spacing: {
         navbar: "72px",

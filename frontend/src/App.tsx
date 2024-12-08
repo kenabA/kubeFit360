@@ -9,7 +9,7 @@ import CTA from "@/layout/sections/CTA/CTA";
 
 export default function App() {
   return (
-    <div>
+    <>
       <Navbar />
       <main>
         <Hero />
@@ -21,6 +21,6 @@ export default function App() {
         <hr />
         <Footer />
       </main>
-    </div>
+    </>
   );
 }

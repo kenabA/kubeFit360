@@ -4,20 +4,23 @@ import summary from "@/assets/images/CTA/Summary.jpg";
 
 export default function CTA() {
   return (
-    <section
-      className="
-  
-  px-5 md:max-w-[90%] md:mx-auto pb-24 pt-12"
-    >
-      <div className="bg-primary rounded-3xl grid grid-cols-2 py-[92px] px-[72px] relative">
-        <div className="space-y-8">
-          <div className="flex flex-col items-start gap-7">
-            <Heading level={4} variant={"quaternary"} className="text-white">
-              Lorem ipsum, dolor sit amet consectetur
+    <section className="px-5 md:max-w-[90%] md:mx-auto pb-24 pt-12">
+      <div
+        className="shadow-cta lg:shadow-elevation overflow-hidden bg-gradient-to-br to-[#EB9447]
+       from-[#DC7418] rounded-3xl grid grid-rows-[1fr,clamp(15.625rem,10.0932rem+23.2919vw,25rem)] lg:grid-rows-none lg:grid-cols-2"
+      >
+        <div className="flex flex-col gap-8 justify-center py-[clamp(4rem,2.9674rem+4.3478vw,5.75rem)] ps-[clamp(3.625rem,3.1087rem+2.1739vw,4.5rem)] pe-[24px]">
+          <div className="flex flex-col items-start gap-7 justify-center">
+            <Heading
+              level={4}
+              variant={"quaternary"}
+              className="text-white capitalize max-w-[410px]"
+            >
+              achieve your fitness goals like never before
             </Heading>
-            <p className="para-xl text-white">
-              We’re excited to talk to you about your project requirements and
-              business goals.
+            <p className="para-xl text-white leading-[180%] max-w-[470px]">
+              Your all-in-one platform for managing workouts, memberships, and{" "}
+              personal goals effortlessly.
             </p>
           </div>
           <div className="flex items-center gap-3">
@@ -27,9 +30,12 @@ export default function CTA() {
             </Button>
           </div>
         </div>
-        <div className="rounded-tl-2xl overflow-hidden absolute w-1/2 bottom-0 right-0">
+        <div
+          className="lg:col-[2/3] lg:pt-[92px] relative
+         ps-[42px] lg:ps-1 overflow-hidden"
+        >
           <img
-            className="size-full object-cover object-center"
+            className="size-full object-cover object-left-top  rounded-tl-2xl  shadow-cta"
             src={summary}
             alt="A screen shot of the system that the users will get access of."
           />
