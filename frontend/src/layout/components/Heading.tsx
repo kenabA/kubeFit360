@@ -9,6 +9,7 @@ const headingVariants = cva("capitalize", {
       primary: "font-bold leading-header tracking-sm primary",
       secondary: "font-bold tracking-sm secondary",
       tertiary: "font-bold tertiary",
+      quaternary: "font-semibold quaternary leading-[120%]",
       quinary: "font-semibold leading-[22px] para-3xl",
     },
   },
