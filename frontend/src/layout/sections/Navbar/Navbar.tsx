@@ -5,10 +5,12 @@ import { navItems } from "./data";
 import { motion, useMotionValueEvent, useScroll } from "motion/react";
 import { useState } from "react";
 import NavbarMenu from "./NavbarMenu";
+import { useNavigate } from "react-router";
 
 export default function Navbar() {
   const { scrollY } = useScroll();
   const [navbarHidden, setNavbarHidden] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   // Listens to the scroll event on the Y axis and calls the callbackFn
   useMotionValueEvent<number, "change">(scrollY, "change", (latest) => {
@@ -21,6 +23,10 @@ export default function Navbar() {
       }
     }
   });
+
+  function handleNavigate(path: string) {
+    navigate(path);
+  }
 
   return (
     <motion.header
@@ -57,10 +63,16 @@ export default function Navbar() {
         </ul>
       </nav>
       <div className="items-center gap-2 hidden md:flex">
-        <Button variant={"ghost"} className="hover:text-primary">
+        <Button
+          variant={"ghost"}
+          className="hover:text-primary"
+          onClick={() => handleNavigate("/login")}
+        >
           Login
         </Button>
-        <Button variant={"primary"}>Sign Up</Button>
+        <Button variant={"primary"} onClick={() => handleNavigate("/signup")}>
+          Sign Up
+        </Button>
       </div>
       <NavbarMenu />
     </motion.header>

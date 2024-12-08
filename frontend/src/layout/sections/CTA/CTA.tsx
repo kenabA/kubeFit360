@@ -1,10 +1,16 @@
 import { Button } from "@/components/ui/button";
 import { Heading } from "@/layout/components/Heading";
 import summary from "@/assets/images/CTA/Summary.jpg";
+import { useNavigate } from "react-router";
 
 export default function CTA() {
+  const navigate = useNavigate();
+  function handleNavigate(path: string) {
+    navigate(path);
+  }
+
   return (
-    <section className="px-5 md:max-w-[90%] md:mx-auto pb-24 pt-12">
+    <section className="px-5 md:max-w-[90%] md:mx-auto pb-24 pt-12" id="cta">
       <div
         className="shadow-cta lg:shadow-elevation overflow-hidden bg-gradient-to-br to-[#EB9447]
        from-[#DC7418] rounded-3xl grid grid-rows-[1fr,clamp(15.625rem,10.0932rem+23.2919vw,25rem)] lg:grid-rows-none lg:grid-cols-2"
@@ -24,8 +30,17 @@ export default function CTA() {
             </p>
           </div>
           <div className="flex items-center gap-3">
-            <Button variant={"primaryReverse"}>join now</Button>
-            <Button variant={"ghost"} className="text-white">
+            <Button
+              variant={"primaryReverse"}
+              onClick={() => handleNavigate("/signup")}
+            >
+              join now
+            </Button>
+            <Button
+              variant={"ghost"}
+              className="text-white"
+              onClick={() => handleNavigate("/login")}
+            >
               login
             </Button>
           </div>
