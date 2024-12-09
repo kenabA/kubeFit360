@@ -6,6 +6,7 @@ import Services from "@/layout/sections/Services/Services";
 import Membership from "@/layout/sections/Membership/Membership";
 import Footer from "@/layout/sections/Footer/Footer";
 import CTA from "@/layout/sections/CTA/CTA";
+import SuccessStories from "@/layout/sections/SuccessStories/SuccessStories";
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
         <About />
         <Services />
         <Membership variant="website" />
+        <SuccessStories />
         <CTA />
         <hr />
         <Footer />
