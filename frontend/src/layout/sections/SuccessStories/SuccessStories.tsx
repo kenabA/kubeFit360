@@ -5,6 +5,7 @@ import { TSuccessStories } from "./type";
 import { ArrowLeft, ArrowRight, QuoteIcon } from "lucide-react";
 import { Navigation } from "swiper/modules";
 import { Button } from "@/components/ui/button";
+import { Compare } from "@/components/ui/compare";
 
 export default function SuccessStories() {
   return (
@@ -55,11 +56,16 @@ export default function SuccessStories() {
 function SuccessStory({ data }: { data: TSuccessStories }) {
   return (
     <div className="!flex flex-col md:flex-row gap-[32px] lg:gap-[48px]">
-      <figure className="w-full bg-secondary rounded-3xl h-[clamp(21.875rem,20.0311rem+7.764vw,25rem)] overflow-hidden">
-        <img
-          className="object-center object-cover size-full"
-          src={`${data.image}`}
-          alt="Picture of person giving a testimonial."
+      <figure className="w-full bg-secondary rounded-3xl h-[clamp(21.875rem,20.0311rem+7.764vw,25rem)] overflow-hidden shadow-elevation">
+        <Compare
+          firstImage={data.image[0]}
+          secondImage={data.image[1]}
+          className="size-full shadow-none"
+          firstImageClassName="object-cover object-center"
+          secondImageClassname="object-cover object-center"
+          slideMode="hover"
+          autoplay={false}
+          initialSliderPercentage={0}
         />
       </figure>
       <article className="w-full flex flex-col md:justify-between items-start gap-12 md:gap-0">
