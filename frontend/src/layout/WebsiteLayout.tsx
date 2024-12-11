@@ -9,6 +9,7 @@ export default function AppLayout() {
       <main>
         <Outlet />
       </main>
+      <hr />
       <Footer />
     </>
   );

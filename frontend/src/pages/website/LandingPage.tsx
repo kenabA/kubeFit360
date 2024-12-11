@@ -16,7 +16,6 @@ export default function LandingPage() {
       <Membership variant="website" />
       <SuccessStories />
       <CTA />
-      <hr />
     </>
   );
 }
