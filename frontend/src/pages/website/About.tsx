@@ -1,10 +1,8 @@
 import { Heading } from "@/layout/components/Heading";
-import { Home } from "lucide-react";
-import { NavLink } from "react-router";
-
+import { Separator } from "@/components/ui/separator";
 import fitnessCoach from "@/assets/images/About/fitnessCoach.jpg";
 import gymBg from "@/assets/images/About/deadlifting.jpg";
-import { Separator } from "@/components/ui/separator";
+import Breadcrumbs from "@/layout/components/Breadcrumbs";
 
 export function About() {
   return (
@@ -88,19 +86,5 @@ export function About() {
         </article>
       </div>
     </section>
-  );
-}
-
-function Breadcrumbs() {
-  return (
-    <div className="ps-12 flex items-center gap-3">
-      <NavLink to={"/"}>
-        <Home className="stroke-gray-tertiary" style={{ width: "18px" }} />
-      </NavLink>{" "}
-      <span className="text-gray-tertiary">/</span>
-      <NavLink to={"/home"} className={"text-primary"}>
-        About
-      </NavLink>
-    </div>
   );
 }

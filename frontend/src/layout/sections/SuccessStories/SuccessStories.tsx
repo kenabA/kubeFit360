@@ -40,7 +40,10 @@ export default function SuccessStories() {
         {successStories.map((data) => {
           return (
             // To always ensure that the swiper slide component is the direct child of the swiper component while using the map function.
-            <SwiperSlide className="!overflow-visible relative pt-[37px]">
+            <SwiperSlide
+              key={data.id}
+              className="!overflow-visible relative pt-[37px]"
+            >
               <div className="absolute bottom-0 right-0 rotate-180 scale-x-[-1] scale-y-[-1] md:top-0 md:right-0 md:rotate-180 md:scale-x-[-1]">
                 <QuoteIcon className="fill-accent stroke-none" size={32} />
               </div>

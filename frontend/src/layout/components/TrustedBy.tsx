@@ -24,7 +24,6 @@ export default function TrustedBy() {
       <Swiper
         modules={[Autoplay]}
         autoplay={{ delay: 1000, disableOnInteraction: false }}
-        loop={true}
         breakpoints={{
           640: {
             slidesPerView: 2,
