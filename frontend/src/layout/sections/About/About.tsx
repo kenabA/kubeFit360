@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Heading } from "@/layout/components/Heading";
-import imageOne from "@/assets/images/rolling-woman.jpg";
-import imageTwo from "@/assets/images/deadlifting.jpg";
-import imageThree from "@/assets/images/stretching-man.jpg";
+import imageOne from "@/assets/images/About/rolling-woman.jpg";
+import imageTwo from "@/assets/images/About/deadlifting.jpg";
+import imageThree from "@/assets/images/About/stretching-man.jpg";
 import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router";
 
