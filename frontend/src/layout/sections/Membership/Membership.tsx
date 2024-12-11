@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
+import useHandleNavigate from "@/hooks/useHandleNavigate";
 import { Heading } from "@/layout/components/Heading";
 import { Check } from "lucide-react";
-import { useNavigate } from "react-router";
 
 export default function Membership({
   variant,
@@ -10,11 +10,7 @@ export default function Membership({
 }) {
   console.log(variant);
 
-  const navigate = useNavigate();
-
-  function handleNavigate(path: string) {
-    navigate(path);
-  }
+  const handleNavigate = useHandleNavigate();
 
   return (
     <section
@@ -98,7 +94,7 @@ export default function Membership({
                 level={3}
                 className="text-gray text-center mb-[18px]"
               >
-                rs. 2,500
+                rs. 6,000
               </Heading>
               <p className="text-center para-large text-gray-tertiary">
                 per 3 month. That's just Rs. 2000 per session!
