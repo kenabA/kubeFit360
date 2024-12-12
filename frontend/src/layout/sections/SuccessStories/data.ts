@@ -1,8 +1,8 @@
 import { TSuccessStories } from "./type";
-import chrisevansBefore from "@/assets/images/Testimonials/chrisevans-skinny.jpeg";
-import chrisevansAfter from "@/assets/images/Testimonials/chrisevans-bulk.jpg";
-import nickAfter from "@/assets/images/Testimonials/nick-skinny.png";
-import nickBefore from "@/assets/images/Testimonials/nick-fat.jpg";
+import chrisevansBefore from "@/assets/images/Testimonials/chrisevans-skinny.webp";
+import chrisevansAfter from "@/assets/images/Testimonials/chrisevans-bulk.webp";
+import nickAfter from "@/assets/images/Testimonials/nick-skinny.webp";
+import nickBefore from "@/assets/images/Testimonials/nick-fat.webp";
 
 export const successStories: TSuccessStories[] = [
   {

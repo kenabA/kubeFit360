@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Heading } from "@/layout/components/Heading";
-import imageOne from "@/assets/images/About/rolling-woman.jpg";
-import imageTwo from "@/assets/images/About/deadlifting.jpg";
-import imageThree from "@/assets/images/About/stretching-man.jpg";
+import imageOne from "@/assets/images/About/rolling-woman.webp";
+import imageTwo from "@/assets/images/About/deadlifting.webp";
+import imageThree from "@/assets/images/About/stretching-man.webp";
 import { ArrowRight } from "lucide-react";
 import useHandleNavigate from "@/hooks/useHandleNavigate";
 
@@ -11,7 +11,7 @@ export default function About() {
 
   return (
     <section
-      className="px-5 md:max-w-[90%] md:mx-auto py-12 flex flex-col md:flex-row gap-6 md:gap-12"
+      className="uni-container py-12 flex flex-col md:flex-row gap-6 md:gap-12"
       id="about"
     >
       <div

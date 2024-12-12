@@ -9,10 +9,7 @@ export default function Membership({
   console.log(variant);
 
   return (
-    <section
-      id="membership"
-      className="px-5 md:max-w-[90%] md:mx-auto py-12 space-y-[74px]"
-    >
+    <section id="membership" className="uni-container py-12 space-y-[74px]">
       <div className="space-y-[18px]">
         <Heading
           level={2}
