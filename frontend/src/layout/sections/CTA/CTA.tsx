@@ -45,7 +45,7 @@ export default function CTA() {
             </Button>
           </div>
         </div>
-        <div
+        <figure
           className="lg:col-[2/3] lg:pt-[92px] relative
          ps-[42px] lg:ps-1 overflow-hidden"
         >
@@ -54,7 +54,7 @@ export default function CTA() {
             src={summary}
             alt="A screen shot of the system that the users will get access of."
           />
-        </div>
+        </figure>
       </div>
     </section>
   );

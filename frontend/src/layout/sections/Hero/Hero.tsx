@@ -11,7 +11,7 @@ export default function Hero() {
   return (
     <section
       className="flex md:h-screen  flex-col-reverse
-       md:flex-row pt-navbar relative"
+    md:flex-row pt-navbar relative"
       id="home"
     >
       <div className="w-full">

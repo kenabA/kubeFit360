@@ -9,7 +9,7 @@ export default function Footer() {
   return (
     <section className="py-24 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 px-5 md:max-w-[90%] md:mx-auto gap-12">
       <div className="row-[2/3] lg:row-[1/2] flex flex-col gap-8">
-        <div className="flex flex-col items-start gap-[18px]">
+        <figure className="flex flex-col items-start gap-[18px]">
           <Link
             to="home"
             smooth={true}
@@ -21,7 +21,7 @@ export default function Footer() {
           <span className="span text-gray-tertiary block">
             Copyright @ 2024. All rights reserved
           </span>
-        </div>
+        </figure>
         <div className="flex items-center gap-8">
           <a
             target="_blank"
