@@ -8,7 +8,7 @@ export default function Breadcrumbs() {
         <Home className="stroke-gray-tertiary" style={{ width: "18px" }} />
       </NavLink>{" "}
       <span className="text-gray-tertiary">/</span>
-      <NavLink to={"/home"} className={"text-primary"}>
+      <NavLink to={"/about"} className={"text-primary"}>
         About
       </NavLink>
     </div>

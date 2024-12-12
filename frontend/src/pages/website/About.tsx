@@ -6,7 +6,10 @@ import Breadcrumbs from "@/layout/components/Breadcrumbs";
 
 export function About() {
   return (
-    <section id="services" className="px-5 md:max-w-[90%] md:mx-auto py-24">
+    <section
+      id="services"
+      className="px-5 md:max-w-[90%] md:mx-auto mt-navbar pt-12 pb-24"
+    >
       <div className="mb-[92px]">
         <div className="relative mb-8">
           <div

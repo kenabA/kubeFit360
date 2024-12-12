@@ -23,9 +23,9 @@ export default function ServicesCard({ data }: { data: TServicesData }) {
         </Link>
       </Button>
       <div className="absolute transition-all group-hover:-top-1 left-8 top-0 -translate-y-1/2 bg-secondary size-[60px] rounded-3xl p-2">
-        <div className="bg-primary size-full rounded-2xl flex items-center justify-center">
+        <figure className="bg-primary size-full rounded-2xl flex items-center justify-center">
           <img src={icon} alt="An icon featuring each service." />
-        </div>
+        </figure>
       </div>
     </div>
   );

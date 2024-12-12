@@ -2,12 +2,16 @@ import CountUp from "react-countup";
 import heroBg from "@/assets/images/hero-bg.jpg";
 import { Button } from "@/components/ui/button";
 import { Heading } from "@/layout/components/Heading";
+import useHandleNavigate from "@/hooks/useHandleNavigate";
+import { Link } from "react-scroll";
 
 export default function Hero() {
+  const handleNavigate = useHandleNavigate();
+
   return (
     <section
       className="flex md:h-screen  flex-col-reverse
-       md:flex-row pt-navbar relative"
+    md:flex-row pt-navbar relative"
       id="home"
     >
       <div className="w-full">
@@ -28,13 +32,20 @@ export default function Hero() {
           </article>
           <div className="flex flex-col gap-12">
             <div className="flex items-center gap-[14px] flex-col md:flex-row">
-              <Button className="w-full md:w-auto">join now</Button>
               <Button
-                variant={"ghost"}
-                className="hover:text-primary w-full md:w-auto"
+                className="w-full md:w-auto"
+                onClick={() => handleNavigate("/signup")}
               >
-                get insights
+                join now
               </Button>
+              <Link spy={true} smooth={true} duration={500} to="about">
+                <Button
+                  variant={"ghost"}
+                  className="hover:text-primary w-full md:w-auto"
+                >
+                  get insights
+                </Button>
+              </Link>
             </div>
             <div className="flex items-center gap-4 justify-evenly md:justify-normal">
               <div className="flex flex-col gap-2  text-center md:text-left md:min-w-[142px]">
@@ -75,14 +86,14 @@ export default function Hero() {
           </div>
         </div>
       </div>
-      <div className="size-full relative">
+      <figure className="size-full relative">
         <img
           className="size-full object-cover object-center"
           src={heroBg}
           alt="A couple talking to each other while doing cardio."
         />
         <div className="absolute inset-0 bg-primary opacity-75"></div>
-      </div>
+      </figure>
     </section>
   );
 }
