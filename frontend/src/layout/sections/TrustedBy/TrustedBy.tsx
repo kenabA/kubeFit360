@@ -7,12 +7,12 @@ import { imageData } from "./data";
 
 export default function TrustedBy() {
   return (
-    <section className="px-6 md:max-w-[90%] md:mx-auto py-12" id="trusted-by">
+    <section className="uni-container py-12 md:py-24" id="trusted-by">
       <Heading
         variant={"quinary"}
         level={5}
         className="text-center uppercase text-accent
-      mb-12"
+      mb-12 md:mb-24"
       >
         trusted by
       </Heading>
@@ -55,7 +55,7 @@ function ImageSlide({
 }) {
   return (
     <img
-      className={"w-auto filter brightness-0 opacity-50 ${heightClass}"}
+      className={"w-auto filter brightness-0 opacity-50"}
       style={{ height: imgHeight }}
       src={imgPath}
       alt="Logo of a company that trusts this business."

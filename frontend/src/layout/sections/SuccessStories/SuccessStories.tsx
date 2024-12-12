@@ -11,7 +11,7 @@ export default function SuccessStories() {
   return (
     <section
       id="success-stories"
-      className="px-5 md:max-w-[90%] md:mx-auto py-12 space-y-[37px]"
+      className="uni-container py-12 space-y-[37px]"
     >
       <div className="space-y-[18px]">
         <Heading

@@ -7,7 +7,10 @@ import x from "@/assets/svg/Footer/x.svg";
 
 export default function Footer() {
   return (
-    <section className="py-24 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 px-5 md:max-w-[90%] md:mx-auto gap-12">
+    <section
+      id="footer"
+      className="py-24 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 uni-container gap-12"
+    >
       <div className="row-[2/3] lg:row-[1/2] flex flex-col gap-8">
         <figure className="flex flex-col items-start gap-[18px]">
           <Link

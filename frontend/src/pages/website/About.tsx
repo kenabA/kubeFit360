@@ -1,15 +1,12 @@
 import { Heading } from "@/layout/components/Heading";
 import { Separator } from "@/components/ui/separator";
 import fitnessCoach from "@/assets/images/About/fitnessCoach.jpg";
-import gymBg from "@/assets/images/About/deadlifting.jpg";
+import gymBg from "@/assets/images/About/deadlifting.webp";
 import Breadcrumbs from "@/layout/components/Breadcrumbs";
 
 export function About() {
   return (
-    <section
-      id="services"
-      className="px-5 md:max-w-[90%] md:mx-auto mt-navbar pt-12 pb-24"
-    >
+    <section id="services" className="uni-container mt-navbar pt-12 pb-24">
       <div className="mb-[92px]">
         <div className="relative mb-8">
           <div

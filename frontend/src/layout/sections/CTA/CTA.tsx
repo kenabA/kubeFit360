@@ -10,7 +10,7 @@ export default function CTA() {
   }
 
   return (
-    <section className="px-5 md:max-w-[90%] md:mx-auto pb-24 pt-12" id="cta">
+    <section className="uni-container pb-24 pt-12" id="cta">
       <div
         className="shadow-cta lg:shadow-elevation overflow-hidden bg-gradient-to-br to-[#EB9447]
        from-[#DC7418] rounded-3xl grid grid-rows-[1fr,clamp(15.625rem,10.0932rem+23.2919vw,25rem)] lg:grid-rows-none lg:grid-cols-2"

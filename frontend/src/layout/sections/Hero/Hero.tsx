@@ -11,12 +11,12 @@ export default function Hero() {
   return (
     <section
       className="flex md:h-screen  flex-col-reverse
-    md:flex-row pt-navbar relative"
+    md:flex-row pt-navbar relative gap-2"
       id="home"
     >
       <div className="w-full">
         <div
-          className="pb-12 px-6 pt-6 md:pb-0 md:ms-[10%] w-fit h-full flex justify-center
+          className="hero-container h-full flex justify-center
        flex-col"
         >
           <article className="flex flex-col gap-8">

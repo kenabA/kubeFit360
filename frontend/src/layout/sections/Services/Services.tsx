@@ -4,10 +4,7 @@ import ServicesCard from "./ServicesCard";
 
 export default function Services() {
   return (
-    <section
-      id="services"
-      className="px-5 md:max-w-[90%] md:mx-auto py-12 space-y-[98px]"
-    >
+    <section id="services" className="uni-container py-12 space-y-[98px]">
       <div className="space-y-[18px]">
         <Heading
           level={2}
