@@ -19,8 +19,7 @@ export default function Membership({
           memberships
         </Heading>
         <p className="subtitle text-center">
-          Experience seamless living with our product, designed for effortless
-          convenience.
+          Tailored membership plans to match your fitness aspirations.
         </p>
       </div>
       <MembershipCards />

@@ -14,8 +14,7 @@ export default function Services() {
           services
         </Heading>
         <p className="subtitle text-center">
-          Experience seamless living with our product, designed for effortless
-          convenience.
+          Empowering your journey with expert fitness solutions.
         </p>
       </div>
       <article className="grid md:grid-rows-2 grid-col-1 md:grid-cols-2 lg:grid-cols-3 gap-12 md:gap-10 lg:gap-12">
