@@ -155,12 +155,11 @@
   }
 
   .hero-container {
-    @apply pb-12 pt-6 px-6 md:px-0 md:pb-0 md:ms-[10%] lg:ms-[13%] 2xl:ms-[20%] w-fit;
+    @apply pb-12 pt-6 px-6 md:px-0 md:pb-0 md:ms-[10%] 2xl:ms-[calc((100vw-1400px)/2)] 3xl:ms-[calc((100vw-1400px)/3)] w-fit;
   }
 
   /* Container that applies to all the section of the website */
   .uni-container {
-    @apply px-5 md:px-0 md:max-w-[90%] md:mx-auto   2xl:max-w-[1400px];
+    @apply px-5 md:px-0 md:max-w-[90%] md:mx-auto  2xl:max-w-[1400px];
   }
-  
 }
