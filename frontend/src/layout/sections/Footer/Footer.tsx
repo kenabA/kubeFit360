@@ -1,5 +1,5 @@
-import { NavLink } from "react-router";
-import { Link } from "react-scroll";
+import { Link, NavLink } from "react-router";
+
 import kubeFitLogo from "@/assets/svg/kubeFitLogo/kubeFit360°-logo-white.svg";
 import instagram from "@/assets/svg/Footer/instagram.svg";
 import facebook from "@/assets/svg/Footer/facebook.svg";
@@ -12,19 +12,14 @@ export default function Footer() {
       className="py-24 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 uni-container gap-12"
     >
       <div className="row-[2/3] lg:row-[1/2] flex flex-col gap-8">
-        <figure className="flex flex-col items-start gap-[18px]">
-          <Link
-            to="home"
-            smooth={true}
-            duration={500}
-            className="hover:cursor-pointer w-fit"
-          >
+        <div className="flex flex-col items-start gap-[18px]">
+          <Link to={"/"} className="hover:cursor-pointer w-fit">
             <img src={kubeFitLogo} alt="Logo of kubeFit" />
           </Link>
           <span className="span text-gray-tertiary block">
             Copyright @ 2024. All rights reserved
           </span>
-        </figure>
+        </div>
         <div className="flex items-center gap-8">
           <a
             target="_blank"
@@ -90,30 +85,42 @@ export default function Footer() {
           >
             Login
           </NavLink>
-          <Link
-            to="about"
-            smooth={true}
-            duration={500}
-            className="para-xl text-gray-tertiary cursor-pointer hover:text-gray-secondary"
+          <NavLink
+            to="/about"
+            className={({ isActive }) =>
+              `para-xl cursor-pointer ${
+                isActive
+                  ? "text-primary"
+                  : "text-gray-tertiary hover:text-gray-secondary"
+              }`
+            }
           >
             About Gym
-          </Link>
-          <Link
-            to="services"
-            smooth={true}
-            duration={500}
-            className="para-xl text-gray-tertiary cursor-pointer hover:text-gray-secondary"
+          </NavLink>
+          <NavLink
+            to="/testimonial"
+            className={({ isActive }) =>
+              `para-xl cursor-pointer ${
+                isActive
+                  ? "text-primary"
+                  : "text-gray-tertiary hover:text-gray-secondary"
+              }`
+            }
           >
-            Services
-          </Link>
-          <Link
-            to="membership"
-            smooth={true}
-            duration={500}
-            className="para-xl text-gray-tertiary cursor-pointer hover:text-gray-secondary"
+            Testimonial
+          </NavLink>
+          <NavLink
+            to="/membership"
+            className={({ isActive }) =>
+              `para-xl cursor-pointer ${
+                isActive
+                  ? "text-primary"
+                  : "text-gray-tertiary hover:text-gray-secondary"
+              }`
+            }
           >
             Membership
-          </Link>
+          </NavLink>
         </div>
       </div>
 
@@ -121,13 +128,13 @@ export default function Footer() {
         <p className="para-2xl capitalize font-medium">Legal</p>
         <div className="flex items-start flex-col gap-[18px]">
           <NavLink
-            to={""}
+            to={"/privacy-policy"}
             className="para-xl text-gray-tertiary hover:text-gray-secondary"
           >
             Privacy Policy
           </NavLink>
           <NavLink
-            to={""}
+            to={"/terms-&-condition"}
             className="para-xl text-gray-tertiary hover:text-gray-secondary"
           >
             Terms & Condition

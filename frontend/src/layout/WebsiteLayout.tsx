@@ -6,7 +6,7 @@ export default function AppLayout() {
   return (
     <>
       <Navbar />
-      <main>
+      <main className="mt-navbar pb-24">
         <Outlet />
       </main>
       <hr />

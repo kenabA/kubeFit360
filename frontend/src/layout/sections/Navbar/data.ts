@@ -2,19 +2,15 @@ import { TNavItem } from "./type";
 
 export const navItems: TNavItem[] = [
   {
-    label: "Home",
-    to: "home",
-  },
-  {
     label: "About",
-    to: "about",
-  },
-  {
-    label: "Services",
-    to: "services",
+    to: "/about",
   },
   {
     label: "Membership",
-    to: "membership",
+    to: "/membership",
+  },
+  {
+    label: "Testimonial",
+    to: "/testimonial",
   },
 ];
