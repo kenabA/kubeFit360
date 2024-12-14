@@ -22,8 +22,7 @@ export default function SuccessStories() {
           success stories
         </Heading>
         <p className="subtitle text-center">
-          Experience seamless living with our product, designed for effortless
-          convenience.
+          Be inspired by the transformative journeys of our members
         </p>
       </div>
 

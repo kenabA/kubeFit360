@@ -10,8 +10,8 @@ export default function Hero() {
 
   return (
     <section
-      className="flex md:h-screen  flex-col-reverse
-    md:flex-row pt-navbar relative gap-2"
+      className="flex md:h-[calc(100vh-72px)] flex-col-reverse
+    md:flex-row relative gap-2"
       id="home"
     >
       <div className="w-full">
