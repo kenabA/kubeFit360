@@ -6,6 +6,7 @@ import facebook from "@/assets/svg/Footer/facebook.svg";
 import x from "@/assets/svg/Footer/x.svg";
 import TermsAndCondition from "@/layout/components/TermsAndCondition";
 import PrivacyPolicy from "@/layout/components/PrivacyPolicy ";
+import { GLOBAL_CONTACTS } from "@/constants";
 
 export default function Footer() {
   return (
@@ -53,19 +54,19 @@ export default function Footer() {
             className="para-xl text-gray-tertiary hover:text-gray-secondary"
             rel="noopener noreferrer"
           >
-            Kumarigal - 7, Kathmandu, Nepal
+            {GLOBAL_CONTACTS.companyAddress}
           </a>
           <a
             href={"tel:9847162918"}
             className="para-xl text-gray-tertiary hover:text-gray-secondary"
           >
-            +977 9847162918
+            {GLOBAL_CONTACTS.companyNumber}
           </a>
           <a
             href={"mailto:kenabkc@gmail.com"}
             className="para-xl text-gray-tertiary hover:text-gray-secondary"
           >
-            kenabkc@gmail.com
+            {GLOBAL_CONTACTS.companyEmail}
           </a>
         </div>
       </div>
