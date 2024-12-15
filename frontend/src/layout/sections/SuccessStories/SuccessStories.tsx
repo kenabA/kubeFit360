@@ -66,7 +66,7 @@ function SuccessStory({ data }: { data: TSuccessStories }) {
           firstImageClassName="object-cover object-center"
           secondImageClassname="object-cover object-center"
           slideMode="hover"
-          autoplay={false}
+          autoplay={true}
           initialSliderPercentage={0}
         />
       </figure>

@@ -4,6 +4,8 @@ import kubeFitLogo from "@/assets/svg/kubeFitLogo/kubeFit360°-logo-white.svg";
 import instagram from "@/assets/svg/Footer/instagram.svg";
 import facebook from "@/assets/svg/Footer/facebook.svg";
 import x from "@/assets/svg/Footer/x.svg";
+import TermsAndCondition from "@/layout/components/TermsAndCondition";
+import PrivacyPolicy from "@/layout/components/PrivacyPolicy ";
 
 export default function Footer() {
   return (
@@ -127,18 +129,8 @@ export default function Footer() {
       <div className="gap-6 flex flex-col items-start">
         <p className="para-2xl capitalize font-medium">Legal</p>
         <div className="flex items-start flex-col gap-[18px]">
-          <NavLink
-            to={"/privacy-policy"}
-            className="para-xl text-gray-tertiary hover:text-gray-secondary"
-          >
-            Privacy Policy
-          </NavLink>
-          <NavLink
-            to={"/terms-&-condition"}
-            className="para-xl text-gray-tertiary hover:text-gray-secondary"
-          >
-            Terms & Condition
-          </NavLink>
+          <PrivacyPolicy />
+          <TermsAndCondition />
         </div>
       </div>
     </section>
