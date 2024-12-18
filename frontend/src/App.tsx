@@ -1,15 +1,15 @@
 import { Route, Routes } from "react-router";
 
 import WebsiteLayout from "@/layout/WebsiteLayout";
-import LandingPage from "@/pages/website/LandingPage";
-import About from "@/pages/website/About";
-import Membership from "@/layout/sections/Membership/Membership";
-import SuccessStories from "@/layout/sections/SuccessStories/SuccessStories";
+import LandingPage from "@/website/pages/LandingPage";
+import About from "@/website/pages/About";
+import Membership from "@/website/layout/sections/Membership/Membership";
+import SuccessStories from "@/website/layout/sections/SuccessStories/SuccessStories";
 
-import Login from "@/pages/system/Login";
-import SignUp from "@/pages/system/SignUp";
+import Login from "@/system/pages/Login";
+import SignUp from "@/system/pages/SignUp";
 
-import ScrollToTop from "@/layout/ScrollToTop";
+import ScrollToTop from "@/components/ScrollToTop";
 
 export default function App() {
   return (
