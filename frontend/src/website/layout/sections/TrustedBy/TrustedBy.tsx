@@ -9,7 +9,7 @@ export default function TrustedBy() {
   return (
     <section className="uni-container py-12 md:py-20" id="trusted-by">
       <Heading
-        variant={"quinary"}
+        variant={"senary"}
         level={5}
         className="text-center uppercase text-accent
       mb-12 md:mb-16"

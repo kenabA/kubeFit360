@@ -1,3 +1,9 @@
+import { LoginWrapper, LoginForm } from "../components/index";
+
 export default function Login() {
-  return <div>Login Here</div>;
+  return (
+    <LoginWrapper>
+      <LoginForm />
+    </LoginWrapper>
+  );
 }

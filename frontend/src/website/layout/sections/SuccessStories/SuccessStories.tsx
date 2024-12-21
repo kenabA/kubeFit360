@@ -73,7 +73,7 @@ function SuccessStory({ data }: { data: TSuccessStories }) {
       <article className="w-full flex flex-col md:justify-between items-start gap-12 md:gap-0">
         <div className="flex flex-col gap-6 md:gap-8 items-start">
           <Heading
-            variant={"quinary"}
+            variant={"senary"}
             level={5}
             className="capitalize text-gray-secondary
       "

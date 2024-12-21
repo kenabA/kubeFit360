@@ -11,7 +11,7 @@ export function MembershipCards() {
       <div className="flex-1 p-12 rounded-[18px] bg-white shadow-lg md:bg-none md:shadow-none flex flex-col gap-12">
         <div>
           <Heading
-            variant={"quinary"}
+            variant={"senary"}
             level={5}
             className="text-center capitalize text-accent
       mb-6"
@@ -58,7 +58,7 @@ export function MembershipCards() {
       <div className="flex-1 rounded-[18px] p-12 bg-tertiary shadow-lg md:shadow-none flex flex-col gap-12">
         <div>
           <Heading
-            variant={"quinary"}
+            variant={"senary"}
             level={5}
             className="text-center capitalize text-primary
       mb-6"

@@ -7,9 +7,10 @@ import Membership from "@/website/layout/sections/Membership/Membership";
 import SuccessStories from "@/website/layout/sections/SuccessStories/SuccessStories";
 
 import Login from "@/system/pages/Login";
-import SignUp from "@/system/pages/SignUp";
+import Signup from "@/system/pages/SignUp";
 
 import ScrollToTop from "@/components/ScrollToTop";
+import AuthLayout from "@/layout/AuthLayout";
 
 export default function App() {
   return (
@@ -24,8 +25,10 @@ export default function App() {
           <Route path="membership" element={<Membership variant="website" />} />
         </Route>
         {/* Routes for Auth  */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
+        <Route element={<AuthLayout />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+        </Route>
         {/* Routes for Management System  */}
       </Routes>
     </>
