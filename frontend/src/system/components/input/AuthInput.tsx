@@ -5,29 +5,23 @@ import { TAuthInputProps } from "./types";
 
 export function AuthInput({ label, type, name }: TAuthInputProps) {
   const [hidden, setHidden] = useState<boolean>(true);
-  const [isFocusing, setFocusing] = useState<boolean>(false);
 
   return (
     <div className="group relative w-full">
+      <Input
+        name={name}
+        className="h-[54px] !w-full peer rounded-xl border border-slate-300 py-2 px-4 focus-visible:ring-1 focus-visible:ring-primary focus-visible:border-primary !text-[16px]"
+        id={label}
+        type={type === "password" ? (hidden ? "password" : "text") : type}
+        placeholder=""
+      />
       <label
         htmlFor={label}
-        className={`absolute left-4 top-2 block text-xs font-light ${
-          isFocusing ? "text-primary" : "text-gray-tertiary"
-        }`}
+        className={`absolute bg-zinc-50 text-xs text-gray-tertiary transition-all pointer-events-none top-0 -translate-y-1/2 left-2  font-light peer-placeholder-shown:text-[16px] peer-placeholder-shown:top-1/2 px-2 peer-placeholder-shown:-translate-y-1/2 peer-focus:text-primary peer-focus:top-0 peer-focus:text-xs`}
       >
         {label}
       </label>
-      <Input
-        name={name}
-        className="h-[54px] !w-full rounded-xl border border-slate-300 pb-2 pt-6 px-4 focus-visible:ring-1 focus-visible:ring-primary focus-visible:border-primary !text-sm"
-        id={label}
-        type={type === "password" ? (hidden ? "password" : "text") : type}
-        onFocus={() => {
-          setFocusing((val) => !val);
-        }}
-        // Fires when the user clicks outside the input field
-        onBlur={() => setFocusing(false)}
-      />
+
       {type === "password" && (
         <Icon
           onMouseDown={(e) => e.preventDefault()}
