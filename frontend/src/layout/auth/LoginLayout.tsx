@@ -4,9 +4,9 @@ import PrivacyPolicy from "@/components/legal/PrivacyPolicy";
 import TermsAndCondition from "@/components/legal/TermsAndCondition";
 import { Link, Outlet } from "react-router";
 
-export default function AuthLayout() {
+export default function LoginLayout() {
   return (
-    <section id="login" className="md:grid md:grid-cols-2 h-dvh">
+    <section id="login" className="lg:grid lg:grid-cols-2 h-dvh">
       <div className="p-6 flex flex-col justify-between items-center h-full">
         <Link to={"/"} className="hover:cursor-pointer w-fit self-start">
           <img src={kubeFitLogo} alt="Logo of kubeFit" />
@@ -18,7 +18,7 @@ export default function AuthLayout() {
           <PrivacyPolicy className="span text-accent underline" />
         </p>
       </div>
-      <figure className="size-full relative hidden md:block">
+      <figure className="size-full relative hidden lg:block">
         <img
           className="size-full object-cover object-center"
           src={heroBg}

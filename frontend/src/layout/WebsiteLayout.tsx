@@ -5,7 +5,7 @@ import Footer from "@/website/layout/sections/Footer/Footer";
 
 export default function AppLayout() {
   return (
-    <ReactLenis root options={{ lerp: 0.08 }}>
+    <ReactLenis root options={{ lerp: 0.2 }}>
       <Navbar />
       <main className="mt-navbar pb-24">
         <Outlet />

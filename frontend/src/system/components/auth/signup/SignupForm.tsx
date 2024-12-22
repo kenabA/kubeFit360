@@ -1,13 +1,14 @@
 import { Button } from "@/components";
 import FloatingInput from "@/system/components/input/AuthInput";
-import { FormEvent, useState } from "react";
+import { useShowStore } from "@/system/stores/useShowStore";
+import { FormEvent } from "react";
 
 export function SignupForm() {
-  const [isAnimate, setIsAnimate] = useState(false);
+  const { toggleShow } = useShowStore();
 
   function handleNext(e: FormEvent<HTMLButtonElement>) {
     e.preventDefault();
-    setIsAnimate(true);
+    toggleShow();
   }
 
   return (
@@ -18,9 +19,9 @@ export function SignupForm() {
       <FloatingInput name="password" label="Password" type="password" />
       <Button
         onClick={(e) => handleNext(e)}
-        className="py-3 w-[100px] self-end bg-tertiary hover:shadow-sm
+        className="py-2.5 w-[100px] self-end hover:shadow-sm
         "
-        variant={"primaryReverse"}
+        variant={"primary"}
       >
         next
       </Button>
