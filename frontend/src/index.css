@@ -1,7 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 * {
   box-sizing: border-box;
   font-family: "Wix Madefor Display", serif;
@@ -99,6 +98,11 @@
     @apply text-[clamp(1.625rem,1.4037rem+0.9317vw,2rem)];
   }
 
+  .quinary {
+    /* min: 20px, max : 24px */
+    @apply text-[clamp(1.25rem,1.1025rem+0.6211vw,1.5rem)];
+  }
+
   /* TEXT SIZES DEFINITIONS */
 
   .para-2xl {
@@ -127,7 +131,7 @@
   }
 
   .span {
-    /* min : 12px, max: 10px */
+    /* min : 10px, max: 12px */
     @apply text-[clamp(0.625rem,0.5512rem+0.3106vw,0.75rem)];
   }
 
