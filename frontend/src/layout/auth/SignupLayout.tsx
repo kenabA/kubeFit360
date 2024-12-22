@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import kubeFitLogo from "@/assets/shared/svg/kubeFitLogo/kubeFit360°-logo-white.svg";
-import heroBg from "@/assets/website/images/hero-bg.jpg";
+import fitnessLady from "@/assets/website/images/About/rolling-woman.webp";
 import PrivacyPolicy from "@/components/legal/PrivacyPolicy";
 import TermsAndCondition from "@/components/legal/TermsAndCondition";
 import { useEffect, useState } from "react";
@@ -61,9 +61,9 @@ export default function AuthLayout() {
             })}
           >
             <img
-              className="size-full object-cover object-center"
-              src={heroBg}
-              alt="A couple talking to each other while doing cardio."
+              className="size-full object-center object-cover"
+              src={fitnessLady}
+              alt="A fit lady."
             />
             <div className="absolute inset-0 bg-primary opacity-75"></div>
           </motion.figure>
