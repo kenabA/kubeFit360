@@ -1,13 +1,7 @@
 import { Heading } from "@/components/heading/Heading";
-import { MembershipCards } from "./MembershipCards";
+import { MembershipCards } from "./membership-cards/MembershipCards";
 
-export default function Membership({
-  variant,
-}: {
-  variant: "website" | "webapp";
-}) {
-  console.log(variant);
-
+export default function Membership() {
   return (
     <section id="membership" className="uni-container py-12 space-y-[74px]">
       <div className="space-y-[18px]">
@@ -22,7 +16,7 @@ export default function Membership({
           Tailored membership plans to match your fitness aspirations.
         </p>
       </div>
-      <MembershipCards />
+      <MembershipCards variant="website" />
     </section>
   );
 }

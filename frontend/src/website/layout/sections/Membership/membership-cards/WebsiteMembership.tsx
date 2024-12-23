@@ -3,7 +3,7 @@ import { Heading } from "@/components/heading/Heading";
 import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
 
-export function MembershipCards() {
+export function WebsiteMembershipCards() {
   const handleNavigate = useHandleNavigate();
   return (
     <div className=" md:bg-white rounded-3xl md:shadow-elevation md:p-6 flex gap-12 flex-col md:flex-row">

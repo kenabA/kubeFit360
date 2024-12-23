@@ -18,7 +18,7 @@ const buttonVariants = cva(
           "bg-none text-accent hover:text-accent-hover hover:underline underline-offset-8 ",
         ghost: "bg-none text-gray",
         primaryReverse:
-          "bg-primary-foreground text-primary hover:shadow-button",
+          "bg-tertiary hover:bg-tertiary-hover text-tertiary-foreground",
         accentReverse:
           "bg-accent-light text-accent hover:bg-accent-light-hover",
         destructive:

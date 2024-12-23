@@ -7,7 +7,7 @@ import Membership from "@/website/layout/sections/Membership/Membership";
 import SuccessStories from "@/website/layout/sections/SuccessStories/SuccessStories";
 
 import Login from "@/system/pages/Login";
-import Signup from "@/system/pages/Signup";
+import Signup from "@/system/pages/SignUp";
 
 import ScrollToTop from "@/components/ScrollToTop";
 import LoginLayout from "./layout/auth/LoginLayout";
@@ -22,7 +22,7 @@ export default function App() {
           <Route index element={<LandingPage />} />
           <Route path="about" element={<About />} />
           <Route path="testimonial" element={<SuccessStories />} />
-          <Route path="membership" element={<Membership variant="website" />} />
+          <Route path="membership" element={<Membership />} />
         </Route>
         <Route element={<LoginLayout />}>
           <Route path="/login" element={<Login />} />

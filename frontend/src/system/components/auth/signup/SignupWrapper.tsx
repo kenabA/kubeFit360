@@ -1,9 +1,11 @@
 import { Heading } from "@/components/heading/Heading";
+import { useShowStore } from "@/system/stores/useShowStore";
 import { Link } from "react-router";
 
 export function SignupWrapper({ children }: { children: React.ReactNode }) {
+  const { show } = useShowStore();
   return (
-    <div className="flex gap-[42px] flex-col items-center w-full">
+    <div className="flex gap-[42px] flex-col items-center w-full relative">
       <div className="flex flex-col gap-3 items-center">
         <Heading variant={"quinary"} level={5}>
           Sign Up
@@ -13,12 +15,14 @@ export function SignupWrapper({ children }: { children: React.ReactNode }) {
         </span>
       </div>
       {children}
-      <p className="text-sm text-gray-secondary">
-        Already have an account?{" "}
-        <Link className="text-primary font-bold" to={"/login"}>
-          Login
-        </Link>
-      </p>
+      {show && (
+        <p className="text-sm text-gray-secondary">
+          Already have an account?{" "}
+          <Link className="text-primary font-bold" to={"/login"}>
+            Login
+          </Link>
+        </p>
+      )}
     </div>
   );
 }

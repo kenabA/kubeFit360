@@ -13,7 +13,7 @@ export default function LandingPage() {
       <TrustedBy />
       <About />
       <Services />
-      <Membership variant="website" />
+      <Membership />
       <SuccessStories />
       <CTA />
     </>

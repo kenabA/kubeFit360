@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { Link, Outlet } from "react-router";
 import { useShowStore } from "@/system/stores/useShowStore";
 
-export default function AuthLayout() {
+export default function SignupLayout() {
   const { show } = useShowStore();
   const [hasAnimated, setHasAnimated] = useState<boolean>(false);
 
@@ -41,7 +41,6 @@ export default function AuthLayout() {
         <Link to="/" className="hover:cursor-pointer w-fit self-start">
           <img src={kubeFitLogo} alt="Logo of kubeFit" />
         </Link>
-
         <Outlet />
         <p className="span text-slate-400 text-center leading-[1.8]">
           By creating account you agree to our{" "}
