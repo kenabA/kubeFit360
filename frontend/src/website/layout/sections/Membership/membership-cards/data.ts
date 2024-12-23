@@ -10,7 +10,7 @@ export type TMembershipPlanDetails = {
 
 export const membershipPlanDetails: TMembershipPlanDetails[] = [
   {
-    title: "BASIC",
+    title: "Basic",
     price: 2500,
     description: "per month. Just Rs. 85 per session!",
     features: ["Locker", "Shower", "Steam Sauna"],
@@ -18,7 +18,7 @@ export const membershipPlanDetails: TMembershipPlanDetails[] = [
     theme: "accent",
   },
   {
-    title: "ENTERPRISE",
+    title: "Enterprise",
     price: 6000,
     description: "per 3 month. Just Rs. 2000 per session!",
     features: ["Locker", "Shower", "Steam Sauna", "Save Rs. 1500"],

@@ -1,6 +1,10 @@
-export type TAuthInputProps = {
+import { FieldError, FieldValues, UseFormRegister } from "react-hook-form";
+
+export type TAuthInputProps<T extends FieldValues> = {
   label: string;
   type: HTMLInputElement["type"];
   placeholder?: string;
-  name: string; // keyof T
+  name: string;
+  error: FieldError | undefined;
+  register: UseFormRegister<T>;
 };

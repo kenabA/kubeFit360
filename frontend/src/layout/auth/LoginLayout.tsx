@@ -6,11 +6,8 @@ import { Link, Outlet } from "react-router";
 
 export default function LoginLayout() {
   return (
-    <section
-      id="login"
-      className="lg:grid lg:grid-cols-2 lg:grid-rows-[100%,100%] h-dvh"
-    >
-      <div className="p-6 flex flex-col justify-between items-center">
+    <section id="login" className="lg:grid lg:grid-cols-2 h-dvh">
+      <div className="p-6 flex flex-col justify-between items-center h-full">
         <Link to={"/"} className="hover:cursor-pointer w-fit self-start">
           <img src={kubeFitLogo} alt="Logo of kubeFit" />
         </Link>

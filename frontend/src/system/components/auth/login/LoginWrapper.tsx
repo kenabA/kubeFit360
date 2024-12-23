@@ -3,7 +3,7 @@ import { Link } from "react-router";
 
 export function LoginWrapper({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex gap-[42px] flex-col items-center w-full">
+    <div className="flex gap-[42px] flex-col items-center w-full ">
       <div className="flex flex-col gap-3 items-center">
         <Heading variant={"quinary"} level={5}>
           Login

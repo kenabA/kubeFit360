@@ -3,7 +3,7 @@
 @tailwind utilities;
 * {
   box-sizing: border-box;
-  font-family: "Wix Madefor Display", serif;
+  font-family: "Wix Madefor Display", Arial, Helvetica;
   padding: 0;
   margin: 0;
 }
