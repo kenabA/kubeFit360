@@ -17,7 +17,7 @@ export function AuthInput<T extends FieldValues>({
     <div className="flex flex-col w-full">
       <div className="group relative w-full">
         <Input
-          className="h-[54px] !w-full peer rounded-xl border border-slate-300 py-2 px-4 focus-visible:ring-1 focus-visible:ring-primary focus-visible:border-primary !text-[16px]"
+          className="floating-input h-[54px] !w-full peer rounded-xl border border-slate-300 py-2 px-4 focus-visible:ring-1 focus-visible:ring-primary focus-visible:border-primary !text-[16px]"
           id={label}
           type={type === "password" ? (hidden ? "password" : "text") : type}
           placeholder=""
@@ -25,7 +25,7 @@ export function AuthInput<T extends FieldValues>({
         />
         <label
           htmlFor={label}
-          className={`absolute bg-zinc-50 text-xs text-gray-tertiary transition-all pointer-events-none top-0 -translate-y-1/2 left-2  font-light peer-placeholder-shown:text-[16px] peer-placeholder-shown:top-1/2 px-2 peer-placeholder-shown:-translate-y-1/2 peer-focus:text-primary peer-focus:top-0 peer-focus:text-xs`}
+          className={`floating-label absolute bg-zinc-50 text-xs text-gray-tertiary transition-all pointer-events-none top-0 -translate-y-1/2 left-2  font-light peer-placeholder-shown:text-[16px] peer-placeholder-shown:top-1/2 px-2 peer-placeholder-shown:-translate-y-1/2 peer-focus:text-primary peer-focus:top-0 peer-focus:text-xs`}
         >
           {label}
         </label>
