@@ -10,13 +10,12 @@ import { useShowStore } from "@/system/stores/useShowStore";
 export default function SignupLayout() {
   const { show } = useShowStore();
   const [hasAnimated, setHasAnimated] = useState<boolean>(false);
-
   const [isLgScreen, setIsLgScreen] = useState<boolean>(false);
 
   useEffect(() => {
     setHasAnimated(true);
     const checkScreenSize = () => {
-      // 768px is the default 'lg' breakpoint in Tailwind
+      // 1024px is the default 'lg' breakpoint in Tailwind
       setIsLgScreen(window.innerWidth >= 1024);
     };
     checkScreenSize();
@@ -27,7 +26,11 @@ export default function SignupLayout() {
   const DynamicMotionDiv = isLgScreen ? motion.div : "div";
 
   return (
-    <section className="h-dvh overflow-hidden flex">
+    <section
+      className={`h-dvh overflow-hidden flex ${
+        !isLgScreen && !show && "h-full md:h-dvh"
+      }`}
+    >
       <DynamicMotionDiv
         {...(isLgScreen && {
           initial: false,
@@ -36,7 +39,7 @@ export default function SignupLayout() {
         })}
         className={`p-6 flex flex-col justify-between items-center h-full ${
           !isLgScreen && "w-full"
-        }`}
+        } ${!isLgScreen && !show && "flex flex-col items-center gap-20"} `}
       >
         <Link to="/" className="hover:cursor-pointer w-fit self-start">
           <img src={kubeFitLogo} alt="Logo of kubeFit" />
