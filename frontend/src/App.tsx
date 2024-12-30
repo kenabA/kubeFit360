@@ -8,6 +8,7 @@ import SuccessStories from "@/website/layout/sections/SuccessStories/SuccessStor
 
 import Login from "@/system/pages/Login";
 import Signup from "@/system/pages/SignUp";
+import ForgotPassword from "@/system/pages/ForgotPassword";
 
 import ScrollToTop from "@/components/ScrollToTop";
 import LoginLayout from "./layout/auth/LoginLayout";
@@ -26,6 +27,7 @@ export default function App() {
         </Route>
         <Route element={<LoginLayout />}>
           <Route path="/login" element={<Login />} />
+          <Route path="/forgotPassword" element={<ForgotPassword />} />
         </Route>
         <Route element={<SignupLayout />}>
           <Route path="/signup" element={<Signup />} />
