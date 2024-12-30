@@ -39,7 +39,7 @@ export default function SignupLayout() {
         })}
         className={`p-6 flex flex-col justify-between items-center h-full ${
           !isLgScreen && "w-full"
-        } ${!isLgScreen && !show && "flex flex-col items-center gap-20"} `}
+        } ${!isLgScreen && !show && "flex flex-col items-center gap-12"} `}
       >
         <Link to="/" className="hover:cursor-pointer w-fit self-start">
           <img src={kubeFitLogo} alt="Logo of kubeFit" />
