@@ -1,4 +1,4 @@
-import { LoginWrapper, LoginForm } from "../components/index";
+import { LoginWrapper, LoginForm } from "../../components/index";
 
 export default function Login() {
   return (

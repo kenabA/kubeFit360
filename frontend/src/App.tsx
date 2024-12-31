@@ -1,16 +1,16 @@
 import { Route, Routes } from "react-router";
 
 import WebsiteLayout from "@/layout/WebsiteLayout";
-import LandingPage from "@/website/pages/LandingPage";
-import About from "@/website/pages/About";
+import LandingPage from "@/website/pages/LandingPage/LandingPage";
+import About from "@/website/pages/About/About";
 import Membership from "@/website/layout/sections/Membership/Membership";
 import SuccessStories from "@/website/layout/sections/SuccessStories/SuccessStories";
 
-import Login from "@/system/pages/Login";
-import Signup from "@/system/pages/SignUp";
-import ForgotPassword from "@/system/pages/ForgotPassword";
+import Login from "@/system/pages/Login/Login";
+import Signup from "@/system/pages/SignUp/SignUp";
+import ForgotPassword from "@/system/pages/ForgotPassword/ForgotPassword";
 
-import ScrollToTop from "@/components/ScrollToTop";
+import ScrollToTop from "@/lib/ScrollToTop";
 import LoginLayout from "./layout/auth/LoginLayout";
 import SignupLayout from "@/layout/auth/SignupLayout";
 
