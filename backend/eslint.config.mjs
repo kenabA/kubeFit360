@@ -1,9 +1,13 @@
 import globals from 'globals';
 import pluginJs from '@eslint/js';
+import eslintPluginPrettier from 'eslint-plugin-prettier/recommended';
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
-  { plugins: ['prettier'] },
+  // { files: ['**/*.js'], languageOptions: { sourceType: 'commonjs' } },
+  { languageOptions: { globals: globals.node } },
+  pluginJs.configs.recommended,
+  eslintPluginPrettier,
   {
     rules: {
       'prettier/prettier': 'error',
@@ -22,7 +26,4 @@ export default [
       'no-shadow': 'off',
     },
   },
-  { files: ['**/*.js'], languageOptions: { sourceType: 'commonjs' } },
-  { languageOptions: { globals: globals.browser } },
-  pluginJs.configs.recommended,
 ];
