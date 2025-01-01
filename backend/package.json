@@ -4,16 +4,21 @@
   "main": "app.js",
   "scripts": {
     "start": "nodemon server.js",
+    "im": "nodemon ./dev-data/data/import-dev-data.js --importMaintainer",
+    "dm": "nodemon ./dev-data/data/import-dev-data.js --deleteMaintainer",
     "start:prod": "NODE_ENV=production nodemon server.js"
   },
   "author": "kenabey",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "dotenv": "^16.4.7",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
     "express": "^4.21.2",
-    "morgan": "^1.10.0"
+    "mongoose": "^8.9.3",
+    "morgan": "^1.10.0",
+    "validator": "^13.12.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",

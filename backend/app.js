@@ -1,6 +1,8 @@
 const express = require('express');
 const morgan = require('morgan');
 const maintainerRouter = require('./routes/maintainerRoutes');
+const AppError = require('./utils/appError');
+const globalErrorHandler = require('./controller/errorController');
 
 const app = express();
 
@@ -15,7 +17,13 @@ app.use(express.json());
 // Middleware to serve static files
 app.use(express.static(`${__dirname}/public`));
 
-// eslint make it work!!!
 app.use('/api/v1/maintainers', maintainerRouter);
+
+app.all('*', (req, res, next) => {
+  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+});
+
+// Error handling middle ware
+app.use(globalErrorHandler);
 
 module.exports = app;
