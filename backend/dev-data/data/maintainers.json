@@ -1,0 +1,202 @@
+[
+  {
+    "name": "John Doe",
+    "email": "john.doe@example.com",
+    "phoneNumber": 1234567890,
+    "gender": "male",
+    "hiredAt": "2023-06-15T10:00:00.000Z",
+    "address": "123 Elm Street",
+    "password": "password123",
+    "confirmPassword": "password123"
+  },
+  {
+    "name": "Jane Smith",
+    "email": "jane.smith@example.com",
+    "phoneNumber": 9876543210,
+    "gender": "female",
+    "hiredAt": "2022-11-01T10:00:00.000Z",
+    "address": "456 Oak Avenue",
+    "password": "mypassword456",
+    "confirmPassword": "mypassword456"
+  },
+  {
+    "name": "Samuel Johnson",
+    "email": "samuel.johnson@example.com",
+    "phoneNumber": 5551237890,
+    "gender": "male",
+    "hiredAt": "2023-09-20T10:00:00.000Z",
+    "address": "789 Maple Lane",
+    "password": "admin1234",
+    "confirmPassword": "admin1234"
+  },
+  {
+    "name": "Emma Brown",
+    "email": "emma.brown@example.com",
+    "phoneNumber": 4445556666,
+    "gender": "female",
+    "hiredAt": "2021-07-15T10:00:00.000Z",
+    "address": "321 Pine Road",
+    "password": "securepassword",
+    "confirmPassword": "securepassword"
+  },
+  {
+    "name": "Chris Green",
+    "email": "chris.green@example.com",
+    "phoneNumber": 2233445566,
+    "gender": "male",
+    "hiredAt": "2020-03-01T10:00:00.000Z",
+    "address": "567 Birch Blvd",
+    "password": "hello12345",
+    "confirmPassword": "hello12345"
+  },
+  {
+    "name": "Liam Wilson",
+    "email": "liam.wilson@example.com",
+    "phoneNumber": 6677889900,
+    "gender": "male",
+    "hiredAt": "2019-10-21T10:00:00.000Z",
+    "address": "890 Ash Street",
+    "password": "password321",
+    "confirmPassword": "password321"
+  },
+  {
+    "name": "Olivia Taylor",
+    "email": "olivia.taylor@example.com",
+    "phoneNumber": 5566778899,
+    "gender": "female",
+    "hiredAt": "2023-05-10T10:00:00.000Z",
+    "address": "432 Cedar Circle",
+    "password": "taylor789",
+    "confirmPassword": "taylor789"
+  },
+  {
+    "name": "Noah White",
+    "email": "noah.white@example.com",
+    "phoneNumber": 3456789012,
+    "gender": "male",
+    "hiredAt": "2020-12-05T10:00:00.000Z",
+    "address": "555 Willow Way",
+    "password": "white1234",
+    "confirmPassword": "white1234"
+  },
+  {
+    "name": "Ava Harris",
+    "email": "ava.harris@example.com",
+    "phoneNumber": 6789012345,
+    "gender": "female",
+    "hiredAt": "2023-08-30T10:00:00.000Z",
+    "address": "876 Aspen Drive",
+    "password": "harris888",
+    "confirmPassword": "harris888"
+  },
+  {
+    "name": "James Lewis",
+    "email": "james.lewis@example.com",
+    "phoneNumber": 1122334455,
+    "gender": "male",
+    "hiredAt": "2018-06-15T10:00:00.000Z",
+    "address": "987 Cherry Street",
+    "password": "james12345",
+    "confirmPassword": "james12345"
+  },
+  {
+    "name": "Sophia Walker",
+    "email": "sophia.walker@example.com",
+    "phoneNumber": 7788991122,
+    "gender": "female",
+    "hiredAt": "2022-01-25T10:00:00.000Z",
+    "address": "222 Hickory Lane",
+    "password": "walker6789",
+    "confirmPassword": "walker6789"
+  },
+  {
+    "name": "Benjamin Martin",
+    "email": "benjamin.martin@example.com",
+    "phoneNumber": 3344556677,
+    "gender": "male",
+    "hiredAt": "2019-04-12T10:00:00.000Z",
+    "address": "654 Juniper Avenue",
+    "password": "martin456",
+    "confirmPassword": "martin456"
+  },
+  {
+    "name": "Ella Wright",
+    "email": "ella.wright@example.com",
+    "phoneNumber": 8899112233,
+    "gender": "female",
+    "hiredAt": "2022-09-09T10:00:00.000Z",
+    "address": "300 Forest Drive",
+    "password": "wright1234",
+    "confirmPassword": "wright1234"
+  },
+  {
+    "name": "Logan King",
+    "email": "logan.king@example.com",
+    "phoneNumber": 4455667788,
+    "gender": "male",
+    "hiredAt": "2021-11-11T10:00:00.000Z",
+    "address": "111 Maple Grove",
+    "password": "king5555",
+    "confirmPassword": "king5555"
+  },
+  {
+    "name": "Charlotte Scott",
+    "email": "charlotte.scott@example.com",
+    "phoneNumber": 9900112233,
+    "gender": "female",
+    "hiredAt": "2020-02-14T10:00:00.000Z",
+    "address": "678 Willow Terrace",
+    "password": "scott999",
+    "confirmPassword": "scott999"
+  },
+  {
+    "name": "Elijah Adams",
+    "email": "elijah.adams@example.com",
+    "phoneNumber": 5678901234,
+    "gender": "male",
+    "hiredAt": "2019-07-20T10:00:00.000Z",
+    "address": "444 Spruce Court",
+    "password": "adams456",
+    "confirmPassword": "adams456"
+  },
+  {
+    "name": "Amelia Carter",
+    "email": "amelia.carter@example.com",
+    "phoneNumber": 1231231234,
+    "gender": "female",
+    "hiredAt": "2018-05-25T10:00:00.000Z",
+    "address": "345 Birch Drive",
+    "password": "carter789",
+    "confirmPassword": "carter789"
+  },
+  {
+    "name": "Lucas Phillips",
+    "email": "lucas.phillips@example.com",
+    "phoneNumber": 1010101010,
+    "gender": "male",
+    "hiredAt": "2023-03-03T10:00:00.000Z",
+    "address": "789 Hemlock Way",
+    "password": "phillips456",
+    "confirmPassword": "phillips456"
+  },
+  {
+    "name": "Isabella Evans",
+    "email": "isabella.evans@example.com",
+    "phoneNumber": 7890123456,
+    "gender": "female",
+    "hiredAt": "2022-12-18T10:00:00.000Z",
+    "address": "654 Sycamore Street",
+    "password": "evans1234",
+    "confirmPassword": "evans1234"
+  },
+  {
+    "name": "Michael Clark",
+    "email": "michael.clark@example.com",
+    "phoneNumber": 2345678901,
+    "gender": "male",
+    "hiredAt": "2017-10-01T10:00:00.000Z",
+    "address": "123 Palm Avenue",
+    "password": "clark567",
+    "confirmPassword": "clark567"
+  }
+]

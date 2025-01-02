@@ -3,15 +3,29 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon server.js",
+    "im": "nodemon ./dev-data/data/import-dev-data.js --importMaintainer",
+    "dm": "nodemon ./dev-data/data/import-dev-data.js --deleteMaintainer",
+    "start:prod": "NODE_ENV=production nodemon server.js"
   },
   "author": "kenabey",
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "express": "^4.21.2"
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.7",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.9.3",
+    "morgan": "^1.10.0",
+    "validator": "^13.12.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.17.0",
+    "eslint": "^9.17.0",
+    "globals": "^15.14.0",
     "nodemon": "^3.1.9"
   }
 }
