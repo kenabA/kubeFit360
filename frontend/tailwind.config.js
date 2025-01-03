@@ -85,6 +85,28 @@ export default {
       letterSpacing: {
         sm: "var(--sm-letterspacing)",
       },
+      keyframes: {
+        bounceLeft: {
+          "35%": {
+            left: "-11%",
+          },
+          "50%": {
+            left: "-8%",
+          },
+          "70%": {
+            left: "-9%",
+          },
+          "90%": {
+            left: "-8%",
+          },
+          "100%": {
+            left: "-8%",
+          },
+        },
+      },
+      animation: {
+        "toast-icon": "bounceLeft 1s ease-in-out forwards",
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],
