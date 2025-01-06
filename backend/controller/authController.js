@@ -1,18 +1,12 @@
-const jwt = require('jsonwebtoken');
-const Maintainer = require('../models/maintainerModel');
+const User = require('../models/userModal');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const sendEmail = require('./../utils/email');
 const crypto = require('crypto');
-
-const signToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES_IN,
-  });
-};
+const signToken = require('../utils/signToken');
 
 exports.signup = catchAsync(async (req, res, next) => {
-  const newUser = await Maintainer.create(req.body);
+  const newUser = await User.create(req.body);
 
   const token = signToken(newUser._id);
 
@@ -23,39 +17,37 @@ exports.signup = catchAsync(async (req, res, next) => {
 
 exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
+
   // 1) Check if email and password exists
   if (!email || !password) {
     return next(new AppError('Please provide your email and password', 404));
   }
 
   // 2) Check if user exists on the database
-  const maintainer = await Maintainer.findOne({ email }).select('+password'); // + to select the field that is deselected on the schema
+  const user = await User.findOne({ email }).select('+password'); // + to select the field that is deselected on the schema
 
-  if (
-    !maintainer ||
-    !(await maintainer.correctPassword(password, maintainer.password))
-  ) {
+  if (!user || !(await user.correctPassword(password, user.password))) {
     return next(new AppError('Incorrect email or password', 401));
   }
 
   // 3) Create Token incase everything is correct
-  const token = signToken(maintainer._id);
+  const token = signToken(user._id);
 
   // 4) Send in the response
-  maintainer.password = undefined;
-  res.status(200).json({ status: 'success', token, data: { maintainer } });
+  user.password = undefined;
+  res.status(200).json({ status: 'success', token, data: { user } });
 });
 
 exports.forgotPassword = catchAsync(async (req, res, next) => {
   // 1) Get user based on the posted email
-  const maintainer = await Maintainer.findOne({ email: req.body.email });
+  const user = await User.findOne({ email: req.body.email });
 
-  if (!maintainer) {
+  if (!user) {
     return next(new AppError('There is no user with email address.', 404));
   }
   // 2) Generate random token
-  const resetToken = maintainer.createPasswordResetToken();
-  await maintainer.save({ validateBeforeSave: false });
+  const resetToken = user.createPasswordResetToken();
+  await user.save({ validateBeforeSave: false });
 
   // 3) Send it to the user's email
   const resetUrl = `${req.protocol}://${req.get('host')}/api/v1/users/resetPassword/${resetToken}`;
@@ -65,7 +57,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   try {
     console.log('first');
     await sendEmail({
-      email: maintainer.email,
+      email: user.email,
       subject: 'Your password reset',
       message,
     });
@@ -76,9 +68,9 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
       message: 'Token sent to email',
     });
   } catch (err) {
-    maintainer.passwordResetToken = undefined;
-    maintainer.passwordResetExpires = undefined;
-    await maintainer.save({ validateBeforeSave: false });
+    user.passwordResetToken = undefined;
+    user.passwordResetExpires = undefined;
+    await user.save({ validateBeforeSave: false });
     console.log(err);
 
     return next(
@@ -96,20 +88,20 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
     .update(req.params.token)
     .digest('hex');
 
-  const maintainer = await Maintainer.findOne({
+  const user = await User.findOne({
     passwordResetExpires: { $gt: Date.now() },
     passwordResetToken: hashedToken,
   });
 
-  if (!maintainer) {
+  if (!user) {
     return next(new AppError('Token is invalid or has expired'));
   }
 
-  maintainer.password = req.body.password;
-  maintainer.passwordConfirm = req.body.password;
-  maintainer.passwordResetToken = undefined;
-  maintainer.passwordResetExpires = undefined;
-  await maintainer.save();
+  user.password = req.body.password;
+  user.passwordConfirm = req.body.password;
+  user.passwordResetToken = undefined;
+  user.passwordResetExpires = undefined;
+  await user.save();
 
   res.status(200).json({ status: 'success' });
 });

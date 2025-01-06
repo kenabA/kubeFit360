@@ -3,8 +3,8 @@ const validator = require('validator');
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 
-const maintainerSchema = new mongoose.Schema({
-  name: { type: String, required: [true, 'A maintainer must have a name'] },
+const userSchema = new mongoose.Schema({
+  name: { type: String, required: [true, 'A user must have a name'] },
   email: {
     unique: true,
     validate: [validator.isEmail, 'Please provide a valid email'],
@@ -13,25 +13,40 @@ const maintainerSchema = new mongoose.Schema({
   },
   phoneNumber: {
     type: Number,
-    required: [true, 'A maintainer must have a phone number'],
+    required: [true, 'A user must have a phone number'],
   },
+  birthDate: Date,
   gender: {
     type: String,
     enum: {
       values: ['male', 'female', 'others'],
       message: 'Please provide a valid gender',
     },
-    required: [true, 'A maintainer must have a gender'],
   },
-  hiredAt: {
+  role: {
+    type: String,
+    enum: {
+      values: ['admin', 'trainer', 'maintainer', 'member'],
+      message: 'Please provide a valid role',
+    },
+    required: [true, 'A user must have a role'],
+  },
+  joinDate: {
     type: Date,
     default: Date.now(),
   },
-  status: { type: Boolean, default: true, select: false },
+  status: {
+    type: String,
+    default: 'active',
+    enum: {
+      values: ['active', 'inactive', 'deleted'],
+      message: 'Please provide a valid status',
+    },
+  },
   address: String,
   password: {
     type: String,
-    required: [true, 'A maintainer must have a password'],
+    required: [true, 'A user must have a password'],
     minLength: 8,
     select: false,
   },
@@ -44,16 +59,17 @@ const maintainerSchema = new mongoose.Schema({
       },
       message: 'Passwords do not match',
     },
-    required: [true, 'A maintainer must re-type their password'],
+    required: [true, 'A user must re-type their password'],
+    select: false,
   },
-  photo: { type: String },
+  photo: String,
   passwordChangedAt: { type: Date, select: false },
   passwordResetToken: { type: String, select: false },
   passwordResetExpires: Date,
 });
 
 // Runs in between creating the data and saving it to the db
-maintainerSchema.pre('save', async function (next) {
+userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) {
     // If the password has not been modified, we don't care and simply return
     next();
@@ -65,7 +81,7 @@ maintainerSchema.pre('save', async function (next) {
   next();
 });
 
-maintainerSchema.pre('save', function (next) {
+userSchema.pre('save', function (next) {
   if (!this.isModified('password') || this.isNew) {
     return next();
   }
@@ -73,14 +89,14 @@ maintainerSchema.pre('save', function (next) {
 });
 
 // Check if the password matches with the login request's pp value
-maintainerSchema.methods.correctPassword = async function (
+userSchema.methods.correctPassword = async function (
   candidatePassword,
   userPassword,
 ) {
   return await bcrypt.compare(candidatePassword, userPassword);
 };
 
-maintainerSchema.methods.createPasswordResetToken = function () {
+userSchema.methods.createPasswordResetToken = function () {
   const resetToken = crypto.randomBytes(32).toString('hex');
   this.passwordResetToken = crypto
     .createHash('sha256')
@@ -92,6 +108,6 @@ maintainerSchema.methods.createPasswordResetToken = function () {
   return resetToken;
 };
 
-const Maintainer = mongoose.model('Maintainer', maintainerSchema);
+const User = mongoose.model('User', userSchema);
 
-module.exports = Maintainer;
+module.exports = User;
