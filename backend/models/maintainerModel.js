@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
+const crypto = require('crypto');
 
 const maintainerSchema = new mongoose.Schema({
   name: { type: String, required: [true, 'A maintainer must have a name'] },
@@ -46,6 +47,9 @@ const maintainerSchema = new mongoose.Schema({
     required: [true, 'A maintainer must re-type their password'],
   },
   photo: { type: String },
+  passwordChangedAt: { type: Date, select: false },
+  passwordResetToken: { type: String, select: false },
+  passwordResetExpires: Date,
 });
 
 // Runs in between creating the data and saving it to the db
@@ -61,12 +65,31 @@ maintainerSchema.pre('save', async function (next) {
   next();
 });
 
+maintainerSchema.pre('save', function (next) {
+  if (!this.isModified('password') || this.isNew) {
+    return next();
+  }
+  this.passwordChangedAt = Date.now() - 1000;
+});
+
 // Check if the password matches with the login request's pp value
 maintainerSchema.methods.correctPassword = async function (
   candidatePassword,
   userPassword,
 ) {
   return await bcrypt.compare(candidatePassword, userPassword);
+};
+
+maintainerSchema.methods.createPasswordResetToken = function () {
+  const resetToken = crypto.randomBytes(32).toString('hex');
+  this.passwordResetToken = crypto
+    .createHash('sha256')
+    .update(resetToken)
+    .digest('hex');
+
+  this.passwordResetExpires = Date.now() + 10 * 60 * 1000 + 1000;
+  console.log('Password Reset Expires:', this.passwordResetExpires);
+  return resetToken;
 };
 
 const Maintainer = mongoose.model('Maintainer', maintainerSchema);

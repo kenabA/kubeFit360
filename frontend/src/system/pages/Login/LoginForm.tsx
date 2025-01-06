@@ -5,8 +5,10 @@ import FloatingInput from "@/system/components/input/AuthInput";
 import { Link } from "react-router";
 import { TLoginFormProps } from "./types";
 import { loginSchema } from "./validator";
+import { useToast } from "@/hooks/use-toast";
 
 export function LoginForm() {
+  const { toast } = useToast();
   const {
     register,
     handleSubmit,
@@ -41,7 +43,18 @@ export function LoginForm() {
           Forgot Password?
         </Link>
       </div>
-      <Button type="submit" className="w-full py-3" variant={"primary"}>
+      <Button
+        onClick={() =>
+          toast({
+            variant: "info",
+            title: "Warning",
+            description: "Backend not integrated yet.",
+          })
+        }
+        type="submit"
+        className="w-full py-3"
+        variant={"primary"}
+      >
         login
       </Button>
     </form>
