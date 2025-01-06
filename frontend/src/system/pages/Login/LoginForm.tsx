@@ -46,8 +46,8 @@ export function LoginForm() {
       <Button
         onClick={() =>
           toast({
-            variant: "info",
-            title: "Warning",
+            variant: "success",
+            title: "Successfull",
             description: "Backend not integrated yet.",
           })
         }

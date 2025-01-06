@@ -14,7 +14,7 @@ import ResetPassword from "@/system/pages/ResetPassword/ResetPassword";
 import ScrollToTop from "@/lib/ScrollToTop";
 import LoginLayout from "./layout/auth/LoginLayout";
 import SignupLayout from "@/layout/auth/SignupLayout";
-import ResetSuccess from "./system/pages/ResetPassword/ResetSuccess";
+import PasswordChanged from "@/system/pages/ResetPassword/PasswordChanged";
 
 export default function App() {
   return (
@@ -31,7 +31,7 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/forgotPassword" element={<ForgotPassword />} />
           <Route path="/resetPassword/:token" element={<ResetPassword />} />
-          <Route path="/resetSuccess" element={<ResetSuccess />} />
+          <Route path="/passwordChanged" element={<PasswordChanged />} />
         </Route>
         <Route element={<SignupLayout />}>
           <Route path="/signup" element={<Signup />} />
