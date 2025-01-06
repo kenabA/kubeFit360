@@ -9,10 +9,12 @@ import SuccessStories from "@/website/layout/sections/SuccessStories/SuccessStor
 import Login from "@/system/pages/Login/Login";
 import Signup from "@/system/pages/SignUp/SignUp";
 import ForgotPassword from "@/system/pages/ForgotPassword/ForgotPassword";
+import ResetPassword from "@/system/pages/ResetPassword/ResetPassword";
 
 import ScrollToTop from "@/lib/ScrollToTop";
 import LoginLayout from "./layout/auth/LoginLayout";
 import SignupLayout from "@/layout/auth/SignupLayout";
+import ResetSuccess from "./system/pages/ResetPassword/ResetSuccess";
 
 export default function App() {
   return (
@@ -28,6 +30,8 @@ export default function App() {
         <Route element={<LoginLayout />}>
           <Route path="/login" element={<Login />} />
           <Route path="/forgotPassword" element={<ForgotPassword />} />
+          <Route path="/resetPassword/:token" element={<ResetPassword />} />
+          <Route path="/resetSuccess" element={<ResetSuccess />} />
         </Route>
         <Route element={<SignupLayout />}>
           <Route path="/signup" element={<Signup />} />
