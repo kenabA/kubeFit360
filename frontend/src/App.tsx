@@ -16,12 +16,14 @@ import LoginLayout from "./layout/auth/LoginLayout";
 import SignupLayout from "@/layout/auth/SignupLayout";
 import PasswordChanged from "@/system/pages/ResetPassword/PasswordChanged";
 import { ROUTES } from "@/config/routes";
+import Hi from "./Hi";
 
 export default function App() {
   return (
     <>
       <ScrollToTop />
       <Routes>
+        <Route path="/hi" element={<Hi />} />
         <Route path="/" element={<WebsiteLayout />}>
           <Route index element={<LandingPage />} />
           <Route path={ROUTES.ABOUT} element={<About />} />
