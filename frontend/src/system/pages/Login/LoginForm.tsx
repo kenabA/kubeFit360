@@ -6,6 +6,7 @@ import { Link } from "react-router";
 import { TLoginFormProps } from "./types";
 import { loginSchema } from "./validator";
 import useLogin from "@/system/features/authentication/useLogin";
+import { Oval } from "react-loader-spinner";
 
 export function LoginForm() {
   const { login, isPending } = useLogin();
@@ -44,8 +45,23 @@ export function LoginForm() {
           Forgot Password?
         </Link>
       </div>
-      <Button type="submit" className="w-full py-3" variant={"primary"}>
-        login
+      <Button
+        type="submit"
+        className="w-full h-11 md:h-12 py-3"
+        variant={"primary"}
+      >
+        {isPending ? (
+          <Oval
+            height="280"
+            strokeWidth={8}
+            secondaryColor="white"
+            width="280"
+            color="white"
+            wrapperStyle={{}}
+          />
+        ) : (
+          "login"
+        )}
       </Button>
     </form>
   );

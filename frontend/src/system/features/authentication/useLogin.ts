@@ -1,9 +1,11 @@
 import { useToast } from "@/hooks/use-toast";
+import useHandleNavigate from "@/hooks/useHandleNavigate";
 import { TLoginFormProps } from "@/system/pages/Login/types";
 import apiLogin from "@/system/services/apiLogin";
 import { useMutation } from "@tanstack/react-query";
 
 function useLogin() {
+  const handleNavigate = useHandleNavigate();
   const { toast } = useToast();
   const { mutate: login, isPending } = useMutation({
     mutationFn: (loginDetails: TLoginFormProps) => apiLogin(loginDetails),
@@ -13,6 +15,7 @@ function useLogin() {
         title: "Success",
         description: "Logged in successfully",
       });
+      handleNavigate("/dashboard");
     },
     onError: (err) => {
       console.log(err.message);
