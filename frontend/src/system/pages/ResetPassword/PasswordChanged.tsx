@@ -2,11 +2,11 @@ import check from "@/assets/system/svg/Check.svg";
 
 import { Button } from "@/components";
 import { Heading } from "@/components/heading/Heading";
+import useHandleNavigate from "@/hooks/useHandleNavigate";
 import { ArrowLeft } from "lucide-react";
-import { useNavigate } from "react-router";
 
 export default function PasswordChanged() {
-  const navigate = useNavigate();
+  const handleNavigate = useHandleNavigate();
 
   return (
     <div className="w-full max-w-[480px]">
@@ -28,7 +28,7 @@ export default function PasswordChanged() {
           className="w-full py-3"
           variant={"primary"}
           onClick={() => {
-            navigate("/login");
+            handleNavigate("/login");
           }}
         >
           <ArrowLeft className="stroke-white" size={18} strokeWidth={3.8} />{" "}
