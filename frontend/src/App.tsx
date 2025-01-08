@@ -15,7 +15,7 @@ import ScrollToTop from "@/hooks/useScrollToTop";
 import LoginLayout from "./layout/auth/LoginLayout";
 import SignupLayout from "@/layout/auth/SignupLayout";
 import PasswordChanged from "@/system/pages/ResetPassword/PasswordChanged";
-import { ROUTES } from "@/config/routes";
+import { ROUTES } from "@/config/appRoutes";
 
 export default function App() {
   return (
