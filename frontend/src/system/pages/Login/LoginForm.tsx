@@ -6,9 +6,12 @@ import { Link } from "react-router";
 import { TLoginFormProps } from "./types";
 import { loginSchema } from "./validator";
 import { useToast } from "@/hooks/use-toast";
+import useLogin from "@/system/features/authentication/useLogin";
 
 export function LoginForm() {
+  const { login, isPending } = useLogin();
   const { toast } = useToast();
+
   const {
     register,
     handleSubmit,
@@ -16,7 +19,7 @@ export function LoginForm() {
   } = useForm<TLoginFormProps>({ resolver: zodResolver(loginSchema) });
 
   function onSubmit(data: TLoginFormProps) {
-    console.log(data);
+    login(data);
   }
 
   return (
@@ -44,13 +47,13 @@ export function LoginForm() {
         </Link>
       </div>
       <Button
-        onClick={() =>
+        onClick={() => {
           toast({
-            variant: "info",
-            title: "Warning",
+            variant: "success",
+            title: "Successfull",
             description: "Backend not integrated yet.",
-          })
-        }
+          });
+        }}
         type="submit"
         className="w-full py-3"
         variant={"primary"}
