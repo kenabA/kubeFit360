@@ -5,12 +5,11 @@ import FloatingInput from "@/system/components/input/AuthInput";
 import { Link } from "react-router";
 import { TLoginFormProps } from "./types";
 import { loginSchema } from "./validator";
-import { useToast } from "@/hooks/use-toast";
 import useLogin from "@/system/features/authentication/useLogin";
+import { Oval } from "react-loader-spinner";
 
 export function LoginForm() {
   const { login, isPending } = useLogin();
-  const { toast } = useToast();
 
   const {
     register,
@@ -47,18 +46,22 @@ export function LoginForm() {
         </Link>
       </div>
       <Button
-        onClick={() => {
-          toast({
-            variant: "success",
-            title: "Successfull",
-            description: "Backend not integrated yet.",
-          });
-        }}
         type="submit"
-        className="w-full py-3"
+        className="w-full h-11 md:h-12 py-3"
         variant={"primary"}
       >
-        login
+        {isPending ? (
+          <Oval
+            height="280"
+            strokeWidth={8}
+            secondaryColor="white"
+            width="280"
+            color="white"
+            wrapperStyle={{}}
+          />
+        ) : (
+          "login"
+        )}
       </Button>
     </form>
   );

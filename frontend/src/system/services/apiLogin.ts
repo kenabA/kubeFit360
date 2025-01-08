@@ -1,10 +1,19 @@
-import { API_ROUTES, BASE_URL } from "@/config/apiRoutes";
+import { API_ROUTES } from "@/config/apiRoutes";
 import { TLoginFormProps } from "../pages/Login/types";
+import { _axios } from "@/config/axios";
+import { AxiosError } from "axios";
 
 const apiLogin = async (loginDetails: TLoginFormProps) => {
   try {
-    console.log(API_ROUTES.AUTH.LOGIN);
-  } catch {}
+    const res = await _axios.post(`${API_ROUTES.AUTH.LOGIN}`, loginDetails);
+    console.log("first");
+    console.log(res);
+
+    return res.data;
+  } catch (err) {
+    const backendError = err as AxiosError<{ message: string }>;
+    throw new Error(backendError.response?.data.message);
+  }
 };
 
 export default apiLogin;
