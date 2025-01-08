@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+const defaultTheme = require("tailwindcss/defaultTheme");
+
 export default {
   darkMode: ["class"],
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
@@ -106,6 +108,9 @@ export default {
       },
       animation: {
         "toast-icon": "bounceLeft 1s ease-in-out forwards",
+      },
+      fontFamily: {
+        madefor: ['"Wix Madefor"', ...defaultTheme.fontFamily.sans],
       },
     },
   },
