@@ -1,7 +1,7 @@
 const fs = require('fs');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-const Maintainer = require('../../models/maintainerModel');
+const User = require('../../models/userModal');
 
 // Converts the config.env file to environmental variables
 dotenv.config({ path: './config.env' });
@@ -23,7 +23,7 @@ const maintainers = JSON.parse(
 
 const importMaintainerData = async () => {
   try {
-    await Maintainer.create(maintainers, { validateBeforeSave: false });
+    await User.create(maintainers, { validateBeforeSave: false });
     console.log('Data successfully loaded');
   } catch (err) {
     console.log(err);
@@ -32,7 +32,7 @@ const importMaintainerData = async () => {
 
 const deleteMaintainerData = async () => {
   try {
-    await Maintainer.deleteMany();
+    await User.deleteMany();
     console.log('Data successfully deleted');
   } catch (err) {
     console.log(err);

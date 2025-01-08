@@ -9,10 +9,13 @@ import SuccessStories from "@/website/layout/sections/SuccessStories/SuccessStor
 import Login from "@/system/pages/Login/Login";
 import Signup from "@/system/pages/SignUp/SignUp";
 import ForgotPassword from "@/system/pages/ForgotPassword/ForgotPassword";
+import ResetPassword from "@/system/pages/ResetPassword/ResetPassword";
 
-import ScrollToTop from "@/lib/ScrollToTop";
+import ScrollToTop from "@/hooks/useScrollToTop";
 import LoginLayout from "./layout/auth/LoginLayout";
 import SignupLayout from "@/layout/auth/SignupLayout";
+import PasswordChanged from "@/system/pages/ResetPassword/PasswordChanged";
+import { ROUTES } from "@/config/routes";
 
 export default function App() {
   return (
@@ -21,16 +24,18 @@ export default function App() {
       <Routes>
         <Route path="/" element={<WebsiteLayout />}>
           <Route index element={<LandingPage />} />
-          <Route path="about" element={<About />} />
-          <Route path="testimonial" element={<SuccessStories />} />
-          <Route path="membership" element={<Membership />} />
+          <Route path={ROUTES.ABOUT} element={<About />} />
+          <Route path={ROUTES.TESTIMONIAL} element={<SuccessStories />} />
+          <Route path={ROUTES.MEMBERSHIP} element={<Membership />} />
         </Route>
         <Route element={<LoginLayout />}>
-          <Route path="/login" element={<Login />} />
-          <Route path="/forgotPassword" element={<ForgotPassword />} />
+          <Route path={ROUTES.LOGIN} element={<Login />} />
+          <Route path={ROUTES.FORGOT_PASSWORD} element={<ForgotPassword />} />
+          <Route path={ROUTES.RESET_PASSWORD} element={<ResetPassword />} />
+          <Route path={ROUTES.PASSWORD_CHANGED} element={<PasswordChanged />} />
         </Route>
         <Route element={<SignupLayout />}>
-          <Route path="/signup" element={<Signup />} />
+          <Route path={ROUTES.SIGNUP} element={<Signup />} />
         </Route>
       </Routes>
     </>

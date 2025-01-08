@@ -9,6 +9,7 @@ import { useToast } from "@/hooks/use-toast";
 
 export function LoginForm() {
   const { toast } = useToast();
+
   const {
     register,
     handleSubmit,
@@ -44,13 +45,13 @@ export function LoginForm() {
         </Link>
       </div>
       <Button
-        onClick={() =>
+        onClick={() => {
           toast({
-            variant: "info",
-            title: "Warning",
+            variant: "success",
+            title: "Successfull",
             description: "Backend not integrated yet.",
-          })
-        }
+          });
+        }}
         type="submit"
         className="w-full py-3"
         variant={"primary"}
