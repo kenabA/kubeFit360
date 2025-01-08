@@ -60,7 +60,6 @@ const userSchema = new mongoose.Schema({
       message: 'Passwords do not match',
     },
     required: [true, 'A user must re-type their password'],
-    select: false,
   },
   photo: String,
   passwordChangedAt: { type: Date, select: false },
@@ -76,8 +75,10 @@ userSchema.pre('save', async function (next) {
   }
 
   this.password = await bcrypt.hash(this.password, 12);
+
   // Because we do not want to put the confirmedPassword in the database
   this.passwordConfirm = undefined;
+
   next();
 });
 
@@ -86,6 +87,7 @@ userSchema.pre('save', function (next) {
     return next();
   }
   this.passwordChangedAt = Date.now() - 1000;
+  next();
 });
 
 // Check if the password matches with the login request's pp value
