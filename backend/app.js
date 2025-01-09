@@ -4,13 +4,40 @@ const maintainerRouter = require('./routes/maintainerRoutes');
 const authRouter = require('./routes/authRoutes');
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controller/errorController');
+const swaggerUi = require('swagger-ui-express');
+const swaggerJsDoc = require('swagger-jsdoc');
 const cors = require('cors');
 
 const app = express();
 
+const swaggerOptions = {
+  swaggerDefinition: {
+    myapi: '1.0.0',
+    info: {
+      title: 'kubeFit 360°',
+      version: '1.0.0',
+      description: 'API documentation',
+    },
+    servers: [
+      {
+        url: 'http://localhost:3000',
+      },
+    ],
+  },
+  apis: ['./routes/*.js'],
+};
+
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
 app.use(cors());
 
-app.use(cors({ credentials: true, origin: process.env.CLIENT_URL }));
+app.use(
+  cors({
+    credentials: true,
+    origin: [process.env.CLIENT_URL, 'http://localhost:3000/api-docs/'],
+  }),
+);
 
 app.options('*', cors());
 
