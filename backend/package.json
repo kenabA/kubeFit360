@@ -4,8 +4,8 @@
   "main": "app.js",
   "scripts": {
     "start": "nodemon server.js",
-    "im": "nodemon ./dev-data/data/import-dev-data.js --importMaintainer",
-    "dm": "nodemon ./dev-data/data/import-dev-data.js --deleteMaintainer",
+    "id": "nodemon ./dev-data/data/import-dev-data.js --importUser",
+    "dd": "nodemon ./dev-data/data/import-dev-data.js --deleteUser",
     "start:prod": "NODE_ENV=production nodemon server.js"
   },
   "author": "kenabey",
