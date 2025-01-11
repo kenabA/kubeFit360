@@ -17,20 +17,18 @@ async function main() {
 
 main().catch((err) => console.log(err));
 
-const maintainers = JSON.parse(
-  fs.readFileSync(`${__dirname}/maintainers.json`, 'utf-8'),
-);
+const users = JSON.parse(fs.readFileSync(`${__dirname}/users.json`, 'utf-8'));
 
-const importMaintainerData = async () => {
+const importUserData = async () => {
   try {
-    await User.create(maintainers, { validateBeforeSave: false });
+    await User.create(users, { validateBeforeSave: false });
     console.log('Data successfully loaded');
   } catch (err) {
     console.log(err);
   }
 };
 
-const deleteMaintainerData = async () => {
+const deleteUserData = async () => {
   try {
     await User.deleteMany();
     console.log('Data successfully deleted');
@@ -39,10 +37,10 @@ const deleteMaintainerData = async () => {
   }
 };
 
-if (process.argv[2] === '--importMaintainer') {
-  importMaintainerData();
+if (process.argv[2] === '--importUser') {
+  importUserData();
 }
 
-if (process.argv[2] === '--deleteMaintainer') {
-  deleteMaintainerData();
+if (process.argv[2] === '--deleteUser') {
+  deleteUserData();
 }
