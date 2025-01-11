@@ -4,8 +4,11 @@ import { Button } from "@/components";
 import FloatingInput from "@/system/components/input/AuthInput";
 import { TResetPasswordFormProps } from "./types";
 import { resetPasswordSchema } from "./validator";
+import useResetPassword from "@/system/features/authentication/useResetPassword";
+import { Oval } from "react-loader-spinner";
 
 export function ResetPasswordForm() {
+  const { isPending, resetPassword } = useResetPassword();
   const {
     register,
     handleSubmit,
@@ -15,7 +18,7 @@ export function ResetPasswordForm() {
   });
 
   function onSubmit(data: TResetPasswordFormProps) {
-    console.log(data);
+    resetPassword(data);
   }
 
   return (
@@ -37,8 +40,19 @@ export function ResetPasswordForm() {
         type="password"
         error={errors.passwordConfirm}
       />
-      <Button type="submit" className="w-full py-3" variant={"primary"}>
-        Reset Password
+      <Button type="submit" className="w-full h-11 md:h-12" variant={"primary"}>
+        {isPending ? (
+          <Oval
+            height="280"
+            strokeWidth={8}
+            secondaryColor="white"
+            width="280"
+            color="white"
+            wrapperStyle={{}}
+          />
+        ) : (
+          "reset password"
+        )}
       </Button>
     </form>
   );

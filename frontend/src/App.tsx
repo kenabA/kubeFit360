@@ -17,6 +17,8 @@ import SignupLayout from "@/layout/auth/SignupLayout";
 import PasswordChanged from "@/system/pages/ResetPassword/PasswordChanged";
 import { ROUTES } from "@/config/appRoutes";
 import Dashboard from "./Dashboard";
+import PageNotFound from "@/components/pageNotFound/PageNotFound";
+import ProtectedRoute from "@/system/features/authentication/ProtectedRoute";
 
 export default function App() {
   return (
@@ -35,10 +37,16 @@ export default function App() {
           <Route path={ROUTES.RESET_PASSWORD} element={<ResetPassword />} />
           <Route path={ROUTES.PASSWORD_CHANGED} element={<PasswordChanged />} />
         </Route>
-        <Route path={"/dashboard"} element={<Dashboard />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path={"/dashboard"} element={<Dashboard />} />
+        </Route>
         <Route element={<SignupLayout />}>
           <Route path={ROUTES.SIGNUP} element={<Signup />} />
         </Route>
+        <Route
+          path="*"
+          element={<PageNotFound errMsg="Page could not be found." />}
+        />
       </Routes>
     </>
   );

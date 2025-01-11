@@ -10,6 +10,22 @@ const cors = require('cors');
 
 const app = express();
 
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL,
+    credentials: true,
+  }),
+);
+
+app.options('*', cors());
+
+// Middleware to get detailed info about the request on the console of the backend server
+console.log(process.env.NODE_ENV);
+
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
+
 const swaggerOptions = {
   swaggerDefinition: {
     myapi: '1.0.0',
@@ -28,25 +44,8 @@ const swaggerOptions = {
 };
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
+
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
-
-app.use(cors());
-
-app.use(
-  cors({
-    credentials: true,
-    origin: [process.env.CLIENT_URL, 'http://localhost:3000/api-docs/'],
-  }),
-);
-
-app.options('*', cors());
-
-// Middleware to get detailed info about the request on the console of the backend server
-console.log(process.env.NODE_ENV);
-
-if (process.env.NODE_ENV === 'development') {
-  app.use(morgan('dev'));
-}
 
 // Middleware to parse the incoming JSON to object
 app.use(express.json());

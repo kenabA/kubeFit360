@@ -4,6 +4,8 @@ import { Button } from "@/components";
 import FloatingInput from "@/system/components/input/AuthInput";
 import { TForgotPasswordFormProps } from "./types";
 import { forgotPasswordSchema } from "./validator";
+import useForgotPassword from "@/system/features/authentication/useForgetPassword";
+import { Oval } from "react-loader-spinner";
 
 export function ForgotPasswordForm() {
   const {
@@ -14,8 +16,10 @@ export function ForgotPasswordForm() {
     resolver: zodResolver(forgotPasswordSchema),
   });
 
+  const { forgotPassword, isPending } = useForgotPassword();
+
   function onSubmit(data: TForgotPasswordFormProps) {
-    console.log(data);
+    forgotPassword(data);
   }
 
   return (
@@ -30,8 +34,19 @@ export function ForgotPasswordForm() {
         type="email"
         error={errors.email}
       />
-      <Button type="submit" className="w-full py-3" variant={"primary"}>
-        Send Link
+      <Button type="submit" className="w-full h-11 md:h-12" variant={"primary"}>
+        {isPending ? (
+          <Oval
+            height="280"
+            strokeWidth={8}
+            secondaryColor="white"
+            width="280"
+            color="white"
+            wrapperStyle={{}}
+          />
+        ) : (
+          "send link"
+        )}
       </Button>
     </form>
   );

@@ -45,11 +45,7 @@ export function LoginForm() {
           Forgot Password?
         </Link>
       </div>
-      <Button
-        type="submit"
-        className="w-full h-11 md:h-12 py-3"
-        variant={"primary"}
-      >
+      <Button type="submit" className="w-full h-11 md:h-12" variant={"primary"}>
         {isPending ? (
           <Oval
             height="280"

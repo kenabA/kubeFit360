@@ -35,9 +35,10 @@ const {
   getAllMaintainers,
   addMaintainer,
 } = require('../controller/maintainerController');
+const { protect } = require('../controller/authController');
 const router = express.Router();
 
-router.route('/').get(getAllMaintainers).post(addMaintainer);
+router.route('/').get(protect, getAllMaintainers).post(addMaintainer);
 
 router
   .route('/:id')

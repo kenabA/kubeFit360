@@ -6,8 +6,6 @@ import { AxiosError } from "axios";
 const apiLogin = async (loginDetails: TLoginFormProps) => {
   try {
     const res = await _axios.post(`${API_ROUTES.AUTH.LOGIN}`, loginDetails);
-    console.log("first");
-    console.log(res);
 
     return res.data;
   } catch (err) {

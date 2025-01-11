@@ -62,7 +62,7 @@ const userSchema = new mongoose.Schema({
     required: [true, 'A user must re-type their password'],
   },
   photo: String,
-  passwordChangedAt: { type: Date, select: false },
+  passwordChangedAt: Date,
   passwordResetToken: { type: String, select: false },
   passwordResetExpires: Date,
 });
@@ -108,6 +108,19 @@ userSchema.methods.createPasswordResetToken = function () {
   this.passwordResetExpires = Date.now() + 10 * 60 * 1000 + 1000;
   console.log('Password Reset Expires:', this.passwordResetExpires);
   return resetToken;
+};
+
+userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
+  // If user has changed the password
+  if (this.passwordChangedAt) {
+    const changedTimeStamp = parseInt(
+      this.passwordChangedAt.getTime() / 1000,
+      10,
+    );
+    return JWTTimestamp < changedTimeStamp;
+  }
+  // False means not changed
+  return false;
 };
 
 const User = mongoose.model('User', userSchema);

@@ -2,19 +2,25 @@ import { useToast } from "@/hooks/use-toast";
 import useHandleNavigate from "@/hooks/useHandleNavigate";
 import { TLoginFormProps } from "@/system/pages/Login/types";
 import apiLogin from "@/system/services/apiLogin";
-import { useMutation } from "@tanstack/react-query";
+import { TUserDetails } from "@/system/stores/user/types";
+import useUserStore from "@/system/stores/user/useUserStore";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 function useLogin() {
   const handleNavigate = useHandleNavigate();
+  const queryClient = useQueryClient();
+  const setUser = useUserStore((state) => state.setUser);
   const { toast } = useToast();
   const { mutate: login, isPending } = useMutation({
     mutationFn: (loginDetails: TLoginFormProps) => apiLogin(loginDetails),
-    onSuccess: () => {
+    onSuccess: (userData: TUserDetails) => {
       toast({
         variant: "success",
         title: "Success",
         description: "Logged in successfully",
       });
+      setUser(userData);
+      queryClient.setQueryData(["user"], userData);
       handleNavigate("/dashboard");
     },
     onError: (err) => {
