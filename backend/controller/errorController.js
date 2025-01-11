@@ -11,7 +11,7 @@ const handleDuplicateValueDB = (err) => {
   return new AppError(message, 400);
 };
 
-function handleValidationErrorDB(err) {
+const handleValidationErrorDB = (err) => {
   /* If you want a single validation error message at a time
    const message = Object.values(err.errors)
      .map((err) => err.message)
@@ -22,8 +22,15 @@ function handleValidationErrorDB(err) {
     .join('. ');
 
   return new AppError(message, 400);
-}
+};
 
+const handleJWTError = () => {
+  return new AppError('Invalid Token. Please log in again.', 401);
+};
+
+const handleTokenExpiredError = () => {
+  return new AppError('User session expired. Please log in again.', 401);
+};
 const sendErrorDev = (err, res) => {
   res.status(err.statusCode).json({
     status: err.status,
@@ -53,6 +60,13 @@ module.exports = (err, req, res, next) => {
   err.status = err.status || 'error';
 
   if (process.env.NODE_ENV === 'development') {
+    if (err.name === 'JsonWebTokenError') {
+      err = handleJWTError(err);
+    }
+    if (err.name === 'TokenExpiredError') {
+      err = handleTokenExpiredError();
+    }
+
     sendErrorDev(err, res);
   } else if (process.env.NODE_ENV === 'production') {
     if (err.name === 'CastError') {
@@ -63,6 +77,12 @@ module.exports = (err, req, res, next) => {
     }
     if (err.name === 'ValidationError') {
       err = handleValidationErrorDB(err);
+    }
+    if (err.name === 'JsonWebTokenError') {
+      err = handleJWTError();
+    }
+    if (err.name === 'TokenExpiredError') {
+      err = handleTokenExpiredError();
     }
     sendErrorProd(err, res);
   }

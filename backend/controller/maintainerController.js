@@ -12,7 +12,7 @@ exports.getMaintainer = catchAsync(async (req, res, next) => {
     role: 'maintainer',
     _id: req.params.id,
   });
-  console.log('first');
+
   if (!maintainer) {
     return next(new AppError('No maintainer found with that id', 404));
   }
