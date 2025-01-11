@@ -37,6 +37,14 @@ exports.login = catchAsync(async (req, res, next) => {
   createAndSendToken(user, 200, res);
 });
 
+exports.logout = (req, res) => {
+  res.cookie('jwt', 'loggedOut', {
+    expired: new Date(Date.now() + 10 * 1000),
+    httpOnly: true,
+  });
+  res.status(200).json({ status: 'success' });
+};
+
 exports.forgotPassword = catchAsync(async (req, res, next) => {
   // 1) Get user based on the posted email
   const user = await User.findOne({ email: req.body.email });
@@ -111,6 +119,8 @@ exports.protect = catchAsync(async (req, res, next) => {
     req.headers.authorization.startsWith('Bearer')
   ) {
     token = req.headers.authorization.split(' ')[1];
+  } else if (req.cookies.jwt) {
+    token = req.cookies.jwt;
   }
 
   if (!token) {
@@ -140,6 +150,28 @@ exports.protect = catchAsync(async (req, res, next) => {
   req.user = currentUser;
   next();
 });
+
+exports.authenticateUser = async (req, res, next) => {
+  try {
+    if (!req.cookies.jwt) {
+      return res.status(401).json({ message: 'User must log in first' });
+    }
+
+    const decoded = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWT_SECRET,
+    );
+
+    res.status(200).json({
+      message: 'Authentication Success.',
+      data: { user: decoded },
+    });
+  } catch {
+    res.status(401).json({
+      message: 'Authentication failed. Please log in again.',
+    });
+  }
+};
 
 exports.updatePassword = catchAsync(async (req, res, next) => {
   // 1. Get user from the collection
