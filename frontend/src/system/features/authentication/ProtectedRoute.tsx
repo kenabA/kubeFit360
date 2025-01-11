@@ -1,10 +1,13 @@
-import { ROUTES } from "@/config/appRoutes";
-import useUserStore from "@/system/stores/user/useUserStore";
+import Loading from "@/components/loading/Loading";
 import { Navigate, Outlet } from "react-router";
+import useAuth from "./useAuth";
 
 export default function ProtectedRoute() {
-  const isAuthenticated = useUserStore((state) => state.isAuthenticated);
-  if (isAuthenticated) alert(123);
+  const { authResponse, isLoading } = useAuth();
 
-  return isAuthenticated ? <Outlet /> : <Navigate to={ROUTES.LOGIN} replace />;
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  return authResponse ? <Outlet /> : <Navigate to="/login" replace />;
 }
