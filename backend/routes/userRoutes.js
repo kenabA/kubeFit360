@@ -5,6 +5,7 @@ const {
   getAllUsers,
   updateMe,
   updateUser,
+  getMe,
 } = require('../controller/userController');
 const {
   updatePassword,
@@ -14,6 +15,7 @@ const {
 const router = express.Router();
 
 router.use(protect);
+router.get('/me', getMe, getUser);
 router.patch('/updateMe', updateMe);
 router.patch('/updatePassword', updatePassword);
 
