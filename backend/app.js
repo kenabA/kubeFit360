@@ -4,7 +4,7 @@ const userRouter = require('./routes/userRoutes');
 const authRouter = require('./routes/authRoutes');
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controller/errorController');
-
+const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
 const app = express();
@@ -18,18 +18,24 @@ app.use(
 
 app.options('*', cors());
 
-// Middleware to get detailed info about the request on the console of the backend server
 console.log(process.env.NODE_ENV);
 
+// Middleware to get detailed info about the request on the console of the backend server
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
 // Middleware to parse the incoming JSON to object
 app.use(express.json());
+app.use(cookieParser());
 
 // Middleware to serve static files
 app.use(express.static(`${__dirname}/public`));
+
+// app.use((req, res, next) => {
+//   console.log(req.cookies);
+//   next();
+// });
 
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/auth', authRouter);
