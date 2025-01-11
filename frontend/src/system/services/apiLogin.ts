@@ -6,11 +6,12 @@ import { AxiosError } from "axios";
 const apiLogin = async (loginDetails: TLoginFormProps) => {
   try {
     const res = await _axios.post(`${API_ROUTES.AUTH.LOGIN}`, loginDetails);
-
     return res.data;
   } catch (err) {
     const backendError = err as AxiosError<{ message: string }>;
-    throw new Error(backendError.response?.data.message);
+    throw new Error(
+      backendError?.response?.data.message || backendError.message
+    );
   }
 };
 
