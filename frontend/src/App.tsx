@@ -37,9 +37,11 @@ export default function App() {
           <Route path={ROUTES.RESET_PASSWORD} element={<ResetPassword />} />
           <Route path={ROUTES.PASSWORD_CHANGED} element={<PasswordChanged />} />
         </Route>
+
         <Route element={<ProtectedRoute />}>
           <Route path={"/dashboard"} element={<Dashboard />} />
         </Route>
+
         <Route element={<SignupLayout />}>
           <Route path={ROUTES.SIGNUP} element={<Signup />} />
         </Route>

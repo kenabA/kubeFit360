@@ -1,7 +1,6 @@
 export type TUserStore = {
   user: TUserDetails | null;
   setUser: (user: TUserDetails) => void;
-  isAuthenticated: boolean;
 };
 
 export type TUserDetails = {
