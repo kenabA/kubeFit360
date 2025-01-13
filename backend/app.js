@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const userRouter = require('./routes/userRoutes');
 const authRouter = require('./routes/authRoutes');
+const equipmentRouter = require('./routes/equipmentRoutes');
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controller/errorController');
 const cookieParser = require('cookie-parser');
@@ -39,6 +40,7 @@ app.use(express.static(`${__dirname}/public`));
 
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/auth', authRouter);
+app.use('/api/v1/equipments', equipmentRouter);
 
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

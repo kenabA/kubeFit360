@@ -9,10 +9,14 @@ const jwt = require('jsonwebtoken');
 const createAndSendToken = require('../utils/token');
 
 exports.signup = catchAsync(async (req, res, next) => {
+  if (!req.body || Object.keys(req.body).length === 0) {
+    return res.status(400).json({
+      status: 'fail',
+      message: 'Request body is missing',
+    });
+  }
   const newUser = await User.create(req.body);
-
   newUser.password = undefined;
-
   createAndSendToken(newUser, 201, res);
 });
 
