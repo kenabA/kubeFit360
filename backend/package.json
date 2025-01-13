@@ -6,6 +6,8 @@
     "start": "nodemon server.js",
     "id": "nodemon ./dev-data/data/import-dev-data.js --importUser",
     "dd": "nodemon ./dev-data/data/import-dev-data.js --deleteUser",
+    "ie": "nodemon ./dev-data/data/import-dev-data.js --importEquipment",
+    "de": "nodemon ./dev-data/data/import-dev-data.js --deleteEquipment",
     "start:prod": "NODE_ENV=production nodemon server.js"
   },
   "author": "kenabey",
