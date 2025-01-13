@@ -77,6 +77,7 @@ export default {
         elevation: "var(--elevation-shadow)",
         userPanel: "var(--cta-user-panel)",
         cta: "var(--cta-shadow)",
+        general: "var(--general-shadow)",
       },
       spacing: {
         navbar: "72px",
