@@ -1,3 +1,14 @@
-export default function Calendar() {
-  return <div className="bg-secondary">Calendar</div>;
+import { Calendar } from "@/components/index";
+
+export default function CustomCalendar() {
+  return (
+    <Calendar
+      mode="single"
+      className="rounded-md border"
+      // selected={date}
+      // onSelect={setDate}
+    />
+  );
+  {
+  }
 }

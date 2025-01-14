@@ -190,3 +190,63 @@ select:-webkit-autofill:focus {
   /*-webkit-box-shadow: 0 0 0px 1000px #fff inset;*/
   transition: background-color 5000s ease-in-out 0s;
 }
+
+/* ----- Calendar ----- */
+
+/* Target the 'Sat' header */
+.daypicker-head-cell:nth-child(7) {
+  color: #E83E34;
+  /* Red color for Saturday header */
+}
+
+/* Target all dates that fall on a Saturday */
+.daypicker-cell:nth-child(7n + 7) .day {
+  color: #E83E34;
+  /* Red color for Saturdays */
+}
+
+/* ----- SCROLLBAR ----- */
+
+.custom-scrollbar::-webkit-scrollbar {
+  display: none;
+  /* Safari and Chrome */
+}
+
+.custom-scrollbar:hover::-webkit-scrollbar {
+  display: block;
+  width: 6px;
+  height: 6px;
+}
+
+.custom-scrollbar:hover::-webkit-scrollbar-thumb {
+  border-radius: 100px;
+  background:hsl(var(--primary));
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+  -ms-border-radius: 100px;
+  -o-border-radius: 100px;
+}
+
+.custom-scrollbar:hover::-webkit-scrollbar-track {
+  background:hsl(var(--secondary));
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background:hsl(var(--secondary));
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+}
+
+.hidden-scrollbar {
+  overflow: -moz-scrollbars-none;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hidden-scrollbar::-webkit-scrollbar {
+  display: block;
+  opacity: 0;
+}
