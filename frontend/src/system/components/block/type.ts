@@ -5,4 +5,5 @@ export type TBlockType = {
   total: string | number;
   type: "numeric" | "figure";
   theme: "success" | "warn" | "info" | "error";
+  children?: React.ReactNode;
 };

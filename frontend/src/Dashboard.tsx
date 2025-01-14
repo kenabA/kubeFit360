@@ -1,8 +1,11 @@
 import { Heading } from "@/components/heading/Heading";
-import Sidebar from "@/system/components/sidebar/Sidebar";
-import Topbar from "@/system/components/topbar/Topbar";
-import Block from "@/system/components/block/Block";
-import Calendar from "@/system/components/calendar/Calendar";
+import {
+  Sidebar,
+  Topbar,
+  Block,
+  Calendar,
+  Piechart,
+} from "@/system/components/index";
 
 export default function Dashboard() {
   return (
@@ -23,23 +26,32 @@ export default function Dashboard() {
             />
             <Block
               type={"numeric"}
-              theme={"info"}
+              theme={"error"}
               data={32}
               icon="lucide:package"
-              title="available equipments"
+              title="unavailable equipments"
               total={42}
             />
             <Block
               type={"numeric"}
-              theme={"error"}
+              theme={"warn"}
               data={32}
               icon="lucide:package"
-              title="available equipments"
+              title="under maintenance"
               total={42}
             />
             <Calendar />
             <div className="bg-secondary col-span-2 h-full row-span-2">asd</div>
-            <Calendar />
+            <Block
+              type={"figure"}
+              theme={"warn"}
+              data={32}
+              icon="lucide:package"
+              title="equipments visualization"
+              total={42}
+            >
+              <Piechart />
+            </Block>
           </div>
         </section>
       </div>

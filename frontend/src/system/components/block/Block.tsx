@@ -11,9 +11,10 @@ export default function ({
   total,
   theme,
   type,
+  children,
 }: TBlockType) {
   return (
-    <div className="bg-white shadow-general py-3 px-6 rounded-2xl">
+    <div className="bg-white shadow-general border-slate-100 border  py-3 px-6 rounded-2xl">
       <div className="flex justify-between w-full">
         <span className="capitalize block text-gray-tertiary">{title}</span>
         <div
@@ -36,6 +37,7 @@ export default function ({
           </span>
         </Heading>
       )}
+      {type === "figure" && children}
     </div>
   );
 }
