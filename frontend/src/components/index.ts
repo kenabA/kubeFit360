@@ -6,3 +6,4 @@ export * from "./ui/sheet";
 export * from "./ui/toast/toast";
 export * from "./ui/card";
 export * from "./ui/chart";
+export * from "./ui/calendar";
