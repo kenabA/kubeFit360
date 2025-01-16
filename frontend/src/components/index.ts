@@ -7,3 +7,5 @@ export * from "./ui/toast/toast";
 export * from "./ui/card";
 export * from "./ui/chart";
 export * from "./ui/calendar";
+export * from "./ui/tooltip";
+export * from "./triangle/Triangle";

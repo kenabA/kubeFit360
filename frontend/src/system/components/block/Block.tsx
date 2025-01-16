@@ -10,12 +10,18 @@ export default function ({
   icon,
   data,
   total,
-  theme,
+  theme = "default",
   type,
   children,
+  className,
 }: TBlockType) {
   return (
-    <div className="bg-white shadow-general border-slate-100 border py-3 px-6 rounded-2xl">
+    <div
+      className={`${cn(
+        " bg-white shadow-general border-slate-100 border py-3 px-6 rounded-2xl",
+        className
+      )}`}
+    >
       <div className="flex justify-between w-full">
         <span className="capitalize block text-gray-tertiary">{title}</span>
         {theme && icon && (
@@ -41,6 +47,7 @@ export default function ({
         </Heading>
       )}
       {type === "figure" && children}
+      {type === "table" && children}
 
       {type === "calendar" && <Calendar />}
     </div>

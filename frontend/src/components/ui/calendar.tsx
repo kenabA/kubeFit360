@@ -51,7 +51,7 @@ function Calendar({
         day_today: "bg-primary text-white !font-semibold",
         // Topbar
         caption:
-          "flex justify-center p-2 relative items-center  text-gray-primary rounded-[6px]",
+          "flex justify-center pt-0 p-2 relative items-center  text-gray-primary",
         nav: "flex items-center",
         nav_button_previous: "absolute left-1",
         nav_button_next: "absolute right-1",
@@ -64,7 +64,7 @@ function Calendar({
         // Calendar Content Container
         table: "w-full border-collapse space-y-1",
         // Months Row and Cell
-        head_row: "w-full flex",
+        head_row: "w-full flex ",
         head_cell:
           "text-muted-foreground   flex-1 rounded-md w-8 font-normal text-[0.8rem]",
         ...classNames,
