@@ -1,5 +1,6 @@
 import { Heading } from "@/components/heading/Heading";
 import { Sidebar, Topbar, Block, Piechart } from "@/system/components/index";
+import RecentActivities from "./system/components/tables/recentActivities/RecentActivities";
 
 export default function Dashboard() {
   return (
@@ -36,14 +37,21 @@ export default function Dashboard() {
                 total={42}
               />
               <div className="relative overflow-hidden shadow-general">
-                <div className="bg-primary absolute  -top-24 w-full h-48 rounded-full filter blur-lg opacity-[0.1]"></div>
+                <div className="bg-primary absolute  -top-40 w-full h-48 rounded-full filter blur-lg opacity-[0.1]"></div>
                 <Block type={"calendar"} />
               </div>
 
-              <div className="bg-white shadow-general border col-span-2 h-full row-span-2 rounded-xl"></div>
+              <Block
+                type={"table"}
+                title="recent activities"
+                icon="lucide:package"
+                className="bg-white shadow-general border col-span-2 h-full row-span-2 rounded-xl"
+              >
+                <RecentActivities />
+              </Block>
+
               <Block
                 type={"figure"}
-                theme={"warn"}
                 data={32}
                 icon="lucide:package"
                 title="equipments visualization"
