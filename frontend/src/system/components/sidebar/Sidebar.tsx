@@ -11,6 +11,7 @@ import {
 import { AnimatePresence, motion } from "framer-motion";
 import Triangle from "@/components/triangle/Triangle";
 import { ThemedDialog } from "@/components/dialog/Dialog";
+import React from "react";
 
 export default function Sidebar() {
   const location = useLocation();
@@ -23,7 +24,7 @@ export default function Sidebar() {
       <ul className="flex-1 py-[14px] border-b flex flex-col items-center gap-[14px]">
         {sidebarData.map((data) => {
           return (
-            <>
+            <React.Fragment key={data.title}>
               <TooltipProvider delayDuration={200}>
                 <Tooltip>
                   <TooltipTrigger>
@@ -74,7 +75,7 @@ export default function Sidebar() {
                   )}
                 </Tooltip>
               </TooltipProvider>
-            </>
+            </React.Fragment>
           );
         })}
       </ul>

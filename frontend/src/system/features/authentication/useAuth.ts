@@ -1,4 +1,4 @@
-import apiAuth from "@/system/services/apiAuth";
+import apiAuth from "@/system/services/auth/apiAuth";
 import { useQuery } from "@tanstack/react-query";
 
 function useAuth() {

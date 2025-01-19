@@ -1,7 +1,7 @@
 import { useToast } from "@/hooks/use-toast";
 import useHandleNavigate from "@/hooks/useHandleNavigate";
 import { TLoginFormProps } from "@/system/pages/Login/types";
-import apiLogin from "@/system/services/apiLogin";
+import apiLogin from "@/system/services/auth/apiLogin";
 import { TUserDetails } from "@/system/stores/user/types";
 import useUserStore from "@/system/stores/user/useUserStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";

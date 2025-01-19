@@ -10,4 +10,5 @@ export const API_ROUTES = {
     FORGOT_PASSWORD: buildApiRoute("auth/forgotPassword"),
     RESET_PASSWORD: buildApiRoute("auth/resetPassword"),
   },
+  EQUIPMENTS: buildApiRoute("equipments"),
 };
