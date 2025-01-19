@@ -5,7 +5,7 @@ import { AxiosError } from "axios";
 async function apiEquipments() {
   try {
     const response = await _axios.get(`${API_ROUTES.EQUIPMENTS}`);
-    return response.data;
+    return response.data.data;
   } catch (err) {
     const backendError = err as AxiosError<{ message: string }>;
     throw new Error(

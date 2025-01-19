@@ -1,15 +1,13 @@
 import apiEquipments from "@/system/services/equipments/apiEquipments";
-import { useQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 
 function useEquipments() {
-  const { data: equipmentsData, isLoading } = useQuery({
+  const { data: equipmentsData, isError } = useSuspenseQuery({
     queryKey: ["equipments"],
-    queryFn: () => apiEquipments(),
+    queryFn: apiEquipments,
   });
 
-  console.log(equipmentsData);
-
-  return { equipmentsData, isLoading };
+  return { equipmentsData, isError };
 }
 
 export default useEquipments;

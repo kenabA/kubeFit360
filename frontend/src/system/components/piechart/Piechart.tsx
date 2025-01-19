@@ -7,10 +7,7 @@ import {
 } from "@/components/ui/chart";
 import { chartConfig, chartData } from "./data";
 
-export default function Component() {
-  const totalCount = React.useMemo(() => {
-    return chartData.reduce((acc, curr) => acc + curr.count, 0);
-  }, []);
+export default function Component({ count }: { count: number }) {
   return (
     <ChartContainer
       config={chartConfig}
@@ -43,7 +40,7 @@ export default function Component() {
                       y={viewBox.cy}
                       className="fill-foreground text-3xl font-bold"
                     >
-                      {totalCount.toLocaleString()}
+                      {count?.toLocaleString()}
                     </tspan>
                     <tspan
                       x={viewBox.cx}

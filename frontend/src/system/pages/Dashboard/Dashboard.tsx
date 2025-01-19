@@ -4,7 +4,15 @@ import RecentActivities from "../../components/tables/recentActivities/RecentAct
 import useEquipments from "@/system/features/equipments/useEquipments";
 
 export default function Dashboard() {
-  const {} = useEquipments();
+  const {
+    equipmentsData: { count },
+    isError,
+  } = useEquipments();
+
+  if (isError) {
+    return <p className="text-destructive">Error Occurred</p>;
+  }
+
   return (
     <section className="rounded-tl-xl overflow-y-auto custom-scrollbar flex-1">
       <div className="py-7 px-6">
@@ -18,7 +26,7 @@ export default function Dashboard() {
             data={32}
             icon="lucide:package"
             title="available equipments"
-            total={42}
+            total={count || 32}
           />
           <Block
             type={"numeric"}
@@ -26,7 +34,7 @@ export default function Dashboard() {
             data={32}
             icon="lucide:package"
             title="unavailable equipments"
-            total={42}
+            total={count || 32}
           />
           <Block
             type={"numeric"}
@@ -34,7 +42,7 @@ export default function Dashboard() {
             data={32}
             icon="lucide:package"
             title="under maintenance"
-            total={42}
+            total={count || 32}
           />
           <div className="relative overflow-hidden shadow-general">
             <div className="bg-primary absolute  -top-40 w-full h-48 rounded-full filter blur-lg opacity-[0.1]"></div>
@@ -50,12 +58,10 @@ export default function Dashboard() {
           </Block>
           <Block
             type={"figure"}
-            data={32}
             icon="lucide:package"
             title="equipments visualization"
-            total={42}
           >
-            <Piechart />
+            <Piechart count={count} />
           </Block>
         </div>
       </div>
