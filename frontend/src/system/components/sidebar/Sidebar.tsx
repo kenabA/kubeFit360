@@ -10,6 +10,7 @@ import {
 } from "@radix-ui/react-tooltip";
 import { AnimatePresence, motion } from "framer-motion";
 import Triangle from "@/components/triangle/Triangle";
+import { ThemedDialog } from "@/components/dialog/Dialog";
 
 export default function Sidebar() {
   const location = useLocation();
@@ -77,11 +78,18 @@ export default function Sidebar() {
           );
         })}
       </ul>
-      <div className="pt-[14px]">
-        <Icon
-          icon={"material-symbols:logout-rounded"}
-          className="text-[22px] w-full text-gray-tertiary"
-        />
+      <div className="pt-[14px] w-full flex justify-center">
+        <ThemedDialog
+          theme="warn"
+          ctaText="Logout"
+          title="Logout"
+          message="Do you really want to logout?"
+        >
+          <Icon
+            icon={"material-symbols:logout-rounded"}
+            className="text-[22px]  text-gray-tertiary"
+          />
+        </ThemedDialog>
       </div>
     </div>
   );

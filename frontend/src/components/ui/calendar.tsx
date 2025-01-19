@@ -48,7 +48,7 @@ function Calendar({
         // Each month
         month: "space-y-4 w-full",
         // Todays date
-        day_today: "bg-primary text-white !font-semibold",
+        day_today: "bg-primary !text-white !font-semibold",
         // Topbar
         caption:
           "flex justify-center pt-0 p-2 relative items-center  text-gray-primary",
