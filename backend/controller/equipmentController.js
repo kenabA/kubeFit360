@@ -14,9 +14,9 @@ exports.addEquipment = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllEquipments = catchAsync(async (req, res, next) => {
-  const equipment = await Equipment.find();
+  const equipments = await Equipment.find();
   const count = await Equipment.countDocuments();
-  res.status(200).json({ status: 'success', data: { count, equipment } });
+  res.status(200).json({ status: 'success', data: { count, equipments } });
 });
 
 exports.getEquipment = catchAsync(async (req, res, next) => {

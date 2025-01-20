@@ -18,7 +18,7 @@ const equipmentSchema = new mongoose.Schema({
     type: String,
     default: 'active',
     enum: {
-      values: ['active', 'inactive', 'deleted'],
+      values: ['active', 'inactive', 'underMaintenance'],
       message: 'Please provide a valid status',
     },
   },
