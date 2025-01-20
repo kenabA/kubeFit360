@@ -17,10 +17,10 @@ import SignupLayout from "@/layout/auth/SignupLayout";
 import PasswordChanged from "@/system/pages/ResetPassword/PasswordChanged";
 import { ROUTES } from "@/config/appRoutes";
 import Dashboard from "./system/pages/Dashboard/Dashboard";
-import PageNotFound from "@/components/pageNotFound/PageNotFound";
 import ProtectedRoute from "@/system/features/authentication/ProtectedRoute";
 import React from "react";
 import SystemLayout from "./layout/SystemLayout";
+import ErrorPage from "@/components/errorPage/ErrorPage";
 
 export default function App() {
   return (
@@ -52,7 +52,7 @@ export default function App() {
 
         <Route
           path="*"
-          element={<PageNotFound errMsg="Page could not be found." />}
+          element={<ErrorPage errMsg="Page could not be found" />}
         />
       </Routes>
     </React.Fragment>

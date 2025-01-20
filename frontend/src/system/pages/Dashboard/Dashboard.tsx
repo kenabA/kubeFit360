@@ -2,15 +2,40 @@ import { Heading } from "@/components/heading/Heading";
 import { Block, Piechart } from "@/system/components/index";
 import RecentActivities from "../../components/tables/recentActivities/RecentActivities";
 import useEquipments from "@/system/features/equipments/useEquipments";
+import ErrorPage from "@/components/errorPage/ErrorPage";
+import { useEffect, useMemo, useState } from "react";
+import { TEquipmentStats } from "@/system/features/equipments/type";
+import {
+  equipmentChartConfig,
+  getEquipmentChartData,
+} from "@/system/features/equipments/equipmentChartData";
 
 export default function Dashboard() {
+  const [stats, setStats] = useState<TEquipmentStats>({
+    active: 0,
+    inactive: 0,
+    underMaintenance: 0,
+  });
   const {
-    equipmentsData: { count },
-    isError,
+    data: { count, equipments },
+    error,
   } = useEquipments();
 
-  if (isError) {
-    return <p className="text-destructive">Error Occurred</p>;
+  useEffect(() => {
+    const counts = equipments.reduce(
+      (acc, eqp) => {
+        acc[eqp.status] = (acc[eqp.status] || 0) + 1;
+        return acc;
+      },
+      { active: 0, inactive: 0, underMaintenance: 0 }
+    );
+    setStats(counts);
+  }, [equipments]);
+
+  const chartData = useMemo(() => getEquipmentChartData(stats), [stats]);
+
+  if (error) {
+    return <ErrorPage errMsg={error.message} />;
   }
 
   return (
@@ -23,26 +48,26 @@ export default function Dashboard() {
           <Block
             type={"numeric"}
             theme={"success"}
-            data={32}
+            data={stats.active}
             icon="lucide:package"
             title="available equipments"
-            total={count || 32}
+            total={count}
           />
           <Block
             type={"numeric"}
             theme={"error"}
-            data={32}
+            data={stats.inactive}
             icon="lucide:package"
             title="unavailable equipments"
-            total={count || 32}
+            total={count}
           />
           <Block
             type={"numeric"}
             theme={"warn"}
-            data={32}
+            data={stats.underMaintenance}
             icon="lucide:package"
             title="under maintenance"
-            total={count || 32}
+            total={count}
           />
           <div className="relative overflow-hidden shadow-general">
             <div className="bg-primary absolute  -top-40 w-full h-48 rounded-full filter blur-lg opacity-[0.1]"></div>
@@ -61,7 +86,11 @@ export default function Dashboard() {
             icon="lucide:package"
             title="equipments visualization"
           >
-            <Piechart count={count} />
+            <Piechart
+              config={equipmentChartConfig}
+              stats={chartData}
+              count={count}
+            />
           </Block>
         </div>
       </div>

@@ -1,16 +1,22 @@
-import * as React from "react";
 import { Label, Pie, PieChart } from "recharts";
 import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { chartConfig, chartData } from "./data";
 
-export default function Component({ count }: { count: number }) {
+export default function Component({
+  count,
+  stats,
+  config,
+}: {
+  count: number;
+  stats: any;
+  config: any;
+}) {
   return (
     <ChartContainer
-      config={chartConfig}
+      config={config}
       className="mx-auto aspect-square max-h-[250px]"
     >
       <PieChart>
@@ -19,7 +25,7 @@ export default function Component({ count }: { count: number }) {
           content={<ChartTooltipContent hideLabel />}
         />
         <Pie
-          data={chartData}
+          data={stats}
           dataKey="count"
           nameKey="status"
           innerRadius={60}

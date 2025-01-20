@@ -7,3 +7,9 @@ export type TEquipmentsData = {
   brandName: string;
   description: string;
 };
+
+export type TEquipmentStats = {
+  active: number;
+  inactive: number;
+  underMaintenance: number;
+};
