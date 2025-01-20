@@ -1,9 +1,10 @@
-import { StrictMode } from "react";
+import { StrictMode, Suspense } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.tsx";
 import { BrowserRouter } from "react-router";
 import { Toaster } from "./components/ui/toast/toaster.tsx";
+import Loading from "@/components/loading/Loading";
 import AuthProvider from "react-auth-kit";
 import { store } from "@/system/stores/authStore.ts";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -15,10 +16,12 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <AuthProvider store={store}>
-        <BrowserRouter>
-          <Toaster />
-          <App />
-        </BrowserRouter>
+        <Suspense fallback={<Loading />}>
+          <BrowserRouter>
+            <Toaster />
+            <App />
+          </BrowserRouter>
+        </Suspense>
       </AuthProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>

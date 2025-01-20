@@ -1,6 +1,6 @@
 import { useToast } from "@/hooks/use-toast";
 import { TForgotPasswordFormProps } from "@/system/pages/ForgotPassword/types";
-import apiForgotPassword from "@/system/services/apiForgotPassword";
+import apiForgotPassword from "@/system/services/auth/apiForgotPassword";
 import { useMutation } from "@tanstack/react-query";
 
 function useForgotPassword() {

@@ -1,19 +1,22 @@
-import * as React from "react";
 import { Label, Pie, PieChart } from "recharts";
 import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { chartConfig, chartData } from "./data";
 
-export default function Component() {
-  const totalCount = React.useMemo(() => {
-    return chartData.reduce((acc, curr) => acc + curr.count, 0);
-  }, []);
+export default function Component({
+  count,
+  stats,
+  config,
+}: {
+  count: number;
+  stats: any;
+  config: any;
+}) {
   return (
     <ChartContainer
-      config={chartConfig}
+      config={config}
       className="mx-auto aspect-square max-h-[250px]"
     >
       <PieChart>
@@ -22,7 +25,7 @@ export default function Component() {
           content={<ChartTooltipContent hideLabel />}
         />
         <Pie
-          data={chartData}
+          data={stats}
           dataKey="count"
           nameKey="status"
           innerRadius={60}
@@ -43,7 +46,7 @@ export default function Component() {
                       y={viewBox.cy}
                       className="fill-foreground text-3xl font-bold"
                     >
-                      {totalCount.toLocaleString()}
+                      {count?.toLocaleString()}
                     </tspan>
                     <tspan
                       x={viewBox.cx}

@@ -1,7 +1,7 @@
 import { API_ROUTES } from "@/config/apiRoutes";
 import { _axios } from "@/config/axios";
 import { AxiosError } from "axios";
-import { TResetPasswordFormProps } from "../pages/ResetPassword/types";
+import { TResetPasswordFormProps } from "../../pages/ResetPassword/types";
 
 const apiResetPassword = async (
   resetPasswordDetails: TResetPasswordFormProps,

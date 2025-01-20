@@ -16,13 +16,15 @@ import LoginLayout from "./layout/auth/LoginLayout";
 import SignupLayout from "@/layout/auth/SignupLayout";
 import PasswordChanged from "@/system/pages/ResetPassword/PasswordChanged";
 import { ROUTES } from "@/config/appRoutes";
-import Dashboard from "./Dashboard";
-import PageNotFound from "@/components/pageNotFound/PageNotFound";
+import Dashboard from "./system/pages/Dashboard/Dashboard";
 import ProtectedRoute from "@/system/features/authentication/ProtectedRoute";
+import React from "react";
+import SystemLayout from "./layout/SystemLayout";
+import ErrorPage from "@/components/errorPage/ErrorPage";
 
 export default function App() {
   return (
-    <>
+    <React.Fragment>
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<WebsiteLayout />}>
@@ -31,25 +33,28 @@ export default function App() {
           <Route path={ROUTES.TESTIMONIAL} element={<SuccessStories />} />
           <Route path={ROUTES.MEMBERSHIP} element={<Membership />} />
         </Route>
+
         <Route element={<LoginLayout />}>
           <Route path={ROUTES.LOGIN} element={<Login />} />
           <Route path={ROUTES.FORGOT_PASSWORD} element={<ForgotPassword />} />
           <Route path={ROUTES.RESET_PASSWORD} element={<ResetPassword />} />
           <Route path={ROUTES.PASSWORD_CHANGED} element={<PasswordChanged />} />
         </Route>
-
-        <Route element={<ProtectedRoute />}>
-          <Route path={"/dashboard"} element={<Dashboard />} />
+        <Route element={<SystemLayout />}>
+          <Route element={<ProtectedRoute />}>
+            <Route path={ROUTES.DASHBOARD} element={<Dashboard />} />
+          </Route>
         </Route>
 
         <Route element={<SignupLayout />}>
           <Route path={ROUTES.SIGNUP} element={<Signup />} />
         </Route>
+
         <Route
           path="*"
-          element={<PageNotFound errMsg="Page could not be found." />}
+          element={<ErrorPage errMsg="Page could not be found" />}
         />
       </Routes>
-    </>
+    </React.Fragment>
   );
 }

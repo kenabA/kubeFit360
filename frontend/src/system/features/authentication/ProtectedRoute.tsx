@@ -1,13 +1,9 @@
-import Loading from "@/components/loading/Loading";
 import { Navigate, Outlet } from "react-router";
 import useAuth from "./useAuth";
+import { ROUTES } from "@/config/appRoutes";
 
 export default function ProtectedRoute() {
-  const { authResponse, isLoading } = useAuth();
+  const { authResponse } = useAuth();
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
-  return authResponse ? <Outlet /> : <Navigate to="/login" replace />;
+  return authResponse ? <Outlet /> : <Navigate to={ROUTES.LOGIN} replace />;
 }
