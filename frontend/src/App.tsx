@@ -21,6 +21,7 @@ import ProtectedRoute from "@/system/features/authentication/ProtectedRoute";
 import React from "react";
 import SystemLayout from "./layout/SystemLayout";
 import ErrorPage from "@/components/errorPage/ErrorPage";
+import Equipments from "./system/pages/Equipments/Equipments";
 
 export default function App() {
   return (
@@ -43,6 +44,7 @@ export default function App() {
         <Route element={<SystemLayout />}>
           <Route element={<ProtectedRoute />}>
             <Route path={ROUTES.DASHBOARD} element={<Dashboard />} />
+            <Route path={ROUTES.EQUIPMENTS} element={<Equipments />} />
           </Route>
         </Route>
 
