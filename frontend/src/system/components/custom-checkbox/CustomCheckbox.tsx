@@ -24,9 +24,9 @@ export default function CustomCheckbox({
         <path
           d="M10.6673 1L4.25065 7.41667L1.33398 4.5"
           stroke="white"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
       </svg>
     </div>

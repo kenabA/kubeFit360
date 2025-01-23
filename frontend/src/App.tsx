@@ -34,15 +34,14 @@ export default function App() {
           <Route path={ROUTES.TESTIMONIAL} element={<SuccessStories />} />
           <Route path={ROUTES.MEMBERSHIP} element={<Membership />} />
         </Route>
-
         <Route element={<LoginLayout />}>
           <Route path={ROUTES.LOGIN} element={<Login />} />
           <Route path={ROUTES.FORGOT_PASSWORD} element={<ForgotPassword />} />
           <Route path={ROUTES.RESET_PASSWORD} element={<ResetPassword />} />
           <Route path={ROUTES.PASSWORD_CHANGED} element={<PasswordChanged />} />
         </Route>
-        <Route element={<SystemLayout />}>
-          <Route element={<ProtectedRoute />}>
+        <Route element={<ProtectedRoute />}>
+          <Route element={<SystemLayout />}>
             <Route path={ROUTES.DASHBOARD} element={<Dashboard />} />
             <Route path={ROUTES.EQUIPMENTS} element={<Equipments />} />
           </Route>

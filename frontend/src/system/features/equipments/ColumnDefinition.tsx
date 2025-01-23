@@ -1,4 +1,4 @@
-import CustomCheckbox from "@/system/components/customCheckbox/CustomCheckbox";
+import CustomCheckbox from "@/system/components/custom-checkbox/CustomCheckbox";
 import Status from "@/system/components/status/Status";
 import { createColumnHelper } from "@tanstack/react-table";
 import { ColumnDef } from "@tanstack/react-table";

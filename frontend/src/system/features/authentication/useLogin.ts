@@ -21,6 +21,7 @@ function useLogin() {
       });
       setUser(userData);
       queryClient.setQueryData(["user"], userData);
+      console.log("redirecting to the dashboard");
       handleNavigate("/dashboard");
     },
     onError: (err) => {

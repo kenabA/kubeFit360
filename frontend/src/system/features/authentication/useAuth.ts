@@ -5,7 +5,7 @@ function useAuth() {
   const { data: authResponse } = useSuspenseQuery({
     queryKey: ["auth"],
     queryFn: () => apiAuth(),
-    retry: false,
+    retry: true,
   });
 
   return { authResponse };
