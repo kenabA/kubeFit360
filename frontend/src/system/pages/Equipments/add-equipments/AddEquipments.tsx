@@ -19,7 +19,6 @@ export default function AddEquipments({
   });
 
   function onSubmit(data: TAddEquipmentFormProps) {
-    alert(123);
     console.log(data);
   }
 
@@ -41,6 +40,7 @@ export default function AddEquipments({
           <Button
             form="equipment-form"
             type="submit"
+            onClick={handleSubmit(onSubmit)}
             className="px-6 shadow-none hover:shadow-none"
             variant={"primary"}
           >
@@ -51,7 +51,6 @@ export default function AddEquipments({
     >
       <form
         id="equipment-form"
-        onSubmit={handleSubmit(onSubmit)}
         className="w-full flex flex-col items-center gap-4"
       >
         <BaseInput

@@ -8,5 +8,5 @@ export const equipmentSchema = z.object({
   serialNumber: z.string().nonempty("Please write the serial number"),
   brandName: z.string().nonempty("Please mention the brand name"),
   category: z.string().nonempty("Please specify the category"),
-  equipmentImage: z.string(),
+  equipmentImage: z.string().optional(),
 });
