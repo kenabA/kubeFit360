@@ -5,6 +5,7 @@ import { equipmentSchema } from "./validator";
 import { useForm } from "react-hook-form";
 import { TAddEquipmentFormProps, TAddEquipmentProps } from "./type";
 import BaseInput from "@/system/components/input/base-input/BaseInput";
+import useAddEquipment from "./useAddEquipment";
 
 export default function AddEquipments({
   isDialogOpen,
@@ -18,8 +19,10 @@ export default function AddEquipments({
     resolver: zodResolver(equipmentSchema),
   });
 
+  const { addEquipment, isPending } = useAddEquipment();
+
   function onSubmit(data: TAddEquipmentFormProps) {
-    console.log(data);
+    addEquipment(data);
   }
 
   return (
@@ -31,6 +34,7 @@ export default function AddEquipments({
       footer={
         <>
           <Button
+            disabled={isPending}
             className="shadow-none hover:shadow-none"
             variant={"primaryReverse"}
             onClick={() => setIsDialogOpen(false)}
@@ -43,6 +47,7 @@ export default function AddEquipments({
             onClick={handleSubmit(onSubmit)}
             className="px-6 shadow-none hover:shadow-none"
             variant={"primary"}
+            disabled={isPending}
           >
             Add
           </Button>

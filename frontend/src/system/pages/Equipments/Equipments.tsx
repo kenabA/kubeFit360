@@ -5,7 +5,7 @@ import ColumnDefinition from "@/system/features/equipments/ColumnDefinition";
 import useEquipments from "@/system/features/equipments/useEquipments";
 import { Plus } from "lucide-react";
 import { useState } from "react";
-import AddEquipments from "./add-equipments/AddEquipments";
+import AddEquipments from "../../features/equipments/add-equipments/AddEquipments";
 
 export default function Equipments() {
   const [openAdd, setOpenAdd] = useState<boolean>(false);
