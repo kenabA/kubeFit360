@@ -6,11 +6,11 @@ const {
   updateEquipment,
   deleteEquipment,
 } = require('../controller/equipmentController');
-// const { protect, restrictTo } = require('../controller/authController');
+const { protect, restrictTo } = require('../controller/authController');
 const router = express.Router();
 
-// router.use(protect);
-// router.use(restrictTo('admin'));
+router.use(protect);
+router.use(restrictTo('admin', 'maintainer'));
 
 router.route('/').get(getAllEquipments).post(addEquipment);
 
