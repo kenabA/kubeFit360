@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components";
-import FloatingInput from "@/system/components/input/AuthInput";
+import FloatingInput from "@/system/components/input/auth-input/AuthInput";
 import { TResetPasswordFormProps } from "./types";
 import { resetPasswordSchema } from "./validator";
 import useResetPassword from "@/system/features/authentication/useResetPassword";

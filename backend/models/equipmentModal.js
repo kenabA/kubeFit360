@@ -7,7 +7,7 @@ const equipmentSchema = new mongoose.Schema({
   },
   serialNumber: {
     unique: true,
-    type: Number,
+    type: String,
     required: [true, 'A equipment must have a serial number'],
   },
   installationDate: {

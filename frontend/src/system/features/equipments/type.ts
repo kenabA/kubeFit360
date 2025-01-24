@@ -1,6 +1,7 @@
 export type TEquipmentsData = {
   _id: string;
   equipmentName: string;
+  equipmentImage: string;
   serialNumber: number;
   installationDate: string;
   status: string;

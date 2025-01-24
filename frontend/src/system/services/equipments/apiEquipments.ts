@@ -6,7 +6,7 @@ import { TEquipmentResponse } from "./type";
 async function apiEquipments(): Promise<TEquipmentResponse> {
   try {
     const response = await _axios.get(`${API_ROUTES.EQUIPMENTS}`);
-    console.log(response);
+
     return response.data;
   } catch (err) {
     const backendError = err as AxiosError<{ message: string }>;

@@ -21,6 +21,7 @@ import ProtectedRoute from "@/system/features/authentication/ProtectedRoute";
 import React from "react";
 import SystemLayout from "./layout/SystemLayout";
 import ErrorPage from "@/components/errorPage/ErrorPage";
+import Equipments from "./system/pages/Equipments/Equipments";
 
 export default function App() {
   return (
@@ -33,16 +34,16 @@ export default function App() {
           <Route path={ROUTES.TESTIMONIAL} element={<SuccessStories />} />
           <Route path={ROUTES.MEMBERSHIP} element={<Membership />} />
         </Route>
-
         <Route element={<LoginLayout />}>
           <Route path={ROUTES.LOGIN} element={<Login />} />
           <Route path={ROUTES.FORGOT_PASSWORD} element={<ForgotPassword />} />
           <Route path={ROUTES.RESET_PASSWORD} element={<ResetPassword />} />
           <Route path={ROUTES.PASSWORD_CHANGED} element={<PasswordChanged />} />
         </Route>
-        <Route element={<SystemLayout />}>
-          <Route element={<ProtectedRoute />}>
+        <Route element={<ProtectedRoute />}>
+          <Route element={<SystemLayout />}>
             <Route path={ROUTES.DASHBOARD} element={<Dashboard />} />
+            <Route path={ROUTES.EQUIPMENTS} element={<Equipments />} />
           </Route>
         </Route>
 

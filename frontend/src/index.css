@@ -42,13 +42,13 @@
     /* Success Color  */
     --success: 121 42% 48%;
     --success-hover: 121 42% 44%;
-    --success-light: 142 70% 91%;
+    --success-light: 145 81% 96%;
     --success-foreground: 0 0% 100%;
 
     /* Destructive Color  */
     --destructive: 3 80% 56%;
     --destructive-hover: 3 80% 52%;
-    --destructive-light: 2 90% 92%;
+    --destructive-light: 0 90% 96%;
     --destructive-foreground: 0 0% 100%;
 
     /* Info Color  */
@@ -208,45 +208,47 @@ select:-webkit-autofill:focus {
 /* ----- SCROLLBAR ----- */
 
 .custom-scrollbar::-webkit-scrollbar {
-  display: none;
-  /* Safari and Chrome */
+  width: 6px;
+  /* Keep the scrollbar width to avoid layout shift */
+  height: 6px;
+  background-color: transparent;
+  /* Transparent background initially */
 }
 
-.custom-scrollbar:hover::-webkit-scrollbar {
+.custom-scrollbar::-webkit-scrollbar {
   display: block;
-  width: 6px;
+  width: 5px;
   height: 6px;
+
+  & {
+    background-color: transparent;
+  }
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: transparent;
 }
 
 .custom-scrollbar:hover::-webkit-scrollbar-thumb {
+  background-color: hsl(var(--primary));
   border-radius: 100px;
-  background:hsl(var(--primary));
+  background: transparent;
   -webkit-border-radius: 100px;
   -moz-border-radius: 100px;
   -ms-border-radius: 100px;
   -o-border-radius: 100px;
 }
 
-.custom-scrollbar:hover::-webkit-scrollbar-track {
-  background:hsl(var(--secondary));
+.custom-scrollbar.always-show::-webkit-scrollbar-thumb,
+.custom-scrollbar:hover::-webkit-scrollbar-thumb {
+  background: hsl(var(--primary));
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  background:hsl(var(--secondary));
+  background: transparent;
   border-radius: 20px;
   -webkit-border-radius: 20px;
   -moz-border-radius: 20px;
   -ms-border-radius: 20px;
   -o-border-radius: 20px;
-}
-
-.hidden-scrollbar {
-  overflow: -moz-scrollbars-none;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-.hidden-scrollbar::-webkit-scrollbar {
-  display: block;
-  opacity: 0;
 }
