@@ -2,10 +2,20 @@ import { Button } from "@/components";
 import { FormModal } from "@/components/formModal/FormModal";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { equipmentSchema } from "./validator";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { TAddEquipmentFormProps, TAddEquipmentProps } from "./type";
 import BaseInput from "@/system/components/input/base-input/BaseInput";
 import useAddEquipment from "./useAddEquipment";
+import { useEffect } from "react";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+} from "@/components/ui/select";
+import { Oval } from "react-loader-spinner";
 
 export default function AddEquipments({
   isDialogOpen,
@@ -13,16 +23,30 @@ export default function AddEquipments({
 }: TAddEquipmentProps) {
   const {
     register,
+    control,
+    reset,
     handleSubmit,
     formState: { errors },
   } = useForm<TAddEquipmentFormProps>({
     resolver: zodResolver(equipmentSchema),
   });
 
-  const { addEquipment, isPending } = useAddEquipment();
+  const { addEquipment, isPending, isSuccess } = useAddEquipment();
+
+  useEffect(() => {
+    if (isSuccess) {
+      setIsDialogOpen(false);
+      reset();
+    }
+  }, [isSuccess]);
 
   function onSubmit(data: TAddEquipmentFormProps) {
     addEquipment(data);
+  }
+
+  function handleCancel() {
+    setIsDialogOpen(false);
+    reset();
   }
 
   return (
@@ -35,9 +59,9 @@ export default function AddEquipments({
         <>
           <Button
             disabled={isPending}
-            className="shadow-none hover:shadow-none"
+            className="shadow-none hover:shadow-none h-10"
             variant={"primaryReverse"}
-            onClick={() => setIsDialogOpen(false)}
+            onClick={handleCancel}
           >
             Cancel
           </Button>
@@ -45,11 +69,22 @@ export default function AddEquipments({
             form="equipment-form"
             type="submit"
             onClick={handleSubmit(onSubmit)}
-            className="px-6 shadow-none hover:shadow-none"
+            className="px-6 shadow-none hover:shadow-none h-10 w-20"
             variant={"primary"}
             disabled={isPending}
           >
-            Add
+            {isPending ? (
+              <Oval
+                height="280"
+                strokeWidth={8}
+                secondaryColor="white"
+                width="280"
+                color="white"
+                wrapperStyle={{}}
+              />
+            ) : (
+              "Add"
+            )}
           </Button>
         </>
       }
@@ -92,14 +127,43 @@ export default function AddEquipments({
             register={register}
           />
         </div>
-        <BaseInput
-          error={errors.category}
-          label="Category"
-          name="category"
-          type="text"
-          placeholder="Enter the category"
-          register={register}
-        />
+        <div className="w-full">
+          <label
+            htmlFor="category"
+            className="text-sm text-gray-tertiary font-normal mb-2 block"
+          >
+            Category
+          </label>
+          <Controller
+            name="category"
+            control={control}
+            render={({ field }) => (
+              <Select onValueChange={field.onChange}>
+                <SelectTrigger className="focus:ring-gray-tertiary rounded-[8px] border border-slate-300 px-4 focus-visible:ring-1 focus-visible:ring-gray-tertiary  text-sm h-[44px]">
+                  <SelectValue placeholder="Select a category" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectItem className="focus" value="cardio">
+                      Cardio
+                    </SelectItem>
+                    <SelectItem className="focus" value="strength">
+                      Strength
+                    </SelectItem>
+                    <SelectItem className="focus" value="flexibility">
+                      Flexibility
+                    </SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            )}
+          />
+          {errors.category && (
+            <p className="h-full p-1 text-left text-xs text-red-400">
+              {errors.category.message}
+            </p>
+          )}
+        </div>
       </form>
     </FormModal>
   );

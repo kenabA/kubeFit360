@@ -1,12 +1,13 @@
 import { API_ROUTES } from "@/config/apiRoutes";
 import { _axios } from "@/config/axios";
 import { AxiosError } from "axios";
-import { TEquipmentData } from "./type";
-import { TApiResponse } from "@/system/global/types";
 
-async function apiEquipments(): Promise<TApiResponse<TEquipmentData[]>> {
+async function apiDeleteEquipments(equipmentId: string) {
   try {
-    const response = await _axios.get(`${API_ROUTES.EQUIPMENTS}`);
+    console.log(equipmentId);
+    const response = await _axios.delete(
+      `${API_ROUTES.EQUIPMENTS}/${equipmentId}`
+    );
     return response.data;
   } catch (err) {
     const backendError = err as AxiosError<{ message: string }>;
@@ -16,4 +17,4 @@ async function apiEquipments(): Promise<TApiResponse<TEquipmentData[]>> {
   }
 }
 
-export default apiEquipments;
+export default apiDeleteEquipments;

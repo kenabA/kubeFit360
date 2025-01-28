@@ -21,6 +21,7 @@ function useLogin() {
       });
       setUser(userData);
       queryClient.setQueryData(["user"], userData);
+
       handleNavigate("/dashboard");
     },
     onError: (err) => {

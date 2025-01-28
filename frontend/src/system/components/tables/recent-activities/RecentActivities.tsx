@@ -3,18 +3,21 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { defaultData } from "./data";
-import { columns } from "./ColumnDefinition";
+
 import { cn } from "@/lib/utils";
+import { TRecentActivities } from "@/system/features/recent-activities/type";
+import ColumnDefinition from "./ColumnDefinition";
 
 export default function RecentActivities({
+  data,
   className,
 }: {
+  data: TRecentActivities[];
   className?: string;
 }) {
   const table = useReactTable({
-    data: defaultData,
-    columns: columns,
+    data: data,
+    columns: ColumnDefinition(),
     getCoreRowModel: getCoreRowModel(),
   });
 

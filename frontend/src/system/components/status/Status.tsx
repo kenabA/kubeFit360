@@ -3,7 +3,8 @@ import { cn } from "@/lib/utils";
 export default function Status({
   status,
 }: {
-  status: "active" | "inactive" | "underMaintenance";
+  // status: "active" | "inactive" | "underMaintenance";
+  status: string;
 }) {
   let statusText;
   let primaryColor;
@@ -31,7 +32,7 @@ export default function Status({
     <div
       style={{ backgroundColor: secondaryColor, color: primaryColor }}
       className={cn(
-        "capitalize w-fit px-3 py-1 rounded-2xl flex gap-2 items-center",
+        "capitalize w-fit px-3 py-1 rounded-2xl flex gap-2 items-center font-medium",
         primaryColor,
         secondaryColor
       )}

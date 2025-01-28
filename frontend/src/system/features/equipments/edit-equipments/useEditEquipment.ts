@@ -1,19 +1,23 @@
 import { useToast } from "@/hooks/use-toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { TEditEquipmentFormProps } from "./type";
+import apiEditEquipments from "@/system/services/equipments/apiEditEquipment";
 
-import apiAddEquipments from "@/system/services/equipments/apiAddEquipment";
-import { TAddEquipmentFormProps } from "./type";
-
-function useAddEquipment() {
+function useEditEquipment() {
   const queryClient = useQueryClient();
   const { toast } = useToast();
   const {
-    mutate: addEquipment,
+    mutate: editEquipment,
     isPending,
     isSuccess,
   } = useMutation({
-    mutationFn: (addEquipmentDetails: TAddEquipmentFormProps) =>
-      apiAddEquipments(addEquipmentDetails),
+    mutationFn: ({
+      editEquipmentDetails,
+      selectedId,
+    }: {
+      editEquipmentDetails: TEditEquipmentFormProps;
+      selectedId: string;
+    }) => apiEditEquipments(editEquipmentDetails, selectedId),
     onSuccess: async () => {
       await queryClient.invalidateQueries({
         queryKey: ["equipments"],
@@ -33,7 +37,7 @@ function useAddEquipment() {
       });
     },
   });
-  return { addEquipment, isPending, isSuccess };
+  return { editEquipment, isPending, isSuccess };
 }
 
-export default useAddEquipment;
+export default useEditEquipment;

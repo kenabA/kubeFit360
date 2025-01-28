@@ -52,11 +52,7 @@ export default function GeneralTable({
         </thead>
         <tbody className="divide-y divide-gray-200">
           {table.getRowModel().rows.map((row) => (
-            <tr
-              onClick={row.getToggleSelectedHandler()}
-              key={row.id}
-              className="hover:cursor-pointer"
-            >
+            <tr onClick={row.getToggleSelectedHandler()} key={row.id}>
               {row.getVisibleCells().map((cell) => (
                 <td
                   key={cell.id}

@@ -5,10 +5,8 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 
-import { cn } from "@/lib/utils";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { Dispatch, SetStateAction } from "react";
 
@@ -36,7 +34,10 @@ export function FormModal({
         setOpen(value);
       }}
     >
-      <DialogContent className="!rounded-2xl p-0 gap-0">
+      <DialogContent
+        onOpenAutoFocus={(e) => e.preventDefault()}
+        className="!rounded-2xl p-0 gap-0"
+      >
         <DialogHeader className=" gap-3 flex-row items-center space-y-0 py-4 px-6 border-b">
           <div className="p-3 border-secondary border-2 rounded-[10px] flex items-center justify-center ">
             <Icon

@@ -1,12 +1,16 @@
 import { API_ROUTES } from "@/config/apiRoutes";
 import { _axios } from "@/config/axios";
 import { AxiosError } from "axios";
-import { TEquipmentData } from "./type";
+
+import { TRecentActivities } from "@/system/features/recent-activities/type";
 import { TApiResponse } from "@/system/global/types";
 
-async function apiEquipments(): Promise<TApiResponse<TEquipmentData[]>> {
+async function apiGetAllRecentActivities(): Promise<
+  TApiResponse<TRecentActivities[]>
+> {
   try {
-    const response = await _axios.get(`${API_ROUTES.EQUIPMENTS}`);
+    const response = await _axios.get(`${API_ROUTES.RECENT_ACTIVITIES}`);
+
     return response.data;
   } catch (err) {
     const backendError = err as AxiosError<{ message: string }>;
@@ -16,4 +20,4 @@ async function apiEquipments(): Promise<TApiResponse<TEquipmentData[]>> {
   }
 }
 
-export default apiEquipments;
+export default apiGetAllRecentActivities;

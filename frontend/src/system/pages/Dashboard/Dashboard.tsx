@@ -1,6 +1,6 @@
 import { Heading } from "@/components/heading/Heading";
 import { Block, Piechart } from "@/system/components/index";
-import RecentActivities from "../../components/tables/recentActivities/RecentActivities";
+import RecentActivities from "../../components/tables/recent-activities/RecentActivities";
 import useEquipments from "@/system/features/equipments/useEquipments";
 import ErrorPage from "@/components/errorPage/ErrorPage";
 import { useEffect, useMemo, useState } from "react";
@@ -9,6 +9,7 @@ import {
   equipmentChartConfig,
   getEquipmentChartData,
 } from "@/system/features/equipments/equipmentChartData";
+import useRecentActivities from "@/system/features/recent-activities/useRecentActivities";
 
 export default function Dashboard() {
   const [stats, setStats] = useState<TEquipmentStats>({
@@ -16,10 +17,14 @@ export default function Dashboard() {
     inactive: 0,
     underMaintenance: 0,
   });
+
   const {
-    data: { count, equipments },
+    data: { count, data: equipments },
     error,
   } = useEquipments();
+
+  const { data: recentActivitiesData, error: activitiesError } =
+    useRecentActivities();
 
   useEffect(() => {
     const counts = equipments.reduce(
@@ -79,7 +84,11 @@ export default function Dashboard() {
             icon="lucide:package"
             className="bg-white shadow-general border col-span-2 h-full row-span-2 rounded-xl"
           >
-            <RecentActivities />
+            {!activitiesError ? (
+              <RecentActivities data={recentActivitiesData.data} />
+            ) : (
+              <p className="text-destructive">Error Fetching Activities Data</p>
+            )}
           </Block>
           <Block
             type={"figure"}

@@ -10,7 +10,7 @@ export default function Component({
   stats,
   config,
 }: {
-  count: number;
+  count: number | undefined;
   stats: any;
   config: any;
 }) {

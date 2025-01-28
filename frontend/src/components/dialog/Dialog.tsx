@@ -10,22 +10,27 @@ import {
 import { Button } from "../ui/button";
 import { themeStyles } from "./helpers";
 import { cn } from "@/lib/utils";
+import { Oval } from "react-loader-spinner";
+import { TDialog } from "./type";
 
 export function ThemedDialog({
+  mutationFn,
+  isPending,
+  dialogOpen,
+  setDialogOpen,
   children,
   title,
   message,
   theme,
   ctaText,
-}: {
-  children: React.ReactNode;
-  title: string;
-  theme: "success" | "destructive" | "warn" | "info";
-  message: string;
-  ctaText: string;
-}) {
+}: TDialog) {
   return (
-    <Dialog>
+    <Dialog
+      open={dialogOpen}
+      onOpenChange={(value) => {
+        setDialogOpen(value);
+      }}
+    >
       <DialogTrigger>{children}</DialogTrigger>
       <DialogContent className="sm:w-[400px] !rounded-2xl">
         <DialogHeader className="px-6 py-3">
@@ -40,7 +45,6 @@ export function ThemedDialog({
               className="mb-4"
               alt="Icon representing the dialog"
             />
-
             {title}
           </DialogTitle>
           <DialogDescription className="text-[16px] font-normal text-gray-tertiary text-center !mb-8">
@@ -48,20 +52,35 @@ export function ThemedDialog({
           </DialogDescription>
           <DialogFooter className="flex items-center gap-1 gap-y-2">
             <Button
+              disabled={isPending}
               className={`${cn(
-                "w-full  py-3 shadow-md",
+                "w-full shadow-md md:h-11",
                 themeStyles[theme].backgroundLight,
                 themeStyles[theme].text
               )}`}
+              onClick={() => setDialogOpen(false)}
               variant={"ghost"}
             >
               Cancel
             </Button>
             <Button
-              className="w-full py-3 shadow-md hover:shadow-md"
+              onClick={mutationFn}
+              className="w-full shadow-md hover:shadow-md md:h-11"
               variant={theme}
+              disabled={isPending}
             >
-              {ctaText}
+              {isPending ? (
+                <Oval
+                  height="280"
+                  strokeWidth={8}
+                  secondaryColor="white"
+                  width="280"
+                  color="white"
+                  wrapperStyle={{}}
+                />
+              ) : (
+                ctaText
+              )}
             </Button>
           </DialogFooter>
         </DialogHeader>
