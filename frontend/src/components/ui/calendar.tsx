@@ -18,9 +18,10 @@ function Calendar({
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
-      className={cn("border-none py-2", className)}
+      className={cn("border-none py-2 h-full", className)}
       classNames={{
-        months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-4",
+        months:
+          "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-4 h-full",
 
         cell: cn(
           "relative p-0 text-center text-sm focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-accent [&:has([aria-selected].day-outside)]:bg-accent/50 [&:has([aria-selected].day-range-end)]:rounded-r-md daypicker-cell w-full",
@@ -46,7 +47,7 @@ function Calendar({
         day_disabled: "text-muted-foreground opacity-50",
 
         // Each month
-        month: "space-y-4 w-full",
+        month: "space-y-4 w-full h-full",
         // Todays date
         day_today: "bg-primary !text-white !font-semibold !w-fit",
         // Topbar
@@ -62,7 +63,7 @@ function Calendar({
         // Topbar title
         caption_label: "text-sm font-bold text-gray-primary",
         // Calendar Content Container
-        table: "w-full border-collapse space-y-1",
+        table: "w-full border-collapse space-y-1 h-full",
         // Months Row and Cell
         head_row: "w-full flex ",
         head_cell:

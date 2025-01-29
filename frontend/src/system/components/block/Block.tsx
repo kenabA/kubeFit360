@@ -18,7 +18,7 @@ export default function ({
   return (
     <div
       className={`${cn(
-        " bg-white shadow-general border-slate-100 border py-3 px-6 rounded-2xl",
+        " bg-white shadow-general border-slate-100 border py-3 px-6 rounded-2xl h-full",
         className
       )}`}
     >
