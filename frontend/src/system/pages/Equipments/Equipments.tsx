@@ -11,6 +11,7 @@ import useDeleteEquipments from "@/system/features/equipments/delete-equipments/
 import ColumnDefinition from "@/system/features/equipments/ColumnDefinition";
 import EditEquipments from "@/system/features/equipments/edit-equipments/EditEquipments";
 import { ThemedDialog } from "@/components/dialog/Dialog";
+import Filter from "@/system/components/filter/Filter";
 
 export default function Equipments() {
   const [openAdd, setOpenAdd] = useState<boolean>(false);
@@ -50,7 +51,8 @@ export default function Equipments() {
     <section className="rounded-tl-xl overflow-y-auto custom-scrollbar flex-1">
       <div className="py-7 px-6">
         <Heading level={4} variant={"quaternary"} className="mb-4">
-          Equipments
+          Make select reusable
+          {/* Equipments */}
         </Heading>
         <div className="bg-white rounded-xl shadow-general h-full">
           <div className="p-[18px] flex items-center justify-end gap-4">
@@ -77,6 +79,7 @@ export default function Equipments() {
                 Delete
               </div>
             </ThemedDialog> */}
+            <Filter />
             <Button
               variant={"primary"}
               className="font-medium"

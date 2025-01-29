@@ -18,11 +18,13 @@ import {
 import { TEditEquipmentFormProps, TEditEquipmentProps } from "./type";
 
 import { useQueryClient } from "@tanstack/react-query";
-import { TEquipmentResponse } from "@/system/services/equipments/type";
 
 import useEditEquipment from "./useEditEquipment";
 import { editEquipmentSchema } from "./validator";
 import { TEquipmentsData } from "../type";
+import { TApiResponse } from "@/system/global/types";
+import CustomSelect from "@/system/components/custom-select/CustomSelect";
+import { statusOptions } from "@/system/global/helpers";
 
 export default function EditEquipments({
   selectedId,
@@ -31,7 +33,7 @@ export default function EditEquipments({
 }: TEditEquipmentProps) {
   const queryClient = useQueryClient();
   const allEquipment = queryClient.getQueryData<
-    TEquipmentResponse<TEquipmentsData[]>
+    TApiResponse<TEquipmentsData[]>
   >(["equipments"]);
 
   const equipment = allEquipment?.data.data?.find((e) => e._id === selectedId);
@@ -193,39 +195,7 @@ export default function EditEquipments({
             name="status"
             control={control}
             render={({ field }) => (
-              <Select onValueChange={field.onChange} value={field.value}>
-                <SelectTrigger className="focus:ring-gray-tertiary rounded-[8px] border border-slate-300 px-4 focus-visible:ring-1 focus-visible:ring-gray-tertiary  text-sm h-[44px]">
-                  <SelectValue placeholder="Select a status" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectItem className="" value="active">
-                      <div className="flex gap-2 items-center">
-                        <div className="size-2 rounded-full bg-success"></div>
-                        <span className="text-success font-medium">
-                          Available
-                        </span>
-                      </div>
-                    </SelectItem>
-                    <SelectItem className="" value="inactive">
-                      <div className="flex gap-2 items-center">
-                        <div className="size-2 rounded-full bg-destructive"></div>
-                        <span className="text-destructive font-medium">
-                          Unavailable
-                        </span>
-                      </div>
-                    </SelectItem>
-                    <SelectItem className="" value="underMaintenance">
-                      <div className="flex gap-2 items-center">
-                        <div className="size-2 rounded-full bg-warn"></div>
-                        <span className="text-warn font-medium">
-                          Under Maintenance
-                        </span>
-                      </div>
-                    </SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
+              <CustomSelect field={field} options={statusOptions} />
             )}
           />
         </div>
