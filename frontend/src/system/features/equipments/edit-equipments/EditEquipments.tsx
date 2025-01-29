@@ -23,8 +23,8 @@ import useEditEquipment from "./useEditEquipment";
 import { editEquipmentSchema } from "./validator";
 import { TEquipmentsData } from "../type";
 import { TApiResponse } from "@/system/global/types";
-import CustomSelect from "@/system/components/custom-select/CustomSelect";
-import { statusOptions } from "@/system/global/helpers";
+import CustomSelect from "@/system/components/select/form-select/FormSelect";
+import { statusOptions } from "@/system/global/utils";
 
 export default function EditEquipments({
   selectedId,
@@ -185,17 +185,15 @@ export default function EditEquipments({
           />
         </div>
         <div className="w-full">
-          <label
-            htmlFor="status"
-            className="text-sm text-gray-tertiary font-normal mb-2 block"
-          >
-            Status
-          </label>
           <Controller
             name="status"
             control={control}
             render={({ field }) => (
-              <CustomSelect field={field} options={statusOptions} />
+              <CustomSelect
+                label={field.name}
+                field={field}
+                options={statusOptions}
+              />
             )}
           />
         </div>

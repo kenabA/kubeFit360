@@ -12,6 +12,7 @@ import ColumnDefinition from "@/system/features/equipments/ColumnDefinition";
 import EditEquipments from "@/system/features/equipments/edit-equipments/EditEquipments";
 import { ThemedDialog } from "@/components/dialog/Dialog";
 import Filter from "@/system/components/filter/Filter";
+import { filterFields } from "@/system/global/utils";
 
 export default function Equipments() {
   const [openAdd, setOpenAdd] = useState<boolean>(false);
@@ -79,7 +80,7 @@ export default function Equipments() {
                 Delete
               </div>
             </ThemedDialog> */}
-            <Filter />
+            <Filter entity={filterFields.maintainer} />
             <Button
               variant={"primary"}
               className="font-medium"
