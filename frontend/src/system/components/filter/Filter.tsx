@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 import { TEntity } from "@/system/global/utils";
 import { FilterIcon } from "lucide-react";
 import BaseSelect from "../select/base-select/BaseSelect";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSearchParams } from "react-router";
 
 // TO make the filter component not close, simply use the open, setOpenChange and so on to the popover
@@ -20,10 +20,6 @@ export default function Filter({ entity }: { entity: TEntity }) {
   );
   const [isCleared, setIsCleared] = useState<boolean>(false);
   const [searchParams, setSearchParams] = useSearchParams();
-
-  useEffect(() => {
-    console.log(filters);
-  }, [filters]);
 
   function handleApply() {
     if (filters.length <= 0) {

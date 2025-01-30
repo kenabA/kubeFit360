@@ -1,12 +1,14 @@
 import {
   flexRender,
   getCoreRowModel,
+  getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
 
 import { cn } from "@/lib/utils";
 import { TRecentActivities } from "@/system/features/recent-activities/type";
 import ColumnDefinition from "./ColumnDefinition";
+import { Icon } from "@iconify/react/dist/iconify.js";
 
 export default function RecentActivities({
   data,
@@ -18,6 +20,7 @@ export default function RecentActivities({
   const table = useReactTable({
     data: data,
     columns: ColumnDefinition(),
+    getSortedRowModel: getSortedRowModel(),
     getCoreRowModel: getCoreRowModel(),
   });
 
@@ -39,12 +42,21 @@ export default function RecentActivities({
                           : ""
                       }`}
                 >
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )}
+                  <div className="flex items-center gap-2">
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                    {header.column.getCanSort() && (
+                      <Icon
+                        className="cursor-pointer"
+                        icon={"lucide:arrow-down-up"}
+                        onClick={header.column.getToggleSortingHandler()}
+                      />
+                    )}
+                  </div>
                 </th>
               ))}
             </tr>

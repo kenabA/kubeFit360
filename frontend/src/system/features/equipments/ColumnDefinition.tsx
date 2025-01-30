@@ -86,6 +86,7 @@ export default function ColumnDefinition(
     },
     {
       accessorKey: "category",
+      enableSorting: false,
       header: "Category",
       cell: ({ row }) => (
         <span className="capitalize">{row.original.category || "--"}</span>
@@ -93,11 +94,13 @@ export default function ColumnDefinition(
     },
     {
       accessorKey: "status",
+      enableSorting: false,
       header: "Status",
       cell: ({ row }) => <Status status={row.original.status} />,
     },
     {
       accessorKey: "actions",
+      enableSorting: false,
       header: "",
       cell: ({ row }) => (
         <Popover>

@@ -14,6 +14,7 @@ export default function ColumnDefinition(): ColumnDef<TRecentActivities>[] {
     },
     {
       accessorKey: "activist",
+      enableSorting: false,
       header: () => <span>Activist</span>,
       cell: ({ row }) => (
         <span className="text-gray whitespace-nowrap capitalize">
@@ -23,6 +24,7 @@ export default function ColumnDefinition(): ColumnDef<TRecentActivities>[] {
     },
     {
       accessorKey: "description",
+      enableSorting: false,
       header: () => <span>Description</span>,
       cell: ({ row }) => (
         <p className="flex items-center gap-1">

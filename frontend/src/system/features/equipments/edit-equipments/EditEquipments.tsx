@@ -25,16 +25,19 @@ import { TEquipmentsData } from "../type";
 import { TApiResponse } from "@/system/global/types";
 import CustomSelect from "@/system/components/select/form-select/FormSelect";
 import { statusOptions } from "@/system/global/utils";
+import { useSearchParams } from "react-router";
 
 export default function EditEquipments({
   selectedId,
   isDialogOpen,
   setIsDialogOpen,
 }: TEditEquipmentProps) {
+  const [searchParams] = useSearchParams();
+  const filters = Object.fromEntries(searchParams.entries());
   const queryClient = useQueryClient();
   const allEquipment = queryClient.getQueryData<
     TApiResponse<TEquipmentsData[]>
-  >(["equipments"]);
+  >(["equipments", filters]);
 
   const equipment = allEquipment?.data.data?.find((e) => e._id === selectedId);
 
@@ -58,7 +61,6 @@ export default function EditEquipments({
   }, [isSuccess]);
 
   function onSubmit(data: TEditEquipmentFormProps) {
-    console.log(data);
     editEquipment({ editEquipmentDetails: data, selectedId });
   }
 
