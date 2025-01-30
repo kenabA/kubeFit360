@@ -26,16 +26,25 @@ exports.getAllEquipments = catchAsync(async (req, res, next) => {
     queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`),
   );
 
-  let query = Equipment.find(queryStr);
+  // 2) Sort
+  let query = Equipment.find(queryStr).sort('-installationDate');
 
-  if (req.query.sort) {
-    query = query.sort(req.query.sort);
-  } else {
-    query = query.sort('-installationDate');
+  // 3) Pagination
+  const page = req.query.page * 1 || 1;
+  const limit = req.query.limit * 1 || 2;
+  const skip = (page - 1) * limit;
+
+  query = query.skip(skip).limit(limit);
+
+  if (req.query.page) {
+    const numEquipments = await Equipment.countDocuments();
+    if (skip >= numEquipments) {
+      return next(new AppError(`This page does not exist`, 404));
+    }
   }
 
   const equipments = await query;
-  const count = await Equipment.countDocuments(req.query);
+  const count = await Equipment.countDocuments();
   res
     .status(200)
     .json({ status: 'success', data: { count, data: equipments } });
