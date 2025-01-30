@@ -11,13 +11,11 @@ function useEquipments() {
 
   const filters = Object.fromEntries(searchParams.entries());
 
-  // console.log(new URLSearchParams(filters).toString());
-
   const {
     data: { data },
     error,
   } = useSuspenseQuery<TApiResponse<TEquipmentData[]>, AxiosError>({
-    queryFn: apiEquipments,
+    queryFn: () => apiEquipments(filters),
     queryKey: ["equipments", filters],
   });
 

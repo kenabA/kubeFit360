@@ -52,8 +52,7 @@ export default function Equipments() {
     <section className="rounded-tl-xl overflow-y-auto custom-scrollbar flex-1">
       <div className="py-7 px-6">
         <Heading level={4} variant={"quaternary"} className="mb-4">
-          Make select reusable
-          {/* Equipments */}
+          Equipments
         </Heading>
         <div className="bg-white rounded-xl shadow-general h-full">
           <div className="p-[18px] flex items-center justify-end gap-4">
