@@ -1,4 +1,5 @@
 import {
+  ColumnDef,
   flexRender,
   getCoreRowModel,
   getSortedRowModel,
@@ -9,15 +10,18 @@ import { cn } from "@/lib/utils";
 import { useState } from "react";
 import NoData from "../../no-data/NoData";
 import { Icon } from "@iconify/react/dist/iconify.js";
+import Pagination from "../../pagination/Pagination";
 
-export default function GeneralTable({
+export default function GeneralTable<T>({
+  count,
   className,
   data,
   columns,
 }: {
+  count: number;
   className?: string;
-  data: any;
-  columns: any;
+  data: T[];
+  columns: ColumnDef<T>[];
 }) {
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
   const table = useReactTable({
@@ -33,7 +37,7 @@ export default function GeneralTable({
 
   return (
     <div className={cn("", className)}>
-      <table className="overflow-y-auto w-full divide-y divide-[#E2E7EB]">
+      <table className="overflow-y-auto w-full  divide-y divide-[#E2E7EB]">
         <thead className="bg-[#F9F9F9]">
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
@@ -63,28 +67,28 @@ export default function GeneralTable({
             </tr>
           ))}
         </thead>
-        {data.length > 0 && (
-          <tbody className="divide-y divide-gray-200">
-            {table.getRowModel().rows.map((row) => (
-              <tr onClick={row.getToggleSelectedHandler()} key={row.id}>
-                {row.getVisibleCells().map((cell) => (
-                  <td
-                    key={cell.id}
-                    className="py-[12px] text-gray-tertiary text-sm pr-6 leading-[1.8]"
-                  >
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        )}
+        <tbody className="divide-y divide-gray-200">
+          {table.getRowModel().rows.map((row) => (
+            <tr onClick={row.getToggleSelectedHandler()} key={row.id}>
+              {row.getVisibleCells().map((cell) => (
+                <td
+                  key={cell.id}
+                  className="py-[12px] text-gray-tertiary text-sm pr-6 leading-[1.8]"
+                >
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
       </table>
-      {data.length <= 0 && (
+      {data.length <= 0 ? (
         <NoData
           description="Get started by creating a new equipment."
           title="No items found"
         />
+      ) : (
+        <Pagination count={count} />
       )}
     </div>
   );

@@ -4,6 +4,7 @@ export type TEquipmentsData = {
   equipmentImage: string;
   serialNumber: string;
   installationDate: string;
+  lastMaintenance: string;
   status: string;
   brandName: string;
   description: string;

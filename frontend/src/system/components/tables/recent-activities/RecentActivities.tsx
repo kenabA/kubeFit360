@@ -9,11 +9,13 @@ import { cn } from "@/lib/utils";
 import { TRecentActivities } from "@/system/features/recent-activities/type";
 import ColumnDefinition from "./ColumnDefinition";
 import { Icon } from "@iconify/react/dist/iconify.js";
+import NoData from "../../no-data/NoData";
 
 export default function RecentActivities({
   data,
   className,
 }: {
+  count: number;
   data: TRecentActivities[];
   className?: string;
 }) {
@@ -76,23 +78,13 @@ export default function RecentActivities({
             </tr>
           ))}
         </tbody>
-        <tfoot>
-          {table.getFooterGroups().map((footerGroup) => (
-            <tr key={footerGroup.id}>
-              {footerGroup.headers.map((header) => (
-                <th key={header.id}>
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
-                        header.column.columnDef.footer,
-                        header.getContext()
-                      )}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </tfoot>
       </table>
+      {data.length <= 0 && (
+        <NoData
+          description="Get started by creating a new equipment."
+          title="No items found"
+        />
+      )}
     </div>
   );
 }

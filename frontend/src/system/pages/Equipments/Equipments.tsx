@@ -13,6 +13,7 @@ import EditEquipments from "@/system/features/equipments/edit-equipments/EditEqu
 import { ThemedDialog } from "@/components/dialog/Dialog";
 import Filter from "@/system/components/filter/Filter";
 import { filterFields } from "@/system/global/utils";
+import { TEquipmentsData } from "@/system/features/equipments/type";
 
 export default function Equipments() {
   const [openAdd, setOpenAdd] = useState<boolean>(false);
@@ -21,7 +22,7 @@ export default function Equipments() {
   const [openDelete, setOpenDelete] = useState<boolean>(false);
 
   const {
-    data: { data: equipments },
+    data: { data: equipments, count },
   } = useEquipments();
 
   const {
@@ -41,13 +42,6 @@ export default function Equipments() {
     }
   }, [isDeleteSuccess]);
 
-  // function handleOpenDelete() {
-  //   if (selectedIds.length <= 0) {
-  //     return;
-  //   }
-  //   setOpenDelete(true);
-  // }
-
   return (
     <section className="rounded-tl-xl overflow-y-auto custom-scrollbar flex-1">
       <div className="py-7 px-6">
@@ -56,29 +50,6 @@ export default function Equipments() {
         </Heading>
         <div className="bg-white rounded-xl shadow-general h-full">
           <div className="p-[18px] flex items-center justify-end gap-4">
-            {/* <ThemedDialog
-              dialogOpen={openDelete} // pass this
-              setDialogOpen={setOpenDelete} // pass this
-              mutationFn={() => deleteEquipment(selectedIds)} // pass this
-              disabled={selectedIds.length <= 0}
-              theme="destructive"
-              ctaText="Delete"
-              title="Delete Equipment"
-              message="Do you really want to delete this equipment?"
-            >
-              <div
-                onClick={handleOpenDelete}
-                className={cn(
-                  "font-normal flex gap-2 px-4 py-2",
-                  selectedIds.length <= 0
-                    ? "text-gray-400 cursor-not-allowed"
-                    : "text-gray"
-                )}
-              >
-                <Trash2 />
-                Delete
-              </div>
-            </ThemedDialog> */}
             <Filter entity={filterFields.maintainer} />
             <Button
               variant={"primary"}
@@ -88,7 +59,8 @@ export default function Equipments() {
               <Plus className="stroke-[3px]" /> Add Equipment
             </Button>
           </div>
-          <GeneralTable
+          <GeneralTable<TEquipmentsData>
+            count={count || 0}
             data={equipments}
             columns={ColumnDefinition(
               setSelectedIds,

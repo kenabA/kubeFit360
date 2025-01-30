@@ -29,7 +29,8 @@ export default function Dashboard() {
   useEffect(() => {
     const counts = equipments.reduce(
       (acc, eqp) => {
-        acc[eqp.status] = (acc[eqp.status] || 0) + 1;
+        acc[eqp.status as keyof typeof acc] =
+          (acc[eqp.status as keyof typeof acc] || 0) + 1;
         return acc;
       },
       { active: 0, inactive: 0, underMaintenance: 0 }
@@ -46,8 +47,9 @@ export default function Dashboard() {
   return (
     <section className="rounded-tl-xl overflow-y-auto custom-scrollbar flex-1">
       <div className="py-7 px-6">
-        <Heading level={4} variant={"quaternary"}>
-          Dashboard
+        <Heading level={4} variant={"quaternary"} className="text-xs">
+          huge error in the dashbaord. look at the block data and filter while
+          page active and clear the url if the next page is clicked
         </Heading>
         <div className="h-full grid grid-cols-3 grid-rows-[auto,1fr,1fr] gap-6 mt-6">
           <Block
@@ -85,7 +87,10 @@ export default function Dashboard() {
             className="bg-white shadow-general border col-span-2 h-full row-span-2 rounded-xl"
           >
             {!activitiesError ? (
-              <RecentActivities data={recentActivitiesData.data} />
+              <RecentActivities
+                count={count || 0}
+                data={recentActivitiesData.data}
+              />
             ) : (
               <p className="text-destructive">Error Fetching Activities Data</p>
             )}
