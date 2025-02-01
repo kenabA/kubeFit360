@@ -16,13 +16,14 @@ exports.addEquipment = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllEquipments = catchAsync(async (req, res, next) => {
-  const features = new APIFeatures(Equipment.find(), req.query)
-    .filter()
-    .sort()
-    .paginate();
+  const queryWithFilter = new APIFeatures(Equipment.find(), req.query).filter();
 
-  const equipments = await features.query;
-  const count = await Equipment.countDocuments();
+  const count = await Equipment.countDocuments(queryWithFilter.query);
+
+  const finalQuery = queryWithFilter.sort().paginate().query;
+
+  const equipments = await finalQuery;
+
   res
     .status(200)
     .json({ status: 'success', data: { count, data: equipments } });
@@ -82,4 +83,36 @@ exports.deleteEquipment = catchAsync(async (req, res, next) => {
   }
 
   res.status(204).json({ status: 'success' });
+});
+
+exports.getEquipmentStats = catchAsync(async (req, res, next) => {
+  const stats = await Equipment.aggregate([
+    {
+      $group: {
+        _id: null,
+        total: { $sum: 1 },
+        active: {
+          $sum: { $cond: [{ $eq: ['$status', 'active'] }, 1, 0] },
+        },
+        inactive: {
+          $sum: { $cond: [{ $eq: ['$status', 'inactive'] }, 1, 0] },
+        },
+        underMaintenance: {
+          $sum: { $cond: [{ $eq: ['$status', 'underMaintenance'] }, 1, 0] },
+        },
+      },
+    },
+    // Justifies how the output should look. 0 for hide, 1 for show
+    {
+      $project: {
+        _id: 0,
+        total: 1,
+        active: 1,
+        inactive: 1,
+        underMaintenance: 1,
+      },
+    },
+  ]);
+
+  res.status(200).json({ status: 'success', data: { data: stats } });
 });
