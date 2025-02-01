@@ -11,8 +11,15 @@ export type TEquipmentsData = {
   category: string;
 };
 
-export type TEquipmentStats = {
+export type TEquipmentsStats = {
+  total: number;
   active: number;
   inactive: number;
   underMaintenance: number;
 };
+
+// export type TEquipmentStats = {
+//   active: number;
+//   inactive: number;
+//   underMaintenance: number;
+// };

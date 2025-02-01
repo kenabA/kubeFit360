@@ -10,14 +10,17 @@ import { TRecentActivities } from "@/system/features/recent-activities/type";
 import ColumnDefinition from "./ColumnDefinition";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import NoData from "../../no-data/NoData";
+import Pagination from "../../pagination/Pagination";
 
 export default function RecentActivities({
   data,
   className,
+  resultCount,
 }: {
   count: number;
   data: TRecentActivities[];
   className?: string;
+  resultCount: number;
 }) {
   const table = useReactTable({
     data: data,
@@ -79,11 +82,13 @@ export default function RecentActivities({
           ))}
         </tbody>
       </table>
-      {data.length <= 0 && (
+      {data.length <= 0 ? (
         <NoData
           description="Get started by creating a new equipment."
           title="No items found"
         />
+      ) : (
+        <Pagination resultCount={resultCount} />
       )}
     </div>
   );

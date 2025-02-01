@@ -9,15 +9,14 @@ import { TEquipmentsData } from "./type";
 
 function useEquipments() {
   const [searchParams] = useSearchParams();
-
-  const filters = Object.fromEntries(searchParams.entries());
+  const params = Object.fromEntries(searchParams.entries());
 
   const {
     data: { data },
     error,
   } = useSuspenseQuery<TApiResponse<TEquipmentsData[]>, AxiosError>({
-    queryFn: () => apiEquipments(filters),
-    queryKey: ["equipments", filters],
+    queryFn: () => apiEquipments(params),
+    queryKey: ["equipments", params],
   });
 
   return { data, error };

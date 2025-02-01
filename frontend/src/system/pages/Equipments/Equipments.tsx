@@ -15,6 +15,8 @@ import Filter from "@/system/components/filter/Filter";
 import { filterFields } from "@/system/global/utils";
 import { TEquipmentsData } from "@/system/features/equipments/type";
 
+import TableSearch from "@/system/components/table-search/TableSearch";
+
 export default function Equipments() {
   const [openAdd, setOpenAdd] = useState<boolean>(false);
   const [openEdit, setOpenEdit] = useState<boolean>(false);
@@ -49,18 +51,21 @@ export default function Equipments() {
           Equipments
         </Heading>
         <div className="bg-white rounded-xl shadow-general h-full">
-          <div className="p-[18px] flex items-center justify-end gap-4">
-            <Filter entity={filterFields.maintainer} />
-            <Button
-              variant={"primary"}
-              className="font-medium"
-              onClick={handleOpenAdd}
-            >
-              <Plus className="stroke-[3px]" /> Add Equipment
-            </Button>
+          <div className="p-[18px] flex items-center justify-between ">
+            <TableSearch />
+            <div className="flex items-center gap-4">
+              <Filter entity={filterFields.maintainer} />
+              <Button
+                variant={"primary"}
+                className="font-medium"
+                onClick={handleOpenAdd}
+              >
+                <Plus className="stroke-[3px]" /> Add Equipment
+              </Button>
+            </div>
           </div>
           <GeneralTable<TEquipmentsData>
-            count={count || 0}
+            resultCount={count || 0}
             data={equipments}
             columns={ColumnDefinition(
               setSelectedIds,

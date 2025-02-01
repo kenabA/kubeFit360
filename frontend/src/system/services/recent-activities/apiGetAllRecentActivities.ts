@@ -5,11 +5,14 @@ import { AxiosError } from "axios";
 import { TRecentActivities } from "@/system/features/recent-activities/type";
 import { TApiResponse } from "@/system/global/types";
 
-async function apiGetAllRecentActivities(): Promise<
-  TApiResponse<TRecentActivities[]>
-> {
+async function apiGetAllRecentActivities(params: {
+  [key: string]: string;
+}): Promise<TApiResponse<TRecentActivities[]>> {
   try {
-    const response = await _axios.get(`${API_ROUTES.RECENT_ACTIVITIES}`);
+    const query = `?${new URLSearchParams(params).toString()}`;
+    const response = await _axios.get(
+      `${API_ROUTES.RECENT_ACTIVITIES}${query}`
+    );
 
     return response.data;
   } catch (err) {

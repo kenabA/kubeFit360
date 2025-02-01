@@ -3,14 +3,17 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { TRecentActivities } from "./type";
 import { AxiosError } from "axios";
 import { TApiResponse } from "@/system/global/types";
+import { useSearchParams } from "react-router";
 
 function useRecentActivities() {
+  const [searchParams] = useSearchParams();
+  const params = Object.fromEntries(searchParams.entries());
   const {
     data: { data },
     error,
   } = useSuspenseQuery<TApiResponse<TRecentActivities[]>, AxiosError>({
-    queryFn: apiGetAllRecentActivities,
-    queryKey: ["recentActivities"],
+    queryFn: () => apiGetAllRecentActivities(params),
+    queryKey: ["recentActivities", params],
   });
 
   return { data, error };

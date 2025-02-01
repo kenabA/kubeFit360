@@ -10,6 +10,9 @@ export const API_ROUTES = {
     FORGOT_PASSWORD: buildApiRoute("auth/forgotPassword"),
     RESET_PASSWORD: buildApiRoute("auth/resetPassword"),
   },
-  EQUIPMENTS: buildApiRoute("equipments"),
+  EQUIPMENTS: {
+    BASE: buildApiRoute("equipments"),
+    STATS: buildApiRoute("equipments/equipment-stats"),
+  },
   RECENT_ACTIVITIES: buildApiRoute("recentActivities"),
 };

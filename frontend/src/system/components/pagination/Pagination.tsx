@@ -3,24 +3,32 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router";
 
-export default function Pagination({ count }: { count: number }) {
+export default function Pagination({
+  resultCount,
+  className,
+}: {
+  resultCount: number;
+  className?: string;
+}) {
   const [params, setParams] = useSearchParams();
   const [page, setPage] = useState<number>(1);
-  const limit = 2;
+  const dataLimit = 10;
 
   useEffect(() => {
     if (!params.get("page")) {
       return;
     }
+
     const page = Number(params.get("page"));
     setPage(page);
   }, [params]);
 
-  const startRange = (page - 1) * limit + 1;
-  const endRange = Math.min(page * limit, count);
+  const startRange = (page - 1) * dataLimit + 1;
+  const endRange = Math.min(page * dataLimit, resultCount);
+  const onlyData = startRange === endRange;
 
   const pageButtons = Array.from(
-    { length: Math.round(count / limit) },
+    { length: Math.ceil(resultCount / dataLimit) },
     (_, i) => i + 1
   );
 
@@ -40,11 +48,16 @@ export default function Pagination({ count }: { count: number }) {
   }
 
   return (
-    <div className="py-[12px] border-t w-full px-6 flex items-center justify-between">
+    <div
+      className={cn(
+        "py-[12px] border-t w-full flex items-center justify-between",
+        className
+      )}
+    >
       <div className="text-accent text-sm font-bold">
-        {startRange} - {endRange}{" "}
+        {`${onlyData ? startRange : `${startRange} - ${endRange}`}`}{" "}
         <span className="text-gray-tertiary font-normal">
-          of <b>{count}</b>
+          of <b>{resultCount}</b>
         </span>
       </div>
       <div className="flex gap-4 items-center">

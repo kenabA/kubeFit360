@@ -13,12 +13,14 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import Pagination from "../../pagination/Pagination";
 
 export default function GeneralTable<T>({
-  count,
+  resultCount,
+
   className,
   data,
   columns,
 }: {
-  count: number;
+  resultCount: number;
+
   className?: string;
   data: T[];
   columns: ColumnDef<T>[];
@@ -88,7 +90,7 @@ export default function GeneralTable<T>({
           title="No items found"
         />
       ) : (
-        <Pagination count={count} />
+        <Pagination className="px-6" resultCount={resultCount} />
       )}
     </div>
   );
