@@ -14,6 +14,10 @@ class APIFeatures {
       queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`),
     );
 
+    if (this.queryString.search) {
+      console.log('search in there ');
+    }
+
     this.query.find(queryStr);
 
     return this;

@@ -9,7 +9,7 @@ exports.getAllRecentActivities = catchAsync(async (req, res, next) => {
   ).filter();
 
   const count = await RecentActivity.countDocuments(queryWithFilter.query);
-  const finalQuery = queryWithFilter.sort().paginate().query;
+  const finalQuery = queryWithFilter.paginate().query;
 
   const recentActivites = await finalQuery.populate('entity');
 
