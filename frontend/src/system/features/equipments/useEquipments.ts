@@ -12,14 +12,16 @@ function useEquipments() {
   const params = Object.fromEntries(searchParams.entries());
 
   const {
+    isPending,
     data: { data },
     error,
   } = useSuspenseQuery<TApiResponse<TEquipmentsData[]>, AxiosError>({
     queryFn: () => apiEquipments(params),
+
     queryKey: ["equipments", params],
   });
 
-  return { data, error };
+  return { isPending, data, error };
 }
 
 export default useEquipments;

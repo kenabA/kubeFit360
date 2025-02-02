@@ -1,9 +1,10 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { Search } from "lucide-react";
 import { useEffect, useState } from "react";
+import { Oval } from "react-loader-spinner";
 import { useSearchParams } from "react-router";
 
-export default function TableSearch() {
+export default function TableSearch({ isPending }: { isPending: boolean }) {
   const [searchValue, setSearchValue] = useState<string>("");
   const [params, setParams] = useSearchParams();
 
@@ -15,6 +16,9 @@ export default function TableSearch() {
   }, [params]);
 
   function handleSearch() {
+    if (params.get("page")) {
+      params.set("page", "1");
+    }
     if (!searchValue) {
       params.delete("search");
     } else {
@@ -22,6 +26,8 @@ export default function TableSearch() {
     }
     setParams(params);
   }
+
+  console.log(isPending);
 
   return (
     <div className="w-[420px] h-[44px] border  rounded-[8px] border-slate-300 py-2.5 ps-4 pe-2 flex items-center gap-2">
@@ -48,14 +54,24 @@ export default function TableSearch() {
           onClick={handleSearch}
           className="bg-primary p-1.5 transition-colors rounded-md hover:bg-primary-hover"
         >
-          <Search className="text-white" size={16} strokeWidth={3} />
+          {isPending ? (
+            <Oval
+              height="16"
+              strokeWidth={8}
+              secondaryColor="white"
+              width="16"
+              color="white"
+              wrapperStyle={{}}
+            />
+          ) : (
+            <Search className="text-white" size={16} strokeWidth={3} />
+          )}
         </button>
       )}
     </div>
   );
 }
 
-// 1. Complete the search feature
 // 2. Complete the design of the view feature
 // 3. Complete the add image of the equipment feature.
 // 4. Complete the documentation

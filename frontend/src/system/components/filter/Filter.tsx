@@ -29,6 +29,11 @@ export default function Filter({ entity }: { entity: TEntity }) {
         searchParams.set(filter.field, filter.value);
       });
     }
+
+    if (searchParams.get("page")) {
+      searchParams.set("page", "1");
+    }
+
     setSearchParams(searchParams);
     setFilterOpen(false);
   }
@@ -39,7 +44,7 @@ export default function Filter({ entity }: { entity: TEntity }) {
   };
 
   return (
-    <Popover open={filterOpen} onOpenChange={setFilterOpen}>
+    <Popover modal={true} open={filterOpen} onOpenChange={setFilterOpen}>
       <PopoverTrigger asChild className="cursor-pointer group">
         <div className={cn("flex items-center gap-2 px-4 py-2 ")}>
           <FilterIcon className="text-gray-tertiary group-hover:text-gray size-5" />

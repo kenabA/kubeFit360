@@ -26,6 +26,7 @@ import { TApiResponse } from "@/system/global/types";
 import CustomSelect from "@/system/components/select/form-select/FormSelect";
 import { statusOptions } from "@/system/global/utils";
 import { useSearchParams } from "react-router";
+import { Oval } from "react-loader-spinner";
 
 export default function EditEquipments({
   selectedId,
@@ -48,7 +49,7 @@ export default function EditEquipments({
     control,
     reset,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm<TEditEquipmentFormProps>({
     resolver: zodResolver(editEquipmentSchema),
   });
@@ -101,11 +102,22 @@ export default function EditEquipments({
             form="equipment-form"
             type="submit"
             onClick={handleSubmit(onSubmit)}
-            className="px-6 shadow-none hover:shadow-none"
+            className="px-6 shadow-none hover:shadow-none h-10 w-20"
             variant={"primary"}
-            disabled={isPending}
+            disabled={isPending || !isDirty}
           >
-            Save
+            {isPending ? (
+              <Oval
+                height="280"
+                strokeWidth={8}
+                secondaryColor="white"
+                width="280"
+                color="white"
+                wrapperStyle={{}}
+              />
+            ) : (
+              "Save"
+            )}
           </Button>
         </>
       }

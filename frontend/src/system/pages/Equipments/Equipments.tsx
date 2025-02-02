@@ -25,6 +25,7 @@ export default function Equipments() {
 
   const {
     data: { data: equipments, count },
+    isPending,
   } = useEquipments();
 
   const {
@@ -52,7 +53,7 @@ export default function Equipments() {
         </Heading>
         <div className="bg-white rounded-xl shadow-general h-full">
           <div className="p-[18px] flex items-center justify-between ">
-            <TableSearch />
+            <TableSearch isPending={isPending} />
             <div className="flex items-center gap-4">
               <Filter entity={filterFields.maintainer} />
               <Button
