@@ -55,7 +55,9 @@ export function FormModal({
             </DialogDescription>
           </div>
         </DialogHeader>
-        <div className="py-4 px-6 border-b">{children}</div>
+        <div className="py-4 px-6 border-b max-h-[550px] overflow-hidden overflow-y-auto custom-scrollbar">
+          {children}
+        </div>
         <DialogFooter className="flex items-center gap-1 px-6 py-4">
           {footer}
         </DialogFooter>

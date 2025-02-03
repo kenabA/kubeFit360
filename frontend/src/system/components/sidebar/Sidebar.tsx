@@ -80,6 +80,7 @@ export default function Sidebar() {
         })}
       </ul>
       <div className="pt-[14px] w-full flex justify-center">
+        {/* TODO  : Add a logout functionality */}
         <ThemedDialog
           theme="warn"
           ctaText="Logout"

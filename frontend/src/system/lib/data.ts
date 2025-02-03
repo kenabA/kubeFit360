@@ -1,3 +1,5 @@
+// TODO : Manage types here
+
 export type TOptions = {
   label: string;
   value: string;

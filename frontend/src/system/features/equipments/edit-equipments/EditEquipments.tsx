@@ -88,6 +88,7 @@ export default function EditEquipments({
   async function onSubmit(data: TEditEquipmentFormProps) {
     setIsPending(true);
     if (localImage) {
+      // TODO : Replace the current image with the new one
       const equipmentImageUrl = await uploadImage(localImage as File);
       setValue("equipmentImage", equipmentImageUrl, { shouldDirty: true });
       data = { ...data, equipmentImage: equipmentImageUrl };
@@ -119,6 +120,7 @@ export default function EditEquipments({
         shouldDirty: true,
       });
     } else {
+      // TODO : Handle Remove of the equipment
       alert(123);
     }
   }
