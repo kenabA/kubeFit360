@@ -14,7 +14,8 @@ import { TEquipmentsData } from "./type";
 export default function ColumnDefinition(
   setSelectedIds: React.Dispatch<React.SetStateAction<string>>,
   setOpenEdit: React.Dispatch<React.SetStateAction<boolean>>,
-  setOpenDelete: Dispatch<SetStateAction<boolean>>
+  setOpenDelete: Dispatch<SetStateAction<boolean>>,
+  setOpenView: Dispatch<SetStateAction<boolean>>
 ): ColumnDef<TEquipmentsData>[] {
   // Toggle the selection of a single row
   const toggleRowSelection = (id: string) => {
@@ -62,7 +63,15 @@ export default function ColumnDefinition(
       header: () => <span className="pl-[30px]">Equipment Name</span>,
       cell: ({ row }) => (
         <span className="text-gray flex items-center gap-3 pl-[30px]">
-          <figure className="size-[30px] rounded-full bg-secondary"></figure>
+          <figure className="size-[30px] rounded-full bg-secondary overflow-hidden shadow-button border">
+            {row.original.equipmentImage && (
+              <img
+                className="size-full object-cover object-center"
+                src={row.original.equipmentImage}
+                alt="An icon of the equipment"
+              />
+            )}
+          </figure>
           {row.original.equipmentName || "--"}
         </span>
       ),
@@ -112,7 +121,13 @@ export default function ColumnDefinition(
             onOpenAutoFocus={(e) => e.preventDefault()}
             className="flex rounded-[8px] shadow-general flex-col gap-3 p-3 w-[120px]"
           >
-            <button className="flex items-center gap-[6px] group cursor-pointer">
+            <button
+              onClick={() => {
+                toggleRowSelection(row.original._id);
+                setOpenView(true);
+              }}
+              className="flex items-center gap-[6px] group cursor-pointer"
+            >
               <Icon
                 icon={"ri:eye-line"}
                 className="text-gray-tertiary group-hover:text-gray"

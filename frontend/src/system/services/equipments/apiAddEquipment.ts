@@ -3,7 +3,7 @@ import { _axios } from "@/config/axios";
 import { AxiosError } from "axios";
 import { TEquipmentData } from "./type";
 import { TAddEquipmentFormProps } from "@/system/features/equipments/add-equipments/type";
-import { TApiResponse } from "@/system/global/types";
+import { TApiResponse } from "@/system/lib/types";
 
 async function apiAddEquipments(
   equipmentData: TAddEquipmentFormProps

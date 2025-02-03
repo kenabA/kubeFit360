@@ -5,7 +5,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
-import { TEntity } from "@/system/global/utils";
+import { TEntity } from "@/system/lib/data";
 import { FilterIcon } from "lucide-react";
 import BaseSelect from "../select/base-select/BaseSelect";
 import { useState } from "react";

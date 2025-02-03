@@ -18,8 +18,4 @@ export type TEquipmentsStats = {
   underMaintenance: number;
 };
 
-// export type TEquipmentStats = {
-//   active: number;
-//   inactive: number;
-//   underMaintenance: number;
-// };
+export type TEquipmentCategory = "cardio" | "flexibility" | "strength";

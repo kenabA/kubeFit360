@@ -1,4 +1,4 @@
-import { TApiResponse } from "@/system/global/types";
+import { TApiResponse } from "@/system/lib/types";
 
 import apiEquipments from "@/system/services/equipments/apiEquipments";
 

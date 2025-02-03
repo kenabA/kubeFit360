@@ -1,4 +1,4 @@
-import { TOptions } from "@/system/global/utils";
+import { TOptions } from "@/system/lib/data";
 
 export type TFormSelect = {
   field: any;

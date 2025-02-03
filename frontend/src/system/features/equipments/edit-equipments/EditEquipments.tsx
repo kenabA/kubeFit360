@@ -6,7 +6,7 @@ import { Controller, useForm } from "react-hook-form";
 
 import BaseInput from "@/system/components/input/base-input/BaseInput";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   Select,
   SelectTrigger,
@@ -22,17 +22,21 @@ import { useQueryClient } from "@tanstack/react-query";
 import useEditEquipment from "./useEditEquipment";
 import { editEquipmentSchema } from "./validator";
 import { TEquipmentsData } from "../type";
-import { TApiResponse } from "@/system/global/types";
+import { TApiResponse } from "@/system/lib/types";
 import CustomSelect from "@/system/components/select/form-select/FormSelect";
-import { statusOptions } from "@/system/global/utils";
+import { statusOptions } from "@/system/lib/data";
 import { useSearchParams } from "react-router";
 import { Oval } from "react-loader-spinner";
+import BaseImageInput from "@/system/components/input/base-image-input/BaseImageInput";
+import { handleFileChange, uploadImage } from "@/system/lib/helpers";
 
 export default function EditEquipments({
   selectedId,
   isDialogOpen,
   setIsDialogOpen,
 }: TEditEquipmentProps) {
+  const [localImage, setLocalImage] = useState<File | string | undefined>();
+  const [isPending, setIsPending] = useState<boolean>(false);
   const [searchParams] = useSearchParams();
   const filters = Object.fromEntries(searchParams.entries());
   const queryClient = useQueryClient();
@@ -41,11 +45,12 @@ export default function EditEquipments({
   >(["equipments", filters]);
 
   const equipment = allEquipment?.data.data?.find((e) => e._id === selectedId);
-
-  const { editEquipment, isPending, isSuccess } = useEditEquipment();
+  const { editEquipment, isSuccess } = useEditEquipment();
 
   const {
     register,
+
+    setValue,
     control,
     reset,
     handleSubmit,
@@ -56,31 +61,67 @@ export default function EditEquipments({
 
   useEffect(() => {
     if (isSuccess) {
+      setIsPending(false);
       setIsDialogOpen(false);
       reset();
     }
   }, [isSuccess]);
 
-  function onSubmit(data: TEditEquipmentFormProps) {
-    editEquipment({ editEquipmentDetails: data, selectedId });
-  }
-
-  function handleCancel() {
-    setIsDialogOpen(false);
-    reset();
-  }
-
   useEffect(() => {
     if (!equipment) return;
     reset({
       equipmentName: equipment?.equipmentName,
+      equipmentImage: equipment?.equipmentImage,
       description: equipment?.description,
       serialNumber: equipment?.serialNumber,
       brandName: equipment?.brandName,
       status: equipment?.status,
       category: equipment?.category,
     });
+    if (equipment.equipmentImage) {
+      setLocalImage(equipment.equipmentImage);
+    } else {
+      setLocalImage(undefined);
+    }
   }, [reset, equipment]);
+
+  async function onSubmit(data: TEditEquipmentFormProps) {
+    setIsPending(true);
+    if (localImage) {
+      const equipmentImageUrl = await uploadImage(localImage as File);
+      setValue("equipmentImage", equipmentImageUrl, { shouldDirty: true });
+      data = { ...data, equipmentImage: equipmentImageUrl };
+    }
+    editEquipment({ editEquipmentDetails: data, selectedId });
+  }
+
+  const handleLocalFileChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    handleFileChange<TEditEquipmentFormProps>(
+      "equipmentImage",
+      event,
+      setLocalImage,
+      setValue
+    );
+  };
+
+  function handleCancel() {
+    setIsDialogOpen(false);
+    setLocalImage(equipment?.equipmentImage);
+    reset();
+  }
+
+  function handleRemove() {
+    if (typeof localImage !== "string") {
+      setLocalImage(equipment?.equipmentImage);
+      setValue("equipmentImage", equipment?.equipmentImage, {
+        shouldDirty: true,
+      });
+    } else {
+      alert(123);
+    }
+  }
 
   return (
     <FormModal
@@ -211,6 +252,16 @@ export default function EditEquipments({
             )}
           />
         </div>
+        <BaseImageInput
+          handleFileChange={handleLocalFileChange}
+          handleRemove={handleRemove}
+          localImage={localImage}
+          setLocalImage={setLocalImage}
+          error={errors.equipmentImage}
+          label="Equipment Image"
+          name="equipmentImage"
+          type="file"
+        />
       </form>
     </FormModal>
   );

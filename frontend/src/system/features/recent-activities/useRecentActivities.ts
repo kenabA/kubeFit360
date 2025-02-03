@@ -2,7 +2,7 @@ import apiGetAllRecentActivities from "@/system/services/recent-activities/apiGe
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { TRecentActivities } from "./type";
 import { AxiosError } from "axios";
-import { TApiResponse } from "@/system/global/types";
+import { TApiResponse } from "@/system/lib/types";
 import { useSearchParams } from "react-router";
 
 function useRecentActivities() {

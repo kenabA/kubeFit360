@@ -12,12 +12,14 @@ import ColumnDefinition from "@/system/features/equipments/ColumnDefinition";
 import EditEquipments from "@/system/features/equipments/edit-equipments/EditEquipments";
 import { ThemedDialog } from "@/components/dialog/Dialog";
 import Filter from "@/system/components/filter/Filter";
-import { filterFields } from "@/system/global/utils";
+import { filterFields } from "@/system/lib/data";
 import { TEquipmentsData } from "@/system/features/equipments/type";
 
 import TableSearch from "@/system/components/table-search/TableSearch";
+import ViewEquipment from "@/system/features/equipments/view-equipment/ViewEquipment";
 
 export default function Equipments() {
+  const [openView, setOpenView] = useState<boolean>(false);
   const [openAdd, setOpenAdd] = useState<boolean>(false);
   const [openEdit, setOpenEdit] = useState<boolean>(false);
   const [selectedIds, setSelectedIds] = useState<string>("");
@@ -71,11 +73,19 @@ export default function Equipments() {
             columns={ColumnDefinition(
               setSelectedIds,
               setOpenEdit,
-              setOpenDelete
+              setOpenDelete,
+              setOpenView
             )}
           />
         </div>
       </div>
+
+      <ViewEquipment
+        selectedId={selectedIds}
+        isDialogOpen={openView}
+        setIsDialogOpen={setOpenView}
+        setOpenEdit={setOpenEdit}
+      />
       <AddEquipments isDialogOpen={openAdd} setIsDialogOpen={setOpenAdd} />
       <EditEquipments
         selectedId={selectedIds}

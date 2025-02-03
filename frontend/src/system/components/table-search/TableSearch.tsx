@@ -27,8 +27,6 @@ export default function TableSearch({ isPending }: { isPending: boolean }) {
     setParams(params);
   }
 
-  console.log(isPending);
-
   return (
     <div className="w-[420px] h-[44px] border  rounded-[8px] border-slate-300 py-2.5 ps-4 pe-2 flex items-center gap-2">
       {!searchValue && (

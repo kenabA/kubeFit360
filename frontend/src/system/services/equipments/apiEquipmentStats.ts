@@ -1,7 +1,7 @@
 import { API_ROUTES } from "@/config/apiRoutes";
 import { _axios } from "@/config/axios";
 import { AxiosError } from "axios";
-import { TApiResponse } from "@/system/global/types";
+import { TApiResponse } from "@/system/lib/types";
 import { TEquipmentsStats } from "@/system/features/equipments/type";
 
 async function apiEquipmentsStats(): Promise<TApiResponse<TEquipmentsStats[]>> {

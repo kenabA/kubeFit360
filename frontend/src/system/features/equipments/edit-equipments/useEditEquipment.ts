@@ -25,7 +25,7 @@ function useEditEquipment() {
       toast({
         variant: "success",
         title: "Success",
-        description: "Equipment added successfully",
+        description: "Equipment edited successfully",
       });
     },
     onError: (err) => {

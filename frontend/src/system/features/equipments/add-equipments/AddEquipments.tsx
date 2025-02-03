@@ -6,7 +6,7 @@ import { Controller, useForm } from "react-hook-form";
 import { TAddEquipmentFormProps, TAddEquipmentProps } from "./type";
 import BaseInput from "@/system/components/input/base-input/BaseInput";
 import useAddEquipment from "./useAddEquipment";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   Select,
   SelectTrigger,
@@ -16,36 +16,61 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { Oval } from "react-loader-spinner";
+import BaseImageInput from "@/system/components/input/base-image-input/BaseImageInput";
+import { handleFileChange, uploadImage } from "@/system/lib/helpers";
 
 export default function AddEquipments({
   isDialogOpen,
   setIsDialogOpen,
 }: TAddEquipmentProps) {
+  const [localImage, setLocalImage] = useState<File | string | undefined>();
+  const [isPending, setIsPending] = useState<boolean>(false);
   const {
     register,
     control,
     reset,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<TAddEquipmentFormProps>({
     resolver: zodResolver(equipmentSchema),
   });
 
-  const { addEquipment, isPending, isSuccess } = useAddEquipment();
+  const { addEquipment, isSuccess } = useAddEquipment();
 
   useEffect(() => {
     if (isSuccess) {
+      setIsPending(false);
       setIsDialogOpen(false);
+      setLocalImage(undefined);
       reset();
     }
   }, [isSuccess]);
 
-  function onSubmit(data: TAddEquipmentFormProps) {
+  async function onSubmit(data: TAddEquipmentFormProps) {
+    setIsPending(true);
+    if (localImage) {
+      const equipmentImageUrl = await uploadImage(localImage as File);
+      setValue("equipmentImage", equipmentImageUrl);
+      data = { ...data, equipmentImage: equipmentImageUrl };
+    }
     addEquipment(data);
   }
 
+  const handleLocalFileChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    handleFileChange<TAddEquipmentFormProps>(
+      "equipmentImage",
+      event,
+      setLocalImage,
+      setValue
+    );
+  };
+
   function handleCancel() {
     setIsDialogOpen(false);
+    setLocalImage(undefined);
     reset();
   }
 
@@ -164,6 +189,16 @@ export default function AddEquipments({
             </p>
           )}
         </div>
+        <BaseImageInput
+          handleFileChange={handleLocalFileChange}
+          handleRemove={() => setLocalImage(undefined)}
+          localImage={localImage}
+          setLocalImage={setLocalImage}
+          error={errors.equipmentImage}
+          label="Equipment Image"
+          name="equipmentImage"
+          type="file"
+        />
       </form>
     </FormModal>
   );

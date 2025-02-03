@@ -3,7 +3,7 @@ import { _axios } from "@/config/axios";
 import { AxiosError } from "axios";
 
 import { TRecentActivities } from "@/system/features/recent-activities/type";
-import { TApiResponse } from "@/system/global/types";
+import { TApiResponse } from "@/system/lib/types";
 
 async function apiGetAllRecentActivities(params: {
   [key: string]: string;
