@@ -5,7 +5,6 @@ import GeneralTable from "@/system/components/tables/general-table/GeneralTable"
 import useEquipments from "@/system/features/equipments/useEquipments";
 import { Plus } from "lucide-react";
 import { useEffect, useState } from "react";
-import AddEquipments from "../../features/equipments/add-equipments/AddEquipments";
 
 import useDeleteEquipments from "@/system/features/equipments/delete-equipments/useDeleteEquipment";
 import ColumnDefinition from "@/system/features/equipments/ColumnDefinition";
@@ -17,6 +16,7 @@ import { TEquipmentsData } from "@/system/features/equipments/type";
 
 import TableSearch from "@/system/components/table-search/TableSearch";
 import ViewEquipment from "@/system/features/equipments/view-equipment/ViewEquipment";
+import AddEquipments from "@/system/features/equipments/add-equipments/AddEquipments";
 
 export default function Equipments() {
   const [openView, setOpenView] = useState<boolean>(false);

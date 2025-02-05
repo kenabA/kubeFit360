@@ -1,6 +1,5 @@
 import { Heading } from "@/components/heading/Heading";
 import { Block, Piechart } from "@/system/components/index";
-import RecentActivities from "../../components/tables/recent-activities/RecentActivities";
 
 import ErrorPage from "@/components/errorPage/ErrorPage";
 import { useEffect, useMemo, useState } from "react";
@@ -11,8 +10,9 @@ import {
 } from "@/system/features/equipments/equipmentChartData";
 import useRecentActivities from "@/system/features/recent-activities/useRecentActivities";
 import useEquipmentsStats from "@/system/features/equipments/useEquipmentsStats";
+import RecentActivities from "@/system/components/tables/recent-activities/RecentActivities";
 
-export default function Dashboard() {
+export default function MaintainerDashboard() {
   const [stats, setStats] = useState<TEquipmentsStats>({
     active: 0,
     inactive: 0,

@@ -4,7 +4,7 @@ import { TSidebarData } from "./types";
 export const sidebarData: TSidebarData[] = [
   {
     title: "Dashboard",
-    to: ROUTES.DASHBOARD,
+    to: ROUTES.DASHBOARD.MAINTAINER,
     icon: "lucide:home",
   },
   {
