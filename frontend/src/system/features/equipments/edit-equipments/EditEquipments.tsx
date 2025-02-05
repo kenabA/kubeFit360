@@ -203,6 +203,7 @@ export default function EditEquipments({
             register={register}
           />
         </div>
+        {/* TODO : Use the custom Select field  */}
         <div className="w-full">
           <label
             htmlFor="category"
