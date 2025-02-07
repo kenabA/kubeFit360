@@ -20,7 +20,9 @@ const createAndSendToken = (user, statusCode, res) => {
   }
 
   res.cookie('jwt', token, cookieOptions);
-  res.status(statusCode).json({ status: 'Success', token, data: { user } });
+  res
+    .status(statusCode)
+    .json({ status: 'Success', token, data: { data: user } });
 };
 
 module.exports = createAndSendToken;

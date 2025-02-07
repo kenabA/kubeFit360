@@ -3,7 +3,38 @@ const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const filterObj = require('../utils/filterObj');
 
+exports.getClientStats = catchAsync(async (req, res, next) => {
+  const stats = await User.aggregate([
+    {
+      $match: { role: 'member' },
+    },
+    {
+      $group: {
+        _id: null,
+        total: { $sum: 1 },
+        active: {
+          $sum: { $cond: [{ $eq: ['$status', 'active'] }, 1, 0] },
+        },
+        inactive: {
+          $sum: { $cond: [{ $eq: ['$status', 'inactive'] }, 1, 0] },
+        },
+      },
+    },
+    {
+      $project: {
+        _id: 0,
+        total: 1,
+        active: 1,
+        inactive: 1,
+      },
+    },
+  ]);
+
+  res.status(200).json({ status: 'success', data: { data: { stats } } });
+});
+
 exports.getAllUsers = catchAsync(async (req, res, next) => {
+  console.log('first');
   const { role } = req.query;
   const query = role ? { role } : {};
   const users = await User.find(query);

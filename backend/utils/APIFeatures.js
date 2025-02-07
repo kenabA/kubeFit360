@@ -15,12 +15,32 @@ class APIFeatures {
     );
 
     if (this.queryString.search) {
-      console.log('search in there ');
+      this.search(queryStr);
+    } else {
+      this.query.find(queryStr);
     }
 
-    this.query.find(queryStr);
-
     return this;
+  }
+
+  search(queryStr) {
+    const searchRegex = { $regex: this.queryString.search, $options: 'i' };
+    const searchQuery = {
+      ...queryStr,
+      $or: [
+        { equipmentName: searchRegex },
+        { serialNumber: searchRegex },
+        { brandName: searchRegex },
+      ],
+    };
+
+    delete searchQuery['search'];
+
+    console.log(
+      'Final Query Sent to MongoDB:',
+      JSON.stringify(searchQuery, null, 2),
+    );
+    this.query.find(searchQuery);
   }
 
   sort() {
