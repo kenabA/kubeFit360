@@ -21,11 +21,13 @@ export default function ViewEquipment({
   isDialogOpen,
   setIsDialogOpen,
   setOpenEdit,
+  edit = true,
 }: {
   selectedId: string;
   isDialogOpen: boolean;
   setIsDialogOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setOpenEdit: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpenEdit?: React.Dispatch<React.SetStateAction<boolean>>;
+  edit: boolean;
 }) {
   const [searchParams] = useSearchParams();
   const filters = Object.fromEntries(searchParams.entries());
@@ -91,15 +93,17 @@ export default function ViewEquipment({
                   </li>
                 </ul>
               </DialogDescription>
-              <DialogFooter>
-                <Button
-                  variant={"primary"}
-                  onClick={() => setOpenEdit(true)}
-                  className="py-1.5 font-medium px-6"
-                >
-                  Edit
-                </Button>
-              </DialogFooter>
+              {edit && (
+                <DialogFooter>
+                  <Button
+                    variant={"primary"}
+                    onClick={() => setOpenEdit?.(true)}
+                    className="py-1.5 font-medium px-6"
+                  >
+                    Edit
+                  </Button>
+                </DialogFooter>
+              )}
             </article>
           </div>
         )}

@@ -20,7 +20,6 @@ function useLogin() {
       });
       setUser(userData.data.data);
       queryClient.setQueryData(["user"], userData);
-      console.log(userData);
       switch (userData.data.data.role) {
         case "maintainer":
           handleNavigate("/maintainer-dashboard");

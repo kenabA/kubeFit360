@@ -1,30 +1,30 @@
 import {
+  ColumnDef,
   flexRender,
   getCoreRowModel,
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-
 import { cn } from "@/lib/utils";
-import { TRecentActivities } from "@/system/features/recent-activities/type";
-import ColumnDefinition from "./ColumnDefinition";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import NoData from "../../no-data/NoData";
 import Pagination from "../../pagination/Pagination";
 
-export default function RecentActivities({
+export default function RecentActivities<T>({
+  columns,
   data,
   className,
   resultCount,
 }: {
+  columns: ColumnDef<T>[];
   count: number;
-  data: TRecentActivities[];
+  data: T[];
   className?: string;
   resultCount: number;
 }) {
   const table = useReactTable({
     data: data,
-    columns: ColumnDefinition(),
+    columns: columns,
     getSortedRowModel: getSortedRowModel(),
     getCoreRowModel: getCoreRowModel(),
   });

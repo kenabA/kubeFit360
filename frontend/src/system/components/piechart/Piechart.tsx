@@ -9,10 +9,12 @@ export default function Component({
   count,
   stats,
   config,
+  entity,
 }: {
   count: number | undefined;
   stats: any;
   config: any;
+  entity: string;
 }) {
   return (
     <ChartContainer
@@ -53,7 +55,7 @@ export default function Component({
                       y={(viewBox.cy || 0) + 24}
                       className="fill-muted-foreground"
                     >
-                      Equipments
+                      {entity}
                     </tspan>
                   </text>
                 );

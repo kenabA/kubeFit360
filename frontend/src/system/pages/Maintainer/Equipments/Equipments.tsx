@@ -81,6 +81,7 @@ export default function Equipments() {
       </div>
 
       <ViewEquipment
+        edit
         selectedId={selectedIds}
         isDialogOpen={openView}
         setIsDialogOpen={setOpenView}

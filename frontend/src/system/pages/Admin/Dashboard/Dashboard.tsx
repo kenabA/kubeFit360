@@ -1,22 +1,37 @@
+import ErrorPage from "@/components/errorPage/ErrorPage";
 import { Heading } from "@/components/heading/Heading";
 import { Areachart, Block, Piechart } from "@/system/components";
+import ColumnDefinition from "@/system/components/tables/recent-activities/ColumnDefinition";
 import RecentActivities from "@/system/components/tables/recent-activities/RecentActivities";
 import { equipmentChartConfig } from "@/system/features/equipments/equipmentChartData";
-import { TEquipmentsStats } from "@/system/features/equipments/type";
+import useEquipmentsAnalytics from "@/system/features/equipments/useEquipmentsAnalytics";
+
+import ViewEquipment from "@/system/features/equipments/view-equipment/ViewEquipment";
 
 import useRecentActivities from "@/system/features/recent-activities/useRecentActivities";
+import { memberChartConfig } from "@/system/features/users/members/membersChartData";
+import useMembersAnalytics from "@/system/features/users/members/useMembersAnalytics";
 import { useState } from "react";
 
 export default function AdminDashboard() {
-  const [stats] = useState<TEquipmentsStats>({
-    active: 0,
-    inactive: 0,
-    underMaintenance: 0,
-    total: 0,
-  });
+  const [selectedIds, setSelectedIds] = useState<string>("");
+  const [openView, setOpenView] = useState<boolean>(false);
 
   const { data: recentActivitiesData, error: activitiesError } =
     useRecentActivities();
+
+  const {
+    stats: equipmentStats,
+    chartData: equipmentChartData,
+    error: equipmentError,
+  } = useEquipmentsAnalytics();
+
+  const {
+    stats: memberStats,
+    chartData: memberChartData,
+    error: memberError,
+  } = useMembersAnalytics();
+
   return (
     <section className="rounded-tl-xl overflow-y-auto custom-scrollbar flex-1">
       <div className="py-7 px-6">
@@ -27,30 +42,19 @@ export default function AdminDashboard() {
           <Block
             type={"figure"}
             icon="lucide:package"
-            title="equipments visualization"
+            title="Members Status"
             className="col-span-full md:col-[1/2] lg:col-[1/2]"
           >
-            <Piechart
-              config={equipmentChartConfig}
-              stats={[
-                {
-                  status: "active",
-                  count: 25,
-                  fill: "#FF5733",
-                },
-                {
-                  status: "inactive",
-                  count: 10,
-                  fill: "#3498DB",
-                },
-                {
-                  status: "pending",
-                  count: 15,
-                  fill: "#F1C40F",
-                },
-              ]}
-              count={23}
-            />
+            {memberError ? (
+              <ErrorPage errMsg={memberError.message} />
+            ) : (
+              <Piechart
+                entity="Members"
+                stats={memberChartData}
+                config={memberChartConfig}
+                count={memberStats.total}
+              />
+            )}
           </Block>
           <Block
             type={"figure"}
@@ -59,22 +63,23 @@ export default function AdminDashboard() {
             className="col-span-full md:col-[2/-1] lg:col-[2/3]"
           >
             <Piechart
+              entity="Members"
               config={equipmentChartConfig}
               stats={[
                 {
                   status: "active",
                   count: 25,
-                  fill: "#FF5733",
+                  fill: "#1A5E63",
                 },
                 {
                   status: "inactive",
                   count: 10,
-                  fill: "#3498DB",
+                  fill: "#7FD7DC",
                 },
                 {
                   status: "pending",
                   count: 15,
-                  fill: "#F1C40F",
+                  fill: "#CFF0F2",
                 },
               ]}
               count={23}
@@ -86,27 +91,16 @@ export default function AdminDashboard() {
             title="equipments visualization"
             className="col-span-full md:col-[1/2] lg:col-[3/4]"
           >
-            <Piechart
-              config={equipmentChartConfig}
-              stats={[
-                {
-                  status: "active",
-                  count: 25,
-                  fill: "#FF5733",
-                },
-                {
-                  status: "inactive",
-                  count: 10,
-                  fill: "#3498DB",
-                },
-                {
-                  status: "pending",
-                  count: 15,
-                  fill: "#F1C40F",
-                },
-              ]}
-              count={23}
-            />
+            {equipmentError ? (
+              <ErrorPage errMsg={equipmentError.message} />
+            ) : (
+              <Piechart
+                entity="Equipments"
+                stats={equipmentChartData}
+                config={equipmentChartConfig}
+                count={equipmentStats.total}
+              />
+            )}
           </Block>
           <div className="relative overflow-hidden shadow-general col-span-full md:col-[2/-1] lg:col-[1/2]">
             <div className="bg-primary absolute  -top-40 w-full h-48 rounded-full filter blur-lg opacity-[0.1]"></div>
@@ -130,8 +124,9 @@ export default function AdminDashboard() {
           >
             {!activitiesError ? (
               <RecentActivities
+                columns={ColumnDefinition(setOpenView, setSelectedIds)}
                 resultCount={recentActivitiesData.count || 0}
-                count={stats.total || 0}
+                count={equipmentStats.total || 0}
                 data={recentActivitiesData.data}
               />
             ) : (
@@ -140,6 +135,12 @@ export default function AdminDashboard() {
           </Block>
         </div>
       </div>
+      <ViewEquipment
+        selectedId={selectedIds}
+        isDialogOpen={openView}
+        setIsDialogOpen={setOpenView}
+        edit={false}
+      />
     </section>
   );
 }

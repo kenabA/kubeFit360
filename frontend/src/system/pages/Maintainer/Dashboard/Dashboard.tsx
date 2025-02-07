@@ -2,45 +2,24 @@ import { Heading } from "@/components/heading/Heading";
 import { Block, Piechart } from "@/system/components/index";
 
 import ErrorPage from "@/components/errorPage/ErrorPage";
-import { useEffect, useMemo, useState } from "react";
-import { TEquipmentsStats } from "@/system/features/equipments/type";
-import {
-  equipmentChartConfig,
-  getEquipmentChartData,
-} from "@/system/features/equipments/equipmentChartData";
+import { useState } from "react";
+
+import { equipmentChartConfig } from "@/system/features/equipments/equipmentChartData";
 import useRecentActivities from "@/system/features/recent-activities/useRecentActivities";
-import useEquipmentsStats from "@/system/features/equipments/useEquipmentsStats";
 import RecentActivities from "@/system/components/tables/recent-activities/RecentActivities";
+import ViewEquipment from "@/system/features/equipments/view-equipment/ViewEquipment";
+import ColumnDefinition from "@/system/components/tables/recent-activities/ColumnDefinition";
+import { TRecentActivities } from "@/system/features/recent-activities/type";
+import useEquipmentsAnalytics from "@/system/features/equipments/useEquipmentsAnalytics";
 
 export default function MaintainerDashboard() {
-  const [stats, setStats] = useState<TEquipmentsStats>({
-    active: 0,
-    inactive: 0,
-    underMaintenance: 0,
-    total: 0,
-  });
-
-  const {
-    error,
-    data: { data: equipmentsStats },
-  } = useEquipmentsStats();
+  const [selectedIds, setSelectedIds] = useState<string>("");
+  const [openView, setOpenView] = useState<boolean>(false);
 
   const { data: recentActivitiesData, error: activitiesError } =
     useRecentActivities();
 
-  useEffect(() => {
-    if (equipmentsStats) {
-      const stats = equipmentsStats[0];
-      setStats({
-        active: stats.active,
-        inactive: stats.inactive,
-        total: stats.total,
-        underMaintenance: stats.underMaintenance,
-      });
-    }
-  }, [equipmentsStats]);
-
-  const chartData = useMemo(() => getEquipmentChartData(stats), [stats]);
+  const { stats, chartData, error } = useEquipmentsAnalytics();
 
   if (error) {
     return <ErrorPage errMsg={error.message} />;
@@ -91,7 +70,8 @@ export default function MaintainerDashboard() {
             className="bg-white shadow-general border col-span-2  row-span-2 rounded-xl"
           >
             {!activitiesError ? (
-              <RecentActivities
+              <RecentActivities<TRecentActivities>
+                columns={ColumnDefinition(setOpenView, setSelectedIds)}
                 resultCount={recentActivitiesData.count || 0}
                 count={stats.total || 0}
                 data={recentActivitiesData.data}
@@ -108,6 +88,7 @@ export default function MaintainerDashboard() {
               className="lg:h-fit h-full"
             >
               <Piechart
+                entity="Equipments"
                 config={equipmentChartConfig}
                 stats={chartData}
                 count={stats.total}
@@ -116,6 +97,12 @@ export default function MaintainerDashboard() {
           </div>
         </div>
       </div>
+      <ViewEquipment
+        selectedId={selectedIds}
+        isDialogOpen={openView}
+        setIsDialogOpen={setOpenView}
+        edit={false}
+      />
     </section>
   );
 }

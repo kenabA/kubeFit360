@@ -19,7 +19,6 @@ export default function GeneralTable<T>({
   columns,
 }: {
   resultCount: number;
-
   className?: string;
   data: T[];
   columns: ColumnDef<T>[];

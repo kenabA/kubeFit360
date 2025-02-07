@@ -1,11 +1,18 @@
-import { API_ROUTES } from "@/config/apiRoutes";
 import { formatTime } from "@/lib/utils";
 import { TRecentActivities } from "@/system/features/recent-activities/type";
 import { ColumnDef } from "@tanstack/react-table";
-import { NavLink } from "react-router";
+
 import Status from "../../status/Status";
 
-export default function ColumnDefinition(): ColumnDef<TRecentActivities>[] {
+export default function ColumnDefinition(
+  setIsDialogOpen: React.Dispatch<React.SetStateAction<boolean>>,
+  setSelectedId: React.Dispatch<React.SetStateAction<string>>
+): ColumnDef<TRecentActivities>[] {
+  function handleEquipmentClick(id: string) {
+    setSelectedId?.(id);
+    setIsDialogOpen(true);
+  }
+
   return [
     {
       accessorKey: "_id",
@@ -26,23 +33,27 @@ export default function ColumnDefinition(): ColumnDef<TRecentActivities>[] {
       accessorKey: "description",
       enableSorting: false,
       header: () => <span>Description</span>,
-      cell: ({ row }) => (
-        <p className="flex items-center gap-1">
-          {row.original.entity ? (
-            <NavLink
-              className="text-primary capitalize underline hover:text-primary-hover transition-colors"
-              to={`${API_ROUTES.EQUIPMENTS}/${row.original.entity?._id}`}
-            >
-              {row.original.entity?.equipmentName}
-            </NavLink>
-          ) : (
-            <span className="text-slate-400">Deleted Eqp</span>
-          )}
+      cell: ({ row }) => {
+        const id = row.original.entity?._id;
 
-          {row.original.description || "--"}
-          <Status status={row.original.status} />
-        </p>
-      ),
+        return (
+          <p className="flex items-center gap-1">
+            {row.original.entity ? (
+              <button
+                className="text-primary capitalize underline hover:text-primary-hover transition-colors"
+                onClick={() => handleEquipmentClick(id)}
+              >
+                {row.original.entity?.equipmentName}
+              </button>
+            ) : (
+              <span className="text-slate-400">Deleted Eqp</span>
+            )}
+
+            {row.original.description || "--"}
+            <Status status={row.original.status} />
+          </p>
+        );
+      },
     },
     {
       accessorKey: "time",
