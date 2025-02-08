@@ -15,6 +15,8 @@ import { genderOptions } from "@/system/lib/data";
 import FormSelect from "@/system/components/select/form-select/FormSelect";
 import useAddUser from "../../useAddUser";
 
+import { DatetimePicker } from "@/system/components/date-picker/DatePicker";
+
 export default function AddMaintainer({
   isDialogOpen,
   setIsDialogOpen,
@@ -148,13 +150,17 @@ export default function AddMaintainer({
             placeholder="Enter the phone number"
             register={register}
           />
-          <BaseInput
+          {/* <BaseInput
             error={errors.birthDate}
             label="Birthdate"
             name="birthDate"
             type="date"
             placeholder="Enter the birth date"
             register={register}
+          /> */}
+          <DatetimePicker
+            onChange={(date) => console.log(date)}
+            format={[["months", "days", "years"]]}
           />
         </div>
         <div className="flex gap-4 items-start w-full">

@@ -14,7 +14,6 @@ export function FormModal({
   open,
   setOpen,
   children,
-  className,
   icon,
   title,
   subtitle,
