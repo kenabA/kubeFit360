@@ -13,8 +13,6 @@ import { TEquipmentCategory } from "../type";
 import { formatTime } from "@/lib/utils";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import useGetEquipment from "../get-equipment/useGetEquipment";
-import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import ErrorPage from "@/components/errorPage/ErrorPage";
 
 export default function ViewEquipment({
   selectedId,
@@ -29,11 +27,10 @@ export default function ViewEquipment({
   setOpenEdit?: React.Dispatch<React.SetStateAction<boolean>>;
   edit: boolean;
 }) {
-  const {
-    data: equipment,
-    error,
-    isPending,
-  } = useGetEquipment({ selectedId: selectedId, enabled: isDialogOpen });
+  const { data: equipment } = useGetEquipment({
+    selectedId: selectedId,
+    enabled: isDialogOpen,
+  });
 
   return (
     <Dialog
@@ -42,9 +39,6 @@ export default function ViewEquipment({
         setIsDialogOpen(value);
       }}
     >
-      {isPending && <div className="!bg-white">Loading</div>}
-      {error && <ErrorPage errMsg={error?.message} />}
-
       <DialogContent
         onOpenAutoFocus={(e) => e.preventDefault()}
         className="!rounded-2xl p-0 flex max-w-5xl overflow-hidden border-none"
@@ -108,6 +102,7 @@ export default function ViewEquipment({
           </div>
         )}
         {/* Just to remove the accessibility bug */}
+
         <DialogTitle className="hidden"></DialogTitle>
         <DialogDescription className="hidden"></DialogDescription>
       </DialogContent>
