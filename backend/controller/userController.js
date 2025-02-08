@@ -30,7 +30,7 @@ exports.getClientStats = catchAsync(async (req, res, next) => {
     },
   ]);
 
-  res.status(200).json({ status: 'success', data: { data: { stats } } });
+  res.status(200).json({ status: 'success', data: { data: stats } });
 });
 
 exports.getAllUsers = catchAsync(async (req, res, next) => {
