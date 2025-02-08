@@ -14,6 +14,9 @@ export const API_ROUTES = {
     BASE: buildApiRoute("equipments"),
     STATS: buildApiRoute("equipments/equipment-stats"),
   },
+  MAINTAINERS: {
+    BASE: buildApiRoute("maintainers"),
+  },
   RECENT_ACTIVITIES: buildApiRoute("recentActivities"),
   USER: {
     BASE: buildApiRoute("users"),

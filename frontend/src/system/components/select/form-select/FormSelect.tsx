@@ -7,7 +7,13 @@ import {
 } from "@/components/ui/select";
 import { TFormSelect } from "./type";
 
-export default function FormSelect({ field, label, options }: TFormSelect) {
+export default function FormSelect({
+  field,
+  label,
+  error,
+  options,
+  placeholder,
+}: TFormSelect) {
   return (
     <>
       <label
@@ -18,17 +24,19 @@ export default function FormSelect({ field, label, options }: TFormSelect) {
       </label>
       <Select onValueChange={field.onChange} value={field.value}>
         <SelectTrigger className="focus:ring-gray-tertiary rounded-[8px] border border-slate-300 px-4 focus-visible:ring-1 focus-visible:ring-gray-tertiary  text-sm h-[44px]">
-          <SelectValue placeholder="Select a status" />
+          <SelectValue placeholder={placeholder} />
         </SelectTrigger>
         <SelectContent>
           {options?.map((opt) => {
             return (
               <SelectItem value={opt.value} key={opt.label}>
                 <div className="flex gap-2 items-center">
-                  <div
-                    className="size-2 rounded-full"
-                    style={{ backgroundColor: opt.theme }}
-                  ></div>
+                  {opt.theme && (
+                    <div
+                      className="size-2 rounded-full"
+                      style={{ backgroundColor: opt.theme }}
+                    ></div>
+                  )}
                   <span className="font-medium" style={{ color: opt.theme }}>
                     {opt.label}
                   </span>
@@ -37,6 +45,11 @@ export default function FormSelect({ field, label, options }: TFormSelect) {
             );
           })}
         </SelectContent>
+        {error && (
+          <p className="h-full p-1 text-left text-xs text-red-400">
+            {error.message}
+          </p>
+        )}
       </Select>
     </>
   );

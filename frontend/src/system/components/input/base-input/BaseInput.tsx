@@ -19,7 +19,7 @@ export function BaseInput<T extends FieldValues>({
       <div className="group relative w-full flex flex-col gap-2">
         <label
           htmlFor={label}
-          className={`text-sm text-gray-tertiary font-normal`}
+          className={`text-sm text-gray-tertiary font-normal w-fit`}
         >
           {label}
         </label>

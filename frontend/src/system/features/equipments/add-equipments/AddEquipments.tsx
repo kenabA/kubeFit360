@@ -76,6 +76,7 @@ export default function AddEquipments({
 
   return (
     <FormModal
+      icon="lucide:package"
       title="Add Equipment"
       subtitle="Fill in the form to add a equipment"
       open={isDialogOpen}

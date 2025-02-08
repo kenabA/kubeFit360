@@ -12,4 +12,5 @@ export type TUserDetails = {
   role: string;
   joinDate: string;
   status: string;
+  userImage: string;
 };

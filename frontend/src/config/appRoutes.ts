@@ -13,6 +13,7 @@ export const ROUTES = {
     ADMIN: "/admin-dashboard",
   },
   EQUIPMENTS: "/equipments",
+  MAINTAINERS: "/maintainers",
   NOTICES: "/notices",
   SETTINGS: "/settings",
 };

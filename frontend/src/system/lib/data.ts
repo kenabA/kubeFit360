@@ -27,6 +27,15 @@ export const statusOptions: TOptions[] = [
   },
 ];
 
+export const genderOptions: TOptions[] = [
+  { label: "Male", value: "male" },
+  { label: "Female", value: "female" },
+  {
+    label: "Others",
+    value: "others",
+  },
+];
+
 export const categoryOptions: TOptions[] = [
   { label: "Cardio", value: "cardio" },
   { label: "Flexibility", value: "flexibility" },

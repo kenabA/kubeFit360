@@ -25,6 +25,7 @@ import ErrorPage from "@/components/errorPage/ErrorPage";
 import AdminDashboard from "./system/pages/Admin/Dashboard/Dashboard";
 import Equipments from "./system/pages/Maintainer/Equipments/Equipments";
 import MaintainerDashboard from "./system/pages/Maintainer/Dashboard/Dashboard";
+import Maintainer from "./system/pages/Admin/Maintainer/Maintainer";
 
 export default function App() {
   return (
@@ -51,6 +52,7 @@ export default function App() {
             />
             <Route path={ROUTES.DASHBOARD.ADMIN} element={<AdminDashboard />} />
             <Route path={ROUTES.EQUIPMENTS} element={<Equipments />} />
+            <Route path={ROUTES.MAINTAINERS} element={<Maintainer />} />
           </Route>
         </Route>
 
