@@ -6,6 +6,7 @@ const {
   updateMe,
   updateUser,
   getMe,
+  getClientStats,
 } = require('../controller/userController');
 const {
   updatePassword,
@@ -15,12 +16,15 @@ const {
 const router = express.Router();
 
 router.use(protect);
+
 router.get('/me', getMe, getUser);
+
 router.patch('/updateMe', updateMe);
 router.patch('/updatePassword', updatePassword);
 
-router.use(restrictTo('admin'));
 router.route('/').get(getAllUsers);
+router.route('/user-stats').get(restrictTo('admin'), getClientStats);
+
 router.route('/:id').get(getUser).patch(updateUser).delete(deleteUser);
 
 module.exports = router;

@@ -20,23 +20,25 @@ function Calendar({
       showOutsideDays={showOutsideDays}
       className={cn("border-none py-2", className)}
       classNames={{
-        months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-4",
+        months:
+          "flex flex-col sm:flex-row flex-wrap justify-center items-start space-y-4 sm:space-x-4 sm:space-y-0 w-full min-w-0",
 
         cell: cn(
-          "relative p-0 text-center text-sm focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-accent [&:has([aria-selected].day-outside)]:bg-accent/50 [&:has([aria-selected].day-range-end)]:rounded-r-md daypicker-cell w-full",
+          "relative p-0 text-center text-sm focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-accent [&:has([aria-selected].day-outside)]:bg-accent/50 [&:has([aria-selected].day-range-end)]:rounded-r-md daypicker-cell w-full min-w-0",
           props.mode === "range"
             ? "[&:has(>.day-range-end)]:rounded-r-md [&:has(>.day-range-start)]:rounded-l-md first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md"
             : "[&:has([aria-selected])]:rounded-md"
         ),
         day: cn(
           buttonVariants({ variant: "ghost" }),
-          `h-8 w-8 font-normal text-[12px] leading-[15.645px] text-gray-secondary day w-full`
+          `h-8 w-8 font-normal text-[12px] leading-[15.645px] text-gray-secondary day min-w-0`
         ),
         day_range_start: "day-range-start",
         day_range_end: "day-range-end",
 
         day_outside:
           "day-outside text-muted-foreground opacity-50  aria-selected:bg-accent/50 aria-selected:text-muted-foreground aria-selected:opacity-30",
+
         day_range_middle:
           "aria-selected:bg-accent aria-selected:text-accent-foreground",
         day_hidden: "invisible",
@@ -46,9 +48,9 @@ function Calendar({
         day_disabled: "text-muted-foreground opacity-50",
 
         // Each month
-        month: "space-y-4 w-full",
+        month: "space-y-4 w-full min-w-0",
         // Todays date
-        day_today: "bg-primary !text-white !font-semibold",
+        day_today: "bg-primary !text-white min-w-0 !font-semibold",
         // Topbar
         caption:
           "flex justify-center pt-0 p-2 relative items-center  text-gray-primary",
@@ -60,7 +62,8 @@ function Calendar({
           "h-7 w-7  p-0  hover:opacity-100"
         ),
         // Topbar title
-        caption_label: "text-sm font-bold text-gray-primary",
+        caption_label:
+          "text-sm font-bold bg-tertiary py-1 px-3 rounded-[8px] text-primary-hover",
         // Calendar Content Container
         table: "w-full border-collapse space-y-1",
         // Months Row and Cell

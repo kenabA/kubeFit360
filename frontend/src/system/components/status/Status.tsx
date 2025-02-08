@@ -2,8 +2,10 @@ import { cn } from "@/lib/utils";
 
 export default function Status({
   status,
+  className,
 }: {
-  status: "active" | "inactive" | "underMaintenance";
+  status: string;
+  className?: string;
 }) {
   let statusText;
   let primaryColor;
@@ -29,11 +31,17 @@ export default function Status({
 
   return (
     <div
-      style={{ backgroundColor: secondaryColor, color: primaryColor }}
+      style={{
+        backgroundColor: secondaryColor,
+        color: primaryColor,
+        border: "0.5px solid",
+        borderColor: primaryColor,
+      }}
       className={cn(
-        "capitalize w-fit px-3 py-1 rounded-2xl flex gap-2 items-center",
+        "capitalize w-fit px-3 py-1 rounded-2xl flex gap-2 items-center font-medium",
         primaryColor,
-        secondaryColor
+        secondaryColor,
+        className
       )}
     >
       <div

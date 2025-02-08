@@ -16,12 +16,15 @@ import LoginLayout from "./layout/auth/LoginLayout";
 import SignupLayout from "@/layout/auth/SignupLayout";
 import PasswordChanged from "@/system/pages/ResetPassword/PasswordChanged";
 import { ROUTES } from "@/config/appRoutes";
-import Dashboard from "./system/pages/Dashboard/Dashboard";
+
 import ProtectedRoute from "@/system/features/authentication/ProtectedRoute";
 import React from "react";
 import SystemLayout from "./layout/SystemLayout";
 import ErrorPage from "@/components/errorPage/ErrorPage";
-import Equipments from "./system/pages/Equipments/Equipments";
+
+import AdminDashboard from "./system/pages/Admin/Dashboard/Dashboard";
+import Equipments from "./system/pages/Maintainer/Equipments/Equipments";
+import MaintainerDashboard from "./system/pages/Maintainer/Dashboard/Dashboard";
 
 export default function App() {
   return (
@@ -42,7 +45,11 @@ export default function App() {
         </Route>
         <Route element={<ProtectedRoute />}>
           <Route element={<SystemLayout />}>
-            <Route path={ROUTES.DASHBOARD} element={<Dashboard />} />
+            <Route
+              path={ROUTES.DASHBOARD.MAINTAINER}
+              element={<MaintainerDashboard />}
+            />
+            <Route path={ROUTES.DASHBOARD.ADMIN} element={<AdminDashboard />} />
             <Route path={ROUTES.EQUIPMENTS} element={<Equipments />} />
           </Route>
         </Route>

@@ -2,7 +2,7 @@ import { FieldError, FieldValues, UseFormRegister } from "react-hook-form";
 
 export type TBaseInputProps<T extends FieldValues> = {
   label: string;
-  type: HTMLInputElement["type"];
+  type: React.HTMLInputTypeAttribute;
   placeholder: string;
   name: string;
   error: FieldError | undefined;

@@ -1,20 +1,27 @@
 import { useToast } from "@/hooks/use-toast";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import apiAddEquipments from "@/system/services/equipments/apiAddEquipment";
 import { TAddEquipmentFormProps } from "./type";
 
 function useAddEquipment() {
+  const queryClient = useQueryClient();
   const { toast } = useToast();
-  const { mutate: addEquipment, isPending } = useMutation({
+  const {
+    mutate: addEquipment,
+    isPending,
+    isSuccess,
+  } = useMutation({
     mutationFn: (addEquipmentDetails: TAddEquipmentFormProps) =>
       apiAddEquipments(addEquipmentDetails),
-    onSuccess: (newEquipmentData) => {
-      console.log(newEquipmentData);
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ["equipments"],
+      });
       toast({
         variant: "success",
         title: "Success",
-        description: "Logged in successfully",
+        description: "Equipment added successfully",
       });
     },
     onError: (err) => {
@@ -26,7 +33,7 @@ function useAddEquipment() {
       });
     },
   });
-  return { addEquipment, isPending };
+  return { addEquipment, isPending, isSuccess };
 }
 
 export default useAddEquipment;

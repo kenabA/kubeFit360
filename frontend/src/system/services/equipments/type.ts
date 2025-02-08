@@ -1,8 +1,3 @@
-export type TEquipmentResponse = {
-  data: { count: number; equipments: TEquipmentData[] };
-  status: string;
-};
-
 export type TEquipmentData = {
   equipmentName: string;
   serialNumber: Number;

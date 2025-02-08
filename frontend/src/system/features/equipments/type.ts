@@ -2,15 +2,20 @@ export type TEquipmentsData = {
   _id: string;
   equipmentName: string;
   equipmentImage: string;
-  serialNumber: number;
+  serialNumber: string;
   installationDate: string;
+  lastMaintenance: string;
   status: string;
   brandName: string;
   description: string;
+  category: string;
 };
 
-export type TEquipmentStats = {
+export type TEquipmentsStats = {
+  total: number;
   active: number;
   inactive: number;
   underMaintenance: number;
 };
+
+export type TEquipmentCategory = "cardio" | "flexibility" | "strength";

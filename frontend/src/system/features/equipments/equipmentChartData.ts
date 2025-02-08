@@ -1,10 +1,7 @@
 import { ChartConfig } from "@/components";
+import { TEquipmentsStats } from "./type";
 
-export function getEquipmentChartData(stats: {
-  active: number;
-  inactive: number;
-  underMaintenance: number;
-}) {
+export function getEquipmentChartData(stats: TEquipmentsStats) {
   const chartData = [
     { status: "available", count: stats.active, fill: "#E67E22" },
     { status: "unavailable", count: stats.inactive, fill: "#ED9E5A" },

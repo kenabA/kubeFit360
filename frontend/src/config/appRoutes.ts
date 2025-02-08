@@ -8,7 +8,10 @@ export const ROUTES = {
   ABOUT: "/about",
   TESTIMONIAL: "/testimonial",
   MEMBERSHIP: "/membership",
-  DASHBOARD: "/dashboard",
+  DASHBOARD: {
+    MAINTAINER: "/maintainer-dashboard",
+    ADMIN: "/admin-dashboard",
+  },
   EQUIPMENTS: "/equipments",
   NOTICES: "/notices",
   SETTINGS: "/settings",
