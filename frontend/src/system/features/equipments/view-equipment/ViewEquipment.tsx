@@ -9,12 +9,12 @@ import {
 } from "@/components/ui/dialog";
 import Status from "@/system/components/status/Status";
 import treadmill from "@/assets/website/images/hero-bg.jpg";
-import { useQueryClient } from "@tanstack/react-query";
-import { TEquipmentCategory, TEquipmentsData } from "../type";
-import { TApiResponse } from "@/system/lib/types";
-import { useSearchParams } from "react-router";
+import { TEquipmentCategory } from "../type";
 import { formatTime } from "@/lib/utils";
 import { Icon } from "@iconify/react/dist/iconify.js";
+import useGetEquipment from "../get-equipment/useGetEquipment";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import ErrorPage from "@/components/errorPage/ErrorPage";
 
 export default function ViewEquipment({
   selectedId,
@@ -29,14 +29,11 @@ export default function ViewEquipment({
   setOpenEdit?: React.Dispatch<React.SetStateAction<boolean>>;
   edit: boolean;
 }) {
-  const [searchParams] = useSearchParams();
-  const filters = Object.fromEntries(searchParams.entries());
-  const queryClient = useQueryClient();
-  const allEquipment = queryClient.getQueryData<
-    TApiResponse<TEquipmentsData[]>
-  >(["equipments", filters]);
-
-  const equipment = allEquipment?.data.data?.find((e) => e._id === selectedId);
+  const {
+    data: equipment,
+    error,
+    isPending,
+  } = useGetEquipment({ selectedId: selectedId, enabled: isDialogOpen });
 
   return (
     <Dialog
@@ -45,6 +42,9 @@ export default function ViewEquipment({
         setIsDialogOpen(value);
       }}
     >
+      {isPending && <div className="!bg-white">Loading</div>}
+      {error && <ErrorPage errMsg={error?.message} />}
+
       <DialogContent
         onOpenAutoFocus={(e) => e.preventDefault()}
         className="!rounded-2xl p-0 flex max-w-5xl overflow-hidden border-none"
@@ -75,7 +75,7 @@ export default function ViewEquipment({
                 </div>
               </DialogHeader>
               <Brand brandName={equipment.brandName} />
-              <DialogDescription className="flex flex-col gap-5 h-auto mb-auto">
+              <div className="flex flex-col gap-5 h-auto mb-auto">
                 <p
                   className="text-gray-tertiary
                text-sm font-normal leading-[1.6]"
@@ -89,10 +89,10 @@ export default function ViewEquipment({
                   </li>
                   <li className="text-gray-secondary font-normal">
                     <span className="mr-2 font-bold">Installation Date:</span>
-                    {formatTime(equipment.installationDate)}
+                    {formatTime(equipment?.installationDate)}
                   </li>
                 </ul>
-              </DialogDescription>
+              </div>
               {edit && (
                 <DialogFooter>
                   <Button
@@ -107,6 +107,9 @@ export default function ViewEquipment({
             </article>
           </div>
         )}
+        {/* Just to remove the accessibility bug */}
+        <DialogTitle className="hidden"></DialogTitle>
+        <DialogDescription className="hidden"></DialogDescription>
       </DialogContent>
     </Dialog>
   );

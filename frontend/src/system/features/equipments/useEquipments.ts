@@ -1,6 +1,6 @@
 import { TApiResponse } from "@/system/lib/types";
 
-import apiEquipments from "@/system/services/equipments/apiEquipments";
+import apiEquipments from "@/system/services/equipments/apiGetAllEquipments";
 
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
@@ -17,7 +17,6 @@ function useEquipments() {
     error,
   } = useSuspenseQuery<TApiResponse<TEquipmentsData[]>, AxiosError>({
     queryFn: () => apiEquipments(params),
-
     queryKey: ["equipments", params],
   });
 
