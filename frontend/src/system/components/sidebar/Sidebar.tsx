@@ -1,6 +1,6 @@
 import kf from "@/assets/shared/svg/kubeFitLogo/kubeFit360°-logo-black.svg";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { sidebarData } from "./data";
+
 import { NavLink, useLocation } from "react-router";
 import {
   Tooltip,
@@ -12,9 +12,12 @@ import { AnimatePresence, motion } from "framer-motion";
 import Triangle from "@/components/triangle/Triangle";
 import { ThemedDialog } from "@/components/dialog/Dialog";
 import React from "react";
+import { useSidebarData } from "./useSidebar";
 
 export default function Sidebar() {
   const location = useLocation();
+  // TODO Get the role of the user from the global state
+  const sidebarData = useSidebarData("admin");
 
   return (
     <div className="z-10 h-full flex flex-col p-3 pt-0 bg-white shadow-general">

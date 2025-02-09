@@ -15,7 +15,7 @@ import { genderOptions } from "@/system/lib/data";
 import FormSelect from "@/system/components/select/form-select/FormSelect";
 import useAddUser from "../../useAddUser";
 
-import { DatetimePicker } from "@/system/components/date-picker/DatePicker";
+import DateInput from "@/system/components/input/date-input/DateInput";
 
 export default function AddMaintainer({
   isDialogOpen,
@@ -59,6 +59,7 @@ export default function AddMaintainer({
       data = { ...data, userImage: maintainerImageUrl };
     }
     addUser(data);
+    console.log(data);
   }
 
   const handleLocalFileChange = (
@@ -150,17 +151,11 @@ export default function AddMaintainer({
             placeholder="Enter the phone number"
             register={register}
           />
-          {/* <BaseInput
-            error={errors.birthDate}
-            label="Birthdate"
+          <DateInput<TAddMaintainerFormProps>
             name="birthDate"
-            type="date"
-            placeholder="Enter the birth date"
-            register={register}
-          /> */}
-          <DatetimePicker
-            onChange={(date) => console.log(date)}
-            format={[["months", "days", "years"]]}
+            setValue={setValue}
+            error={errors.birthDate}
+            label="Date of Birth"
           />
         </div>
         <div className="flex gap-4 items-start w-full">

@@ -1,7 +1,7 @@
 import { ROUTES } from "@/config/appRoutes";
 import { TSidebarData } from "./types";
 
-export const sidebarData: TSidebarData[] = [
+export const sidebarDataMaintainer: TSidebarData[] = [
   {
     title: "Dashboard",
     to: ROUTES.DASHBOARD.MAINTAINER,
@@ -23,3 +23,33 @@ export const sidebarData: TSidebarData[] = [
     icon: "gravity-ui:gear",
   },
 ];
+
+export const sidebarDataAdmin: TSidebarData[] = [
+  {
+    title: "Dashboard",
+    to: ROUTES.DASHBOARD.ADMIN,
+    icon: "lucide:home",
+  },
+  {
+    title: "Maintainers",
+    to: ROUTES.MAINTAINERS,
+    icon: "lucide:package",
+  },
+  {
+    title: "Notices",
+    to: ROUTES.NOTICES,
+    icon: "pepicons-pop:bulletin-notice",
+  },
+  {
+    title: "Settings",
+    to: ROUTES.SETTINGS,
+    icon: "gravity-ui:gear",
+  },
+];
+
+export const ROLE_SIDEBAR_DATA = {
+  maintainer: sidebarDataMaintainer,
+  admin: sidebarDataAdmin,
+};
+
+export type Role = keyof typeof ROLE_SIDEBAR_DATA;
