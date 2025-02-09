@@ -61,7 +61,7 @@ const userSchema = new mongoose.Schema({
     },
     required: [true, 'A user must re-type their password'],
   },
-  photo: String,
+  userImage: String,
   passwordChangedAt: Date,
   passwordResetToken: { type: String, select: false },
   passwordResetExpires: Date,

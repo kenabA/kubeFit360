@@ -34,14 +34,24 @@ exports.getClientStats = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllUsers = catchAsync(async (req, res, next) => {
-  console.log('first');
-  const { role } = req.query;
-  const query = role ? { role } : {};
-  const users = await User.find(query);
-  const count = await User.countDocuments(query);
-
-  res.status(201).json({ status: 'success', data: { count, users } });
+  const users = await User.find();
+  const count = await User.countDocuments();
+  res.status(200).json({ status: 'success', data: { count, users } });
 });
+
+exports.getUsersByRole = (role) =>
+  catchAsync(async (req, res, next) => {
+    const users = await User.find({ role: role });
+
+    if (!users || users.length === 0) {
+      return next(new AppError(`No users found with role: ${role}`, 404));
+    }
+
+    res.status(200).json({
+      status: 'success',
+      data: { count: users.length, data: users },
+    });
+  });
 
 exports.getMe = (req, res, next) => {
   req.params.id = req.user.id;
@@ -105,4 +115,20 @@ exports.deleteUser = catchAsync(async (req, res, next) => {
   }
 
   res.status(204).json({ status: 'success' });
+});
+
+exports.addUser = catchAsync(async (req, res, next) => {
+  if (!req.body || Object.keys(req.body).length === 0) {
+    return res.status(400).json({
+      status: 'fail',
+      message: 'Request body is missing',
+    });
+  }
+  const newUser = await User.create(req.body);
+  newUser.password = undefined;
+
+  res.status(201).json({
+    status: 'success',
+    data: { data: newUser },
+  });
 });
