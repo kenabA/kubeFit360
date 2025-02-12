@@ -43,8 +43,8 @@ class APIFeatures {
     this.query.find(searchQuery);
   }
 
-  sort() {
-    this.query = this.query.sort('-installationDate');
+  sort(timeStr) {
+    this.query = this.query.sort(timeStr || '-createdAt');
     return this;
   }
 

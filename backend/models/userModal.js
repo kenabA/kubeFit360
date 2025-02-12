@@ -3,69 +3,72 @@ const validator = require('validator');
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 
-const userSchema = new mongoose.Schema({
-  name: { type: String, required: [true, 'A user must have a name'] },
-  email: {
-    unique: true,
-    validate: [validator.isEmail, 'Please provide a valid email'],
-    type: String,
-    required: [true, 'Please provide your email'],
-  },
-  phoneNumber: {
-    type: Number,
-    required: [true, 'A user must have a phone number'],
-  },
-  birthDate: Date,
-  gender: {
-    type: String,
-    enum: {
-      values: ['male', 'female', 'others'],
-      message: 'Please provide a valid gender',
+const userSchema = new mongoose.Schema(
+  {
+    name: { type: String, required: [true, 'A user must have a name'] },
+    email: {
+      unique: true,
+      validate: [validator.isEmail, 'Please provide a valid email'],
+      type: String,
+      required: [true, 'Please provide your email'],
     },
-  },
-  role: {
-    type: String,
-    enum: {
-      values: ['admin', 'trainer', 'maintainer', 'member'],
-      message: 'Please provide a valid role',
+    phoneNumber: {
+      type: Number,
+      required: [true, 'A user must have a phone number'],
     },
-    required: [true, 'A user must have a role'],
-  },
-  joinDate: {
-    type: Date,
-    default: Date.now(),
-  },
-  status: {
-    type: String,
-    default: 'active',
-    enum: {
-      values: ['active', 'inactive', 'deleted'],
-      message: 'Please provide a valid status',
-    },
-  },
-  address: String,
-  password: {
-    type: String,
-    required: [true, 'A user must have a password'],
-    minLength: 8,
-    select: false,
-  },
-  passwordConfirm: {
-    type: String,
-    validate: {
-      // Works only on Create or Save
-      validator: function (value) {
-        return this.password === value;
+    birthDate: Date,
+    gender: {
+      type: String,
+      enum: {
+        values: ['male', 'female', 'others'],
+        message: 'Please provide a valid gender',
       },
-      message: 'Passwords do not match',
     },
-    required: [true, 'A user must re-type their password'],
+    role: {
+      type: String,
+      enum: {
+        values: ['admin', 'trainer', 'maintainer', 'member'],
+        message: 'Please provide a valid role',
+      },
+      required: [true, 'A user must have a role'],
+    },
+    joinDate: {
+      type: Date,
+      default: Date.now(),
+    },
+    status: {
+      type: String,
+      default: 'active',
+      enum: {
+        values: ['active', 'inactive', 'deleted'],
+        message: 'Please provide a valid status',
+      },
+    },
+    address: String,
+    password: {
+      type: String,
+      required: [true, 'A user must have a password'],
+      minLength: 8,
+      select: false,
+    },
+    passwordConfirm: {
+      type: String,
+      validate: {
+        // Works only on Create or Save
+        validator: function (value) {
+          return this.password === value;
+        },
+        message: 'Passwords do not match',
+      },
+      required: [true, 'A user must re-type their password'],
+    },
+    userImage: String,
+    passwordChangedAt: Date,
+    passwordResetToken: { type: String, select: false },
+    passwordResetExpires: Date,
   },
-  userImage: String,
-  passwordChangedAt: Date,
-  passwordResetToken: { type: String, select: false },
-  passwordResetExpires: Date,
-});
+  { timestamps: true },
+);
 
 // Runs in between creating the data and saving it to the db
 userSchema.pre('save', async function (next) {

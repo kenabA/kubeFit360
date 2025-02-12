@@ -1,4 +1,5 @@
 const User = require('../models/userModal');
+const APIFeatures = require('../utils/APIFeatures');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const filterObj = require('../utils/filterObj');
@@ -41,7 +42,14 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
 
 exports.getUsersByRole = (role) =>
   catchAsync(async (req, res, next) => {
-    const users = await User.find({ role: role });
+    const queryWithFilter = new APIFeatures(
+      User.find({ role: role }),
+      req.query,
+    ).filter();
+
+    const finalQuery = queryWithFilter.sort('-joinDate').paginate().query;
+
+    const users = await finalQuery;
 
     if (!users || users.length === 0) {
       return next(new AppError(`No users found with role: ${role}`, 404));
