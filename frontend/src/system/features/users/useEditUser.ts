@@ -1,21 +1,25 @@
 import { useToast } from "@/hooks/use-toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { TAddMaintainerFormProps } from "./maintainers/add-maintainers/type";
-import apiAddUser from "@/system/services/users/apiAddUser";
-import { capitalize } from "@/lib/utils";
+import { TEditMaintainerFormProps } from "./maintainers/edit-maintainers/type";
+import apiEditUser from "@/system/services/users/apiEditUser";
 
-function useAddUser(role: string) {
+function useEditUser(role: string) {
   const queryClient = useQueryClient();
   const { toast } = useToast();
   const {
-    mutate: addUser,
+    mutate: editMaintainer,
     isPending,
     isSuccess,
     error,
   } = useMutation({
-    mutationFn: (addUserDetails: TAddMaintainerFormProps) =>
-      apiAddUser(addUserDetails),
+    mutationFn: ({
+      editMaintainerDetails,
+      selectedId,
+    }: {
+      editMaintainerDetails: TEditMaintainerFormProps;
+      selectedId: string;
+    }) => apiEditUser(editMaintainerDetails, selectedId),
     onSuccess: async () => {
       await queryClient.invalidateQueries({
         queryKey: [role],
@@ -23,7 +27,7 @@ function useAddUser(role: string) {
       toast({
         variant: "success",
         title: "Success",
-        description: `${capitalize(role)} added successfully`,
+        description: "Maintainer's data edited successfully",
       });
     },
     onError: (err) => {
@@ -35,7 +39,7 @@ function useAddUser(role: string) {
       });
     },
   });
-  return { addUser, isPending, isSuccess, error };
+  return { editMaintainer, isPending, isSuccess, error };
 }
 
-export default useAddUser;
+export default useEditUser;

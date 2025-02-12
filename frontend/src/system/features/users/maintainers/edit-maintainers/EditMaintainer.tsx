@@ -1,55 +1,88 @@
 import { Button } from "@/components";
 import { FormModal } from "@/components/formModal/FormModal";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { maintainerSchema } from "./validator";
+
 import { Controller, useForm } from "react-hook-form";
 
 import BaseInput from "@/system/components/input/base-input/BaseInput";
+
 import { useEffect, useState } from "react";
+
+import { TEditMaintainerFormProps, TEditMaintainerProps } from "./type";
+
+import { genderOptions } from "@/system/lib/data";
 
 import { Oval } from "react-loader-spinner";
 import BaseImageInput from "@/system/components/input/base-image-input/BaseImageInput";
 import { handleFileChange, uploadImage } from "@/system/lib/helpers";
-import { TAddMaintainerFormProps, TAddMaintainerProps } from "./type";
-import { genderOptions } from "@/system/lib/data";
 import FormSelect from "@/system/components/select/form-select/FormSelect";
-import useAddUser from "../../useAddUser";
-
+import useEditUser from "../../useEditUser";
+import { maintainerSchema } from "./validator";
+import { useSearchParams } from "react-router";
+import { useQueryClient } from "@tanstack/react-query";
+import { TUserDetails } from "@/system/stores/user/types";
+import { TApiResponse } from "@/system/lib/types";
 import DateInput from "@/system/components/input/date-input/DateInput";
 
-export default function AddMaintainer({
+export default function EditMaintainer({
+  selectedId,
   isDialogOpen,
   setIsDialogOpen,
-}: TAddMaintainerProps) {
+}: TEditMaintainerProps) {
   const [localImage, setLocalImage] = useState<File | string | undefined>();
   const [isPending, setIsPending] = useState<boolean>(false);
+  const [searchParams] = useSearchParams();
+  const filters = Object.fromEntries(searchParams.entries());
+  const queryClient = useQueryClient();
+
+  const allMaintainers = queryClient.getQueryData<TApiResponse<TUserDetails[]>>(
+    ["maintainers", filters]
+  );
+
+  const maintainer = allMaintainers?.data.data?.find(
+    (e) => e._id === selectedId
+  );
+
+  const { editMaintainer, isSuccess, error } = useEditUser("maintainers");
+
   const {
     register,
+    setValue,
     control,
     reset,
     handleSubmit,
-    setValue,
-    formState: { errors },
-  } = useForm<TAddMaintainerFormProps>({
-    // TODO : THe default password will be the role and after adding user, a mail should go stating that the default password is 'maintainer' suggesting user to change it
-    defaultValues: {
-      role: "maintainer",
-      password: "maintainer",
-      passwordConfirm: "maintainer",
-    },
+    formState: { errors, isDirty },
+  } = useForm<TEditMaintainerFormProps>({
     resolver: zodResolver(maintainerSchema),
   });
-
-  const { isSuccess, addUser, error } = useAddUser("maintainers");
 
   useEffect(() => {
     if (isSuccess) {
       setIsPending(false);
       setIsDialogOpen(false);
-      setLocalImage(undefined);
       reset();
     }
   }, [isSuccess]);
+
+  useEffect(() => {
+    if (!maintainer) return;
+    reset({
+      name: maintainer?.name,
+      address: maintainer?.address,
+      birthDate: maintainer?.birthDate,
+      email: maintainer?.email,
+      gender: maintainer?.gender,
+      role: maintainer?.role,
+      userImage: maintainer?.userImage,
+      phoneNumber: String(maintainer?.phoneNumber),
+    });
+
+    if (maintainer.userImage) {
+      setLocalImage(maintainer.userImage);
+    } else {
+      setLocalImage(undefined);
+    }
+  }, [reset, maintainer]);
 
   useEffect(() => {
     if (error) {
@@ -57,20 +90,21 @@ export default function AddMaintainer({
     }
   }, [error]);
 
-  async function onSubmit(data: TAddMaintainerFormProps) {
+  async function onSubmit(data: TEditMaintainerFormProps) {
     setIsPending(true);
     if (localImage) {
+      // TODO : Replace the current image with the new one
       const maintainerImageUrl = await uploadImage(localImage as File);
-      setValue("userImage", maintainerImageUrl);
+      setValue("userImage", maintainerImageUrl, { shouldDirty: true });
       data = { ...data, userImage: maintainerImageUrl };
     }
-    addUser(data);
+    editMaintainer({ editMaintainerDetails: data, selectedId });
   }
 
   const handleLocalFileChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    handleFileChange<TAddMaintainerFormProps>(
+    handleFileChange<TEditMaintainerFormProps>(
       "userImage",
       event,
       setLocalImage,
@@ -80,22 +114,34 @@ export default function AddMaintainer({
 
   function handleCancel() {
     setIsDialogOpen(false);
-    setLocalImage(undefined);
+    setLocalImage(maintainer?.userImage);
     reset();
+  }
+
+  function handleRemove() {
+    if (typeof localImage !== "string") {
+      setLocalImage(maintainer?.userImage);
+      setValue("userImage", maintainer?.userImage, {
+        shouldDirty: true,
+      });
+    } else {
+      // TODO : Handle Remove of the maintainer
+      alert(123);
+    }
   }
 
   return (
     <FormModal
-      icon="bi:database-fill-gear"
-      title="Add Maintainer"
-      subtitle="Fill in the form to add a maintainer"
+      icon="lucide:package"
+      title="Edit Maintainer"
+      subtitle="Modify and Update Maintainer Details"
       open={isDialogOpen}
       setOpen={setIsDialogOpen}
       footer={
         <>
           <Button
             disabled={isPending}
-            className="shadow-none hover:shadow-none h-10"
+            className="shadow-none hover:shadow-none"
             variant={"primaryReverse"}
             onClick={handleCancel}
           >
@@ -107,7 +153,7 @@ export default function AddMaintainer({
             onClick={handleSubmit(onSubmit)}
             className="px-6 shadow-none hover:shadow-none h-10 w-20"
             variant={"primary"}
-            disabled={isPending}
+            disabled={isPending || !isDirty}
           >
             {isPending ? (
               <Oval
@@ -119,7 +165,7 @@ export default function AddMaintainer({
                 wrapperStyle={{}}
               />
             ) : (
-              "Add"
+              "Save"
             )}
           </Button>
         </>
@@ -156,7 +202,7 @@ export default function AddMaintainer({
             placeholder="Enter the phone number"
             register={register}
           />
-          <DateInput<TAddMaintainerFormProps>
+          <DateInput<TEditMaintainerFormProps>
             name="birthDate"
             setValue={setValue}
             error={errors.birthDate}
@@ -190,7 +236,7 @@ export default function AddMaintainer({
         </div>
         <BaseImageInput
           handleFileChange={handleLocalFileChange}
-          handleRemove={() => setLocalImage(undefined)}
+          handleRemove={handleRemove}
           localImage={localImage}
           setLocalImage={setLocalImage}
           error={errors.userImage}

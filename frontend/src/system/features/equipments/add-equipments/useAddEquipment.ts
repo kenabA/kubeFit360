@@ -10,6 +10,7 @@ function useAddEquipment() {
   const {
     mutate: addEquipment,
     isPending,
+    error,
     isSuccess,
   } = useMutation({
     mutationFn: (addEquipmentDetails: TAddEquipmentFormProps) =>
@@ -33,7 +34,7 @@ function useAddEquipment() {
       });
     },
   });
-  return { addEquipment, isPending, isSuccess };
+  return { addEquipment, isPending, isSuccess, error };
 }
 
 export default useAddEquipment;

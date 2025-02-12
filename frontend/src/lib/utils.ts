@@ -9,3 +9,7 @@ export function cn(...inputs: ClassValue[]) {
 export function formatTime(isoTimestamp: string) {
   return format(parseISO(isoTimestamp), "MMM dd, hh:mm a");
 }
+
+export function capitalize(str: string) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}

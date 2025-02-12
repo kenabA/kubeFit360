@@ -7,18 +7,17 @@ import { useEffect, useState } from "react";
 
 import useDeleteEquipments from "@/system/features/equipments/delete-equipments/useDeleteEquipment";
 
-import EditEquipments from "@/system/features/equipments/edit-equipments/EditEquipments";
 import { ThemedDialog } from "@/components/dialog/Dialog";
 import Filter from "@/system/components/filter/Filter";
 import { filterFields } from "@/system/lib/data";
 
 import TableSearch from "@/system/components/table-search/TableSearch";
-import ViewEquipment from "@/system/features/equipments/view-equipment/ViewEquipment";
 
 import useMaintainers from "@/system/features/users/maintainers/useMaintainers";
 import ColumnDefinition from "@/system/features/users/maintainers/ColumnDefinition";
 import { TUserDetails } from "@/system/stores/user/types";
 import AddMaintainer from "@/system/features/users/maintainers/add-maintainers/AddMaintainers";
+import EditMaintainer from "@/system/features/users/maintainers/edit-maintainers/EditMaintainer";
 
 export default function Maintainer() {
   const [openView, setOpenView] = useState<boolean>(false);
@@ -84,16 +83,16 @@ export default function Maintainer() {
           />
         </div>
       </div>
-      <ViewEquipment
+      {/* <ViewEquipment
         edit
         selectedId={selectedIds}
         isDialogOpen={openView}
         setIsDialogOpen={setOpenView}
         setOpenEdit={setOpenEdit}
-      />
+      /> */}
       <AddMaintainer isDialogOpen={openAdd} setIsDialogOpen={setOpenAdd} />
 
-      <EditEquipments
+      <EditMaintainer
         selectedId={selectedIds}
         isDialogOpen={openEdit}
         setIsDialogOpen={setOpenEdit}

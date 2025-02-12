@@ -136,6 +136,7 @@ export const DatetimePicker = forwardRef<HTMLDivElement, DateTimeInput>(
       ...(value && { date: value }),
       onChangeDate: handleDateChange,
     });
+
     return (
       <DatetimeGrid
         format={format}

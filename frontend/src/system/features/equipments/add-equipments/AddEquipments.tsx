@@ -36,7 +36,7 @@ export default function AddEquipments({
     resolver: zodResolver(equipmentSchema),
   });
 
-  const { addEquipment, isSuccess } = useAddEquipment();
+  const { addEquipment, isSuccess, error } = useAddEquipment();
 
   useEffect(() => {
     if (isSuccess) {
@@ -46,6 +46,12 @@ export default function AddEquipments({
       reset();
     }
   }, [isSuccess]);
+
+  useEffect(() => {
+    if (error) {
+      setIsPending(false);
+    }
+  }, [error]);
 
   async function onSubmit(data: TAddEquipmentFormProps) {
     setIsPending(true);

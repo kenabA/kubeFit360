@@ -45,7 +45,7 @@ export default function EditEquipments({
   >(["equipments", filters]);
 
   const equipment = allEquipment?.data.data?.find((e) => e._id === selectedId);
-  const { editEquipment, isSuccess } = useEditEquipment();
+  const { editEquipment, isSuccess, error } = useEditEquipment();
 
   const {
     register,
@@ -84,6 +84,12 @@ export default function EditEquipments({
       setLocalImage(undefined);
     }
   }, [reset, equipment]);
+
+  useEffect(() => {
+    if (error) {
+      setIsPending(false);
+    }
+  }, [error]);
 
   async function onSubmit(data: TEditEquipmentFormProps) {
     setIsPending(true);
@@ -127,6 +133,7 @@ export default function EditEquipments({
 
   return (
     <FormModal
+      icon="lucide:package"
       title="Edit Equipment"
       subtitle="Modify and Update Equipment Details"
       open={isDialogOpen}
