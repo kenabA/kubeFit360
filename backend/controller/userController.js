@@ -47,17 +47,15 @@ exports.getUsersByRole = (role) =>
       req.query,
     ).filter();
 
-    const finalQuery = queryWithFilter.sort('-joinDate').paginate().query;
+    const count = await User.countDocuments(queryWithFilter.query);
+
+    const finalQuery = queryWithFilter.sort().paginate().query;
 
     const users = await finalQuery;
 
-    if (!users || users.length === 0) {
-      return next(new AppError(`No users found with role: ${role}`, 404));
-    }
-
     res.status(200).json({
       status: 'success',
-      data: { count: users.length, data: users },
+      data: { count, data: users },
     });
   });
 
@@ -74,7 +72,7 @@ exports.getUser = catchAsync(async (req, res, next) => {
   if (!user) {
     return next(new AppError(`No user found with that id`, 404));
   }
-  res.status(201).json({ status: 'success', data: { user } });
+  res.status(201).json({ status: 'success', data: { data: user } });
 });
 
 exports.updateMe = catchAsync(async (req, res, next) => {

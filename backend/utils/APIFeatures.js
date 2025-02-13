@@ -25,12 +25,16 @@ class APIFeatures {
 
   search(queryStr) {
     const searchRegex = { $regex: this.queryString.search, $options: 'i' };
+    const isNumeric = !isNaN(searchRegex);
     const searchQuery = {
       ...queryStr,
       $or: [
+        { name: searchRegex },
+        { email: searchRegex },
         { equipmentName: searchRegex },
         { serialNumber: searchRegex },
         { brandName: searchRegex },
+        ...(isNumeric ? [{ phoneNumber: parseInt(searchRegex) }] : []),
       ],
     };
 

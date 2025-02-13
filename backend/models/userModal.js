@@ -17,6 +17,7 @@ const userSchema = new mongoose.Schema(
       required: [true, 'A user must have a phone number'],
     },
     birthDate: Date,
+
     gender: {
       type: String,
       enum: {
