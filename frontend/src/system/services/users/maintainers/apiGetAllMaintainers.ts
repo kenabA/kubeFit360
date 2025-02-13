@@ -12,6 +12,7 @@ async function apiGetAllMaintainers(params: {
     const response = await _axios.get(
       `${API_ROUTES.USER.BASE}/maintainers${query}`
     );
+    console.log(response);
     return response.data;
   } catch (err) {
     const backendError = err as AxiosError<{ message: string }>;

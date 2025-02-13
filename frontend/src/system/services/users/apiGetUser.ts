@@ -1,11 +1,11 @@
 import { API_ROUTES } from "@/config/apiRoutes";
 import { _axios } from "@/config/axios";
 import { AxiosError } from "axios";
-import { TEquipmentsData } from "@/system/features/equipments/type";
+import { TUserDetails } from "@/system/stores/user/types";
 
-async function apiGetEquipment(id: string): Promise<TEquipmentsData> {
+async function apiGetUser(id: string): Promise<TUserDetails> {
   try {
-    const response = await _axios.get(`${API_ROUTES.EQUIPMENTS.BASE}/${id}`);
+    const response = await _axios.get(`${API_ROUTES.USER.BASE}/${id}`);
     return response.data.data.data;
   } catch (err) {
     const backendError = err as AxiosError<{ message: string }>;
@@ -15,4 +15,4 @@ async function apiGetEquipment(id: string): Promise<TEquipmentsData> {
   }
 }
 
-export default apiGetEquipment;
+export default apiGetUser;

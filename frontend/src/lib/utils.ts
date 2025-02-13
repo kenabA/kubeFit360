@@ -6,8 +6,8 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function formatTime(isoTimestamp: string) {
-  return format(parseISO(isoTimestamp), "MMM dd, hh:mm a");
+export function formatTime(isoTimestamp: string, formatStr?: string) {
+  return format(parseISO(isoTimestamp), formatStr || "MMM dd, hh:mm a");
 }
 
 export function capitalize(str: string) {

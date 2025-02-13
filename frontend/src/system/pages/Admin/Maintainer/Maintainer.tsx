@@ -5,8 +5,6 @@ import GeneralTable from "@/system/components/tables/general-table/GeneralTable"
 import { Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 
-import useDeleteEquipments from "@/system/features/equipments/delete-equipments/useDeleteEquipment";
-
 import { ThemedDialog } from "@/components/dialog/Dialog";
 import Filter from "@/system/components/filter/Filter";
 import { filterFields } from "@/system/lib/data";
@@ -18,6 +16,8 @@ import ColumnDefinition from "@/system/features/users/maintainers/ColumnDefiniti
 import { TUserDetails } from "@/system/stores/user/types";
 import AddMaintainer from "@/system/features/users/maintainers/add-maintainers/AddMaintainers";
 import EditMaintainer from "@/system/features/users/maintainers/edit-maintainers/EditMaintainer";
+import useDeleteUser from "@/system/features/users/useDeleteUser";
+import ViewMaintainer from "@/system/features/users/maintainers/view-maintainer/ViewMaintainer";
 
 export default function Maintainer() {
   const [openView, setOpenView] = useState<boolean>(false);
@@ -32,10 +32,10 @@ export default function Maintainer() {
   } = useMaintainers();
 
   const {
-    deleteEquipment,
+    deleteUser,
     isSuccess: isDeleteSuccess,
     isPending: isDeletePending,
-  } = useDeleteEquipments();
+  } = useDeleteUser({ role: "maintainers" });
 
   function handleOpenAdd() {
     setOpenAdd(true);
@@ -61,7 +61,7 @@ export default function Maintainer() {
               placeholder="Search by name, etc . . . "
             />
             <div className="flex items-center gap-4">
-              <Filter entity={filterFields.maintainer} />
+              <Filter entity={filterFields.maintainers} />
               <Button
                 variant={"primary"}
                 className="font-medium"
@@ -83,13 +83,13 @@ export default function Maintainer() {
           />
         </div>
       </div>
-      {/* <ViewEquipment
+      <ViewMaintainer
         edit
         selectedId={selectedIds}
         isDialogOpen={openView}
         setIsDialogOpen={setOpenView}
         setOpenEdit={setOpenEdit}
-      /> */}
+      />
       <AddMaintainer isDialogOpen={openAdd} setIsDialogOpen={setOpenAdd} />
 
       <EditMaintainer
@@ -101,11 +101,11 @@ export default function Maintainer() {
         isPending={isDeletePending}
         dialogOpen={openDelete}
         setDialogOpen={setOpenDelete}
-        mutationFn={() => deleteEquipment(selectedIds)}
+        mutationFn={() => deleteUser(selectedIds)}
         theme="destructive"
         ctaText="Delete"
-        title="Delete Equipment"
-        message="Do you really want to delete this equipment?"
+        title="Delete Maintainer"
+        message="Do you really want to delete this maintainer?"
       />
     </section>
   );

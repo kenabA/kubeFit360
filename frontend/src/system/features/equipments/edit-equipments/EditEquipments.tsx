@@ -23,12 +23,13 @@ import useEditEquipment from "./useEditEquipment";
 import { editEquipmentSchema } from "./validator";
 import { TEquipmentsData } from "../type";
 import { TApiResponse } from "@/system/lib/types";
-import { statusOptions } from "@/system/lib/data";
+
 import { useSearchParams } from "react-router";
 import { Oval } from "react-loader-spinner";
 import BaseImageInput from "@/system/components/input/base-image-input/BaseImageInput";
 import { handleFileChange, uploadImage } from "@/system/lib/helpers";
 import FormSelect from "@/system/components/select/form-select/FormSelect";
+import { equipmentStatusOptions } from "@/system/lib/data";
 
 export default function EditEquipments({
   selectedId,
@@ -258,7 +259,7 @@ export default function EditEquipments({
                 error={errors.status}
                 label={field.name}
                 field={field}
-                options={statusOptions}
+                options={equipmentStatusOptions}
                 placeholder="Select a status"
               />
             )}

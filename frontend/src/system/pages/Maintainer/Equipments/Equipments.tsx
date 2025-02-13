@@ -60,7 +60,7 @@ export default function Equipments() {
               placeholder="Search by name, serial number, etc"
             />
             <div className="flex items-center gap-4">
-              <Filter entity={filterFields.maintainer} />
+              <Filter entity={filterFields.equipments} />
               <Button
                 variant={"primary"}
                 className="font-medium"

@@ -7,7 +7,8 @@ export type TOptions = {
 };
 
 export type TFilterFields = {
-  maintainer: TEntity;
+  equipments: TEntity;
+  maintainers: TEntity;
 };
 
 export type TFields = { label: string; options: TOptions[] };
@@ -17,7 +18,7 @@ export type TEntity = {
   fields: TFields[];
 };
 
-export const statusOptions: TOptions[] = [
+export const equipmentStatusOptions: TOptions[] = [
   { label: "Available", value: "active", theme: "hsl(var(--success))" },
   { label: "Unavailable", value: "inactive", theme: "hsl(var(--destructive))" },
   {
@@ -25,6 +26,11 @@ export const statusOptions: TOptions[] = [
     value: "underMaintenance",
     theme: "hsl(var(--primary))",
   },
+];
+
+export const maintainerStatusOptions: TOptions[] = [
+  { label: "Active", value: "active", theme: "hsl(var(--success))" },
+  { label: "Inactive", value: "inactive", theme: "hsl(var(--destructive))" },
 ];
 
 export const genderOptions: TOptions[] = [
@@ -43,11 +49,18 @@ export const categoryOptions: TOptions[] = [
 ];
 
 export const filterFields: TFilterFields = {
-  maintainer: {
-    name: "maintainer",
+  equipments: {
+    name: "equipments",
     fields: [
-      { label: "status", options: statusOptions },
+      { label: "status", options: equipmentStatusOptions },
       { label: "category", options: categoryOptions },
+    ],
+  },
+  maintainers: {
+    name: "maintainers",
+    fields: [
+      { label: "status", options: maintainerStatusOptions },
+      { label: "gender", options: genderOptions },
     ],
   },
 };
