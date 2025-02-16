@@ -11,6 +11,7 @@ export const ROUTES = {
   DASHBOARD: {
     MAINTAINER: "/maintainer-dashboard",
     ADMIN: "/admin-dashboard",
+    TRAINER: "/trainer-dashboard",
   },
   EQUIPMENTS: "/equipments",
   MAINTAINERS: "/maintainers",

@@ -53,6 +53,12 @@ export default function App() {
               element={<MaintainerDashboard />}
             />
           </Route>
+          <Route element={<ProtectedRoute allowedRoles={["trainer"]} />}>
+            <Route
+              path={ROUTES.DASHBOARD.TRAINER}
+              element={<MaintainerDashboard />}
+            />
+          </Route>
           <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
             <Route path={ROUTES.DASHBOARD.ADMIN} element={<AdminDashboard />} />
           </Route>

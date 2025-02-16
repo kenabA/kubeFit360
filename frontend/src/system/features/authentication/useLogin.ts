@@ -1,3 +1,4 @@
+import { ROUTES } from "@/config/appRoutes";
 import { useToast } from "@/hooks/use-toast";
 import useHandleNavigate from "@/hooks/useHandleNavigate";
 import { TLoginFormProps } from "@/system/pages/Login/types";
@@ -28,10 +29,13 @@ function useLogin() {
 
         switch (userData.data.data.role) {
           case "maintainer":
-            handleNavigate("/maintainer-dashboard");
+            handleNavigate(ROUTES.DASHBOARD.MAINTAINER);
             break;
           case "admin":
-            handleNavigate("/admin-dashboard");
+            handleNavigate(ROUTES.DASHBOARD.ADMIN);
+            break;
+          case "trainer":
+            handleNavigate(ROUTES.DASHBOARD.TRAINER);
             break;
         }
       }

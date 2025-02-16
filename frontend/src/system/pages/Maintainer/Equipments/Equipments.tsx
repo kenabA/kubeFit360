@@ -17,6 +17,8 @@ import { TEquipmentsData } from "@/system/features/equipments/type";
 import TableSearch from "@/system/components/table-search/TableSearch";
 import ViewEquipment from "@/system/features/equipments/view-equipment/ViewEquipment";
 import AddEquipments from "@/system/features/equipments/add-equipments/AddEquipments";
+import { TUserDetails } from "@/system/stores/user/types";
+import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 
 export default function Equipments() {
   const [openView, setOpenView] = useState<boolean>(false);
@@ -24,6 +26,7 @@ export default function Equipments() {
   const [openEdit, setOpenEdit] = useState<boolean>(false);
   const [selectedIds, setSelectedIds] = useState<string>("");
   const [openDelete, setOpenDelete] = useState<boolean>(false);
+  const user = useAuthUser<TUserDetails>();
 
   const {
     data: { data: equipments, count },
@@ -90,22 +93,30 @@ export default function Equipments() {
         setIsDialogOpen={setOpenView}
         setOpenEdit={setOpenEdit}
       />
-      <AddEquipments isDialogOpen={openAdd} setIsDialogOpen={setOpenAdd} />
-      <EditEquipments
-        selectedId={selectedIds}
-        isDialogOpen={openEdit}
-        setIsDialogOpen={setOpenEdit}
-      />
-      <ThemedDialog
-        isPending={isDeletePending}
-        dialogOpen={openDelete}
-        setDialogOpen={setOpenDelete}
-        mutationFn={() => deleteEquipment(selectedIds)}
-        theme="destructive"
-        ctaText="Delete"
-        title="Delete Equipment"
-        message="Do you really want to delete this equipment?"
-      />
+      {user?.role === "admin" ||
+        (user?.role === "maintainer" && (
+          <>
+            <AddEquipments
+              isDialogOpen={openAdd}
+              setIsDialogOpen={setOpenAdd}
+            />
+            <EditEquipments
+              selectedId={selectedIds}
+              isDialogOpen={openEdit}
+              setIsDialogOpen={setOpenEdit}
+            />
+            <ThemedDialog
+              isPending={isDeletePending}
+              dialogOpen={openDelete}
+              setDialogOpen={setOpenDelete}
+              mutationFn={() => deleteEquipment(selectedIds)}
+              theme="destructive"
+              ctaText="Delete"
+              title="Delete Equipment"
+              message="Do you really want to delete this equipment?"
+            />
+          </>
+        ))}
     </section>
   );
 }

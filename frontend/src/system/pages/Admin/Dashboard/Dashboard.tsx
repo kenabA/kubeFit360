@@ -1,4 +1,3 @@
-import ErrorPage from "@/components/page-not-found/PageNotFound";
 import { Heading } from "@/components/heading/Heading";
 import { Areachart, Block, Piechart } from "@/system/components";
 import ColumnDefinition from "@/system/components/tables/recent-activities/ColumnDefinition";
@@ -46,7 +45,7 @@ export default function AdminDashboard() {
             className="col-span-full md:col-[1/2] lg:col-[1/2]"
           >
             {memberError ? (
-              <ErrorPage errMsg={memberError.message} />
+              <>An Error Occurred : Make an error page here</>
             ) : (
               <Piechart
                 entity="Members"
@@ -92,7 +91,7 @@ export default function AdminDashboard() {
             className="col-span-full md:col-[1/2] lg:col-[3/4]"
           >
             {equipmentError ? (
-              <ErrorPage errMsg={equipmentError.message} />
+              <>An Error Occurred : Make an error page here</>
             ) : (
               <Piechart
                 entity="Equipments"

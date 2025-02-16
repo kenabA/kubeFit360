@@ -1,7 +1,6 @@
 import { Heading } from "@/components/heading/Heading";
 import { Block, Piechart } from "@/system/components/index";
 
-import ErrorPage from "@/components/page-not-found/PageNotFound";
 import { useState } from "react";
 
 import { equipmentChartConfig } from "@/system/features/equipments/equipmentChartData";
@@ -12,7 +11,7 @@ import ColumnDefinition from "@/system/components/tables/recent-activities/Colum
 import { TRecentActivities } from "@/system/features/recent-activities/type";
 import useEquipmentsAnalytics from "@/system/features/equipments/useEquipmentsAnalytics";
 
-export default function MaintainerDashboard() {
+export default function TrainerDashboard() {
   const [selectedIds, setSelectedIds] = useState<string>("");
   const [openView, setOpenView] = useState<boolean>(false);
 
@@ -22,7 +21,7 @@ export default function MaintainerDashboard() {
   const { stats, chartData, error } = useEquipmentsAnalytics();
 
   if (error) {
-    return <ErrorPage errMsg={error.message} />;
+    return <>An Error Occurred</>;
   }
 
   return (
