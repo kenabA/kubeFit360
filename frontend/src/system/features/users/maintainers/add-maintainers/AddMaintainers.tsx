@@ -86,7 +86,7 @@ export default function AddMaintainer({
 
   return (
     <FormModal
-      icon="bi:database-fill-gear"
+      icon="gravity-ui:person-worker"
       title="Add Maintainer"
       subtitle="Fill in the form to add a maintainer"
       open={isDialogOpen}

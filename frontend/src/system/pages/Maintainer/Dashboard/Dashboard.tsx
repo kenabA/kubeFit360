@@ -1,7 +1,7 @@
 import { Heading } from "@/components/heading/Heading";
 import { Block, Piechart } from "@/system/components/index";
 
-import ErrorPage from "@/components/errorPage/ErrorPage";
+import ErrorPage from "@/components/page-not-found/PageNotFound";
 import { useState } from "react";
 
 import { equipmentChartConfig } from "@/system/features/equipments/equipmentChartData";

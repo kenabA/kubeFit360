@@ -1,4 +1,4 @@
-import ErrorPage from "@/components/errorPage/ErrorPage";
+import ErrorPage from "@/components/page-not-found/PageNotFound";
 import { Heading } from "@/components/heading/Heading";
 import { Areachart, Block, Piechart } from "@/system/components";
 import ColumnDefinition from "@/system/components/tables/recent-activities/ColumnDefinition";

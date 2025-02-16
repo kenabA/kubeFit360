@@ -16,4 +16,5 @@ export const ROUTES = {
   MAINTAINERS: "/maintainers",
   NOTICES: "/notices",
   SETTINGS: "/settings",
+  UNAUTHORIZED: "/unauthorized",
 };

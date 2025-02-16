@@ -11,7 +11,7 @@ export type TUserDetails = {
   email: string;
   phoneNumber: string;
   gender: string;
-  role: string;
+  role: "maintainer" | "admin" | "trainer" | "member";
   joinDate: string;
   status: string;
   userImage: string;

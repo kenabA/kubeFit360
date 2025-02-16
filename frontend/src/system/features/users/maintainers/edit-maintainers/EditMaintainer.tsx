@@ -132,7 +132,7 @@ export default function EditMaintainer({
 
   return (
     <FormModal
-      icon="lucide:package"
+      icon="gravity-ui:person-worker"
       title="Edit Maintainer"
       subtitle="Modify and Update Maintainer Details"
       open={isDialogOpen}

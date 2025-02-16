@@ -42,7 +42,7 @@ export default function ViewMaintainer({
     >
       <DialogContent
         onOpenAutoFocus={(e) => e.preventDefault()}
-        className="!rounded-2xl p-0 flex max-w-5xl overflow-hidden border-none max-h-[500px]"
+        className="!rounded-2xl p-0 flex max-w-5xl overflow-hidden border-none max-h-[450px]"
       >
         {maintainer && (
           <div className="flex items-start w-full">

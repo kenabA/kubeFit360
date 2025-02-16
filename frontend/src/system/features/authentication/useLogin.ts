@@ -2,31 +2,38 @@ import { useToast } from "@/hooks/use-toast";
 import useHandleNavigate from "@/hooks/useHandleNavigate";
 import { TLoginFormProps } from "@/system/pages/Login/types";
 import apiLogin from "@/system/services/auth/apiLogin";
-import useUserStore from "@/system/stores/user/useUserStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import useSignIn from "react-auth-kit/hooks/useSignIn";
 
 function useLogin() {
   const handleNavigate = useHandleNavigate();
+  const signIn = useSignIn();
   const queryClient = useQueryClient();
-  const setUser = useUserStore((state) => state.setUser);
   const { toast } = useToast();
   const { mutate: login, isPending } = useMutation({
     mutationFn: (loginDetails: TLoginFormProps) => apiLogin(loginDetails),
-    onSuccess: (userData) => {
-      toast({
-        variant: "success",
-        title: "Success",
-        description: "Logged in successfully",
-      });
-      setUser(userData.data.data);
-      queryClient.setQueryData(["user"], userData);
-      switch (userData.data.data.role) {
-        case "maintainer":
-          handleNavigate("/maintainer-dashboard");
-          break;
-        case "admin":
-          handleNavigate("/admin-dashboard");
-          break;
+    onSuccess: async (userData) => {
+      if (
+        signIn({
+          auth: { token: userData.token, type: "Bearer" },
+          userState: userData.data.data,
+        })
+      ) {
+        toast({
+          variant: "success",
+          title: "Success",
+          description: "Logged in successfully",
+        });
+        queryClient.setQueryData(["user"], userData);
+
+        switch (userData.data.data.role) {
+          case "maintainer":
+            handleNavigate("/maintainer-dashboard");
+            break;
+          case "admin":
+            handleNavigate("/admin-dashboard");
+            break;
+        }
       }
     },
     onError: (err) => {

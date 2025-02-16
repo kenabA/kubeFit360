@@ -2,20 +2,16 @@ import { API_ROUTES } from "@/config/apiRoutes";
 import { _axios } from "@/config/axios";
 import { AxiosError } from "axios";
 
-async function apiAuth() {
+const apiLogout = async () => {
   try {
-    const response = await _axios.get(`${API_ROUTES.AUTH.AUTHENTICATE_USER}`);
-    return response.data;
+    const res = await _axios.get(`${API_ROUTES.AUTH.LOGOUT}`);
+    return res.data;
   } catch (err) {
     const backendError = err as AxiosError<{ message: string }>;
-
-    if (backendError?.response?.status === 401) {
-      return null;
-    }
     throw new Error(
       backendError?.response?.data.message || backendError.message
     );
   }
-}
+};
 
-export default apiAuth;
+export default apiLogout;

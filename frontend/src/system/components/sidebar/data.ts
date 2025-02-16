@@ -33,6 +33,11 @@ export const sidebarDataAdmin: TSidebarData[] = [
   {
     title: "Maintainers",
     to: ROUTES.MAINTAINERS,
+    icon: "gravity-ui:person-worker",
+  },
+  {
+    title: "Equipments",
+    to: ROUTES.EQUIPMENTS,
     icon: "lucide:package",
   },
   {
@@ -47,9 +52,20 @@ export const sidebarDataAdmin: TSidebarData[] = [
   },
 ];
 
+export const sidebarDataDefault: TSidebarData[] = [
+  {
+    title: "Notices",
+    to: ROUTES.NOTICES,
+    icon: "pepicons-pop:bulletin-notice",
+  },
+];
+
 export const ROLE_SIDEBAR_DATA = {
   maintainer: sidebarDataMaintainer,
   admin: sidebarDataAdmin,
+  trainer: sidebarDataMaintainer,
+  member: sidebarDataAdmin,
+  default: sidebarDataDefault,
 };
 
 export type Role = keyof typeof ROLE_SIDEBAR_DATA;
