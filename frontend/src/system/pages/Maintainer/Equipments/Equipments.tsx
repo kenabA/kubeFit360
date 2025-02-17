@@ -62,15 +62,19 @@ export default function Equipments() {
               isPending={isPending}
               placeholder="Search by name, serial number, etc"
             />
+
             <div className="flex items-center gap-4">
               <Filter entity={filterFields.equipments} />
-              <Button
-                variant={"primary"}
-                className="font-medium"
-                onClick={handleOpenAdd}
-              >
-                <Plus className="stroke-[3px]" /> Add Equipment
-              </Button>
+              {user?.role === "admin" ||
+                (user?.role === "maintainer" && (
+                  <Button
+                    variant={"primary"}
+                    className="font-medium"
+                    onClick={handleOpenAdd}
+                  >
+                    <Plus className="stroke-[3px]" /> Add Equipment
+                  </Button>
+                ))}
             </div>
           </div>
           <GeneralTable<TEquipmentsData>

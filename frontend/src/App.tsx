@@ -27,6 +27,7 @@ import MaintainerDashboard from "./system/pages/Maintainer/Dashboard/Dashboard";
 import Maintainer from "./system/pages/Admin/Maintainer/Maintainer";
 import Unauthorized from "./components/unauthorized/Unauthorized";
 import PageNotFound from "./components/page-not-found/PageNotFound";
+import TrainerDashboard from "./system/pages/Trainer/Dashboard/Dashboard";
 
 export default function App() {
   return (
@@ -56,14 +57,18 @@ export default function App() {
           <Route element={<ProtectedRoute allowedRoles={["trainer"]} />}>
             <Route
               path={ROUTES.DASHBOARD.TRAINER}
-              element={<MaintainerDashboard />}
+              element={<TrainerDashboard />}
             />
           </Route>
           <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
             <Route path={ROUTES.DASHBOARD.ADMIN} element={<AdminDashboard />} />
           </Route>
           <Route
-            element={<ProtectedRoute allowedRoles={["admin", "maintainer"]} />}
+            element={
+              <ProtectedRoute
+                allowedRoles={["admin", "maintainer", "trainer"]}
+              />
+            }
           >
             <Route path={ROUTES.EQUIPMENTS} element={<Equipments />} />
           </Route>

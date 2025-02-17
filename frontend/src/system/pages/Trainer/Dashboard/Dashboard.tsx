@@ -11,7 +11,7 @@ import ColumnDefinition from "@/system/components/tables/recent-activities/Colum
 import { TRecentActivities } from "@/system/features/recent-activities/type";
 import useEquipmentsAnalytics from "@/system/features/equipments/useEquipmentsAnalytics";
 
-export default function MaintainerDashboard() {
+export default function TrainerDashboard() {
   const [selectedIds, setSelectedIds] = useState<string>("");
   const [openView, setOpenView] = useState<boolean>(false);
 
@@ -30,35 +30,29 @@ export default function MaintainerDashboard() {
         <Heading level={4} variant={"quaternary"}>
           Dashboard
         </Heading>
-        <div className="h-full grid grid-cols-2 lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] gap-6 mt-6 ">
+        <div className="h-full grid grid-cols-2 lg:grid-cols-3 lg:grid-rows-[auto,1fr] gap-6 mt-6 ">
           <Block
+            type={"figure"}
+            icon="lucide:package"
+            title="equipments visualization"
             className="col-span-full md:col-[1/2] lg:col-[1/2]"
-            type={"numeric"}
-            theme={"success"}
-            data={stats.active}
-            icon="lucide:package"
-            title="available equipments"
-            total={stats.total}
-          />
+          >
+            Barchart Here
+          </Block>
           <Block
+            type={"figure"}
+            icon="lucide:package"
+            title="equipments visualization"
             className="col-span-full md:col-[2/-1] lg:col-[2/3]"
-            type={"numeric"}
-            theme={"error"}
-            data={stats.inactive}
-            icon="lucide:package"
-            title="unavailable equipments"
-            total={stats.total}
-          />
-          <Block
-            className="col-span-full md:col-[1/-1] lg:col-[3/4]"
-            type={"numeric"}
-            theme={"warn"}
-            data={stats.underMaintenance}
-            icon="lucide:package"
-            title="under maintenance"
-            total={stats.total}
-          />
-          <div className="relative overflow-hidden shadow-general col-span-full md:col-[1/2]">
+          >
+            <Piechart
+              entity="Equipments"
+              config={equipmentChartConfig}
+              stats={chartData}
+              count={stats.total}
+            />
+          </Block>
+          <div className="relative overflow-hidden shadow-general col-span-full md:col-[1/2] lg:col-[3/4]">
             <div className="bg-primary absolute  -top-40 w-full h-48 rounded-full filter blur-lg opacity-[0.1]"></div>
             <Block type={"calendar"} />
           </div>
@@ -66,7 +60,7 @@ export default function MaintainerDashboard() {
             type={"table"}
             title="recent activities"
             icon="lucide:package"
-            className="bg-white shadow-general border col-span-2  row-span-2 rounded-xl"
+            className="bg-white shadow-general border col-span-full rounded-xl"
           >
             {!activitiesError ? (
               <RecentActivities<TRecentActivities>
@@ -79,21 +73,6 @@ export default function MaintainerDashboard() {
               <p className="text-destructive">Error Fetching Activities Data</p>
             )}
           </Block>
-          <div className="col-span-full md:col-[2/-1] row-[4] md:row-[3] lg:col-[1/2]">
-            <Block
-              type={"figure"}
-              icon="lucide:package"
-              title="equipments visualization"
-              className="lg:h-fit h-full"
-            >
-              <Piechart
-                entity="Equipments"
-                config={equipmentChartConfig}
-                stats={chartData}
-                count={stats.total}
-              />
-            </Block>
-          </div>
         </div>
       </div>
       <ViewEquipment
