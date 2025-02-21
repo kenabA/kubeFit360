@@ -13,3 +13,22 @@ export function formatTime(isoTimestamp: string, formatStr?: string) {
 export function capitalize(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
+
+export function formatParams(params: { [key: string]: string }) {
+  const formattedParams: { [key: string]: string } = {};
+  Object.keys(params).forEach((key) => {
+    formattedParams[toCamelCase(key)] = params[key];
+  });
+  return formattedParams;
+}
+
+export function toCamelCase(str: string) {
+  return str
+    .split(" ")
+    .map((word, index) =>
+      index === 0
+        ? word.toLowerCase()
+        : word.charAt(0).toUpperCase() + word.slice(1)
+    )
+    .join("");
+}

@@ -59,6 +59,11 @@ export const sidebarDataTrainer: TSidebarData[] = [
     icon: "lucide:home",
   },
   {
+    title: "Workout Requests",
+    to: ROUTES.WORKOUT_PLAN_REQUESTS,
+    icon: "icon-park-outline:plan",
+  },
+  {
     title: "Equipments",
     to: ROUTES.EQUIPMENTS,
     icon: "lucide:package",

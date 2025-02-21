@@ -28,6 +28,7 @@ import Maintainer from "./system/pages/Admin/Maintainer/Maintainer";
 import Unauthorized from "./components/unauthorized/Unauthorized";
 import PageNotFound from "./components/page-not-found/PageNotFound";
 import TrainerDashboard from "./system/pages/Trainer/Dashboard/Dashboard";
+import WorkoutPlanRequests from "./system/pages/Trainer/WorkoutPlanRequests/WorkoutPlanRequests";
 
 export default function App() {
   return (
@@ -63,6 +64,17 @@ export default function App() {
           <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
             <Route path={ROUTES.DASHBOARD.ADMIN} element={<AdminDashboard />} />
           </Route>
+          <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
+            <Route path={ROUTES.MAINTAINERS} element={<Maintainer />} />
+          </Route>
+          <Route
+            element={<ProtectedRoute allowedRoles={["admin", "trainer"]} />}
+          >
+            <Route
+              path={ROUTES.WORKOUT_PLAN_REQUESTS}
+              element={<WorkoutPlanRequests />}
+            />
+          </Route>
           <Route
             element={
               <ProtectedRoute
@@ -72,11 +84,7 @@ export default function App() {
           >
             <Route path={ROUTES.EQUIPMENTS} element={<Equipments />} />
           </Route>
-          <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
-            <Route path={ROUTES.MAINTAINERS} element={<Maintainer />} />
-          </Route>
         </Route>
-
         <Route element={<SignupLayout />}>
           <Route path={ROUTES.SIGNUP} element={<Signup />} />
         </Route>

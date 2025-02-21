@@ -10,6 +10,7 @@ import ViewEquipment from "@/system/features/equipments/view-equipment/ViewEquip
 import ColumnDefinition from "@/system/components/tables/recent-activities/ColumnDefinition";
 import { TRecentActivities } from "@/system/features/recent-activities/type";
 import useEquipmentsAnalytics from "@/system/features/equipments/useEquipmentsAnalytics";
+import { Barchart } from "@/system/components/barchart/Barchart";
 
 export default function TrainerDashboard() {
   const [selectedIds, setSelectedIds] = useState<string>("");
@@ -34,10 +35,10 @@ export default function TrainerDashboard() {
           <Block
             type={"figure"}
             icon="lucide:package"
-            title="equipments visualization"
+            title="plan creation"
             className="col-span-full md:col-[1/2] lg:col-[1/2]"
           >
-            Barchart Here
+            <Barchart className="mt-8" />
           </Block>
           <Block
             type={"figure"}

@@ -15,6 +15,7 @@ export const ROUTES = {
   },
   EQUIPMENTS: "/equipments",
   MAINTAINERS: "/maintainers",
+  WORKOUT_PLAN_REQUESTS: "/workoutPlanRequests",
   NOTICES: "/notices",
   SETTINGS: "/settings",
   UNAUTHORIZED: "/unauthorized",

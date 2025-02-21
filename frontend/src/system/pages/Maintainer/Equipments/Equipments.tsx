@@ -91,7 +91,7 @@ export default function Equipments() {
       </div>
 
       <ViewEquipment
-        edit
+        edit={user?.role === "maintainer" || user?.role === "admin"}
         selectedId={selectedIds}
         isDialogOpen={openView}
         setIsDialogOpen={setOpenView}

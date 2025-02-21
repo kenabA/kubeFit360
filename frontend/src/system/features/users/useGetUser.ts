@@ -3,7 +3,6 @@ import { AxiosError } from "axios";
 
 import { TUserDetails } from "@/system/stores/user/types";
 import apiGetUser from "@/system/services/users/apiGetUser";
-import { TApiResponse } from "@/system/lib/types";
 
 type TGetUser = {
   selectedId: string;
