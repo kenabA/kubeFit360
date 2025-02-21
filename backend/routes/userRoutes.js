@@ -27,7 +27,9 @@ router.patch('/updatePassword', updatePassword);
 router.route('/').get(getAllUsers).post(addUser);
 router.route('/user-stats').get(restrictTo('admin'), getClientStats);
 
-router.route('/maintainers').get(getUsersByRole('maintainer'));
+router
+  .route('/maintainers')
+  .get(restrictTo('admin'), getUsersByRole('maintainer'));
 
 router.route('/:id').get(getUser).patch(updateUser).delete(deleteUser);
 

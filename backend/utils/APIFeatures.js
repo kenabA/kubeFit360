@@ -40,10 +40,6 @@ class APIFeatures {
 
     delete searchQuery['search'];
 
-    console.log(
-      'Final Query Sent to MongoDB:',
-      JSON.stringify(searchQuery, null, 2),
-    );
     this.query.find(searchQuery);
   }
 
