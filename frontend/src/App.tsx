@@ -29,6 +29,7 @@ import Unauthorized from "./components/unauthorized/Unauthorized";
 import PageNotFound from "./components/page-not-found/PageNotFound";
 import TrainerDashboard from "./system/pages/Trainer/Dashboard/Dashboard";
 import WorkoutPlanRequests from "./system/pages/Trainer/WorkoutPlanRequests/WorkoutPlanRequests";
+import CreateWorkoutPlan from "./system/pages/Trainer/workout-plan/create-workout-plan/CreateWorkoutPlan";
 
 export default function App() {
   return (
@@ -73,6 +74,14 @@ export default function App() {
             <Route
               path={ROUTES.WORKOUT_PLAN_REQUESTS}
               element={<WorkoutPlanRequests />}
+            />
+          </Route>
+          <Route
+            element={<ProtectedRoute allowedRoles={["admin", "trainer"]} />}
+          >
+            <Route
+              path={ROUTES.WORKOUT_PLAN.CREATE}
+              element={<CreateWorkoutPlan />}
             />
           </Route>
           <Route

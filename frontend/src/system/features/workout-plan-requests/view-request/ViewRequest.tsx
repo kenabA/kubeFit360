@@ -15,6 +15,7 @@ import { Oval } from "react-loader-spinner";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
+import { useNavigate } from "react-router";
 
 export default function ViewRequest({
   selectedId,
@@ -29,6 +30,7 @@ export default function ViewRequest({
     selectedId: selectedId,
     enabled: isDialogOpen,
   });
+  const navigate = useNavigate();
   const [pendingAction, setPendingAction] = useState<TWorkoutPlanStatus | null>(
     null
   );
@@ -139,7 +141,9 @@ export default function ViewRequest({
                       animate={{ x: 0 }}
                       exit={{ x: 20 }}
                       disabled={isPending}
-                      onClick={() => handleChangeStatus("approved")}
+                      onClick={() =>
+                        navigate(`/workoutPlan/${selectedId}/create`)
+                      }
                       form="equipment-form"
                       type="submit"
                       className="shadow-none h-10 w-fit font-semibold text-sm flex items-center gap-2 bg-primary text-primary-foreground hover:bg-primary-hover hover:shadow-button px-4 py-2 rounded-lg"

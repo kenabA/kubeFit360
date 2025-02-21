@@ -16,6 +16,7 @@ export const ROUTES = {
   EQUIPMENTS: "/equipments",
   MAINTAINERS: "/maintainers",
   WORKOUT_PLAN_REQUESTS: "/workoutPlanRequests",
+  WORKOUT_PLAN: { BASE: "/workoutPlan", CREATE: "/workoutPlan/:id/create" },
   NOTICES: "/notices",
   SETTINGS: "/settings",
   UNAUTHORIZED: "/unauthorized",
