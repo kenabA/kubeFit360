@@ -7,8 +7,12 @@ export default function AdditionalUserInfo({
 }) {
   return (
     <div
-      className={cn("bg-white shadow-general p-6 !rounded-[12px]", className)}
+      className={cn(
+        "bg-white shadow-general p-6  !rounded-[12px] relative overflow-hidden",
+        className
+      )}
     >
+      <div className="absolute bg-primary w-full h-48 rounded-full filter blur-2xl -top-36 opacity-[0.2]"></div>
       <span className="font-semibold text-lg text-primary block mb-6">
         Additional User Info
       </span>

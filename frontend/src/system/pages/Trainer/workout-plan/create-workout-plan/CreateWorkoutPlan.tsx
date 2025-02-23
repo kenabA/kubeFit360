@@ -35,7 +35,7 @@ export default function CreateWorkoutPlan() {
           Create Workout Plan | Refactor
         </Heading>
         <motion.div
-          className="grid grid-cols-[2fr,1fr] gap-4"
+          className="grid grid-cols-[2fr,1fr]  gap-4"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
@@ -43,10 +43,16 @@ export default function CreateWorkoutPlan() {
           <motion.div variants={itemVariants} className="col-span-full">
             <UserProfileCard classname="col-span-full rounded-[8px]" />
           </motion.div>
-          <motion.div variants={itemVariants}>
+          <motion.div
+            variants={itemVariants}
+            className="lg:col-[1/2] col-span-full row-2 bg-white"
+          >
             <WorkoutPlanEditor />
           </motion.div>
-          <motion.div variants={itemVariants}>
+          <motion.div
+            variants={itemVariants}
+            className="col-span-full lg:col-[2/3] "
+          >
             <AdditionalUserInfo />
           </motion.div>
         </motion.div>

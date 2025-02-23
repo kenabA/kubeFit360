@@ -1,9 +1,10 @@
 import { Button } from "@/components";
+import Tiptap from "@/system/components/tiptap/Tiptap";
 import { Icon } from "@iconify/react/dist/iconify.js";
 
 export default function WorkoutPlanEditor() {
   return (
-    <div className="bg-white shadow-general p-6 !rounded-[12px]">
+    <div className="shadow-general p-6 !rounded-[12px] space-y-6">
       <div className="flex justify-between items-center">
         <span className="block font-semibold text-lg text-gray">
           Workout Plan
@@ -25,6 +26,7 @@ export default function WorkoutPlanEditor() {
           </Button>
         </div>
       </div>
+      <Tiptap />
     </div>
   );
 }
