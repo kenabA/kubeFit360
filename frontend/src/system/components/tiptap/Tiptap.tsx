@@ -12,13 +12,11 @@ import BubbleMenuBar from "./BubbleMenu";
 import Highlight from "@tiptap/extension-highlight";
 import { Color } from "@tiptap/extension-color";
 import TextStyle from "@tiptap/extension-text-style";
-import { Button } from "@/components";
-import { Icon } from "@iconify/react/dist/iconify.js";
-import TablePopover from "./table-popover/TablePopover";
 import Table from "@tiptap/extension-table";
 import TableRow from "@tiptap/extension-table-row";
 import TableHeader from "@tiptap/extension-table-header";
 import TableCell from "@tiptap/extension-table-cell";
+import TableOperations from "./TableOperations";
 
 const limit = 2500;
 
@@ -95,43 +93,18 @@ const Tiptap = () => {
   }
 
   return (
-    <div className="border rounded-[8px] p-4 min-h-[350px] flex flex-col justify-between relative">
+    <div className="border rounded-[8px] p-4  flex flex-col justify-between relative h-full ">
       <EditorContent editor={editor} />
       {editor && (
         <>
           <BubbleMenuBar editor={editor} />
           <div className="flex gap-4 justify-between items-center mt-4">
             <CharacterCountStats limit={limit} editor={editor} />
-            <div className="flex items-center gap-2">
-              {editor && editor.getText().trim() !== "" && (
-                <Button
-                  onClick={handleClearContent}
-                  variant={"outline"}
-                  className="border-transparent text-slate-600 bg-slate-200 py-1 px-2 hover:border-slate-400-hover hover:text-slate-400-hover font-medium"
-                >
-                  <Icon icon={"ic:round-clear"} className="!size-[20px]" />
-                </Button>
-              )}
-              <Button
-                onClick={handleLoadTemplate}
-                variant={"outline"}
-                className="border-accent text-accent bg-accent-light py-1 px-2 hover:border-accent-hover hover:text-accent-hover font-medium"
-              >
-                <Icon
-                  icon={"flowbite:upload-outline"}
-                  className="!size-[20px]"
-                />
-                Load Template
-              </Button>
-              <TablePopover editor={editor}>
-                <Button
-                  variant={"outline"}
-                  className="border-accent text-accent bg-accent-light py-1 px-2 hover:border-accent-hover hover:text-accent-hover"
-                >
-                  <Icon icon={"tabler:table"} className="!size-[20px]" />
-                </Button>
-              </TablePopover>
-            </div>
+            <TableOperations
+              editor={editor}
+              handleLoadTemplate={handleLoadTemplate}
+              handleClearContent={handleClearContent}
+            />
           </div>
         </>
       )}

@@ -18,7 +18,7 @@ export default function UserProfileCard({
     >
       <div className="flex items-center justify-between">
         <div className="flex items-start gap-3">
-          <figure className="size-16 border-[1px] border-primary rounded-full items-center justify-center flex overflow-hidden">
+          <figure className="size-16 flex-shrink-0 border-[1px] border-primary rounded-full items-center justify-center flex overflow-hidden">
             {userData?.userImage ? (
               <img
                 src={userData?.userImage}
@@ -41,7 +41,7 @@ export default function UserProfileCard({
                 <span className="capitalize">{userData.gender}</span>
               </span>
             </div>
-            <div className="flex gap-2 items-center justify-start">
+            <div className="flex gap-2 items-center justify-start flex-wrap">
               <Tag
                 value={data.fitnessLevel}
                 icon={

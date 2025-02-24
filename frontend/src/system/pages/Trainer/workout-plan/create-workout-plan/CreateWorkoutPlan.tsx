@@ -47,18 +47,21 @@ export default function CreateWorkoutPlan() {
   }
 
   return (
-    <section className="rounded-tl-xl overflow-y-auto custom-scrollbar flex-1">
-      <div className="py-7 px-6">
+    <section
+      className="rounded-tl-xl overflow-y-auto custom-scrollbar h-dvh flex flex-col
+    "
+    >
+      <div className="rounded-[18px] flex-1 flex flex-col py-7 px-6">
         <Heading level={4} variant={"quaternary"} className="mb-4">
-          Create Workout Plan | Refactor
+          Create Workout Plan
         </Heading>
         <motion.div
-          className="grid grid-cols-[2fr,1fr]  gap-4"
+          className="grid grid-cols-[2fr,1fr] grid-rows-[auto,1fr] gap-4 flex- h-full relative"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
         >
-          <motion.div variants={itemVariants} className="col-span-full">
+          <motion.div variants={itemVariants} className="col-span-full h-full">
             <UserProfileCard
               data={workoutRequest}
               classname="col-span-full rounded-[8px]"
@@ -66,13 +69,13 @@ export default function CreateWorkoutPlan() {
           </motion.div>
           <motion.div
             variants={itemVariants}
-            className="lg:col-[1/2] col-span-full row-2 bg-white"
+            className="lg:col-[1/2] col-span-full h-full"
           >
             <WorkoutPlanEditor />
           </motion.div>
           <motion.div
             variants={itemVariants}
-            className="col-span-full lg:col-[2/3] "
+            className="col-span-full lg:col-[2/3] h-fit lg:sticky lg:top-4"
           >
             <AdditionalUserInfo data={workoutRequest} />
           </motion.div>
