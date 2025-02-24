@@ -1,8 +1,12 @@
 import { Heading } from "@/components/heading/Heading";
 import UserProfileCard from "./UserProfileCard";
+import Loading from "@/components/loading/Loading";
 import AdditionalUserInfo from "./AdditionalUserInfo";
 import WorkoutPlanEditor from "./WorkoutPlanEditor";
 import { motion } from "framer-motion";
+import useGetWorkoutRequest from "@/system/features/workout-plan-requests/useGetWorkoutRequest";
+import { useParams } from "react-router";
+import Error from "@/components/error/Error";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -28,6 +32,20 @@ const itemVariants = {
 };
 
 export default function CreateWorkoutPlan() {
+  const { id } = useParams(); // Extracts the ID from the URL
+
+  const { data: workoutRequest, error } = useGetWorkoutRequest({
+    selectedId: id || "",
+    enabled: !!id,
+  });
+  if (!workoutRequest) {
+    return <Loading />;
+  }
+
+  if (error) {
+    return <Error error={error} />;
+  }
+
   return (
     <section className="rounded-tl-xl overflow-y-auto custom-scrollbar flex-1">
       <div className="py-7 px-6">
@@ -41,7 +59,10 @@ export default function CreateWorkoutPlan() {
           animate="visible"
         >
           <motion.div variants={itemVariants} className="col-span-full">
-            <UserProfileCard classname="col-span-full rounded-[8px]" />
+            <UserProfileCard
+              data={workoutRequest}
+              classname="col-span-full rounded-[8px]"
+            />
           </motion.div>
           <motion.div
             variants={itemVariants}
@@ -53,7 +74,7 @@ export default function CreateWorkoutPlan() {
             variants={itemVariants}
             className="col-span-full lg:col-[2/3] "
           >
-            <AdditionalUserInfo />
+            <AdditionalUserInfo data={workoutRequest} />
           </motion.div>
         </motion.div>
       </div>

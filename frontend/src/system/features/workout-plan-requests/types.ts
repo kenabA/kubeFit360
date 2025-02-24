@@ -49,8 +49,8 @@ export type TWorkoutPlanRequest = {
   status: TWorkoutPlanStatus;
   fitnessLevel: TFitnessLevel;
   bodyType: TBodyType;
-  workoutTypePreference: TWorkoutTypePreference;
-  workoutGoals: TWorkoutGoals;
+  workoutTypePreference: TWorkoutTypePreference[];
+  workoutGoals: TWorkoutGoals[];
   preferredWorkoutDays: TDays[];
   additionalNotes: string;
   createdAt: string;

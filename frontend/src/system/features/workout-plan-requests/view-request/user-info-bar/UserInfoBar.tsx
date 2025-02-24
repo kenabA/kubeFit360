@@ -1,7 +1,7 @@
 import InfoCard from "@/system/components/info-card/InfoCard";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { TWorkoutPlanRequest } from "../../types";
-import { formatTime } from "@/lib/utils";
+import { calculateAge, formatTime } from "@/lib/utils";
 
 export default function UserInfoBar({ data }: { data: TWorkoutPlanRequest }) {
   return (
@@ -27,7 +27,7 @@ export default function UserInfoBar({ data }: { data: TWorkoutPlanRequest }) {
           />
         }
         label="age / gender"
-        value={`28 / ${data.member.gender}`}
+        value={`${calculateAge(data.member.birthDate)} / ${data.member.gender}`}
       />
       <InfoCard
         icon={
@@ -70,6 +70,8 @@ export default function UserInfoBar({ data }: { data: TWorkoutPlanRequest }) {
             className="text-[20px] text-slate-400"
           />
         }
+        className="items-start"
+        type="list"
         label="Workout Type"
         value={data.workoutTypePreference}
       />
@@ -80,11 +82,13 @@ export default function UserInfoBar({ data }: { data: TWorkoutPlanRequest }) {
             className="text-[20px] text-slate-400"
           />
         }
+        type="list"
+        className="items-start"
         label="Preferred Days"
         value={data.preferredWorkoutDays}
       />
       <InfoCard
-        className="items-start col-span-full"
+        className="items-start"
         icon={
           <Icon
             icon={"mdi:heart-outline"}

@@ -1,9 +1,18 @@
 import { cn } from "@/lib/utils";
+import {
+  TDays,
+  TWorkoutGoals,
+  TWorkoutPlanRequest,
+  TWorkoutTypePreference,
+} from "@/system/features/workout-plan-requests/types";
+import AdditionalUserInfoBlock from "./AdditionalUserInfoBlock";
 
 export default function AdditionalUserInfo({
   className,
+  data,
 }: {
   className?: string;
+  data: TWorkoutPlanRequest;
 }) {
   return (
     <div
@@ -17,35 +26,15 @@ export default function AdditionalUserInfo({
         Additional User Info
       </span>
       <div className="flex flex-col gap-5">
-        <div className="flex flex-col gap-1">
-          <label className="text-xs font-normal text-slate-400">
-            Preferred Days
-          </label>
-          <span className="text-gray text-[16px]">Sun, Mon, Fri</span>
-        </div>
-        <div className="flex flex-col gap-1">
-          <label className="text-xs font-normal text-slate-400">
-            Workout Goals
-          </label>
-          <span className="text-gray text-[16px]">
-            Muscle Gain, Weight Loss
-          </span>
-        </div>
-        <div className="flex flex-col gap-1">
-          <label className="text-xs font-normal text-slate-400">
-            Workout Type
-          </label>
-          <span className="text-gray text-[16px]">Strength Training</span>
-        </div>
-        <div className="flex flex-col gap-1">
-          <label className="text-xs font-normal text-slate-400">
-            Additional Notes
-          </label>
-          <span className="text-gray text-[16px] leading-[1.6]">
-            This is a barbell sqaut rack, used to put the items of the gym
-            related to the squat machines.
-          </span>
-        </div>
+        <AdditionalUserInfoBlock<TDays[]> data={data.preferredWorkoutDays} />
+        <AdditionalUserInfoBlock<TWorkoutGoals[]> data={data.workoutGoals} />
+        <AdditionalUserInfoBlock<TWorkoutTypePreference[]>
+          data={data.workoutTypePreference}
+        />
+        <AdditionalUserInfoBlock<string>
+          data={data.additionalNotes}
+          type="description"
+        />
       </div>
     </div>
   );
