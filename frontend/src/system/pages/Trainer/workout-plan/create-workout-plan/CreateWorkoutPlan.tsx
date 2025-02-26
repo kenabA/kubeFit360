@@ -7,6 +7,8 @@ import { motion } from "framer-motion";
 import useGetWorkoutRequest from "@/system/features/workout-plan-requests/useGetWorkoutRequest";
 import { useParams } from "react-router";
 import Error from "@/components/error/Error";
+import useCreateWorkoutPlan from "@/system/features/workout-plan/useCreateWorkoutPlan";
+import { TCreateWorkoutPlanForm } from "@/system/features/workout-plan/types";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -38,6 +40,19 @@ export default function CreateWorkoutPlan() {
     selectedId: id || "",
     enabled: !!id,
   });
+
+  const { createWorkoutPlan, isPending } = useCreateWorkoutPlan();
+
+  function handleCreateWorkoutPlan(content: string) {
+    if (id) {
+      const data: TCreateWorkoutPlanForm = {
+        request: id,
+        workoutPlan: content,
+      };
+      createWorkoutPlan(data);
+    }
+  }
+
   if (!workoutRequest) {
     return <Loading />;
   }
@@ -47,10 +62,7 @@ export default function CreateWorkoutPlan() {
   }
 
   return (
-    <section
-      className="rounded-tl-xl overflow-y-auto custom-scrollbar h-dvh flex flex-col
-    "
-    >
+    <section className="rounded-tl-xl overflow-y-auto custom-scrollbar h-dvh flex flex-col">
       <div className="rounded-[18px] flex-1 flex flex-col py-7 px-6">
         <Heading level={4} variant={"quaternary"} className="mb-4">
           Create Workout Plan
@@ -71,7 +83,10 @@ export default function CreateWorkoutPlan() {
             variants={itemVariants}
             className="lg:col-[1/2] col-span-full h-full"
           >
-            <WorkoutPlanEditor />
+            <WorkoutPlanEditor
+              isPending={isPending}
+              handleCreateWorkoutPlan={handleCreateWorkoutPlan}
+            />
           </motion.div>
           <motion.div
             variants={itemVariants}
