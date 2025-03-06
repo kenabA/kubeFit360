@@ -5,6 +5,7 @@ const authRouter = require('./routes/authRoutes');
 const equipmentRouter = require('./routes/equipmentRoutes');
 const activitiesRouter = require('./routes/activitiesRoutes');
 const workoutPlanReqRouter = require('./routes/workoutPlanReqRoutes');
+const workoutPlanRouter = require('./routes/workoutPlanRoutes');
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controller/errorController');
 const cookieParser = require('cookie-parser');
@@ -39,6 +40,7 @@ app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/equipments', equipmentRouter);
 app.use('/api/v1/recentActivities', activitiesRouter);
 app.use('/api/v1/workoutPlanRequests', workoutPlanReqRouter);
+app.use('/api/v1/workoutPlan', workoutPlanRouter);
 
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

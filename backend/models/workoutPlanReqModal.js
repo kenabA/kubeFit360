@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const equipmentSchema = new mongoose.Schema(
+const workoutPlanRequests = new mongoose.Schema(
   {
     member: {
       type: mongoose.Schema.Types.ObjectId,
@@ -48,7 +48,7 @@ const equipmentSchema = new mongoose.Schema(
         values: ['strength training', 'cardio', 'flexibility'],
         message: 'Please provide a valid workout type',
       },
-      type: String,
+      type: [String],
       required: [true, 'Do specify your workout type preference.'],
     },
     workoutGoals: {
@@ -91,6 +91,6 @@ const equipmentSchema = new mongoose.Schema(
 
 const WorkoutPlanRequests = mongoose.model(
   'WorkoutPlanRequests',
-  equipmentSchema,
+  workoutPlanRequests,
 );
 module.exports = WorkoutPlanRequests;

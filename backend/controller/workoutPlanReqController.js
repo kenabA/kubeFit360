@@ -77,3 +77,15 @@ exports.updateWorkoutPlanRequest = catchAsync(async (req, res, next) => {
     .status(200)
     .json({ status: 'success', data: { data: updatedPlanRequest } });
 });
+
+exports.deleteWorkoutPlanRequest = catchAsync(async (req, res, next) => {
+  const workoutRequest = await WorkoutPlanRequests.findOneAndDelete({
+    _id: req.params.id,
+  });
+
+  if (!workoutRequest) {
+    return next(new AppError('No workoutRequest found with that id', 404));
+  }
+
+  res.status(204).json({ status: 'success' });
+});
