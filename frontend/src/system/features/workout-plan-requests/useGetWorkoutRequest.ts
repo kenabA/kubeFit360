@@ -4,10 +4,7 @@ import { AxiosError } from "axios";
 import { TGetWorkoutRequest, TWorkoutPlanRequest } from "./types";
 import apiGetWorkoutRequest from "@/system/services/workout-plan-requests/apiGetWorkoutRequest";
 
-function useGetWorkoutRequest({
-  selectedId,
-  enabled = true,
-}: TGetWorkoutRequest) {
+function useGetWorkoutRequest({ selectedId, enabled }: TGetWorkoutRequest) {
   const { isPending, data, error } = useQuery<TWorkoutPlanRequest, AxiosError>({
     queryFn: () => apiGetWorkoutRequest(selectedId),
     queryKey: ["workoutPlanRequests", selectedId],

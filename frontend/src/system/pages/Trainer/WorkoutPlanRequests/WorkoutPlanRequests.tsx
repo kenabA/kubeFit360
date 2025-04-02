@@ -52,6 +52,7 @@ export default function WorkoutPlanRequests() {
         </div>
       </div>
       <ViewRequest
+        setSelectedId={setSelectedIds}
         selectedId={selectedIds}
         isDialogOpen={openView}
         setIsDialogOpen={setOpenView}

@@ -16,13 +16,16 @@ import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { useNavigate } from "react-router";
+import useDeleteWorkoutPlan from "../delete-plan-requests/useDeleteWorkoutPlan";
 
 export default function ViewRequest({
   selectedId,
+  setSelectedId,
   isDialogOpen,
   setIsDialogOpen,
 }: {
   selectedId: string;
+  setSelectedId: React.Dispatch<React.SetStateAction<string>>;
   isDialogOpen: boolean;
   setIsDialogOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
@@ -36,6 +39,12 @@ export default function ViewRequest({
   );
   const { editPlanRequest, isPending, isSuccess, error } = useEditPlanRequest();
 
+  const {
+    deleteWorkoutPlanRequest,
+    isPending: isDeletePending,
+    isSuccess: isDeleteSuccess,
+  } = useDeleteWorkoutPlan();
+
   function handleChangeStatus(status: TWorkoutPlanStatus) {
     setPendingAction(status);
     editPlanRequest({ data: { status: status }, selectedId: selectedId });
@@ -46,6 +55,13 @@ export default function ViewRequest({
       setPendingAction(null);
     }
   }, [isSuccess, error]);
+
+  useEffect(() => {
+    if (isDeleteSuccess) {
+      setIsDialogOpen(false);
+      setSelectedId("");
+    }
+  }, [isDeleteSuccess]);
 
   const isRejected = workoutRequest?.status === "rejected";
   const isApproved = workoutRequest?.status === "approved";
@@ -77,7 +93,7 @@ export default function ViewRequest({
             <Separator className="bg-slate-200" />
             <UserInfoBar data={workoutRequest} />
             <div className="text-end space-x-2">
-              {!isApproved && (
+              {!isApproved && !isRejected && (
                 <Button
                   disabled={isPending || workoutRequest.status === "rejected"}
                   onClick={() => handleChangeStatus("rejected")}
@@ -101,14 +117,42 @@ export default function ViewRequest({
                   ) : (
                     <>
                       <Icon icon={"octicon:x-circle-16"} />
-                      {isRejected ? "Rejected" : "Reject"}
+                      Reject
+                    </>
+                  )}
+                </Button>
+              )}
+              {isRejected && (
+                <Button
+                  disabled={isDeletePending}
+                  onClick={() => {
+                    deleteWorkoutPlanRequest(selectedId);
+                  }}
+                  className={cn(
+                    "shadow-none w-40 hover:shadow-none h-10 border-[1px] border-destructive bg-destructive-light text-destructive font-semibold text-sm hover:text-destructive-hover hover:border-destructive-hover"
+                  )}
+                  variant={"outline"}
+                >
+                  {isDeletePending ? (
+                    <Oval
+                      height="280"
+                      strokeWidth={8}
+                      secondaryColor="white"
+                      width="280"
+                      color="hsl(var(--destructive))"
+                      wrapperStyle={{}}
+                    />
+                  ) : (
+                    <>
+                      <Icon icon={"lucide:trash-2"} />
+                      Delete Request
                     </>
                   )}
                 </Button>
               )}
               {!isApproved && !isRejected && (
                 <Button
-                  disabled={isPending}
+                  disabled={isPending || isDeletePending}
                   onClick={() => handleChangeStatus("approved")}
                   form="equipment-form"
                   type="submit"
