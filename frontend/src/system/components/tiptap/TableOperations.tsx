@@ -2,6 +2,7 @@ import { Button } from "@/components";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import TablePopover from "./table-popover/TablePopover";
 import { Editor } from "@tiptap/react";
+import ViewTemplatePopover from "./view-template-popover/ViewTemplatePopover";
 
 export default function TableOperations({
   editor,
@@ -23,14 +24,16 @@ export default function TableOperations({
           <Icon icon={"ic:round-clear"} className="!size-[20px]" />
         </Button>
       )}
-      <Button
-        onClick={handleLoadTemplate}
-        variant={"outline"}
-        className="border-accent text-accent bg-accent-light py-1 px-2 hover:border-accent-hover hover:text-accent-hover font-medium"
-      >
-        <Icon icon={"flowbite:upload-outline"} className="!size-[20px]" />
-        Load Template
-      </Button>
+      <ViewTemplatePopover handleLoadTemplate={handleLoadTemplate}>
+        <Button
+          // onClick={handleLoadTemplate}
+          variant={"outline"}
+          className="border-accent text-accent bg-accent-light py-1 px-2 hover:border-accent-hover hover:text-accent-hover font-medium"
+        >
+          <Icon icon={"flowbite:upload-outline"} className="!size-[20px]" />
+          Load Template
+        </Button>
+      </ViewTemplatePopover>
       <TablePopover editor={editor}>
         <Button
           variant={"outline"}

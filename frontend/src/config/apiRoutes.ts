@@ -22,6 +22,7 @@ export const API_ROUTES = {
     BASE: buildApiRoute("maintainers"),
     WORKOUT_PLAN_REQUESTS: buildApiRoute("workoutPlanRequests"),
     WORKOUT_PLAN: buildApiRoute("workoutPlan"),
+    WORKOUT_PLAN_TEMPLATE: buildApiRoute("workoutPlanTemplate"),
   },
   RECENT_ACTIVITIES: buildApiRoute("recentActivities"),
   USER: {
