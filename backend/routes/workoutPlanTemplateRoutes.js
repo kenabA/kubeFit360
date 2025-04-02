@@ -1,0 +1,20 @@
+const express = require('express');
+const { protect, restrictTo } = require('../controller/authController');
+
+const {
+  getAllWorkoutPlanTemplates,
+  createWorkoutPlanTemplate,
+  deleteAllWorkoutPlanTemplate,
+} = require('../controller/workoutPlanTemplateController');
+
+const router = express.Router();
+
+router.use(protect);
+router.use(restrictTo('admin', 'trainer'));
+router
+  .route('/')
+  .get(getAllWorkoutPlanTemplates)
+  .post(restrictTo('trainer'), createWorkoutPlanTemplate)
+  .delete(deleteAllWorkoutPlanTemplate);
+
+module.exports = router;
