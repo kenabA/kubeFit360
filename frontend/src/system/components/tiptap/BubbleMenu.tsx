@@ -3,7 +3,6 @@ import { cn } from "@/lib/utils";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { BubbleMenu, Editor } from "@tiptap/react";
 import BadgesPopover from "./badges-popover/BadgesPopover";
-import SaveTemplatePopover from "./save-template-popover/SaveTemplatePopover";
 
 export default function BubbleMenuBar({ editor }: { editor: Editor }) {
   return (
@@ -119,14 +118,6 @@ export default function BubbleMenuBar({ editor }: { editor: Editor }) {
           orientation="vertical"
           className="h-5 bg-secondary w-[0.5px]"
         />
-        <SaveTemplatePopover>
-          <button>
-            <Icon
-              icon={"material-symbols:save-outline-rounded"}
-              className="text-[20px]"
-            />
-          </button>
-        </SaveTemplatePopover>
       </div>
     </BubbleMenu>
   );

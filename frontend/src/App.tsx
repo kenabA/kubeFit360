@@ -28,7 +28,7 @@ import Maintainer from "./system/pages/Admin/Maintainer/Maintainer";
 import Unauthorized from "./components/unauthorized/Unauthorized";
 import PageNotFound from "./components/page-not-found/PageNotFound";
 import TrainerDashboard from "./system/pages/Trainer/Dashboard/Dashboard";
-import WorkoutPlanRequests from "./system/pages/Trainer/WorkoutPlanRequests/WorkoutPlanRequests";
+import WorkoutPlanRequests from "./system/pages/Trainer/workout-plan-requests/WorkoutPlanRequests";
 import CreateWorkoutPlan from "./system/pages/Trainer/workout-plan/create-workout-plan/CreateWorkoutPlan";
 
 export default function App() {

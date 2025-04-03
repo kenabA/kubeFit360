@@ -67,10 +67,7 @@ export default function ViewMaintainer({
                 </div>
               </DialogHeader>
               <div className="flex flex-col gap-5 h-auto mb-auto">
-                <ul
-                  className="grid grid-cols-2 gap-6
-                "
-                >
+                <ul className="grid grid-cols-2 gap-6">
                   <UserDetailBlock
                     label="Email"
                     value={maintainer.email}

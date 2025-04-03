@@ -5,7 +5,7 @@ import BubbleMenuBar from "./BubbleMenu";
 import TableOperations from "./TableOperations";
 
 const Tiptap = ({ editor, limit }: { editor: Editor; limit: number }) => {
-  function handleLoadTemplate() {
+  function handleLoadLocalTemplate() {
     const newTemplate = `
     <table>
       <thead>
@@ -36,6 +36,12 @@ const Tiptap = ({ editor, limit }: { editor: Editor; limit: number }) => {
     }
   }
 
+  function handleLoadServerTemplate(template: string) {
+    if (editor && template) {
+      editor.commands.setContent(template, true);
+    }
+  }
+
   function handleClearContent() {
     if (editor) {
       editor.commands.clearContent(true);
@@ -52,7 +58,8 @@ const Tiptap = ({ editor, limit }: { editor: Editor; limit: number }) => {
             <CharacterCountStats limit={limit} editor={editor} />
             <TableOperations
               editor={editor}
-              handleLoadTemplate={handleLoadTemplate}
+              handleLoadServerTemplate={handleLoadServerTemplate}
+              handleLoadLocalTemplate={handleLoadLocalTemplate}
               handleClearContent={handleClearContent}
             />
           </div>
