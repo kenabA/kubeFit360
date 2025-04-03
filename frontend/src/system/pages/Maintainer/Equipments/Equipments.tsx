@@ -62,7 +62,6 @@ export default function Equipments() {
               isPending={isPending}
               placeholder="Search by name, serial number, etc"
             />
-
             <div className="flex items-center gap-4">
               <Filter entity={filterFields.equipments} />
               {user?.role === "admin" ||
@@ -89,7 +88,6 @@ export default function Equipments() {
           />
         </div>
       </div>
-
       <ViewEquipment
         edit={user?.role === "maintainer" || user?.role === "admin"}
         selectedId={selectedIds}

@@ -13,6 +13,7 @@ export const ROUTES = {
     ADMIN: "/admin-dashboard",
     TRAINER: "/trainer-dashboard",
   },
+  CLIENT_WORKOUT_PLAN: "/clientWorkoutPlan",
   EQUIPMENTS: "/equipments",
   MAINTAINERS: "/maintainers",
   WORKOUT_PLAN_REQUESTS: "/workoutPlanRequests",

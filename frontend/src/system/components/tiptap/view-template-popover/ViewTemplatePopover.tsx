@@ -4,6 +4,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
+import useDeleteWorkoutPlanTemplate from "@/system/features/workout-plan-template/useDeleteWorkoutPlanTemplate";
 import useWorkoutPlanTemplate from "@/system/features/workout-plan-template/useWorkoutPlanTemplates";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { AnimatePresence, motion } from "framer-motion";
@@ -34,6 +35,8 @@ export default function ViewTemplatePopover({
 }) {
   const [hoveredTemplateId, setHoveredTemplateId] = useState("");
   const { data } = useWorkoutPlanTemplate();
+  const { deleteWorkoutPlanRequest, isPending } =
+    useDeleteWorkoutPlanTemplate();
   return (
     <Popover>
       <PopoverTrigger asChild className="cursor-pointer group">
@@ -89,10 +92,10 @@ export default function ViewTemplatePopover({
                 <AnimatePresence>
                   {hoveredTemplateId === template._id && (
                     <motion.button
+                      disabled={isPending}
                       variants={itemVariants}
                       onClick={(e) => {
-                        // PUT DELETE HERE
-                        alert(123);
+                        deleteWorkoutPlanRequest(template._id);
                         e.stopPropagation();
                       }}
                       className="bg-destructive-light border-destructive border rounded-sm text-white p-1 absolute right-0"

@@ -34,6 +34,9 @@ function useLogin() {
           case "admin":
             handleNavigate(ROUTES.DASHBOARD.ADMIN);
             break;
+          case "member":
+            handleNavigate(ROUTES.CLIENT_WORKOUT_PLAN);
+            break;
           case "trainer":
             handleNavigate(ROUTES.DASHBOARD.TRAINER);
             break;
@@ -53,11 +56,3 @@ function useLogin() {
 }
 
 export default useLogin;
-
-// 1. Request Login
-// 2. Set the token in the local storage
-// 3. Fetch the user profile
-//   1. Get the token from the local storage
-//   2. Set the token in the headers
-//   3. Fetch the user again
-// 4. Set the user in the global state
