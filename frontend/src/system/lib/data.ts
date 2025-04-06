@@ -1,6 +1,10 @@
 import {
+  TBodyType,
+  TDays,
   TFitnessLevel,
+  TWorkoutGoals,
   TWorkoutPlanStatus,
+  TWorkoutTypePreference,
 } from "../features/workout-plan-requests/types";
 
 export type TOptions<T> = {
@@ -87,3 +91,33 @@ export const filterFields: TFilterFields = {
     ],
   },
 };
+
+export const bodyTypeOptions: TOptions<TBodyType>[] = [
+  { label: "Ectomorph", value: "ectomorph" },
+  { label: "Mesomorph", value: "mesomorph" },
+  { label: "Endomorph", value: "endomorph" },
+];
+
+export const weekdaysOptions: TOptions<TDays>[] = [
+  { label: "Sunday", value: "Sunday" },
+  { label: "Monday", value: "Monday" },
+  { label: "Tuesday", value: "Tuesday" },
+  { label: "Wednesday", value: "Wednesday" },
+  { label: "Thursday", value: "Thursday" },
+  { label: "Friday", value: "Friday" },
+  { label: "Saturday", value: "Saturday" },
+];
+
+export const workoutTypeOptions: TOptions<TWorkoutTypePreference>[] = [
+  { label: "Cardio", value: "cardio" },
+  { label: "Flexibility", value: "flexibility" },
+  { label: "Strength Training", value: "strength training" },
+];
+
+export const workoutGoalOptions: TOptions<TWorkoutGoals>[] = [
+  { label: "Fat Loss", value: "Fat Loss" },
+  { label: "Endurance", value: "Endurance" },
+  { label: "General Fitness", value: "General Fitness" },
+  { label: "Muscle Gain", value: "Muscle Gain" },
+  { label: "Strength", value: "Strength" },
+];

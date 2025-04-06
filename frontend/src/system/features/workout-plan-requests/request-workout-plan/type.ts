@@ -1,6 +1,10 @@
 import { Dispatch, SetStateAction } from "react";
+import { workoutPlanTemplateSchema } from "./validator";
+import { z } from "zod";
 
-// export type TAddEquipmentFormProps = z.infer<typeof equipmentSchema>;
+export type TRequestWorkoutPlanFormProps = z.infer<
+  typeof workoutPlanTemplateSchema
+>;
 
 export type TRequestWorkoutPlanProps = {
   isDialogOpen: boolean;

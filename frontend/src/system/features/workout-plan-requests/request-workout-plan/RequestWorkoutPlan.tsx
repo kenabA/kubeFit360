@@ -6,33 +6,41 @@ import { Controller, useForm } from "react-hook-form";
 
 import BaseInput from "@/system/components/input/base-input/BaseInput";
 
-import { useEffect } from "react";
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  //   SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectContent,
-} from "@/components/ui/select";
+import { useState } from "react";
+
 import { Oval } from "react-loader-spinner";
-import { TRequestWorkoutPlanProps } from "./type";
+import { TRequestWorkoutPlanFormProps, TRequestWorkoutPlanProps } from "./type";
+import { workoutPlanTemplateSchema } from "./validator";
+import FormSelect from "@/system/components/select/form-select/FormSelect";
+import {
+  bodyTypeOptions,
+  fitnessLevelOptions,
+  weekdaysOptions,
+  workoutGoalOptions,
+  workoutTypeOptions,
+} from "@/system/lib/data";
+import { BodyMetricsInput } from "@/system/components/input/body-metrics-input/BodyMetricsInput";
+import { MultiSelect } from "@/system/components/select/multi-select/multi-select";
+import { TDays, TWorkoutGoals, TWorkoutTypePreference } from "../types";
 
 export default function RequestWorkoutPlan({
   isDialogOpen,
   setIsDialogOpen,
 }: TRequestWorkoutPlanProps) {
-  //   const {
-  //     register,
-  //     control,
-  //     reset,
-  //     handleSubmit,
-
-  //     formState: { errors },
-  //   } = useForm<TAddEquipmentFormProps>({
-  //     resolver: zodResolver(equipmentSchema),
-  //   });
+  const [weekdays, setWeekdays] = useState<TDays[]>([]);
+  const [workoutTypePreferences, setWorkoutTypePreferences] = useState<
+    TWorkoutTypePreference[]
+  >([]);
+  const [workoutGoals, setWorkoutGoals] = useState<TWorkoutGoals[]>([]);
+  const {
+    register,
+    control,
+    // reset,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<TRequestWorkoutPlanFormProps>({
+    resolver: zodResolver(workoutPlanTemplateSchema),
+  });
 
   //   const { addEquipment, isSuccess, error } = useAddEquipment();
 
@@ -57,9 +65,20 @@ export default function RequestWorkoutPlan({
     // reset();
   }
 
+  async function onSubmit(data: TRequestWorkoutPlanFormProps) {
+    // setIsPending(true);
+    // if (localImage) {
+    //   const equipmentImageUrl = await uploadImage(localImage as File);
+    //   setValue("equipmentImage", equipmentImageUrl);
+    //   data = { ...data, equipmentImage: equipmentImageUrl };
+    // }
+    // addEquipment(data);
+    console.log(data);
+  }
+
   return (
     <FormModal
-      icon="lucide:package"
+      icon="pepicons-pop:bulletin-notice"
       title="Request Workout Plan"
       subtitle="Fill in the form to request the workout plan"
       open={isDialogOpen}
@@ -77,7 +96,7 @@ export default function RequestWorkoutPlan({
           <Button
             form="equipment-form"
             type="submit"
-            // onClick={handleSubmit(onSubmit)}
+            onClick={handleSubmit(onSubmit)}
             className="px-6 shadow-none hover:shadow-none h-10 w-20"
             variant={"primary"}
             // disabled={isPending}
@@ -92,7 +111,7 @@ export default function RequestWorkoutPlan({
                 wrapperStyle={{}}
               />
             ) : (
-              "Request"
+              "Send"
             )}
           </Button>
         </>
@@ -102,77 +121,100 @@ export default function RequestWorkoutPlan({
         id="equipment-form"
         className="w-full flex flex-col items-center gap-4"
       >
-        {/* <BaseInput
-          error={errors.equipmentName}
-          label="Equipment Name"
-          name="equipmentName"
-          type="text"
-          placeholder="Enter the equipment name"
-          register={register}
-        />
-        <BaseInput
-          error={errors.description}
-          label="Description"
-          name="description"
-          type="text"
-          placeholder="Enter the description"
-          register={register}
-        />
         <div className="flex gap-4 items-start w-full">
-          <BaseInput
-            error={errors.serialNumber}
-            label="Serial Number"
-            name="serialNumber"
-            type="text"
-            placeholder="EN-C-123"
+          <div className="w-full">
+            <Controller
+              name="bodyType"
+              control={control}
+              render={({ field }) => (
+                <FormSelect
+                  error={errors.bodyType}
+                  placeholder="Select your body type"
+                  label={field.name}
+                  field={field}
+                  options={bodyTypeOptions}
+                />
+              )}
+            />
+          </div>
+          <div className="w-full">
+            <Controller
+              name="fitnessLevel"
+              control={control}
+              render={({ field }) => (
+                <FormSelect
+                  error={errors.fitnessLevel}
+                  placeholder="Select your fitness level"
+                  label={field.name}
+                  field={field}
+                  options={fitnessLevelOptions}
+                />
+              )}
+            />
+          </div>
+        </div>
+        <div className="flex gap-4 items-end w-full">
+          <BodyMetricsInput
+            unitLabel="ft"
+            error={errors.height?.feet}
+            label="Height"
+            name="height"
+            type="number"
+            placeholder="Feet"
             register={register}
           />
-          <BaseInput
-            error={errors.brandName}
-            label="Brand Name"
-            name="brandName"
-            type="text"
-            placeholder="Enter the brand name"
+          <BodyMetricsInput
+            label=""
+            showLabel={false}
+            unitLabel="in"
+            error={errors.height?.inches}
+            name="weight"
+            type="number"
+            placeholder="Inches"
             register={register}
           />
         </div>
-        <div className="w-full">
-          <label
-            htmlFor="category"
-            className="text-sm text-gray-tertiary font-normal mb-2 block"
-          >
-            Category
-          </label>
-          <Controller
-            name="category"
-            control={control}
-            render={({ field }) => (
-              <Select onValueChange={field.onChange}>
-                <SelectTrigger className="focus:ring-gray-tertiary rounded-[8px] border border-slate-300 px-4 focus-visible:ring-1 focus-visible:ring-gray-tertiary  text-sm h-[44px]">
-                  <SelectValue placeholder="Select a category" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectItem className="focus" value="cardio">
-                      Cardio
-                    </SelectItem>
-                    <SelectItem className="focus" value="strength">
-                      Strength
-                    </SelectItem>
-                    <SelectItem className="focus" value="flexibility">
-                      Flexibility
-                    </SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-            )}
-          />
-          {errors.category && (
-            <p className="h-full p-1 text-left text-xs text-red-400">
-              {errors.category.message}
-            </p>
-          )}
-        </div> */}
+        <BodyMetricsInput
+          unitLabel="kg"
+          error={errors.weight}
+          label="Weight"
+          name="weight"
+          type="number"
+          placeholder="Mention your weight"
+          register={register}
+        />
+
+        {/* preferredWorkoutDays */}
+        <MultiSelect<TDays>
+          label={"Preferred Workout Days"}
+          options={weekdaysOptions}
+          selected={weekdays}
+          onChange={setWeekdays}
+          placeholder="Select available days"
+        />
+        {/* workoutTypePreference */}
+        <MultiSelect<TWorkoutTypePreference>
+          label={"Preferred Workout Type"}
+          options={workoutTypeOptions}
+          selected={workoutTypePreferences}
+          onChange={setWorkoutTypePreferences}
+          placeholder="Select workout type preference"
+        />
+        <MultiSelect<TWorkoutGoals>
+          label={"Workout Goal"}
+          options={workoutGoalOptions}
+          selected={workoutGoals}
+          onChange={setWorkoutGoals}
+          placeholder="Select workout type preference"
+        />
+        <BaseInput
+          error={errors.additionalNotes}
+          label="Additional Notes"
+          name="additionalNotes"
+          type="text"
+          placeholder="Mention your additional notes here"
+          register={register}
+        />
       </form>
     </FormModal>
   );

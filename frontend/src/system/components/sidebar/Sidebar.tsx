@@ -23,7 +23,6 @@ export default function Sidebar() {
   // TODO Get the role of the user from the global state
   const auth = useAuthUser<TUserDetails>();
   const sidebarData = useSidebarData(auth ? auth.role : "default");
-
   const { isPending, logoutUser } = useLogout();
 
   return (

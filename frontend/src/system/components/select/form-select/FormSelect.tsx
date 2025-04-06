@@ -29,7 +29,11 @@ export default function FormSelect({
         <SelectContent>
           {options?.map((opt) => {
             return (
-              <SelectItem value={opt.value} key={opt.label}>
+              <SelectItem
+                value={opt.value}
+                key={opt.label}
+                className="cursor-pointer"
+              >
                 <div className="flex gap-2 items-center">
                   {opt.theme && (
                     <div
