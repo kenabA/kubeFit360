@@ -1,4 +1,5 @@
 const WorkoutPlanTemplate = require('../models/workoutPlanTemplateModal');
+const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 
 exports.getAllWorkoutPlanTemplates = catchAsync(async (req, res, next) => {
@@ -31,4 +32,16 @@ exports.deleteAllWorkoutPlanTemplate = catchAsync(async (req, res, next) => {
   res.status(204).json({
     status: 'success',
   });
+});
+
+exports.deleteWorkoutPlanTemplate = catchAsync(async (req, res, next) => {
+  const workoutTemplate = await WorkoutPlanTemplate.findOneAndDelete({
+    _id: req.params.id,
+  });
+
+  if (!workoutTemplate) {
+    return next(new AppError('No workoutTemplate found with that id', 404));
+  }
+
+  res.status(204).json({ status: 'success' });
 });

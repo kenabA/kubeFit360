@@ -18,10 +18,9 @@ exports.createWorkoutPlan = catchAsync(async (req, res, next) => {
 });
 
 exports.getWorkoutPlan = catchAsync(async (req, res, next) => {
-  const plan = await WorkoutPlan.findOne({
-    _id: req.params.id,
-  }).populate({
+  const plan = await WorkoutPlan.findOne().populate({
     path: 'request',
+    match: { member: req.params.id },
     populate: [{ path: 'member' }, { path: 'trainer' }],
   });
 

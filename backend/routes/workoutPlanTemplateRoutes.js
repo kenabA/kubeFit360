@@ -5,6 +5,7 @@ const {
   getAllWorkoutPlanTemplates,
   createWorkoutPlanTemplate,
   deleteAllWorkoutPlanTemplate,
+  deleteWorkoutPlanTemplate,
 } = require('../controller/workoutPlanTemplateController');
 
 const router = express.Router();
@@ -16,5 +17,7 @@ router
   .get(getAllWorkoutPlanTemplates)
   .post(restrictTo('trainer'), createWorkoutPlanTemplate)
   .delete(deleteAllWorkoutPlanTemplate);
+
+router.route('/:id').delete(deleteWorkoutPlanTemplate);
 
 module.exports = router;

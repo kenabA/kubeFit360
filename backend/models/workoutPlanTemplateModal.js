@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const workoutPlan = new mongoose.Schema(
   {
-    title: {
+    templateName: {
       type: String,
       required: [true, 'Template is required'],
     },
