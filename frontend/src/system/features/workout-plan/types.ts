@@ -12,3 +12,8 @@ export type TWorkoutPlan = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type TGetWorkoutPlan = {
+  selectedId: string;
+  enabled?: boolean;
+};

@@ -1,8 +1,11 @@
 import { z } from "zod";
 
 const HeightSchema = z.object({
-  feet: z.number().min(0),
-  inches: z.number().min(0).max(11),
+  feet: z.number().min(0, { message: "Feet must be 0 or more" }),
+  inches: z
+    .number()
+    .min(0, { message: "Inches must be 0 or more" })
+    .max(11, { message: "Inches must be less than 12" }),
 });
 
 export const workoutPlanTemplateSchema = z.object({
@@ -10,7 +13,6 @@ export const workoutPlanTemplateSchema = z.object({
   trainer: z.string(),
   height: HeightSchema,
   weight: z.number().min(0),
-  status: z.enum(["approved", "rejected", "pending"]),
   fitnessLevel: z.enum(["beginner", "intermediate", "professional"]),
   bodyType: z.enum(["ectomorph", "mesomorph", "endomorph"]),
   workoutTypePreference: z.array(

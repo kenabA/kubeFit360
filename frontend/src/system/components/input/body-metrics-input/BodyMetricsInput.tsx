@@ -33,7 +33,7 @@ export function BodyMetricsInput<T extends FieldValues>({
             id={label}
             type={type === "password" ? (hidden ? "password" : "text") : type}
             placeholder={placeholder}
-            {...register(name as Path<T>)}
+            {...register(name as Path<T>, { valueAsNumber: true })}
           />
           <div className="cursor-default flex h-[44px] items-center rounded-r-md border border-l-1 bg-slate-50 px-3 text-sm text-gray-tertiary font-medium border-slate-300">
             {unitLabel}
@@ -52,7 +52,7 @@ export function BodyMetricsInput<T extends FieldValues>({
       </div>
       {error && (
         <p className="h-full p-1 text-left text-xs text-red-400">
-          {error.message}
+          {error.type === "invalid_type" ? `Required` : error.message}
         </p>
       )}
     </div>

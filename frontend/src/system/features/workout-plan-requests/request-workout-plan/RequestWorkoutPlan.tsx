@@ -22,11 +22,19 @@ import {
 import { BodyMetricsInput } from "@/system/components/input/body-metrics-input/BodyMetricsInput";
 import { MultiSelect } from "@/system/components/select/multi-select/multi-select";
 import { TDays, TWorkoutGoals, TWorkoutTypePreference } from "../types";
+import { TUserDetails } from "@/system/stores/user/types";
+import useAuthUser from "react-auth-kit/hooks/useAuthUser";
+import useCreateWorkoutPlanRequest from "./useCreateWorkoutPlanRequest";
 
 export default function RequestWorkoutPlan({
   isDialogOpen,
   setIsDialogOpen,
 }: TRequestWorkoutPlanProps) {
+  const auth = useAuthUser<TUserDetails>();
+
+  const { createWorkoutPlanTemplate, isPending } =
+    useCreateWorkoutPlanRequest();
+
   const [weekdays, setWeekdays] = useState<TDays[]>([]);
   const [workoutTypePreferences, setWorkoutTypePreferences] = useState<
     TWorkoutTypePreference[]
@@ -35,45 +43,24 @@ export default function RequestWorkoutPlan({
   const {
     register,
     control,
-    // reset,
+    reset,
     handleSubmit,
     formState: { errors },
   } = useForm<TRequestWorkoutPlanFormProps>({
     resolver: zodResolver(workoutPlanTemplateSchema),
+    defaultValues: {
+      trainer: "67b21d4a2c4441cfca53335e",
+      member: auth?._id,
+    },
   });
-
-  //   const { addEquipment, isSuccess, error } = useAddEquipment();
-
-  //   useEffect(() => {
-  //     if (isSuccess) {
-  //       setIsDialogOpen(false);
-  //       reset();
-  //     }
-  //   }, [isSuccess]);
-
-  //   useEffect(() => {
-  //     if (error) {
-  //     }
-  //   }, [error]);
-
-  //   async function onSubmit(data: TAddEquipmentFormProps) {
-  //     addEquipment(data);
-  //   }
 
   function handleCancel() {
     setIsDialogOpen(false);
-    // reset();
+    reset();
   }
 
   async function onSubmit(data: TRequestWorkoutPlanFormProps) {
-    // setIsPending(true);
-    // if (localImage) {
-    //   const equipmentImageUrl = await uploadImage(localImage as File);
-    //   setValue("equipmentImage", equipmentImageUrl);
-    //   data = { ...data, equipmentImage: equipmentImageUrl };
-    // }
-    // addEquipment(data);
-    console.log(data);
+    createWorkoutPlanTemplate(data);
   }
 
   return (
@@ -99,7 +86,7 @@ export default function RequestWorkoutPlan({
             onClick={handleSubmit(onSubmit)}
             className="px-6 shadow-none hover:shadow-none h-10 w-20"
             variant={"primary"}
-            // disabled={isPending}
+            disabled={isPending}
           >
             {false ? (
               <Oval
@@ -158,7 +145,7 @@ export default function RequestWorkoutPlan({
             unitLabel="ft"
             error={errors.height?.feet}
             label="Height"
-            name="height"
+            name="height.feet"
             type="number"
             placeholder="Feet"
             register={register}
@@ -168,7 +155,7 @@ export default function RequestWorkoutPlan({
             showLabel={false}
             unitLabel="in"
             error={errors.height?.inches}
-            name="weight"
+            name="height.inches"
             type="number"
             placeholder="Inches"
             register={register}
@@ -184,28 +171,56 @@ export default function RequestWorkoutPlan({
           register={register}
         />
 
-        {/* preferredWorkoutDays */}
-        <MultiSelect<TDays>
-          label={"Preferred Workout Days"}
-          options={weekdaysOptions}
-          selected={weekdays}
-          onChange={setWeekdays}
-          placeholder="Select available days"
+        <Controller
+          control={control}
+          name="preferredWorkoutDays"
+          render={({ field }) => (
+            <MultiSelect<TDays>
+              error={errors.preferredWorkoutDays}
+              label={"Preferred Workout Days"}
+              options={weekdaysOptions}
+              selected={weekdays || []}
+              onChange={(val) => {
+                field.onChange(val);
+                setWeekdays(val);
+              }}
+              placeholder="Select available days"
+            />
+          )}
         />
-        {/* workoutTypePreference */}
-        <MultiSelect<TWorkoutTypePreference>
-          label={"Preferred Workout Type"}
-          options={workoutTypeOptions}
-          selected={workoutTypePreferences}
-          onChange={setWorkoutTypePreferences}
-          placeholder="Select workout type preference"
+        <Controller
+          control={control}
+          name="workoutTypePreference"
+          render={({ field }) => (
+            <MultiSelect<TWorkoutTypePreference>
+              label={"Preferred Workout Type"}
+              options={workoutTypeOptions}
+              error={errors.workoutTypePreference}
+              selected={workoutTypePreferences || []}
+              onChange={(val) => {
+                field.onChange(val);
+                setWorkoutTypePreferences(val);
+              }}
+              placeholder="Select workout type preference"
+            />
+          )}
         />
-        <MultiSelect<TWorkoutGoals>
-          label={"Workout Goal"}
-          options={workoutGoalOptions}
-          selected={workoutGoals}
-          onChange={setWorkoutGoals}
-          placeholder="Select workout type preference"
+        <Controller
+          control={control}
+          name="workoutGoals"
+          render={({ field }) => (
+            <MultiSelect<TWorkoutGoals>
+              label={"Workout Goal"}
+              options={workoutGoalOptions}
+              error={errors.workoutGoals}
+              selected={workoutGoals}
+              onChange={(val) => {
+                field.onChange(val);
+                setWorkoutGoals(val);
+              }}
+              placeholder="Select workout type preference"
+            />
+          )}
         />
         <BaseInput
           error={errors.additionalNotes}
