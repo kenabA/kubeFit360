@@ -13,10 +13,14 @@ import { TWorkoutPlanRequest } from "@/system/features/workout-plan-requests/typ
 import ColumnDefinition from "@/system/features/workout-plan-requests/ColumnDefinition";
 
 import ViewRequest from "@/system/features/workout-plan-requests/view-request/ViewRequest";
+import ViewPlan from "@/system/features/workout-plan/ViewPlan";
 
 export default function WorkoutPlanRequests() {
   const [openView, setOpenView] = useState<boolean>(false);
+  const [openViewPlan, setOpenViewPlan] = useState<boolean>(false);
   const [selectedIds, setSelectedIds] = useState<string>("");
+  const [selectedWorkoutPlanId, setSelectedWorkoutPlanId] =
+    useState<string>("");
   const [openDelete, setOpenDelete] = useState<boolean>(false);
 
   const {
@@ -52,10 +56,17 @@ export default function WorkoutPlanRequests() {
         </div>
       </div>
       <ViewRequest
+        setOpenPlan={setOpenViewPlan}
         setSelectedId={setSelectedIds}
+        setSelectedWorkoutPlanId={setSelectedWorkoutPlanId}
         selectedId={selectedIds}
         isDialogOpen={openView}
         setIsDialogOpen={setOpenView}
+      />
+      <ViewPlan
+        selectedId={selectedWorkoutPlanId}
+        isDialogOpen={openViewPlan}
+        setIsDialogOpen={setOpenViewPlan}
       />
     </section>
   );

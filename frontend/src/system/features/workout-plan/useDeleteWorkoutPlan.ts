@@ -1,8 +1,8 @@
 import { useToast } from "@/hooks/use-toast";
-import apiDeletePlanRequest from "@/system/services/workout-plan-requests/apiDeletePlanRequest";
+import apiDeleteWorkoutPlan from "@/system/services/workout-plan/apiDeleteWorkoutPlan";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-function useDeleteWorkoutPlanRequest() {
+function useDeleteWorkoutPlan() {
   const queryClient = useQueryClient();
   const { toast } = useToast();
   const {
@@ -10,7 +10,7 @@ function useDeleteWorkoutPlanRequest() {
     isPending,
     isSuccess,
   } = useMutation({
-    mutationFn: (requestId: string) => apiDeletePlanRequest(requestId),
+    mutationFn: (requestId: string) => apiDeleteWorkoutPlan(requestId),
     onSuccess: async () => {
       queryClient.invalidateQueries({
         queryKey: ["workoutPlanRequests"],
@@ -34,4 +34,4 @@ function useDeleteWorkoutPlanRequest() {
   return { deleteWorkoutPlanRequest, isPending, isSuccess };
 }
 
-export default useDeleteWorkoutPlanRequest;
+export default useDeleteWorkoutPlan;

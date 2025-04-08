@@ -19,13 +19,17 @@ import { useNavigate } from "react-router";
 import useDeleteWorkoutPlan from "../delete-plan-requests/useDeleteWorkoutPlan";
 
 export default function ViewRequest({
+  setOpenPlan,
   selectedId,
   setSelectedId,
+  setSelectedWorkoutPlanId,
   isDialogOpen,
   setIsDialogOpen,
 }: {
+  setOpenPlan: React.Dispatch<React.SetStateAction<boolean>>;
   selectedId: string;
   setSelectedId: React.Dispatch<React.SetStateAction<string>>;
+  setSelectedWorkoutPlanId: React.Dispatch<React.SetStateAction<string>>;
   isDialogOpen: boolean;
   setIsDialogOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
@@ -33,6 +37,7 @@ export default function ViewRequest({
     selectedId: selectedId,
     enabled: isDialogOpen,
   });
+
   const navigate = useNavigate();
   const [pendingAction, setPendingAction] = useState<TWorkoutPlanStatus | null>(
     null
@@ -65,6 +70,15 @@ export default function ViewRequest({
 
   const isRejected = workoutRequest?.status === "rejected";
   const isApproved = workoutRequest?.status === "approved";
+  const isGenerated = workoutRequest?.status === "generated";
+
+  useEffect(() => {
+    if (isGenerated && workoutRequest?.generatedPlan) {
+      setSelectedWorkoutPlanId(workoutRequest.generatedPlan);
+    }
+  }, [isGenerated, workoutRequest?.generatedPlan]);
+
+  console.log(workoutRequest?.generatedPlan);
 
   return (
     <Dialog
@@ -93,7 +107,7 @@ export default function ViewRequest({
             <Separator className="bg-slate-200" />
             <UserInfoBar data={workoutRequest} />
             <div className="text-end space-x-2">
-              {!isApproved && !isRejected && (
+              {!isApproved && !isRejected && !isGenerated && (
                 <Button
                   disabled={isPending || workoutRequest.status === "rejected"}
                   onClick={() => handleChangeStatus("rejected")}
@@ -122,35 +136,36 @@ export default function ViewRequest({
                   )}
                 </Button>
               )}
-              {isRejected && (
-                <Button
-                  disabled={isDeletePending}
-                  onClick={() => {
-                    deleteWorkoutPlanRequest(selectedId);
-                  }}
-                  className={cn(
-                    "shadow-none w-40 hover:shadow-none h-10 border-[1px] border-destructive bg-destructive-light text-destructive font-semibold text-sm hover:text-destructive-hover hover:border-destructive-hover"
-                  )}
-                  variant={"outline"}
-                >
-                  {isDeletePending ? (
-                    <Oval
-                      height="280"
-                      strokeWidth={8}
-                      secondaryColor="white"
-                      width="280"
-                      color="hsl(var(--destructive))"
-                      wrapperStyle={{}}
-                    />
-                  ) : (
-                    <>
-                      <Icon icon={"lucide:trash-2"} />
-                      Delete Request
-                    </>
-                  )}
-                </Button>
-              )}
-              {!isApproved && !isRejected && (
+              {isRejected ||
+                (isGenerated && (
+                  <Button
+                    disabled={isDeletePending}
+                    onClick={() => {
+                      deleteWorkoutPlanRequest(selectedId);
+                    }}
+                    className={cn(
+                      "shadow-none w-40 hover:shadow-none h-10 border-[1px] border-destructive bg-destructive-light text-destructive font-semibold text-sm hover:text-destructive-hover hover:border-destructive-hover"
+                    )}
+                    variant={"outline"}
+                  >
+                    {isDeletePending ? (
+                      <Oval
+                        height="280"
+                        strokeWidth={8}
+                        secondaryColor="white"
+                        width="280"
+                        color="hsl(var(--destructive))"
+                        wrapperStyle={{}}
+                      />
+                    ) : (
+                      <>
+                        <Icon icon={"lucide:trash-2"} />
+                        Delete Request
+                      </>
+                    )}
+                  </Button>
+                ))}
+              {!isApproved && !isRejected && !isGenerated && (
                 <Button
                   disabled={isPending || isDeletePending}
                   onClick={() => handleChangeStatus("approved")}
@@ -172,6 +187,32 @@ export default function ViewRequest({
                     <>
                       <Icon icon={"rivet-icons:check-circle-breakout"} />
                       Approve
+                    </>
+                  )}
+                </Button>
+              )}
+              {isGenerated && (
+                <Button
+                  disabled={isPending || isDeletePending}
+                  onClick={() => setOpenPlan(true)}
+                  form="equipment-form"
+                  type="submit"
+                  className="shadow-none hover:shadow-none hover:bg-accent-hover h-10 w-28 bg-accent text-white font-semibold text-sm"
+                  variant={"primary"}
+                >
+                  {pendingAction === "approved" && isPending ? (
+                    <Oval
+                      height="280"
+                      strokeWidth={8}
+                      secondaryColor="white"
+                      width="280"
+                      color="hsl(var(--success))"
+                      wrapperStyle={{}}
+                    />
+                  ) : (
+                    <>
+                      <Icon icon={"rivet-icons:check-circle-breakout"} />
+                      View Plan
                     </>
                   )}
                 </Button>

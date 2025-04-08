@@ -10,8 +10,9 @@
 }
 
 @font-face {
-  font-family: 'Wix Madefor';
-  src: url('/src/assets/shared/fonts/WixMadeforDisplay-VariableFont_wght.ttf') format('truetype');
+  font-family: "Wix Madefor";
+  src: url("/src/assets/shared/fonts/WixMadeforDisplay-VariableFont_wght.ttf")
+    format("truetype");
   font-weight: 300 800;
   font-style: normal;
 }
@@ -195,13 +196,13 @@ select:-webkit-autofill:focus {
 
 /* Target the 'Sat' header */
 .daypicker-head-cell:nth-child(7) {
-  color: #E83E34;
+  color: #e83e34;
   /* Red color for Saturday header */
 }
 
 /* Target all dates that fall on a Saturday */
 .daypicker-cell:nth-child(7n + 7) .day {
-  color: #E83E34;
+  color: #e83e34;
   /* Red color for Saturdays */
 }
 

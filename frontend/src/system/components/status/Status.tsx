@@ -33,6 +33,11 @@ export default function Status({
       secondaryColor = "hsl(var(--success-light))";
       statusText = "approved";
       break;
+    case "generated":
+      primaryColor = "hsl(var(--accent))";
+      secondaryColor = "hsl(var(--accent-light))";
+      statusText = "generated";
+      break;
     case "rejected":
       primaryColor = "hsl(var(--destructive))";
       secondaryColor = "hsl(var(--destructive-light))";

@@ -25,7 +25,11 @@ export type TDays =
   | "Saturday"
   | "Sunday";
 
-export type TWorkoutPlanStatus = "approved" | "rejected" | "pending";
+export type TWorkoutPlanStatus =
+  | "approved"
+  | "rejected"
+  | "pending"
+  | "generated";
 export type TFitnessLevel = "beginner" | "intermediate" | "professional";
 export type TBodyType = "ectomorph" | "mesomorph" | "endomorph";
 export type TWorkoutTypePreference =
@@ -47,6 +51,7 @@ export type TWorkoutPlanRequest = {
   member: TUserDetails;
   trainer: TUserDetails;
   status: TWorkoutPlanStatus;
+  generatedPlan?: string;
   fitnessLevel: TFitnessLevel;
   bodyType: TBodyType;
   workoutTypePreference: TWorkoutTypePreference[];
