@@ -4,7 +4,7 @@ import { Heading } from "@/components/heading/Heading";
 import NoData from "@/system/components/no-data/NoData";
 import RequestWorkoutPlan from "@/system/features/workout-plan-requests/request-workout-plan/RequestWorkoutPlan";
 import useDeleteWorkoutPlan from "@/system/features/workout-plan/useDeleteWorkoutPlan";
-import useGetWorkoutPlan from "@/system/features/workout-plan/useGetWorkoutPlan";
+import useGetWorkoutPlanByMemberId from "@/system/features/workout-plan/useGetWorkoutPlanByMemberId";
 import { TUserDetails } from "@/system/stores/user/types";
 import { Icon } from "@iconify/react/dist/iconify.js";
 
@@ -19,7 +19,7 @@ export default function ClientWorkoutPlan() {
   const { deleteWorkoutPlanRequest, isPending: isDeleting } =
     useDeleteWorkoutPlan();
   const auth = useAuthUser<TUserDetails>();
-  const { isPending, data } = useGetWorkoutPlan({
+  const { isPending, data } = useGetWorkoutPlanByMemberId({
     selectedId: auth?._id || "",
   });
 
@@ -45,7 +45,7 @@ export default function ClientWorkoutPlan() {
   }
 
   const workoutPlanPresent = data?.workoutPlan;
-  const trainer = data?.request.trainer.name;
+  const trainer = data?.request?.trainer?.name || "Certified Trainer";
 
   return (
     <section className="rounded-tl-xl h-[calc(100dvh-60px)]">

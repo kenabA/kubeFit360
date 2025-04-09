@@ -49,7 +49,7 @@ export default function ViewPlan({
           <div className="flex justify-center size-full items-center text-gray-tertiary">
             <NoData
               title="No Workout Plan!"
-              description="Client might have deleted the workout plan"
+              description={`Client might have deleted the workout plan or a new workout plan has been generated for the same user`}
             />
           </div>
         )}

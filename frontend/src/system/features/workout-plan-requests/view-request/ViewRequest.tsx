@@ -78,8 +78,6 @@ export default function ViewRequest({
     }
   }, [isGenerated, workoutRequest?.generatedPlan]);
 
-  console.log(workoutRequest?.generatedPlan);
-
   return (
     <Dialog
       open={isDialogOpen}
