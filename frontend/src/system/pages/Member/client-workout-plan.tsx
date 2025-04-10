@@ -1,3 +1,4 @@
+import "./styles.scss";
 import { Button } from "@/components";
 import { ThemedDialog } from "@/components/dialog/Dialog";
 import { Heading } from "@/components/heading/Heading";
@@ -100,7 +101,14 @@ export default function ClientWorkoutPlan() {
             className="p-6 mb-4 bg-white rounded-xl shadow-general
            h-full  overflow-x-hidden overflow-y-auto custom-scrollbar "
           >
-            {isPending ? (
+            {workoutPlanPresent ? (
+              <div
+                className="client-workout-plan break-words"
+                dangerouslySetInnerHTML={{
+                  __html: data.workoutPlan,
+                }}
+              />
+            ) : isPending ? (
               <div className="size-full flex items-center justify-center">
                 <Oval
                   height="32"
@@ -111,13 +119,6 @@ export default function ClientWorkoutPlan() {
                   wrapperStyle={{}}
                 />
               </div>
-            ) : workoutPlanPresent ? (
-              <div
-                className="client-workout-plan break-words"
-                dangerouslySetInnerHTML={{
-                  __html: data.workoutPlan,
-                }}
-              />
             ) : (
               <div className="flex justify-center size-full items-center text-gray-tertiary">
                 <NoData

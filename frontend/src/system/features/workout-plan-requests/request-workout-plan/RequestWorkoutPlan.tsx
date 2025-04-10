@@ -25,12 +25,17 @@ import { TDays, TWorkoutGoals, TWorkoutTypePreference } from "../types";
 import { TUserDetails } from "@/system/stores/user/types";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import useCreateWorkoutPlanRequest from "./useCreateWorkoutPlanRequest";
+import useFetchTrainers from "./useFetchTrainers";
 
 export default function RequestWorkoutPlan({
   isDialogOpen,
   setIsDialogOpen,
 }: TRequestWorkoutPlanProps) {
   const auth = useAuthUser<TUserDetails>();
+
+  const { trainerOptions } = useFetchTrainers();
+
+  console.log(trainerOptions);
 
   const { createWorkoutPlanTemplate, isPending } =
     useCreateWorkoutPlanRequest();
@@ -49,7 +54,6 @@ export default function RequestWorkoutPlan({
   } = useForm<TRequestWorkoutPlanFormProps>({
     resolver: zodResolver(workoutPlanTemplateSchema),
     defaultValues: {
-      trainer: "67b21d4a2c4441cfca53335e",
       member: auth?._id,
     },
   });
@@ -61,6 +65,7 @@ export default function RequestWorkoutPlan({
 
   async function onSubmit(data: TRequestWorkoutPlanFormProps) {
     createWorkoutPlanTemplate(data);
+    setIsDialogOpen(false);
   }
 
   return (
@@ -140,6 +145,21 @@ export default function RequestWorkoutPlan({
             />
           </div>
         </div>
+        <div className="w-full">
+          <Controller
+            name="trainer"
+            control={control}
+            render={({ field }) => (
+              <FormSelect
+                error={errors.fitnessLevel}
+                placeholder="Select your desired trainer"
+                label={field.name}
+                field={field}
+                options={trainerOptions}
+              />
+            )}
+          />
+        </div>
         <div className="flex gap-4 items-end w-full">
           <BodyMetricsInput
             unitLabel="ft"
@@ -218,7 +238,7 @@ export default function RequestWorkoutPlan({
                 field.onChange(val);
                 setWorkoutGoals(val);
               }}
-              placeholder="Select workout type preference"
+              placeholder="Select workout goal"
             />
           )}
         />
