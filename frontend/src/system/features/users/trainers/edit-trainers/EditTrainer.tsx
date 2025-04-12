@@ -8,7 +8,7 @@ import BaseInput from "@/system/components/input/base-input/BaseInput";
 
 import { useEffect, useState } from "react";
 
-import { TEditMaintainerFormProps, TEditMaintainerProps } from "./type";
+import { TEditTrainerProps } from "./type";
 
 import { genderOptions } from "@/system/lib/data";
 
@@ -17,17 +17,20 @@ import BaseImageInput from "@/system/components/input/base-image-input/BaseImage
 import { handleFileChange, uploadImage } from "@/system/lib/helpers";
 import FormSelect from "@/system/components/select/form-select/FormSelect";
 import useEditUser from "../../useEditUser";
-import { maintainerSchema } from "./validator";
+
 import { useSearchParams } from "react-router";
 import { useQueryClient } from "@tanstack/react-query";
 import { TUserDetails } from "@/system/stores/user/types";
 import { TApiResponse } from "@/system/lib/types";
+import DateInput from "@/system/components/input/date-input/DateInput";
+import { TEditMaintainerFormProps } from "../../maintainers/edit-maintainers/type";
+import { trainerSchema } from "./validator";
 
-export default function EditMaintainer({
+export default function EditTrainer({
   selectedId,
   isDialogOpen,
   setIsDialogOpen,
-}: TEditMaintainerProps) {
+}: TEditTrainerProps) {
   const [localImage, setLocalImage] = useState<File | string | undefined>();
   const [isPending, setIsPending] = useState<boolean>(false);
   const [searchParams] = useSearchParams();
@@ -42,7 +45,7 @@ export default function EditMaintainer({
     (e) => e._id === selectedId
   );
 
-  const { editUser, isSuccess, error } = useEditUser("maintainers");
+  const { editUser, isSuccess, error } = useEditUser("trainer");
 
   const {
     register,
@@ -52,7 +55,7 @@ export default function EditMaintainer({
     handleSubmit,
     formState: { errors, isDirty },
   } = useForm<TEditMaintainerFormProps>({
-    resolver: zodResolver(maintainerSchema),
+    resolver: zodResolver(trainerSchema),
   });
 
   useEffect(() => {
@@ -132,8 +135,8 @@ export default function EditMaintainer({
   return (
     <FormModal
       icon="gravity-ui:person-worker"
-      title="Edit Maintainer"
-      subtitle="Modify and Update Maintainer Details"
+      title="Edit Trainer"
+      subtitle="Modify and Update Trainer Details"
       open={isDialogOpen}
       setOpen={setIsDialogOpen}
       footer={
@@ -201,19 +204,11 @@ export default function EditMaintainer({
             placeholder="Enter the phone number"
             register={register}
           />
-          {/* <BaseInput<TEditMaintainerFormProps>
+          <DateInput<TEditMaintainerFormProps>
             name="birthDate"
             setValue={setValue}
             error={errors.birthDate}
             label="Date of Birth"
-          /> */}
-          <BaseInput
-            error={errors.birthDate}
-            label="Date of Birth"
-            name="birthDate"
-            placeholder="Enter date of birth"
-            register={register}
-            type="date"
           />
         </div>
         <div className="flex gap-4 items-start w-full">

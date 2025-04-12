@@ -12,6 +12,7 @@ type TGetUser = {
 function useGetUser({ selectedId, enabled = true }: TGetUser) {
   const { isPending, data, error } = useQuery<TUserDetails, AxiosError>({
     queryFn: () => apiGetUser(selectedId),
+    // MIGHT NEED CHANGE HERE
     queryKey: ["maintainer", selectedId],
     enabled: enabled && !!selectedId,
   });

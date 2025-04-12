@@ -37,14 +37,13 @@ function Calendar({
         day_range_end: "day-range-end",
 
         day_outside:
-          "day-outside text-muted-foreground opacity-50  aria-selected:bg-accent/50 aria-selected:text-muted-foreground aria-selected:opacity-30",
+          "day-outside text-muted-foreground opacity-50  aria-selected:bg-accent/50 aria-selected:text-muted-foreground aria-selected:opacity-30 ",
 
         day_range_middle:
           "aria-selected:bg-accent aria-selected:text-accent-foreground",
         day_hidden: "invisible",
 
-        day_selected:
-          "bg-primary text-primary-foreground hover:bg-secondary hover:text-primary focus:bg-primary focus:text-primary-foreground",
+        day_selected: "text-primary-foreground",
         day_disabled: "text-muted-foreground opacity-50",
 
         // Each month

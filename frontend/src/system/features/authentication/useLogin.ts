@@ -25,7 +25,10 @@ function useLogin() {
           title: "Success",
           description: "Logged in successfully",
         });
-        queryClient.setQueryData(["user"], userData);
+        // After successful login
+        console.log(userData);
+        localStorage.setItem("user", JSON.stringify(userData.data.data));
+        queryClient.setQueryData(["user"], userData.data.data);
 
         switch (userData.data.data.role) {
           case "maintainer":

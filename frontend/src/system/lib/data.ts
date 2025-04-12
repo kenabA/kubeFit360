@@ -41,6 +41,11 @@ export const maintainerStatusOptions: TOptions<string>[] = [
   { label: "Inactive", value: "inactive", theme: "hsl(var(--destructive))" },
 ];
 
+export const trainerStatusOptions: TOptions<string>[] = [
+  { label: "Active", value: "active", theme: "hsl(var(--success))" },
+  { label: "Inactive", value: "inactive", theme: "hsl(var(--destructive))" },
+];
+
 export const genderOptions: TOptions<string>[] = [
   { label: "Male", value: "male" },
   { label: "Female", value: "female" },

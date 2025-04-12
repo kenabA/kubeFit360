@@ -10,6 +10,7 @@ export function BaseInput<T extends FieldValues>({
   name,
   register,
   placeholder,
+  disabled = false,
   error,
 }: TBaseInputProps<T>) {
   const [hidden, setHidden] = useState<boolean>(true);
@@ -24,6 +25,7 @@ export function BaseInput<T extends FieldValues>({
           {label}
         </label>
         <Input
+          disabled={disabled}
           className="w-full rounded-[8px] border border-slate-300 px-4 focus-visible:ring-1 focus-visible:ring-gray-tertiary  text-sm h-[44px]"
           id={label}
           type={type === "password" ? (hidden ? "password" : "text") : type}

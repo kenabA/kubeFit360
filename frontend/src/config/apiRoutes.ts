@@ -29,5 +29,6 @@ export const API_ROUTES = {
   USER: {
     BASE: buildApiRoute("users"),
     STATS: buildApiRoute("users/user-stats"),
+    CR_USER: buildApiRoute("users/me"),
   },
 };

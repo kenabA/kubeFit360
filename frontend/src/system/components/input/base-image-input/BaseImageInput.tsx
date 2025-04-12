@@ -6,6 +6,7 @@ import { TBaseImageInputProps } from "./types";
 import { cn } from "@/lib/utils";
 
 export default function BaseImageInput({
+  isSettings = false,
   handleRemove,
   handleFileChange,
   label,
@@ -40,18 +41,35 @@ export default function BaseImageInput({
         >
           {localImage ? (
             <>
-              <figure className="size-full overflow-hidden border border-slate-300 rounded-[8px]">
+              <figure className="size-full overflow-hidden border border-slate-300 rounded-[8px] relative">
                 <img
-                  alt="Image of the equipment"
+                  alt="Image of the entity"
                   src={
                     typeof localImage === "string"
                       ? localImage
                       : URL.createObjectURL(localImage as File)
                   }
-                  className="size-full object-cover object-center"
+                  className={cn(
+                    "object-center size-full",
+                    isSettings ? "object-contain absolute z-10" : "object-cover"
+                  )}
                 />
+
+                {isSettings && (
+                  <img
+                    alt="Image of the entity"
+                    src={
+                      typeof localImage === "string"
+                        ? localImage
+                        : URL.createObjectURL(localImage as File)
+                    }
+                    className={cn(
+                      "absolute inset-0 w-full h-full object-cover scale-110 transition-opacity duration-300 filter blur-sm opacity-50"
+                    )}
+                  />
+                )}
               </figure>
-              <div className="absolute inset-0 size-full bg-black bg-opacity-0 transition duration-300 group-hover:bg-opacity-30"></div>
+              <div className="absolute z-20 inset-0 size-full bg-black bg-opacity-0 transition duration-300 group-hover:bg-opacity-30"></div>
               <Button
                 role="button"
                 onClick={(e) => {
@@ -60,7 +78,7 @@ export default function BaseImageInput({
                   handleRemove();
                 }}
                 variant={"ghost"}
-                className="absolute right-1 top-1 hidden h-fit border-primary bg-white p-1 group-hover:block rounded-[4px]"
+                className="absolute right-1 top-1 hidden h-fit border-primary bg-white p-1 group-hover:block rounded-[4px] z-30"
               >
                 <Trash2 className="stroke-primary text-xs" />
               </Button>

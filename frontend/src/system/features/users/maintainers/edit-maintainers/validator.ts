@@ -1,6 +1,7 @@
 import z from "zod";
 
 export const maintainerSchema = z.object({
+  _id: z.string(),
   name: z.string().nonempty("Please specify maintainer's name"),
   email: z.string().nonempty("Please provide maintainer's email"),
   phoneNumber: z

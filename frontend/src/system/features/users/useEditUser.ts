@@ -8,7 +8,7 @@ function useEditUser(role: string) {
   const queryClient = useQueryClient();
   const { toast } = useToast();
   const {
-    mutate: editMaintainer,
+    mutate: editUser,
     isPending,
     isSuccess,
     error,
@@ -20,14 +20,15 @@ function useEditUser(role: string) {
       editMaintainerDetails: TEditMaintainerFormProps;
       selectedId: string;
     }) => apiEditUser(editMaintainerDetails, selectedId),
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({
-        queryKey: [role],
-      });
+    onSuccess: async (data) => {
+      console.log(data);
+      queryClient.invalidateQueries({ queryKey: ["user"] });
+      queryClient.setQueryData(["user"], data.data.data);
+      localStorage.setItem("user", JSON.stringify(data.data.data));
       toast({
         variant: "success",
         title: "Success",
-        description: "Maintainer's data edited successfully",
+        description: `User's data edited successfully`,
       });
     },
     onError: (err) => {
@@ -39,7 +40,7 @@ function useEditUser(role: string) {
       });
     },
   });
-  return { editMaintainer, isPending, isSuccess, error };
+  return { editUser, isPending, isSuccess, error };
 }
 
 export default useEditUser;

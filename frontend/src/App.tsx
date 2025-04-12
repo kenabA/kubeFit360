@@ -8,7 +8,7 @@ import SuccessStories from "@/website/layout/sections/SuccessStories/SuccessStor
 
 import Login from "@/system/pages/Login/Login";
 import Signup from "@/system/pages/SignUp/SignUp";
-import ForgotPassword from "@/system/pages/ForgotPassword/ForgotPassword";
+import ForgotPassword from "@/system/pages/forgot-password/ForgotPassword";
 import ResetPassword from "@/system/pages/ResetPassword/ResetPassword";
 
 import ScrollToTop from "@/hooks/useScrollToTop";
@@ -18,21 +18,33 @@ import PasswordChanged from "@/system/pages/ResetPassword/PasswordChanged";
 import { ROUTES } from "@/config/appRoutes";
 
 import ProtectedRoute from "@/system/features/authentication/ProtectedRoute";
-import React from "react";
+import React, { useEffect } from "react";
 import SystemLayout from "./layout/SystemLayout";
 
-import AdminDashboard from "./system/pages/Admin/Dashboard/Dashboard";
+import AdminDashboard from "./system/pages/admin/Dashboard/Dashboard";
 import Equipments from "./system/pages/Maintainer/Equipments/Equipments";
 import MaintainerDashboard from "./system/pages/Maintainer/Dashboard/Dashboard";
-import Maintainer from "./system/pages/Admin/Maintainer/Maintainer";
+import Maintainer from "./system/pages/admin/Maintainer/Maintainer";
 import Unauthorized from "./components/unauthorized/Unauthorized";
 import PageNotFound from "./components/page-not-found/PageNotFound";
 import TrainerDashboard from "./system/pages/Trainer/Dashboard/Dashboard";
 import WorkoutPlanRequests from "./system/pages/Trainer/workout-plan-requests/WorkoutPlanRequests";
 import CreateWorkoutPlan from "./system/pages/Trainer/workout-plan/create-workout-plan/CreateWorkoutPlan";
 import ClientWorkoutPlan from "./system/pages/Member/client-workout-plan";
+import Settings from "./system/pages/settings/Settings";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function App() {
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+
+    if (storedUser) {
+      queryClient.setQueryData(["user"], JSON.parse(storedUser));
+    }
+  }, [queryClient]);
+
   return (
     <React.Fragment>
       <ScrollToTop />
@@ -99,6 +111,15 @@ export default function App() {
             }
           >
             <Route path={ROUTES.EQUIPMENTS} element={<Equipments />} />
+          </Route>
+          <Route
+            element={
+              <ProtectedRoute
+                allowedRoles={["admin", "maintainer", "trainer", "member"]}
+              />
+            }
+          >
+            <Route path={ROUTES.SETTINGS} element={<Settings />} />
           </Route>
         </Route>
         <Route element={<SignupLayout />}>
