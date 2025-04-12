@@ -14,15 +14,15 @@ function useEditUser(role: string) {
     error,
   } = useMutation({
     mutationFn: ({
-      editMaintainerDetails,
+      editUserDetails,
       selectedId,
     }: {
-      editMaintainerDetails: TEditMaintainerFormProps;
+      editUserDetails: TEditMaintainerFormProps;
       selectedId: string;
-    }) => apiEditUser(editMaintainerDetails, selectedId),
+    }) => apiEditUser(editUserDetails, selectedId),
     onSuccess: async (data) => {
       console.log(data);
-      queryClient.invalidateQueries({ queryKey: ["user"] });
+      queryClient.invalidateQueries({});
       queryClient.setQueryData(["user"], data.data.data);
       localStorage.setItem("user", JSON.stringify(data.data.data));
       toast({

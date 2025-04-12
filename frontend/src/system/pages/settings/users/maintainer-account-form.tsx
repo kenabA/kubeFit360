@@ -1,51 +1,40 @@
 import { Button } from "@/components";
 import BaseImageInput from "@/system/components/input/base-image-input/BaseImageInput";
 import BaseInput from "@/system/components/input/base-input/BaseInput";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import FormSelect from "@/system/components/select/form-select/FormSelect";
 
-import { trainerSchema } from "@/system/features/users/trainers/edit-trainers/validator";
 import useGetCurrentUser from "@/system/features/users/useGetCurrentUser";
-import { genderOptions, trainerStatusOptions } from "@/system/lib/data";
+import { genderOptions, maintainerStatusOptions } from "@/system/lib/data";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 
-import { TEditTrainerFormProps } from "@/system/features/users/trainers/edit-trainers/type";
-import { formatTime } from "@/lib/utils";
-import { handleFileChange, uploadImage } from "@/system/lib/helpers";
+import { containerVariants, formatTime } from "@/lib/utils";
 import useEditUser from "@/system/features/users/useEditUser";
+import { handleFileChange, uploadImage } from "@/system/lib/helpers";
 import { Oval } from "react-loader-spinner";
+import { TEditMaintainerFormProps } from "@/system/features/users/maintainers/edit-maintainers/type";
+import { ThemedDialog } from "@/components/dialog/Dialog";
+import { maintainerSchema } from "@/system/features/users/maintainers/edit-maintainers/validator";
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-
-  visible: {
-    opacity: 1,
-
-    transition: {
-      duration: 0.3,
-      staggerChildren: 0.1,
-    },
-  },
-};
-
-export default function AccountDetailsForm() {
+export default function MaintainerAccountForm() {
   const {
     register,
-    getValues,
     control,
     reset,
     setValue,
     handleSubmit,
     formState: { errors, dirtyFields },
-  } = useForm<TEditTrainerFormProps>({
-    resolver: zodResolver(trainerSchema),
+  } = useForm<TEditMaintainerFormProps>({
+    resolver: zodResolver(maintainerSchema),
   });
 
-  const { editUser, isSuccess, error } = useEditUser("trainer");
+  const [openDelete, setOpenDelete] = useState<boolean>(false);
+
+  const { editUser } = useEditUser("maintainer");
 
   const [isPending, setIsPending] = useState<boolean>(false);
 
@@ -70,7 +59,12 @@ export default function AccountDetailsForm() {
       phoneNumber: String(data?.phoneNumber),
       createdAt: formatTime(data?.createdAt, "MMM dd, yyyy"),
     });
-    handleRemove();
+    if (typeof localImage !== "string") {
+      setLocalImage(data?.userImage);
+      setValue("userImage", data?.userImage, {
+        shouldDirty: true,
+      });
+    }
   }
 
   useEffect(() => {
@@ -83,7 +77,7 @@ export default function AccountDetailsForm() {
       email: data?.email,
       gender: data?.gender,
       role: data?.role,
-      status: data.status,
+      status: data?.status,
       userImage: data?.userImage,
       phoneNumber: String(data?.phoneNumber),
       createdAt: formatTime(data.createdAt, "MMM dd, yyyy"),
@@ -96,23 +90,32 @@ export default function AccountDetailsForm() {
     }
   }, [reset, data]);
 
-  async function onSubmit(data: TEditTrainerFormProps) {
+  async function onSubmit(data: TEditMaintainerFormProps) {
     setIsPending(true);
     if (localImage) {
       //   // TODO : Replace the current image with the new one
-      const maintainerImageUrl = await uploadImage(localImage as File);
-      setValue("userImage", maintainerImageUrl, { shouldDirty: true });
-      data = { ...data, userImage: maintainerImageUrl };
+      const userImageUrl = await uploadImage(localImage as File);
+      setValue("userImage", userImageUrl, { shouldDirty: true });
+      data = { ...data, userImage: userImageUrl };
     }
-    await editUser({ editMaintainerDetails: data, selectedId: data?._id });
+    await editUser({ editUserDetails: data, selectedId: data?._id });
     reset();
     setIsPending(false);
+  }
+
+  async function handleRemoveProfilePicture() {
+    if (!data) return;
+    await editUser({
+      editUserDetails: { removeImage: true } as TEditMaintainerFormProps,
+      selectedId: data?._id,
+    });
+    setOpenDelete(false);
   }
 
   const handleLocalFileChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    handleFileChange<TEditTrainerFormProps>(
+    handleFileChange<TEditMaintainerFormProps>(
       "userImage",
       event,
       setLocalImage,
@@ -128,9 +131,11 @@ export default function AccountDetailsForm() {
       });
     } else {
       // TODO : Handle Remove of the maintainer
-      alert(123);
+      setOpenDelete(true);
     }
   }
+
+  console.log(errors);
 
   return (
     <div className="grid grid-cols-2 gap-6">
@@ -142,18 +147,18 @@ export default function AccountDetailsForm() {
           localImage={localImage}
           setLocalImage={setLocalImage}
           error={errors.userImage}
-          label="Trainer's Image"
+          label="Maintainer's Image"
           name="userImage"
           type="file"
         />
       </div>
       <BaseInput
         error={errors._id}
-        label="Trainer ID"
+        label="Maintainer ID"
         disabled={true}
         name="_id"
         type="text"
-        placeholder="Trainer's ID"
+        placeholder="Maintainer's ID"
         register={register}
       />
       <BaseInput
@@ -171,7 +176,7 @@ export default function AccountDetailsForm() {
         disabled={true}
         name="email"
         type="text"
-        placeholder="Trainer's Email"
+        placeholder="Maintainer's Email"
         register={register}
       />
       <BaseInput
@@ -225,7 +230,7 @@ export default function AccountDetailsForm() {
               error={errors.status}
               label={field.name}
               field={field}
-              options={trainerStatusOptions}
+              options={maintainerStatusOptions}
               placeholder="Select a status"
             />
           )}
@@ -247,11 +252,11 @@ export default function AccountDetailsForm() {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="col-span-full flex items-center justify-end gap-3"
+          className="col-span-full flex items-center justify-end gap-3 lg:sticky lg:-bottom-3 bg-white border border-primary p-3 shadow-sm rounded-lg"
         >
           <Button
             disabled={isPending}
-            className="shadow-none hover:shadow-none"
+            className="shadow-none hover:shadow-none mb-0"
             variant={"primaryReverse"}
             onClick={handleReset}
           >
@@ -261,7 +266,7 @@ export default function AccountDetailsForm() {
             form="maintainer-form"
             type="submit"
             onClick={handleSubmit(onSubmit)}
-            className="px-6 shadow-none hover:shadow-none h-10 w-36"
+            className=" shadow-none hover:shadow-none h-10 w-36 mb-0"
             variant={"primary"}
             disabled={isPending}
           >
@@ -280,6 +285,16 @@ export default function AccountDetailsForm() {
           </Button>
         </motion.div>
       )}
+      <ThemedDialog
+        isPending={false}
+        dialogOpen={openDelete}
+        setDialogOpen={setOpenDelete}
+        mutationFn={handleRemoveProfilePicture}
+        theme="destructive"
+        ctaText="Remove"
+        title="Remove Photo"
+        message="Do you really want to remove the current photo?"
+      />
     </div>
   );
 }

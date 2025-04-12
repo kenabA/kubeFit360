@@ -1,4 +1,4 @@
-import "./styles.scss";
+// import "./styles.scss";
 import { Button } from "@/components";
 import { ThemedDialog } from "@/components/dialog/Dialog";
 import { Heading } from "@/components/heading/Heading";

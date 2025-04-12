@@ -13,5 +13,6 @@ export const trainerSchema = z.object({
   status: z.string().nonempty("Please provide a valid status"),
   address: z.string().nonempty("Please specify trainer's address"),
   userImage: z.string().optional(),
+  removeImage: z.boolean().optional(),
   createdAt: z.string(),
 });
