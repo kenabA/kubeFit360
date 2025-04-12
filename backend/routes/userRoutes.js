@@ -31,6 +31,10 @@ router
   .route('/maintainers')
   .get(restrictTo('admin'), getUsersByRole('maintainer'));
 
+router
+  .route('/trainers')
+  .get(restrictTo('admin', 'member'), getUsersByRole('trainer'));
+
 router.route('/:id').get(getUser).patch(updateUser).delete(deleteUser);
 
 module.exports = router;

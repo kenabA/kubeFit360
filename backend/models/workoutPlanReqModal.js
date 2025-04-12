@@ -24,7 +24,7 @@ const workoutPlanRequests = new mongoose.Schema(
       type: String,
       default: 'pending',
       enum: {
-        values: ['approved', 'rejected', 'pending'],
+        values: ['approved', 'rejected', 'pending', 'generated'],
         message: 'Please provide a valid status.',
       },
     },
@@ -84,6 +84,10 @@ const workoutPlanRequests = new mongoose.Schema(
     additionalNotes: {
       type: String,
       maxLength: 500,
+    },
+    generatedPlan: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'WorkoutPlan',
     },
   },
   { timestamps: true },

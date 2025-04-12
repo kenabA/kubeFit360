@@ -5,6 +5,9 @@ const {
   getWorkoutPlan,
   getAllWorkoutPlan,
   deleteAllWorkoutPlan,
+  deleteWorkoutPlan,
+  getWorkoutPlanByMemberId,
+  // getWorkoutPlanByReqId,
 } = require('../controller/workoutPlanController');
 
 const router = express.Router();
@@ -16,6 +19,7 @@ router
   .get(getAllWorkoutPlan)
   .delete(deleteAllWorkoutPlan);
 router.use(restrictTo('admin', 'trainer', 'member'));
-router.route('/:id').get(getWorkoutPlan);
+router.route('/:id').get(getWorkoutPlan).delete(deleteWorkoutPlan);
+router.route('/member/:id').get(getWorkoutPlanByMemberId);
 
 module.exports = router;

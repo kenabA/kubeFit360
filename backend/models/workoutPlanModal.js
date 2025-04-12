@@ -7,6 +7,7 @@ const workoutPlan = new mongoose.Schema(
       required: true,
       ref: 'WorkoutPlanRequests',
     },
+
     workoutPlan: {
       type: String,
       required: [true, 'Workout Plan is required'],
