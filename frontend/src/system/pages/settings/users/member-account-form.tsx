@@ -19,8 +19,11 @@ import { TEditMemberFormProps } from "@/system/features/users/members/edit-membe
 import { memberSchema } from "@/system/features/users/members/edit-members/validator";
 import FormSelect from "@/system/components/select/form-select/FormSelect";
 import { genderOptions } from "@/system/lib/data";
+import { TAccountFormProps } from "./types";
 
-export default function MemberAccountForm() {
+export default function MemberAccountForm({
+  setOpenChangePasswordModal,
+}: TAccountFormProps) {
   const {
     register,
     control,
@@ -143,6 +146,7 @@ export default function MemberAccountForm() {
           Account Information
         </Heading>
         <Button
+          onClick={() => setOpenChangePasswordModal(true)}
           variant={"accentReverse"}
           className="font-medium border border-accent"
         >

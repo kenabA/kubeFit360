@@ -15,8 +15,11 @@ import { containerVariants } from "@/lib/utils";
 import { Oval } from "react-loader-spinner";
 import useEditUser from "@/system/features/users/useEditUser";
 import { ThemedDialog } from "@/components/dialog/Dialog";
+import { TAccountFormProps } from "./types";
 
-export default function AdminAccountForm() {
+export default function AdminAccountForm({
+  setOpenChangePasswordModal,
+}: TAccountFormProps) {
   const {
     register,
     control,
@@ -130,6 +133,7 @@ export default function AdminAccountForm() {
           Account Information
         </Heading>
         <Button
+          onClick={() => setOpenChangePasswordModal(true)}
           variant={"accentReverse"}
           className="font-medium border border-accent"
         >

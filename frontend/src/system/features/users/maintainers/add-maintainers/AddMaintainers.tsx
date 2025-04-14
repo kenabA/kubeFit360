@@ -31,7 +31,7 @@ export default function AddMaintainer({
     setValue,
     formState: { errors },
   } = useForm<TAddMaintainerFormProps>({
-    // TODO : THe default password will be the role and after adding user, a mail should go stating that the default password is 'maintainer' suggesting user to change it
+    // TODO : The default password will be the role and after adding user, a mail should go stating that the default password is 'maintainer' suggesting user to change it
     defaultValues: {
       role: "maintainer",
       password: "maintainer",

@@ -8,8 +8,12 @@ import MaintainerAccountForm from "./users/maintainer-account-form";
 import AdminAccountForm from "./users/admin-account-form";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import MemberAccountForm from "./users/member-account-form";
+import { useState } from "react";
+import ChangePasswordModal from "@/system/features/authentication/change-password/change-password";
 
 export default function Settings() {
+  const [openChangePasswordModal, setOpenChangePasswordModal] =
+    useState<boolean>(false);
   const auth = useAuthUser<TUserDetails>();
   const role = auth?.role;
 
@@ -32,8 +36,16 @@ export default function Settings() {
               className="h-full  overflow-x-hidden overflow-y-auto custom-scrollbar p-3 pb-6"
               value="account"
             >
-              {role === "admin" && <AdminAccountForm />}
-              {role === "member" && <MemberAccountForm />}
+              {role === "admin" && (
+                <AdminAccountForm
+                  setOpenChangePasswordModal={setOpenChangePasswordModal}
+                />
+              )}
+              {role === "member" && (
+                <MemberAccountForm
+                  setOpenChangePasswordModal={setOpenChangePasswordModal}
+                />
+              )}
             </TabsContent>
             <TabsContent value="password">
               Change your password here.
@@ -54,6 +66,7 @@ export default function Settings() {
                   Account Information
                 </Heading>
                 <Button
+                  onClick={() => setOpenChangePasswordModal(true)}
                   variant={"accentReverse"}
                   className="font-medium border border-accent"
                 >
@@ -70,6 +83,10 @@ export default function Settings() {
           </div>
         )}
       </div>
+      <ChangePasswordModal
+        setIsDialogOpen={setOpenChangePasswordModal}
+        isDialogOpen={openChangePasswordModal}
+      />
     </section>
   );
 }
