@@ -292,3 +292,11 @@ select:-webkit-autofill:focus {
 .client-workout-plan tbody tr:last-child td {
   border-bottom: 1px solid #d2d3d5;
 }
+
+.list-with-disc ul {
+  list-style-type: disc;
+}
+
+.list-with-decimal ol {
+  list-style-type: decimal;
+}

@@ -5,10 +5,13 @@ import { Button } from "@/components";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { changePasswordSchema } from "./validator";
+import useChangePassword from "./useChangePassword";
+import { Oval } from "react-loader-spinner";
 
 export default function ChangePasswordModal({
   isDialogOpen,
   setIsDialogOpen,
+  userId,
 }: TChangePasswordProps) {
   const {
     register,
@@ -19,8 +22,10 @@ export default function ChangePasswordModal({
     resolver: zodResolver(changePasswordSchema),
   });
 
+  const { changePassword, isPending } = useChangePassword();
+
   function onSubmit(data: TChangePasswordFormProps) {
-    console.log(data);
+    changePassword({ passwordDetails: data, selectedId: userId });
   }
 
   function handleCancel() {
@@ -31,14 +36,14 @@ export default function ChangePasswordModal({
   return (
     <FormModal
       icon={"mdi:password-outline"}
-      title="Change Password | Check for api"
+      title="Change Password"
       subtitle="Fill in the fields to change your password"
       open={isDialogOpen}
       setOpen={setIsDialogOpen}
       footer={
         <>
           <Button
-            // disabled={isPending}
+            disabled={isPending}
             className="shadow-none hover:shadow-none h-10"
             variant={"primaryReverse"}
             onClick={handleCancel}
@@ -51,9 +56,9 @@ export default function ChangePasswordModal({
             onClick={handleSubmit(onSubmit)}
             className="px-6 shadow-none hover:shadow-none h-10 w-44"
             variant={"primary"}
-            // disabled={isPending}
+            disabled={isPending}
           >
-            {/* {isPending ? (
+            {isPending ? (
               <Oval
                 height="280"
                 strokeWidth={8}
@@ -63,37 +68,36 @@ export default function ChangePasswordModal({
                 wrapperStyle={{}}
               />
             ) : (
-              "Add"
-            )} */}
-            Change Password
+              "Change Password"
+            )}
           </Button>
         </>
       }
     >
       <form
         id="change-password-form"
-        className="w-full flex flex-col items-center gap-6"
+        className="w-full flex flex-col items-center gap-4"
       >
         <FloatingInput<TChangePasswordFormProps>
           register={register}
-          name="oldPassword"
+          name="passwordCurrent"
           label="Old Password"
           type="password"
-          error={errors.oldPassword}
+          error={errors.passwordCurrent}
         />
         <FloatingInput<TChangePasswordFormProps>
           register={register}
-          name="newPassword"
+          name="password"
           label="New Password"
           type="password"
-          error={errors.newPassword}
+          error={errors.password}
         />
         <FloatingInput<TChangePasswordFormProps>
           register={register}
-          name="confirmPassword"
+          name="passwordConfirm"
           label="Confirm Password"
           type="password"
-          error={errors.confirmPassword}
+          error={errors.passwordConfirm}
         />
       </form>
     </FormModal>

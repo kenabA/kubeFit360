@@ -8,7 +8,7 @@ function useGetWorkoutPlanByMemberId({ selectedId, enabled }: TGetWorkoutPlan) {
   // verify the get workout plan in the backend first and then only work forward.
   const { isPending, data, error } = useQuery<TWorkoutPlan, AxiosError>({
     queryFn: () => apiGetWorkoutPlanByMemberId(selectedId),
-    queryKey: ["workoutPlanPlan", selectedId],
+    queryKey: ["workoutPlan", selectedId],
     enabled: enabled && !!selectedId,
   });
 

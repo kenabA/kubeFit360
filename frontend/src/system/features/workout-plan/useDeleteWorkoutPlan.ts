@@ -12,10 +12,7 @@ function useDeleteWorkoutPlan() {
   } = useMutation({
     mutationFn: (requestId: string) => apiDeleteWorkoutPlan(requestId),
     onSuccess: async () => {
-      queryClient.invalidateQueries({
-        queryKey: ["workoutPlanRequests"],
-      });
-
+      queryClient.resetQueries({ queryKey: ["workoutPlan"] });
       toast({
         variant: "success",
         title: "Success",

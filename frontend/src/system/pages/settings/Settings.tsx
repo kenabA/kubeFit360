@@ -9,13 +9,14 @@ import AdminAccountForm from "./users/admin-account-form";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import MemberAccountForm from "./users/member-account-form";
 import { useState } from "react";
-import ChangePasswordModal from "@/system/features/authentication/change-password/change-password";
+import ChangePasswordModal from "@/system/features/users/change-password/change-password";
 
 export default function Settings() {
   const [openChangePasswordModal, setOpenChangePasswordModal] =
     useState<boolean>(false);
   const auth = useAuthUser<TUserDetails>();
   const role = auth?.role;
+  const userId = auth?._id || "";
 
   return (
     <section className="rounded-tl-xl h-[calc(100dvh-60px)]">
@@ -84,6 +85,7 @@ export default function Settings() {
         )}
       </div>
       <ChangePasswordModal
+        userId={userId}
         setIsDialogOpen={setOpenChangePasswordModal}
         isDialogOpen={openChangePasswordModal}
       />

@@ -1,4 +1,3 @@
-import "./styles.scss";
 import { Button } from "@/components";
 import { ThemedDialog } from "@/components/dialog/Dialog";
 import { Heading } from "@/components/heading/Heading";
@@ -41,8 +40,11 @@ export default function ClientWorkoutPlan() {
     printWindow?.print();
   };
 
-  function handleCancelWorkoutPlan() {
-    if (data?._id) deleteWorkoutPlanRequest(data?._id);
+  async function handleCancelWorkoutPlan() {
+    if (data?._id) {
+      await deleteWorkoutPlanRequest(data?._id);
+      setOpenDelete(false);
+    }
   }
 
   const workoutPlanPresent = data?.workoutPlan;
@@ -104,7 +106,7 @@ export default function ClientWorkoutPlan() {
           >
             {workoutPlanPresent ? (
               <div
-                className="client-workout-plan break-words"
+                className="client-workout-plan break-words list-with-disc list-with-decimal"
                 dangerouslySetInnerHTML={{
                   __html: data.workoutPlan,
                 }}

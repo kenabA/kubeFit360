@@ -124,7 +124,7 @@ export default function AdminAccountForm({
 
   return (
     <>
-      <header className="flex justify-between items-center mb-6">
+      <header className="flex justify-between items-center mb-6 ">
         <Heading
           level={5}
           variant={"quinary"}
