@@ -98,6 +98,10 @@ exports.updateMe = catchAsync(async (req, res, next) => {
 });
 
 exports.updateUser = catchAsync(async (req, res, next) => {
+  if (req.body.removeImage) {
+    req.body.userImage = '';
+  }
+
   const udpatedUser = await User.findOneAndUpdate(
     { _id: req.params.id },
     req.body,
@@ -108,7 +112,7 @@ exports.updateUser = catchAsync(async (req, res, next) => {
     return next(new AppError('No user found with that id', 404));
   }
 
-  res.status(201).json({ status: 'success', data: { user: udpatedUser } });
+  res.status(201).json({ status: 'success', data: { data: udpatedUser } });
 });
 
 exports.deleteUser = catchAsync(async (req, res, next) => {
