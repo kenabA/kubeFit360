@@ -21,7 +21,6 @@ function useEditUser(role: string) {
       selectedId: string;
     }) => apiEditUser(editUserDetails, selectedId),
     onSuccess: async (data) => {
-      console.log(data);
       queryClient.invalidateQueries({});
       queryClient.setQueryData(["user"], data.data.data);
       localStorage.setItem("user", JSON.stringify(data.data.data));

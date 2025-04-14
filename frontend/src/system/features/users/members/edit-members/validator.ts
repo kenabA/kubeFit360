@@ -1,6 +1,6 @@
 import z from "zod";
 
-export const maintainerSchema = z.object({
+export const memberSchema = z.object({
   _id: z.string(),
   name: z.string().nonempty("Please specify trainer's name"),
   email: z.string().nonempty("Please provide trainer's email"),

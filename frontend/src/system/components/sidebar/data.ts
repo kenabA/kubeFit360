@@ -51,6 +51,28 @@ export const sidebarDataAdmin: TSidebarData[] = [
     icon: "gravity-ui:gear",
   },
 ];
+export const sidebarDataMember: TSidebarData[] = [
+  {
+    title: "Dashboard",
+    to: ROUTES.DASHBOARD.MEMBER,
+    icon: "lucide:home",
+  },
+  {
+    title: "Workout Plan",
+    to: ROUTES.WORKOUT_PLAN.MEMBER,
+    icon: "icon-park-outline:plan",
+  },
+  {
+    title: "Notices",
+    to: ROUTES.NOTICES,
+    icon: "pepicons-pop:bulletin-notice",
+  },
+  {
+    title: "Settings",
+    to: ROUTES.SETTINGS,
+    icon: "gravity-ui:gear",
+  },
+];
 
 export const sidebarDataTrainer: TSidebarData[] = [
   {
@@ -92,7 +114,7 @@ export const ROLE_SIDEBAR_DATA = {
   maintainer: sidebarDataMaintainer,
   admin: sidebarDataAdmin,
   trainer: sidebarDataTrainer,
-  member: sidebarDataAdmin,
+  member: sidebarDataMember,
   default: sidebarDataDefault,
 };
 

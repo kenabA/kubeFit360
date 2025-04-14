@@ -30,9 +30,10 @@ import PageNotFound from "./components/page-not-found/PageNotFound";
 import TrainerDashboard from "./system/pages/Trainer/Dashboard/Dashboard";
 import WorkoutPlanRequests from "./system/pages/Trainer/workout-plan-requests/WorkoutPlanRequests";
 import CreateWorkoutPlan from "./system/pages/Trainer/workout-plan/create-workout-plan/CreateWorkoutPlan";
-import ClientWorkoutPlan from "./system/pages/Member/client-workout-plan";
+import ClientWorkoutPlan from "./system/pages/Member/client-workout-plan/client-workout-plan";
 import Settings from "./system/pages/settings/Settings";
 import { useQueryClient } from "@tanstack/react-query";
+import MemberDashboard from "./system/pages/Member/dashboard/dashboard";
 
 export default function App() {
   const queryClient = useQueryClient();
@@ -69,6 +70,12 @@ export default function App() {
               element={<MaintainerDashboard />}
             />
           </Route>
+          <Route element={<ProtectedRoute allowedRoles={["member"]} />}>
+            <Route
+              path={ROUTES.DASHBOARD.MEMBER}
+              element={<MemberDashboard />}
+            />
+          </Route>
           <Route element={<ProtectedRoute allowedRoles={["trainer"]} />}>
             <Route
               path={ROUTES.DASHBOARD.TRAINER}
@@ -78,14 +85,15 @@ export default function App() {
           <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
             <Route path={ROUTES.DASHBOARD.ADMIN} element={<AdminDashboard />} />
           </Route>
-          <Route element={<ProtectedRoute allowedRoles={["member"]} />}>
-            <Route
-              path={ROUTES.CLIENT_WORKOUT_PLAN}
-              element={<ClientWorkoutPlan />}
-            />
-          </Route>
+
           <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
             <Route path={ROUTES.MAINTAINERS} element={<Maintainer />} />
+          </Route>
+          <Route element={<ProtectedRoute allowedRoles={["member"]} />}>
+            <Route
+              path={ROUTES.WORKOUT_PLAN.MEMBER}
+              element={<ClientWorkoutPlan />}
+            />
           </Route>
           <Route
             element={<ProtectedRoute allowedRoles={["admin", "trainer"]} />}

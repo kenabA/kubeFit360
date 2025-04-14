@@ -38,7 +38,7 @@ function useLogin() {
             handleNavigate(ROUTES.DASHBOARD.ADMIN);
             break;
           case "member":
-            handleNavigate(ROUTES.CLIENT_WORKOUT_PLAN);
+            handleNavigate(ROUTES.DASHBOARD.MEMBER);
             break;
           case "trainer":
             handleNavigate(ROUTES.DASHBOARD.TRAINER);

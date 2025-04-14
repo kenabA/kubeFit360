@@ -1,4 +1,4 @@
-// import "./styles.scss";
+import "./styles.scss";
 import { Button } from "@/components";
 import { ThemedDialog } from "@/components/dialog/Dialog";
 import { Heading } from "@/components/heading/Heading";
@@ -47,6 +47,7 @@ export default function ClientWorkoutPlan() {
 
   const workoutPlanPresent = data?.workoutPlan;
   const trainer = data?.request?.trainer?.name || "Certified Trainer";
+  const trainerProfile = data?.request?.trainer?.userImage;
 
   return (
     <section className="rounded-tl-xl h-[calc(100dvh-60px)]">
@@ -144,9 +145,9 @@ export default function ClientWorkoutPlan() {
               </Button>
               <div className="flex items-center justify-normal gap-2">
                 <figure className="bg-[#d9d9d9] size-[34px] rounded-full overflow-hidden shadow-userPanel border-primary border">
-                  {auth?.userImage ? (
+                  {trainerProfile ? (
                     <img
-                      src={auth?.userImage}
+                      src={trainerProfile}
                       className="size-full object-center object-cover"
                       alt="User's Photo"
                     />

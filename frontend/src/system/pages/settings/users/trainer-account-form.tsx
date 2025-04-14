@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 import { TEditTrainerFormProps } from "@/system/features/users/trainers/edit-trainers/type";
-import { containerVariants, formatTime } from "@/lib/utils";
+import { cn, containerVariants, formatTime } from "@/lib/utils";
 import { handleFileChange, uploadImage } from "@/system/lib/helpers";
 import useEditUser from "@/system/features/users/useEditUser";
 import { Oval } from "react-loader-spinner";
@@ -249,7 +249,9 @@ export default function TrainerAccountForm() {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="col-span-full flex items-center justify-end gap-3 lg:sticky lg:-bottom-3 bg-white border border-primary p-3 shadow-sm rounded-lg"
+          className={cn(
+            "col-span-full flex items-center justify-end gap-3 lg:sticky lg:-bottom-6 bg-white border border-primary p-3 shadow-sm rounded-lg"
+          )}
         >
           <Button
             disabled={isPending}

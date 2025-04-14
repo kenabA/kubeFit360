@@ -9,7 +9,6 @@ export const trainerSchema = z.object({
     .regex(/^(?:98[0-9]{8}|97[0-9]{8}|96[0-9]{8})$/, "Invalid phone number."),
   birthDate: z.string().nonempty("Please mention trainer's DOB"),
   gender: z.string().nonempty("Please specify trainer's gender"),
-  role: z.string().nonempty("Please provide a valid role"),
   status: z.string().nonempty("Please provide a valid status"),
   address: z.string().nonempty("Please specify trainer's address"),
   userImage: z.string().optional(),

@@ -1,22 +1,26 @@
 import { Button } from "@/components";
 import { Heading } from "@/components/heading/Heading";
-import { motion } from "framer-motion";
 import BaseImageInput from "@/system/components/input/base-image-input/BaseImageInput";
 import BaseInput from "@/system/components/input/base-input/BaseInput";
-import { TEditAdminFormProps } from "@/system/features/users/admin/type";
-import { adminSchema } from "@/system/features/users/admin/validator";
+import { motion } from "framer-motion";
+
+import useEditUser from "@/system/features/users/useEditUser";
 import useGetCurrentUser from "@/system/features/users/useGetCurrentUser";
-import { handleFileChange, uploadImage } from "@/system/lib/helpers";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { containerVariants } from "@/lib/utils";
-import { Oval } from "react-loader-spinner";
-import useEditUser from "@/system/features/users/useEditUser";
-import { ThemedDialog } from "@/components/dialog/Dialog";
 
-export default function AdminAccountForm() {
+import { useEffect, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { handleFileChange, uploadImage } from "@/system/lib/helpers";
+import { ThemedDialog } from "@/components/dialog/Dialog";
+import { Oval } from "react-loader-spinner";
+import { containerVariants, formatTime } from "@/lib/utils";
+import { TEditMemberFormProps } from "@/system/features/users/members/edit-members/type";
+import { memberSchema } from "@/system/features/users/members/edit-members/validator";
+import FormSelect from "@/system/components/select/form-select/FormSelect";
+import { genderOptions } from "@/system/lib/data";
+
+export default function MemberAccountForm() {
   const {
     register,
     control,
@@ -24,17 +28,16 @@ export default function AdminAccountForm() {
     setValue,
     handleSubmit,
     formState: { errors, dirtyFields },
-  } = useForm<TEditAdminFormProps>({
-    resolver: zodResolver(adminSchema),
+  } = useForm<TEditMemberFormProps>({
+    resolver: zodResolver(memberSchema),
   });
-
   const [isPending, setIsPending] = useState<boolean>(false);
 
   const [openDelete, setOpenDelete] = useState<boolean>(false);
 
   const { data } = useGetCurrentUser();
 
-  const { editUser } = useEditUser("admin");
+  const { editUser } = useEditUser("member");
 
   const [localImage, setLocalImage] = useState<File | string | undefined>();
 
@@ -43,7 +46,7 @@ export default function AdminAccountForm() {
   const handleLocalFileChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    handleFileChange<TEditAdminFormProps>(
+    handleFileChange<TEditMemberFormProps>(
       "userImage",
       event,
       setLocalImage,
@@ -54,7 +57,7 @@ export default function AdminAccountForm() {
   async function handleRemoveProfilePicture() {
     if (!data) return;
     await editUser({
-      editUserDetails: { removeImage: true },
+      editUserDetails: { removeImage: true } as TEditMemberFormProps,
       selectedId: data?._id,
     });
     setOpenDelete(false);
@@ -71,24 +74,7 @@ export default function AdminAccountForm() {
     }
   }
 
-  function handleReset() {
-    if (!data) return;
-    reset({
-      _id: data?._id,
-      name: data?.name,
-      email: data?.email,
-      userImage: data?.userImage,
-      phoneNumber: String(data?.phoneNumber),
-    });
-    if (typeof localImage !== "string") {
-      setLocalImage(data?.userImage);
-      setValue("userImage", data?.userImage, {
-        shouldDirty: true,
-      });
-    }
-  }
-
-  async function onSubmit(data: TEditAdminFormProps) {
+  async function onSubmit(data: TEditMemberFormProps) {
     setIsPending(true);
     if (localImage) {
       //   // TODO : Replace the current image with the new one
@@ -102,14 +88,41 @@ export default function AdminAccountForm() {
     setIsPending(false);
   }
 
+  function handleReset() {
+    if (!data) return;
+    reset({
+      _id: data?._id,
+      name: data?.name,
+      address: data?.address,
+      birthDate: data?.birthDate.slice(0, 10),
+      email: data?.email,
+      gender: data?.gender,
+      status: data.status,
+      userImage: data?.userImage,
+      phoneNumber: String(data?.phoneNumber),
+      createdAt: formatTime(data?.createdAt, "MMM dd, yyyy"),
+    });
+    if (typeof localImage !== "string") {
+      setLocalImage(data?.userImage);
+      setValue("userImage", data?.userImage, {
+        shouldDirty: true,
+      });
+    }
+  }
+
   useEffect(() => {
     if (!data) return;
     reset({
       _id: data?._id,
       name: data?.name,
+      address: data?.address,
+      birthDate: data?.birthDate.slice(0, 10),
       email: data?.email,
+      gender: data?.gender,
+      status: data?.status,
       userImage: data?.userImage,
       phoneNumber: String(data?.phoneNumber),
+      createdAt: formatTime(data.createdAt, "MMM dd, yyyy"),
     });
 
     if (data.userImage) {
@@ -156,11 +169,11 @@ export default function AdminAccountForm() {
         </div>
         <BaseInput
           error={errors._id}
-          label="Admin Id"
+          label="Member Id"
           disabled={true}
           name="_id"
           type="text"
-          placeholder="Admin's Id"
+          placeholder="Member's Id"
           register={register}
         />
         <BaseInput
@@ -173,28 +186,72 @@ export default function AdminAccountForm() {
         />
 
         <BaseInput
-          error={errors.phoneNumber}
-          label="Phone Number"
-          name="phoneNumber"
-          type="text"
-          placeholder="Admin's Phone Number"
-          register={register}
-        />
-        <BaseInput
           error={errors.email}
           label="Email"
           disabled={true}
           name="email"
           type="text"
-          placeholder="Admin's Email"
+          placeholder="Member's Email"
           register={register}
         />
+        <BaseInput
+          error={errors.address}
+          label="Address"
+          name="address"
+          type="text"
+          placeholder="Enter the full name"
+          register={register}
+        />
+        <BaseInput
+          error={errors.phoneNumber}
+          label="Phone Number"
+          name="phoneNumber"
+          type="text"
+          placeholder="Member's Phone Number"
+          register={register}
+        />
+
+        <div className="w-full">
+          <Controller
+            name="gender"
+            control={control}
+            render={({ field }) => (
+              <FormSelect
+                error={errors.gender}
+                placeholder="Select a gender"
+                label={field.name}
+                field={field}
+                options={genderOptions}
+              />
+            )}
+          />
+        </div>
+
+        <BaseInput
+          error={errors.birthDate}
+          label="Date of Birth"
+          name="birthDate"
+          placeholder="Enter date of birth"
+          register={register}
+          type="date"
+        />
+
+        <BaseInput
+          error={errors.createdAt}
+          label="Joined Date"
+          name="createdAt"
+          type="text"
+          disabled={true}
+          placeholder=""
+          register={register}
+        />
+
         {isFormEdited && (
           <motion.div
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="col-span-full flex items-center justify-end gap-3 lg:sticky lg:-bottom-3  p-3  rounded-lg shadow-inner"
+            className="col-span-full flex items-center justify-end bg-white gap-3 lg:sticky lg:bottom-6  p-3  rounded-lg shadow-inner"
           >
             <Button
               disabled={isPending}
