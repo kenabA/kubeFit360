@@ -16,6 +16,7 @@ export type TOptions<T> = {
 export type TFilterFields = {
   equipments: TEntity;
   maintainers: TEntity;
+  notices: TEntity;
   workoutPlanRequests: TEntity;
 };
 
@@ -34,6 +35,11 @@ export const equipmentStatusOptions: TOptions<string>[] = [
     value: "underMaintenance",
     theme: "hsl(var(--primary))",
   },
+];
+
+export const noticesStatusOptions: TOptions<string>[] = [
+  { label: "Active", value: "active", theme: "hsl(var(--success))" },
+  { label: "Expired", value: "inactive", theme: "hsl(var(--destructive))" },
 ];
 
 export const maintainerStatusOptions: TOptions<string>[] = [
@@ -80,6 +86,10 @@ export const filterFields: TFilterFields = {
       { label: "status", options: equipmentStatusOptions },
       { label: "category", options: categoryOptions },
     ],
+  },
+  notices: {
+    name: "notices",
+    fields: [{ label: "status", options: noticesStatusOptions }],
   },
   maintainers: {
     name: "maintainers",

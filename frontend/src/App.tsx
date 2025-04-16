@@ -34,6 +34,7 @@ import ClientWorkoutPlan from "./system/pages/Member/client-workout-plan/client-
 import Settings from "./system/pages/settings/Settings";
 import { useQueryClient } from "@tanstack/react-query";
 import MemberDashboard from "./system/pages/Member/dashboard/dashboard";
+import Notices from "./system/pages/notices/notices";
 
 export default function App() {
   const queryClient = useQueryClient();
@@ -75,6 +76,15 @@ export default function App() {
               path={ROUTES.DASHBOARD.MEMBER}
               element={<MemberDashboard />}
             />
+          </Route>
+          <Route
+            element={
+              <ProtectedRoute
+                allowedRoles={["admin", "maintainer", "trainer", "member"]}
+              />
+            }
+          >
+            <Route path={ROUTES.NOTICES} element={<Notices />} />
           </Route>
           <Route element={<ProtectedRoute allowedRoles={["trainer"]} />}>
             <Route
