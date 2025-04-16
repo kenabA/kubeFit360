@@ -71,7 +71,6 @@ export default function EditMaintainer({
       birthDate: maintainer?.birthDate,
       email: maintainer?.email,
       gender: maintainer?.gender,
-      role: maintainer?.role,
       userImage: maintainer?.userImage,
       phoneNumber: String(maintainer?.phoneNumber),
     });
@@ -97,7 +96,7 @@ export default function EditMaintainer({
       setValue("userImage", maintainerImageUrl, { shouldDirty: true });
       data = { ...data, userImage: maintainerImageUrl };
     }
-    editUser({ editMaintainerDetails: data, selectedId });
+    editUser({ editUserDetails: data, selectedId });
   }
 
   const handleLocalFileChange = (

@@ -58,7 +58,7 @@ export default function AdminDashboard() {
           <Block
             type={"figure"}
             icon="lucide:package"
-            title="equipments visualization"
+            title="membership ratio"
             className="col-span-full md:col-[2/-1] lg:col-[2/3]"
           >
             <Piechart

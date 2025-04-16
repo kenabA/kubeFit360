@@ -7,7 +7,7 @@ export const maintainerSchema = z.object({
   phoneNumber: z
     .string()
     .regex(/^(?:98[0-9]{8}|97[0-9]{8}|96[0-9]{8})$/, "Invalid phone number."),
-  birthDate: z.string().nonempty("Please mention trainer's DOB"),
+  birthDate: z.string(),
   gender: z.string().nonempty("Please specify trainer's gender"),
   status: z.string().nonempty("Please provide a valid status"),
   address: z.string().nonempty("Please specify trainer's address"),
