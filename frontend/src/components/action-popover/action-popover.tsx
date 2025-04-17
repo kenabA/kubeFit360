@@ -8,7 +8,7 @@ import { Dispatch, SetStateAction } from "react";
 
 export default function ActionPopover({
   children,
-  setSelectedIds,
+  handleSelectId,
   setOpenEdit,
   setOpenDelete,
   setOpenView,
@@ -16,7 +16,7 @@ export default function ActionPopover({
   setOpenActionPopover,
 }: {
   children: React.ReactNode;
-  setSelectedIds: React.Dispatch<React.SetStateAction<string>>;
+  handleSelectId: () => void;
   setOpenEdit: React.Dispatch<React.SetStateAction<boolean>>;
   setOpenDelete: Dispatch<SetStateAction<boolean>>;
   setOpenView?: Dispatch<SetStateAction<boolean>>;
@@ -41,12 +41,13 @@ export default function ActionPopover({
       <PopoverContent
         sideOffset={10}
         onOpenAutoFocus={(e) => e.preventDefault()}
-        className="flex rounded-[8px] shadow-general flex-col gap-3 p-3 w-[120px]"
+        onClick={(e) => e.stopPropagation()}
+        className="flex  rounded-[8px] shadow-general flex-col gap-3 p-3 w-[120px]"
       >
         {setOpenView && (
           <button
             onClick={() => {
-              // toggleRowSelection(row.original._id);
+              handleSelectId();
               setOpenView(true);
               setOpenActionPopover(false);
             }}
@@ -65,6 +66,7 @@ export default function ActionPopover({
           className="flex items-center gap-[6px] group"
           onClick={(e) => {
             // toggleRowSelection(row.original._id);
+            handleSelectId();
             setOpenEdit(true);
             setOpenActionPopover(false);
             e.stopPropagation();

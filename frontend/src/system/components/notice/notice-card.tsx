@@ -1,9 +1,11 @@
 import { AnimatePresence, motion } from "motion/react";
-import { TNoticeCard } from "../expandable-card/expandable-card";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
 import { useRef } from "react";
 import { CountDown } from "./Countdown";
 import { Badge } from "@/components/ui/badge";
+import { TNoticeData } from "@/system/features/notices/type";
+import { useGetDayMonth } from "@/hooks/useGetDayMonth";
+import { cn } from "@/lib/utils";
 
 export const CloseIcon = () => {
   return (
@@ -43,11 +45,15 @@ export default function NoticeCard({
   id,
   setActive,
 }: {
-  active: TNoticeCard | boolean | null;
+  active: TNoticeData | boolean | null;
   id: string;
-  setActive: React.Dispatch<React.SetStateAction<TNoticeCard | boolean | null>>;
+  setActive: React.Dispatch<React.SetStateAction<TNoticeData | boolean | null>>;
 }) {
   const ref = useRef<HTMLDivElement>(null);
+
+  const { day, month } = useGetDayMonth(
+    typeof active === "object" && active?.createdAt ? active.createdAt : ""
+  );
 
   useOutsideClick(ref, () => setActive(null));
   return (
@@ -60,16 +66,21 @@ export default function NoticeCard({
             className="w-full max-w-[600px] flex flex-col bg-white sm:rounded-3xl overflow-hidden"
           >
             <motion.figure
-              className="size-full"
-              layoutId={`image-${active.date}-${id}`}
+              className="size-full flex items-center justify-center relative"
+              layoutId={`image-${active.representativeImg}-${id}`}
             >
               <img
-                src={
-                  "https://media.istockphoto.com/id/2170450588/photo/interior-of-modern-light-gym-is-well-equipped-with-modern-machines-and-fitness-gear-offering.jpg?s=612x612&w=is&k=20&c=DSa3xRH3ZAjOFBV-QvkTDV1f3LHRpWs5YxRVJ0qiFT0="
-                }
-                alt={active.title}
-                className="size-full object-cover object-center
+                src={active.representativeImg}
+                alt={`${active.title}'s image representation`}
+                className="max-w-[300px] max-h-[300px] object-contain z-10 object-center
                 "
+              />
+              <img
+                alt="Image of the entity"
+                src={active.representativeImg}
+                className={cn(
+                  "absolute inset-0 w-full h-full object-cover scale-110 transition-opacity duration-300 filter blur-sm opacity-50"
+                )}
               />
             </motion.figure>
 
@@ -81,7 +92,7 @@ export default function NoticeCard({
                       className="text-white bg-accent hover:bg-accent-hover cursor-default
                     "
                     >
-                      20 AUG
+                      {day} {month}
                     </Badge>
                     <Badge
                       className="text-gray-primary bg-[#E2E7EB] hover:bg-slate-300
@@ -91,7 +102,7 @@ export default function NoticeCard({
                       Admin
                     </Badge>
                   </div>
-                  <CountDown expiryDate="2025-04-18T00:00:00Z" />
+                  <CountDown expiryDate={active.expiresAt} />
                 </div>
                 <motion.h3
                   layoutId={`title-${active.title}-${id}`}
@@ -112,47 +123,4 @@ export default function NoticeCard({
       ) : null}
     </AnimatePresence>
   );
-}
-
-{
-  /* <div>
-              <div className="flex justify-between items-start p-4">
-                <div className="">
-                  <motion.h3
-                    layoutId={`title-${active.title}-${id}`}
-                    className="font-bold text-neutral-700 dark:text-neutral-200"
-                  >
-                    {active.title}
-                  </motion.h3>
-                  <motion.p
-                    layoutId={`description-${active.description}-${id}`}
-                    className="text-neutral-600 dark:text-neutral-400"
-                  >
-                    {active.description}
-                  </motion.p>
-                </div>
-
-                <motion.a
-                  layoutId={`button-${active.title}-${id}`}
-                  href={active.status}
-                  target="_blank"
-                  className="px-4 py-3 text-sm rounded-full font-bold bg-green-500 text-white"
-                >
-                  {active.status}
-                </motion.a>
-              </div>
-              <div className="pt-4 relative px-4">
-                <motion.div
-                  layout
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  className="text-neutral-600 text-xs md:text-sm lg:text-base h-40 md:h-fit pb-10 flex flex-col items-start gap-4 overflow-auto dark:text-neutral-400 [mask:linear-gradient(to_bottom,white,white,transparent)] [scrollbar-width:none] [-ms-overflow-style:none] [-webkit-overflow-scrolling:touch]"
-                >
-                  {typeof active.description === "function"
-                    ? active.description
-                    : active.description}
-                </motion.div>
-              </div>
-            </div> */
 }

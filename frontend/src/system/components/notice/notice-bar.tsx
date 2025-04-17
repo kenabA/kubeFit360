@@ -1,12 +1,14 @@
 import { EllipsisVertical } from "lucide-react";
 import { motion } from "motion/react";
-import { TNoticeCard } from "../expandable-card/expandable-card";
 import { Heading } from "@/components/heading/Heading";
 import { CountDown } from "./Countdown";
 import React, { Dispatch, SetStateAction, useState } from "react";
 import ActionPopover from "@/components/action-popover/action-popover";
 import EditNotice from "@/system/features/notices/edit-notice/edit-notice";
 import { ThemedDialog } from "@/components/dialog/Dialog";
+import { TNoticeData } from "@/system/features/notices/type";
+import { useGetDayMonth } from "@/hooks/useGetDayMonth";
+import useDeleteNotice from "@/system/features/notices/delete-notice/useDeleteNotice";
 
 export default function NoticeBar({
   role,
@@ -16,38 +18,51 @@ export default function NoticeBar({
   setActive,
 }: {
   role: "maintainer" | "admin" | "trainer" | "member" | undefined;
-  card: TNoticeCard;
+  card: TNoticeData;
   id: string;
   setIsDialogOpen: Dispatch<SetStateAction<boolean>>;
-  setActive: React.Dispatch<React.SetStateAction<TNoticeCard | boolean | null>>;
+  setActive: React.Dispatch<React.SetStateAction<TNoticeData | boolean | null>>;
 }) {
   const [openEdit, setOpenEdit] = useState<boolean>(false);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
   const [openDelete, setOpenDelete] = useState<boolean>(false);
   const [openActionPopover, setOpenActionPopover] = useState<boolean>(false);
+
+  const { deleteNotice, isPending } = useDeleteNotice();
+
+  const { day, month } = useGetDayMonth(card.createdAt);
+
+  function handleSelectId() {
+    setSelectedId(card._id);
+  }
 
   return (
     <motion.div
       layoutId={`card-${card.title}-${id}`}
       key={`card-${card.title}-${id}`}
-      onClick={() => setActive(card)}
+      onClick={() => {
+        if (!openEdit) {
+          setActive(card);
+        }
+      }}
       className=" hover:bg-neutral-50 cursor-pointer rounded-xl bg-[#fcfcfc] grid grid-cols-[auto,1fr] overflow-hidden shadow-[0_0_4px_rgba(0,0,0,0.25)]"
     >
       <motion.div
-        layoutId={`card-${card.date}-${id}`}
+        layoutId={`card-${card.createdAt}-${id}`}
         className="flex flex-col -space-y-1 items-center justify-center bg-accent p-3 h-full shadow-[0_0_4px_rgba(0,0,0,0.25)]"
       >
-        <span className="text-white font-bold text-lg block">20</span>
+        <span className="text-white font-bold text-lg block">{day}</span>
         <span className="text-white font-normal text-sm uppercase block">
-          AUG
+          {month}
         </span>
       </motion.div>
       <motion.div className="p-3 grid grid-cols-[1fr,8fr] gap-3">
         <motion.figure
-          layoutId={`image-${card.date}-${id}`}
-          className="size-full min-w-[150px] min-h-[110px] bg-secondary rounded-[8px] overflow-hidden"
+          layoutId={`image-${card.representativeImg}-${id}`}
+          className="size-full min-w-[150px] min-h-[110px] rounded-[8px] overflow-hidden shadow-[0_0_4px_rgba(0,0,0,0.06)]"
         >
           <motion.img
-            src="https://media.istockphoto.com/id/2170450588/photo/interior-of-modern-light-gym-is-well-equipped-with-modern-machines-and-fitness-gear-offering.jpg?s=612x612&w=is&k=20&c=DSa3xRH3ZAjOFBV-QvkTDV1f3LHRpWs5YxRVJ0qiFT0="
+            src={card.representativeImg}
             className="size-full object-cover"
             alt="Image of the Notice"
           />
@@ -62,14 +77,14 @@ export default function NoticeBar({
               {card.title}
             </Heading>
             <div className="flex gap-2 items-center">
-              <CountDown expiryDate="2025-04-18T00:00:00Z" />
+              <CountDown expiryDate={card.expiresAt} />
               {role === "admin" && (
                 <ActionPopover
                   openActionPopover={openActionPopover}
                   setOpenActionPopover={setOpenActionPopover}
                   setOpenDelete={setOpenDelete}
                   setOpenEdit={setOpenEdit}
-                  setSelectedIds={() => null}
+                  handleSelectId={handleSelectId}
                 >
                   <EllipsisVertical className="size-[16px]" />
                 </ActionPopover>
@@ -82,21 +97,22 @@ export default function NoticeBar({
           >
             {card.description}
           </motion.p>
-          <motion.button
-            onClick={() => setIsDialogOpen(true)}
-            className="text-sm text-primary font-semibold mt-auto"
-          >
+          <motion.button className="text-sm text-primary font-semibold mt-auto">
             View Details
           </motion.button>
         </motion.article>
       </motion.div>
-      <EditNotice isDialogOpen={openEdit} setIsDialogOpen={setOpenEdit} />
+      <EditNotice
+        selectedId={selectedId || ""}
+        isDialogOpen={openEdit}
+        setIsDialogOpen={setOpenEdit}
+      />
       <ThemedDialog
-        isPending={false}
+        isPending={isPending}
         dialogOpen={openDelete}
         setDialogOpen={setOpenDelete}
         mutationFn={() => {
-          null;
+          deleteNotice(card._id);
         }}
         theme="destructive"
         ctaText="Delete"
@@ -106,35 +122,3 @@ export default function NoticeBar({
     </motion.div>
   );
 }
-
-// <div className="flex gap-4 flex-col md:flex-row ">
-//         <motion.div layoutId={`image-${card.title}-${id}`}>
-//           {/* <img
-//             width={100}
-//             height={100}
-//             src={card.src}
-//             alt={card.title}
-//             className="h-40 w-40 md:h-14 md:w-14 rounded-lg object-cover object-top"
-//           /> */}
-//         </motion.div>
-//         <div className="">
-//           <motion.h3
-//             layoutId={`title-${card.title}-${id}`}
-//             className="font-medium text-neutral-800 dark:text-neutral-200 text-center md:text-left"
-//           >
-//             {card.title}
-//           </motion.h3>
-//           <motion.p
-// layoutId={`description-${card.description}-${id}`}
-//             className="text-neutral-600 dark:text-neutral-400 text-center md:text-left"
-//           >
-//             {card.description}
-//           </motion.p>
-//         </div>
-//       </div>
-//       <motion.button
-//         layoutId={`button-${card.title}-${id}`}
-//         className="px-4 py-2 text-sm rounded-full font-bold bg-gray-100 hover:bg-green-500 hover:text-white text-black mt-4 md:mt-0"
-//       >
-//         View
-//       </motion.button>

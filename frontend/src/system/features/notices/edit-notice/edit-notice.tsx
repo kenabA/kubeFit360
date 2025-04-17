@@ -5,17 +5,21 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 import BaseImageInput from "@/system/components/input/base-image-input/BaseImageInput";
-import { handleFileChange } from "@/system/lib/helpers";
-import { useState } from "react";
+import { handleFileChange, uploadImage } from "@/system/lib/helpers";
+import { useEffect, useState } from "react";
 import { Oval } from "react-loader-spinner";
 
 import { noticeSchema } from "./validator";
 import { TEditNoticeFormProps } from "./types";
+import useGetNotice from "../useGetNotice";
+import useEditNotice from "./useEditNotice";
 
 export default function EditNotice({
+  selectedId,
   isDialogOpen,
   setIsDialogOpen,
 }: {
+  selectedId: string;
   isDialogOpen: boolean;
   setIsDialogOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
@@ -32,6 +36,8 @@ export default function EditNotice({
     resolver: zodResolver(noticeSchema),
   });
 
+  const { editNotice, isSuccess } = useEditNotice();
+
   const handleLocalFileChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -43,18 +49,39 @@ export default function EditNotice({
     );
   };
 
+  const { data: noticeData } = useGetNotice({
+    selectedId: selectedId,
+    enabled: true,
+  });
+
   async function onSubmit(data: TEditNoticeFormProps) {
     setIsPending(true);
     data = { ...data, expiresAt: new Date(data.expiresAt).toISOString() };
-    // if (localImage) {
-    //   const noticeImageUrl = await uploadImage(localImage as File);
-    //   setValue("representativeImg", noticeImageUrl);
-    //   data = { ...data, representativeImg: noticeImageUrl };
-    // }
-    // addEquipment(data);
-
-    console.log(data);
+    if (localImage) {
+      const noticeImageUrl = await uploadImage(localImage as File);
+      setValue("representativeImg", noticeImageUrl);
+      data = { ...data, representativeImg: noticeImageUrl };
+    }
+    await editNotice({ editNoticeDetails: data, selectedId: selectedId });
+    setIsDialogOpen(false);
+    setIsPending(false);
   }
+
+  useEffect(() => {
+    if (!noticeData) return;
+    reset({
+      title: noticeData?.title,
+      description: noticeData?.description,
+      expiresAt: noticeData?.expiresAt.slice(0, 10),
+      representativeImg: noticeData.representativeImg,
+    });
+
+    if (noticeData.representativeImg) {
+      setLocalImage(noticeData.representativeImg);
+    } else {
+      setLocalImage(undefined);
+    }
+  }, [reset, noticeData]);
 
   function handleCancel() {
     setIsDialogOpen(false);
@@ -86,7 +113,7 @@ export default function EditNotice({
             form="equipment-form"
             type="submit"
             onClick={(e) => {
-              handleSubmit(onSubmit);
+              handleSubmit(onSubmit)();
               e.stopPropagation();
             }}
             className="px-6 shadow-none hover:shadow-none h-10 w-34"
@@ -140,7 +167,7 @@ export default function EditNotice({
         <BaseImageInput
           isSettings={true}
           handleFileChange={handleLocalFileChange}
-          handleRemove={() => setLocalImage(undefined)}
+          handleRemove={() => alert(12)}
           localImage={localImage}
           setLocalImage={setLocalImage}
           error={errors.representativeImg}

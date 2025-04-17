@@ -6,6 +6,7 @@ import NoData from "@/system/components/no-data/NoData";
 
 import TableSearch from "@/system/components/table-search/TableSearch";
 import AddNotice from "@/system/features/notices/add-notice/add-notice";
+import useNotices from "@/system/features/notices/useNotices";
 import { filterFields } from "@/system/lib/data";
 import { TUserDetails } from "@/system/stores/user/types";
 import { Plus } from "lucide-react";
@@ -17,12 +18,13 @@ export default function Notices() {
 
   const [openAdd, setOpenAdd] = useState<boolean>(false);
 
+  const { data, isPending } = useNotices();
+
   function handleOpenAdd() {
     setOpenAdd(true);
   }
 
-  const notices = true;
-
+  const notices = data.data;
   const role = user?.role;
 
   return (
@@ -51,7 +53,11 @@ export default function Notices() {
             </div>
           </div>
           {notices ? (
-            <ExpandableCardDemo role={role} setIsDialogOpen={setOpenAdd} />
+            <ExpandableCardDemo
+              noticesData={notices}
+              role={role}
+              setIsDialogOpen={setOpenAdd}
+            />
           ) : (
             <NoData
               title="No Notices Available"

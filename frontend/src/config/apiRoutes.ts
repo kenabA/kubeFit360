@@ -19,6 +19,8 @@ export const API_ROUTES = {
     BASE: buildApiRoute("maintainers"),
   },
 
+  NOTICES: buildApiRoute("notices"),
+
   TRAINERS: {
     BASE: buildApiRoute("maintainers"),
     WORKOUT_PLAN_REQUESTS: buildApiRoute("workoutPlanRequests"),

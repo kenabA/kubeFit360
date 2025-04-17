@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "motion/react";
 
 import NoticeBar from "../notice/notice-bar";
 import NoticeCard from "../notice/notice-card";
+import { TNoticeData } from "@/system/features/notices/type";
 
 export type TNoticeCard = {
   id: string;
@@ -56,14 +57,16 @@ export const announcementsData: TNoticeCard[] = [
 ];
 
 export function ExpandableCardDemo({
+  noticesData,
   role,
   setIsDialogOpen,
 }: {
+  noticesData: TNoticeData[];
   role: "maintainer" | "admin" | "trainer" | "member" | undefined;
   // isDialogOpen: boolean;
   setIsDialogOpen: Dispatch<SetStateAction<boolean>>;
 }) {
-  const [active, setActive] = useState<TNoticeCard | boolean | null>(null);
+  const [active, setActive] = useState<TNoticeData | boolean | null>(null);
 
   const id = useId();
 
@@ -100,7 +103,7 @@ export function ExpandableCardDemo({
       <NoticeCard active={active} id={id} setActive={setActive} />
       {/* RENDER LISTS */}
       <ul className="flex flex-col gap-6">
-        {announcementsData.map((data, index) => (
+        {noticesData.map((data, index) => (
           <NoticeBar
             role={role}
             setIsDialogOpen={setIsDialogOpen}
