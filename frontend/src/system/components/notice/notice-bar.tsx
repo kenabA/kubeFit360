@@ -1,17 +1,30 @@
+import { EllipsisVertical } from "lucide-react";
 import { motion } from "motion/react";
 import { TNoticeCard } from "../expandable-card/expandable-card";
 import { Heading } from "@/components/heading/Heading";
 import { CountDown } from "./Countdown";
+import React, { Dispatch, SetStateAction, useState } from "react";
+import ActionPopover from "@/components/action-popover/action-popover";
+import EditNotice from "@/system/features/notices/edit-notice/edit-notice";
+import { ThemedDialog } from "@/components/dialog/Dialog";
 
 export default function NoticeBar({
+  role,
   card,
   id,
+  setIsDialogOpen,
   setActive,
 }: {
+  role: "maintainer" | "admin" | "trainer" | "member" | undefined;
   card: TNoticeCard;
   id: string;
+  setIsDialogOpen: Dispatch<SetStateAction<boolean>>;
   setActive: React.Dispatch<React.SetStateAction<TNoticeCard | boolean | null>>;
 }) {
+  const [openEdit, setOpenEdit] = useState<boolean>(false);
+  const [openDelete, setOpenDelete] = useState<boolean>(false);
+  const [openActionPopover, setOpenActionPopover] = useState<boolean>(false);
+
   return (
     <motion.div
       layoutId={`card-${card.title}-${id}`}
@@ -48,7 +61,20 @@ export default function NoticeBar({
             >
               {card.title}
             </Heading>
-            <CountDown expiryDate="2025-04-18T00:00:00Z" />
+            <div className="flex gap-2 items-center">
+              <CountDown expiryDate="2025-04-18T00:00:00Z" />
+              {role === "admin" && (
+                <ActionPopover
+                  openActionPopover={openActionPopover}
+                  setOpenActionPopover={setOpenActionPopover}
+                  setOpenDelete={setOpenDelete}
+                  setOpenEdit={setOpenEdit}
+                  setSelectedIds={() => null}
+                >
+                  <EllipsisVertical className="size-[16px]" />
+                </ActionPopover>
+              )}
+            </div>
           </motion.header>
           <motion.p
             layoutId={`description-${card.description}-${id}`}
@@ -56,11 +82,27 @@ export default function NoticeBar({
           >
             {card.description}
           </motion.p>
-          <motion.button className="text-sm text-primary font-semibold mt-auto">
+          <motion.button
+            onClick={() => setIsDialogOpen(true)}
+            className="text-sm text-primary font-semibold mt-auto"
+          >
             View Details
           </motion.button>
         </motion.article>
       </motion.div>
+      <EditNotice isDialogOpen={openEdit} setIsDialogOpen={setOpenEdit} />
+      <ThemedDialog
+        isPending={false}
+        dialogOpen={openDelete}
+        setDialogOpen={setOpenDelete}
+        mutationFn={() => {
+          null;
+        }}
+        theme="destructive"
+        ctaText="Delete"
+        title="Delete Notice"
+        message="Do you really want to delete this notice?"
+      />
     </motion.div>
   );
 }

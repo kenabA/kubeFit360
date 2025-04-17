@@ -58,13 +58,19 @@ export function ThemedDialog({
                 themeStyles[theme].backgroundLight,
                 themeStyles[theme].text
               )}`}
-              onClick={() => setDialogOpen(false)}
+              onClick={(e) => {
+                setDialogOpen(false);
+                e.stopPropagation();
+              }}
               variant={"ghost"}
             >
               Cancel
             </Button>
             <Button
-              onClick={mutationFn}
+              onClick={(e) => {
+                mutationFn();
+                e.stopPropagation();
+              }}
               className="w-full shadow-md hover:shadow-md md:h-11"
               variant={theme}
               disabled={isPending}

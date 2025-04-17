@@ -1,6 +1,5 @@
-import { useEffect, useId, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useId, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { useOutsideClick } from "@/hooks/useOutsideClick";
 
 import NoticeBar from "../notice/notice-bar";
 import NoticeCard from "../notice/notice-card";
@@ -56,7 +55,14 @@ export const announcementsData: TNoticeCard[] = [
   },
 ];
 
-export function ExpandableCardDemo() {
+export function ExpandableCardDemo({
+  role,
+  setIsDialogOpen,
+}: {
+  role: "maintainer" | "admin" | "trainer" | "member" | undefined;
+  // isDialogOpen: boolean;
+  setIsDialogOpen: Dispatch<SetStateAction<boolean>>;
+}) {
   const [active, setActive] = useState<TNoticeCard | boolean | null>(null);
 
   const id = useId();
@@ -95,7 +101,14 @@ export function ExpandableCardDemo() {
       {/* RENDER LISTS */}
       <ul className="flex flex-col gap-6">
         {announcementsData.map((data, index) => (
-          <NoticeBar setActive={setActive} card={data} key={index} id={id} />
+          <NoticeBar
+            role={role}
+            setIsDialogOpen={setIsDialogOpen}
+            setActive={setActive}
+            card={data}
+            key={index}
+            id={id}
+          />
         ))}
       </ul>
     </div>

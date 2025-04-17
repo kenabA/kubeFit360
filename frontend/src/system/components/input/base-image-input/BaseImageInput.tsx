@@ -6,12 +6,13 @@ import { TBaseImageInputProps } from "./types";
 import { cn } from "@/lib/utils";
 
 export default function BaseImageInput({
-  isSettings = false,
+  isSettings = true,
   handleRemove,
   handleFileChange,
   label,
   type,
   localImage,
+  error,
 }: TBaseImageInputProps) {
   const uploadImageRef = useRef<HTMLInputElement>(null);
 
@@ -98,6 +99,11 @@ export default function BaseImageInput({
           )}
         </div>
       </div>
+      {error && (
+        <p className="h-full p-1 text-left text-xs text-red-400">
+          {error.message}
+        </p>
+      )}
     </div>
   );
 }

@@ -5,6 +5,7 @@ import Filter from "@/system/components/filter/Filter";
 import NoData from "@/system/components/no-data/NoData";
 
 import TableSearch from "@/system/components/table-search/TableSearch";
+import AddNotice from "@/system/features/notices/add-notice/add-notice";
 import { filterFields } from "@/system/lib/data";
 import { TUserDetails } from "@/system/stores/user/types";
 import { Plus } from "lucide-react";
@@ -21,6 +22,8 @@ export default function Notices() {
   }
 
   const notices = true;
+
+  const role = user?.role;
 
   return (
     <section className="rounded-tl-xl h-[calc(100dvh-60px)]">
@@ -48,7 +51,7 @@ export default function Notices() {
             </div>
           </div>
           {notices ? (
-            <ExpandableCardDemo />
+            <ExpandableCardDemo role={role} setIsDialogOpen={setOpenAdd} />
           ) : (
             <NoData
               title="No Notices Available"
@@ -57,6 +60,7 @@ export default function Notices() {
           )}
         </div>
       </div>
+      <AddNotice isDialogOpen={openAdd} setIsDialogOpen={setOpenAdd} />
     </section>
   );
 }

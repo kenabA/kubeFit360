@@ -30,6 +30,7 @@ export function FormModal({
 }) {
   return (
     <Dialog
+      modal={true}
       open={open}
       onOpenChange={(value) => {
         setOpen(value);
