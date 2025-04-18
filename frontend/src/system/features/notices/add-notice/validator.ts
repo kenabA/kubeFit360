@@ -6,8 +6,6 @@ export const noticeSchema = z.object({
     .string()
     .nonempty("Please brief about the notice")
     .max(500, "Too long! Keep it less than 500 words."),
-  representativeImg: z
-    .string()
-    .nonempty("Please insert an representative image"),
+  representativeImg: z.string().optional(),
   expiresAt: z.string().nonempty("Please specify the expiry date"),
 });

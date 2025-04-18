@@ -1,24 +1,28 @@
 import { useToast } from "@/hooks/use-toast";
-import apiDeleteNotice from "@/system/services/notices/apiDeleteNotice";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-function useDeleteNotice() {
+import { TAddNoticeFormProps } from "./types";
+import apiAddNotice from "@/system/services/notices/apiAddNotice";
+
+function useAddNotice() {
   const queryClient = useQueryClient();
   const { toast } = useToast();
   const {
-    mutate: deleteNotice,
+    mutate: addNotice,
     isPending,
+    error,
     isSuccess,
   } = useMutation({
-    mutationFn: (noticeId: string) => apiDeleteNotice(noticeId),
+    mutationFn: (addNoticeDetails: TAddNoticeFormProps) =>
+      apiAddNotice(addNoticeDetails),
     onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: ["notices", {}],
+        queryKey: ["notices"],
       });
       toast({
         variant: "success",
         title: "Success",
-        description: "Notice deleted successfully",
+        description: "Notice added successfully",
       });
     },
     onError: (err) => {
@@ -30,7 +34,7 @@ function useDeleteNotice() {
       });
     },
   });
-  return { deleteNotice, isPending, isSuccess };
+  return { addNotice, isPending, isSuccess, error };
 }
 
-export default useDeleteNotice;
+export default useAddNotice;

@@ -1,6 +1,7 @@
 import { EllipsisVertical } from "lucide-react";
 import { motion } from "motion/react";
 import { Heading } from "@/components/heading/Heading";
+import warn from "@/assets/system/svg/warn.svg";
 import { CountDown } from "./Countdown";
 import React, { Dispatch, SetStateAction, useState } from "react";
 import ActionPopover from "@/components/action-popover/action-popover";
@@ -9,6 +10,10 @@ import { ThemedDialog } from "@/components/dialog/Dialog";
 import { TNoticeData } from "@/system/features/notices/type";
 import { useGetDayMonth } from "@/hooks/useGetDayMonth";
 import useDeleteNotice from "@/system/features/notices/delete-notice/useDeleteNotice";
+import { cn } from "@/lib/utils";
+import Status from "../status/Status";
+import { Badge } from "@/components/ui/badge";
+import Tag from "../tag/Tag";
 
 export default function NoticeBar({
   role,
@@ -58,14 +63,26 @@ export default function NoticeBar({
       </motion.div>
       <motion.div className="p-3 grid grid-cols-[1fr,8fr] gap-3">
         <motion.figure
-          layoutId={`image-${card.representativeImg}-${id}`}
-          className="size-full min-w-[150px] min-h-[110px] rounded-[8px] overflow-hidden shadow-[0_0_4px_rgba(0,0,0,0.06)]"
+          layoutId={`image-${card.title}-${id}`}
+          className={cn(
+            "size-full min-w-[150px] h-[120px] rounded-[8px] overflow-hidden shadow-[0_0_4px_rgba(0,0,0,0.06)]",
+            !card.representativeImg &&
+              "flex items-center justify-center relative bg-slate-100 shadow-inner"
+          )}
         >
-          <motion.img
-            src={card.representativeImg}
-            className="size-full object-cover"
-            alt="Image of the Notice"
-          />
+          {card.representativeImg ? (
+            <motion.img
+              src={card.representativeImg}
+              className="size-full object-cover"
+              alt="Image of the Notice"
+            />
+          ) : (
+            <img
+              className="mx-auto size-20"
+              src={warn}
+              alt=" An warning icon"
+            />
+          )}
         </motion.figure>
         <motion.article className="flex flex-col gap-[6px] items-start">
           <motion.header className="flex items-center justify-between w-full">
@@ -77,6 +94,7 @@ export default function NoticeBar({
               {card.title}
             </Heading>
             <div className="flex gap-2 items-center">
+              <Badge variant={card.status}>{card.status}</Badge>
               <CountDown expiryDate={card.expiresAt} />
               {role === "admin" && (
                 <ActionPopover

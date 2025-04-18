@@ -39,7 +39,7 @@ export const equipmentStatusOptions: TOptions<string>[] = [
 
 export const noticesStatusOptions: TOptions<string>[] = [
   { label: "Active", value: "active", theme: "hsl(var(--success))" },
-  { label: "Expired", value: "inactive", theme: "hsl(var(--destructive))" },
+  { label: "Expired", value: "expired", theme: "hsl(var(--destructive))" },
 ];
 
 export const maintainerStatusOptions: TOptions<string>[] = [

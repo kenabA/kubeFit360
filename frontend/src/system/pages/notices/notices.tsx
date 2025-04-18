@@ -34,7 +34,7 @@ export default function Notices() {
           Notices
         </Heading>
         <div className="bg-white rounded-xl shadow-general h-full overflow-hidden overflow-y-auto custom-scrollbar">
-          <div className="flex items-center justify-between sticky  top-0 bg-white p-[18px] pb-[9px]">
+          <div className="flex items-center justify-between sticky  top-0 bg-white p-[18px] pb-[9px] z-10">
             <TableSearch
               isPending={false}
               placeholder="Search by Notice Id or Notice Title"
@@ -52,7 +52,7 @@ export default function Notices() {
               )}
             </div>
           </div>
-          {notices ? (
+          {notices.length > 0 ? (
             <ExpandableCardDemo
               noticesData={notices}
               role={role}

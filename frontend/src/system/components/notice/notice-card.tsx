@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { TNoticeData } from "@/system/features/notices/type";
 import { useGetDayMonth } from "@/hooks/useGetDayMonth";
 import { cn } from "@/lib/utils";
+import warn from "@/assets/system/svg/warn.svg";
 
 export const CloseIcon = () => {
   return (
@@ -66,22 +67,35 @@ export default function NoticeCard({
             className="w-full max-w-[600px] flex flex-col bg-white sm:rounded-3xl overflow-hidden"
           >
             <motion.figure
-              className="size-full flex items-center justify-center relative"
-              layoutId={`image-${active.representativeImg}-${id}`}
+              className={cn(
+                "size-full flex items-center justify-center relative bg-slate-100 shadow-inner",
+                !active.representativeImg && "p-6"
+              )}
+              layoutId={`image-${active.title}-${id}`}
             >
-              <img
-                src={active.representativeImg}
-                alt={`${active.title}'s image representation`}
-                className="max-w-[300px] max-h-[300px] object-contain z-10 object-center
+              {active.representativeImg ? (
+                <>
+                  <img
+                    src={active.representativeImg}
+                    alt={`${active.title}'s image representation`}
+                    className="max-w-[300px] max-h-[300px] object-contain z-10 object-center
                 "
-              />
-              <img
-                alt="Image of the entity"
-                src={active.representativeImg}
-                className={cn(
-                  "absolute inset-0 w-full h-full object-cover scale-110 transition-opacity duration-300 filter blur-sm opacity-50"
-                )}
-              />
+                  />
+                  <img
+                    alt="Image of the entity"
+                    src={active.representativeImg}
+                    className={cn(
+                      "absolute inset-0 w-full h-full object-cover scale-110 transition-opacity duration-300 filter blur-sm opacity-50"
+                    )}
+                  />
+                </>
+              ) : (
+                <img
+                  className="mx-auto size-24"
+                  src={warn}
+                  alt=" An warning icon"
+                />
+              )}
             </motion.figure>
 
             <div className="bg-white flex flex-col h-fit max-h-[350px] overflow-y-auto custom-scrollbar">
@@ -102,7 +116,10 @@ export default function NoticeCard({
                       Admin
                     </Badge>
                   </div>
-                  <CountDown expiryDate={active.expiresAt} />
+                  <div className="flex items-center gap-2">
+                    <Badge variant={active.status}>{active.status}</Badge>
+                    <CountDown expiryDate={active.expiresAt} />
+                  </div>
                 </div>
                 <motion.h3
                   layoutId={`title-${active.title}-${id}`}

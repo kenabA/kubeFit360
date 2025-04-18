@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { TEditNoticeFormProps } from "./types";
 import apiEditNotice from "@/system/services/notices/apiEditNotice";
 
-function useEditNotice() {
+function useEditNotice({ selectedId }: { selectedId: string }) {
   const queryClient = useQueryClient();
   const { toast } = useToast();
   const {
@@ -20,9 +20,8 @@ function useEditNotice() {
       selectedId: string;
     }) => apiEditNotice(editNoticeDetails, selectedId),
     onSuccess: async () => {
-      await queryClient.invalidateQueries({
-        queryKey: ["notices"],
-      });
+      await queryClient.invalidateQueries({});
+
       toast({
         variant: "success",
         title: "Success",

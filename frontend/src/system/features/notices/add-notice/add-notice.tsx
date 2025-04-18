@@ -5,11 +5,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 import BaseImageInput from "@/system/components/input/base-image-input/BaseImageInput";
-import { handleFileChange } from "@/system/lib/helpers";
+import { handleFileChange, uploadImage } from "@/system/lib/helpers";
 import { useState } from "react";
 import { Oval } from "react-loader-spinner";
 import { TAddNoticeFormProps } from "./types";
 import { noticeSchema } from "./validator";
+import useAddNotice from "./useAddNotice";
 
 export default function AddNotice({
   isDialogOpen,
@@ -20,6 +21,8 @@ export default function AddNotice({
 }) {
   const [isPending, setIsPending] = useState<boolean>(false);
   const [localImage, setLocalImage] = useState<File | string | undefined>();
+
+  const { addNotice } = useAddNotice();
 
   const {
     register,
@@ -46,14 +49,14 @@ export default function AddNotice({
   async function onSubmit(data: TAddNoticeFormProps) {
     setIsPending(true);
     data = { ...data, expiresAt: new Date(data.expiresAt).toISOString() };
-    // if (localImage) {
-    //   const noticeImageUrl = await uploadImage(localImage as File);
-    //   setValue("representativeImg", noticeImageUrl);
-    //   data = { ...data, representativeImg: noticeImageUrl };
-    // }
-    // addEquipment(data);
-
-    console.log(data);
+    if (localImage) {
+      const noticeImageUrl = await uploadImage(localImage as File);
+      setValue("representativeImg", noticeImageUrl);
+      data = { ...data, representativeImg: noticeImageUrl };
+    }
+    await addNotice(data);
+    setIsPending(false);
+    setIsDialogOpen(false);
   }
 
   function handleCancel() {

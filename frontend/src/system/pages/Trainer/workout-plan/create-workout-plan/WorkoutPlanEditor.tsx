@@ -93,14 +93,14 @@ export default function WorkoutPlanEditor({
           Workout Plan
         </span>
         <div className="flex items-center gap-2 flex-wrap">
-          {/* <Button
+          <Button
             className="shadow-none hover:shadow-none h-10 w-fit sm:w-44 border-[1px] border-primary hover:text-primary-hover hover:border-primary-hover bg-tertiary text-primary-hover font-semibold text-sm"
             variant={"outline"}
             disabled={isPending}
           >
             <Icon icon={"mingcute:ai-fill"} />
             Generate with AI
-          </Button> */}
+          </Button>
           <Button
             onClick={handleSendtoClient}
             disabled={isPending}

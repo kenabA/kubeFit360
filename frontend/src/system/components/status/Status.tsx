@@ -43,6 +43,11 @@ export default function Status({
       secondaryColor = "hsl(var(--destructive-light))";
       statusText = "rejected";
       break;
+    case "expired":
+      primaryColor = "hsl(var(--destructive))";
+      secondaryColor = "hsl(var(--destructive-light))";
+      statusText = "rejected";
+      break;
     case "pending":
       statusText = "pending";
       primaryColor = "hsl(var(--primary))";

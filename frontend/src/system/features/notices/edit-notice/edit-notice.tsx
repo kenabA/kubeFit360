@@ -1,6 +1,7 @@
 import { Button } from "@/components";
 import { FormModal } from "@/components/formModal/FormModal";
 import BaseInput from "@/system/components/input/base-input/BaseInput";
+import { useQueryClient } from "@tanstack/react-query";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
@@ -13,6 +14,7 @@ import { noticeSchema } from "./validator";
 import { TEditNoticeFormProps } from "./types";
 import useGetNotice from "../useGetNotice";
 import useEditNotice from "./useEditNotice";
+import { ThemedDialog } from "@/components/dialog/Dialog";
 
 export default function EditNotice({
   selectedId,
@@ -25,18 +27,30 @@ export default function EditNotice({
 }) {
   const [isPending, setIsPending] = useState<boolean>(false);
   const [localImage, setLocalImage] = useState<File | string | undefined>();
+  const [openDelete, setOpenDelete] = useState<boolean>(false);
 
   const {
     register,
     reset,
     handleSubmit,
     setValue,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm<TEditNoticeFormProps>({
     resolver: zodResolver(noticeSchema),
   });
 
-  const { editNotice, isSuccess } = useEditNotice();
+  const { editNotice, isSuccess } = useEditNotice({ selectedId: selectedId });
+
+  async function handleRemoveProfilePicture() {
+    if (!noticeData) return;
+    await editNotice({
+      editNoticeDetails: { removeImage: true } as TEditNoticeFormProps,
+      selectedId: selectedId,
+    });
+    setOpenDelete(false);
+    setIsDialogOpen(false);
+    setValue("representativeImg", undefined, { shouldDirty: true });
+  }
 
   const handleLocalFileChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -54,6 +68,17 @@ export default function EditNotice({
     enabled: true,
   });
 
+  function handleRemove() {
+    if (typeof localImage !== "string") {
+      setLocalImage(noticeData?.representativeImg);
+      setValue("representativeImg", noticeData?.representativeImg, {
+        shouldDirty: true,
+      });
+    } else {
+      setOpenDelete(true);
+    }
+  }
+
   async function onSubmit(data: TEditNoticeFormProps) {
     setIsPending(true);
     data = { ...data, expiresAt: new Date(data.expiresAt).toISOString() };
@@ -65,29 +90,39 @@ export default function EditNotice({
     await editNotice({ editNoticeDetails: data, selectedId: selectedId });
     setIsDialogOpen(false);
     setIsPending(false);
+    setLocalImage(undefined);
   }
 
   useEffect(() => {
     if (!noticeData) return;
-    reset({
-      title: noticeData?.title,
-      description: noticeData?.description,
-      expiresAt: noticeData?.expiresAt.slice(0, 10),
-      representativeImg: noticeData.representativeImg,
-    });
 
+    // Set image first
     if (noticeData.representativeImg) {
       setLocalImage(noticeData.representativeImg);
     } else {
       setLocalImage(undefined);
     }
+
+    // Then reset form values
+    reset({
+      title: noticeData.title,
+      description: noticeData.description,
+      expiresAt: noticeData.expiresAt?.slice(0, 10),
+      representativeImg: noticeData.representativeImg,
+    });
   }, [reset, noticeData]);
 
   function handleCancel() {
     setIsDialogOpen(false);
-    setLocalImage(undefined);
+    setLocalImage(noticeData?.representativeImg ?? undefined);
     reset();
   }
+
+  // function handleCancel() {
+  //   setIsDialogOpen(false);
+  //   setLocalImage(noticeData?.representativeImg);
+  //   reset();
+  // }
 
   return (
     <FormModal
@@ -118,7 +153,7 @@ export default function EditNotice({
             }}
             className="px-6 shadow-none hover:shadow-none h-10 w-34"
             variant={"primary"}
-            disabled={isPending}
+            disabled={isPending || !isDirty}
           >
             {isPending ? (
               <Oval
@@ -167,7 +202,7 @@ export default function EditNotice({
         <BaseImageInput
           isSettings={true}
           handleFileChange={handleLocalFileChange}
-          handleRemove={() => alert(12)}
+          handleRemove={handleRemove}
           localImage={localImage}
           setLocalImage={setLocalImage}
           error={errors.representativeImg}
@@ -176,6 +211,16 @@ export default function EditNotice({
           type="file"
         />
       </form>
+      <ThemedDialog
+        isPending={false}
+        dialogOpen={openDelete}
+        setDialogOpen={setOpenDelete}
+        mutationFn={handleRemoveProfilePicture}
+        theme="destructive"
+        ctaText="Remove"
+        title="Remove Photo"
+        message="Do you really want to remove the current photo?"
+      />
     </FormModal>
   );
 }

@@ -11,7 +11,7 @@ type TGetNotice = {
 function useGetNotice({ selectedId, enabled = true }: TGetNotice) {
   const { isPending, data, error } = useQuery<TNoticeData, AxiosError>({
     queryFn: () => apiGetNotice(selectedId),
-    queryKey: ["notice", selectedId],
+    queryKey: ["notices", selectedId],
     enabled: enabled && !!selectedId,
   });
 
