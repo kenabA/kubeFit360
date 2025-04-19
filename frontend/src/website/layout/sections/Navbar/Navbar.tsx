@@ -71,7 +71,7 @@ export default function Navbar() {
           Sign Up
         </Button>
       </div>
-      <NavbarMenu />
+      <NavbarMenu items={navItems} />
     </motion.header>
   );
 }

@@ -1,10 +1,19 @@
 import { Route, Routes } from "react-router";
 
+import { lazy, Suspense } from "react";
+
+const LandingPage = lazy(
+  () => import("@/website/pages/LandingPage/LandingPage")
+);
+const About = lazy(() => import("@/website/pages/About/About"));
+const SuccessStories = lazy(
+  () => import("@/website/layout/sections/SuccessStories/SuccessStories")
+);
+const Membership = lazy(
+  () => import("@/website/layout/sections/Membership/Membership")
+);
+
 import WebsiteLayout from "@/layout/WebsiteLayout";
-import LandingPage from "@/website/pages/LandingPage/LandingPage";
-import About from "@/website/pages/About/About";
-import Membership from "@/website/layout/sections/Membership/Membership";
-import SuccessStories from "@/website/layout/sections/SuccessStories/SuccessStories";
 
 import Login from "@/system/pages/Login/Login";
 import Signup from "@/system/pages/SignUp/SignUp";
@@ -35,6 +44,8 @@ import Settings from "./system/pages/settings/Settings";
 import { useQueryClient } from "@tanstack/react-query";
 import MemberDashboard from "./system/pages/Member/dashboard/dashboard";
 import Notices from "./system/pages/notices/notices";
+import { Oval } from "react-loader-spinner";
+import Spinner from "./system/components/spinner/Spinner";
 
 export default function App() {
   const queryClient = useQueryClient();
@@ -51,7 +62,15 @@ export default function App() {
     <React.Fragment>
       <ScrollToTop />
       <Routes>
-        <Route path="/" element={<WebsiteLayout />}>
+        {/* ======= WEBSITE ROUTES ======= */}
+        <Route
+          path="/"
+          element={
+            <Suspense fallback={<Spinner />}>
+              <WebsiteLayout />
+            </Suspense>
+          }
+        >
           <Route index element={<LandingPage />} />
           <Route path={ROUTES.ABOUT} element={<About />} />
           <Route path={ROUTES.TESTIMONIAL} element={<SuccessStories />} />
