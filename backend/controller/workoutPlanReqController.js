@@ -27,15 +27,22 @@ exports.deleteAllWorkoutPlanRequests = catchAsync(async (req, res, next) => {
 
 exports.getAllWorkoutPlanRequests = catchAsync(async (req, res, next) => {
   const queryWithFilter = new APIFeatures(
-    WorkoutPlanRequests.find().populate('member').populate('trainer'),
+    WorkoutPlanRequests.find(),
     req.query,
+    {
+      includeUserFields: true,
+      userFields: ['member', 'trainer'],
+    },
   ).filter();
 
   const count = await WorkoutPlanRequests.countDocuments(queryWithFilter.query);
 
   const finalQuery = queryWithFilter.paginate().query;
 
-  const workoutPlanRequests = await finalQuery.sort('-createdAt');
+  const workoutPlanRequests = await finalQuery
+    .populate('member')
+    .populate('trainer')
+    .sort('-createdAt');
 
   res
     .status(200)

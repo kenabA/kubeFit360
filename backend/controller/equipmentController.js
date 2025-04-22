@@ -48,6 +48,10 @@ exports.updateEquipment = catchAsync(async (req, res, next) => {
     return next(new AppError('No equipment found with that id', 404));
   }
 
+  if (req.body.removeImage) {
+    req.body.equipmentImage = '';
+  }
+
   const updatedEquipment = await Equipment.findOneAndUpdate(
     { _id: req.params.id },
     req.body,

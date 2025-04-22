@@ -16,10 +16,15 @@ router.use(protect);
 router
   .route('/')
   .post(restrictTo('trainer'), createWorkoutPlan)
-  .get(getAllWorkoutPlan)
-  .delete(deleteAllWorkoutPlan);
-router.use(restrictTo('admin', 'trainer', 'member'));
-router.route('/:id').get(getWorkoutPlan).delete(deleteWorkoutPlan);
-router.route('/member/:id').get(getWorkoutPlanByMemberId);
+  .get(restrictTo('trainer', 'admin'), getAllWorkoutPlan)
+  .delete(restrictTo('trainer', 'admin'), deleteAllWorkoutPlan);
+
+router
+  .route('/:id')
+  .get(restrictTo('admin', 'trainer', 'member'), getWorkoutPlan)
+  .delete(restrictTo('admin', 'trainer'), deleteWorkoutPlan);
+router
+  .route('/member/:id')
+  .get(restrictTo('admin', 'trainer', 'member'), getWorkoutPlanByMemberId);
 
 module.exports = router;

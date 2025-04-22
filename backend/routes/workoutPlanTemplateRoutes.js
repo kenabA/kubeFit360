@@ -15,7 +15,7 @@ router.use(restrictTo('admin', 'trainer'));
 router
   .route('/')
   .get(getAllWorkoutPlanTemplates)
-  .post(restrictTo('trainer'), createWorkoutPlanTemplate)
+  .post(createWorkoutPlanTemplate)
   .delete(deleteAllWorkoutPlanTemplate);
 
 router.route('/:id').delete(deleteWorkoutPlanTemplate);

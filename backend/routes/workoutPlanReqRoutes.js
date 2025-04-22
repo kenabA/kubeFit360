@@ -13,9 +13,7 @@ const {
 const router = express.Router();
 
 router.use(protect);
-router
-  .route('/')
-  .post(restrictTo('member', 'trainer'), createWorkoutPlanRequests);
+router.route('/').post(restrictTo('member'), createWorkoutPlanRequests);
 router.use(restrictTo('admin', 'trainer'));
 router
   .route('/')

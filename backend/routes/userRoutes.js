@@ -24,16 +24,17 @@ router.get('/me', getMe, getUser);
 router.patch('/updateMe', updateMe);
 router.patch('/updatePassword', updatePassword);
 
-router.route('/').get(getAllUsers).post(addUser);
+router
+  .route('/')
+  .get(restrictTo('admin'), getAllUsers)
+  .post(restrictTo('admin'), addUser);
 router.route('/user-stats').get(restrictTo('admin'), getClientStats);
 
-router
-  .route('/maintainers')
-  .get(restrictTo('admin'), getUsersByRole('maintainer'));
+router.use(restrictTo('admin'));
 
-router
-  .route('/trainers')
-  .get(restrictTo('admin', 'member'), getUsersByRole('trainer'));
+router.route('/maintainers').get(getUsersByRole('maintainer'));
+
+router.route('/trainers').get(getUsersByRole('trainer'));
 
 router.route('/:id').get(getUser).patch(updateUser).delete(deleteUser);
 
