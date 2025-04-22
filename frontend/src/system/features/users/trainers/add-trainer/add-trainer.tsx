@@ -5,83 +5,51 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 
 import BaseInput from "@/system/components/input/base-input/BaseInput";
-
 import { useEffect, useState } from "react";
-
-import { genderOptions, trainerStatusOptions } from "@/system/lib/data";
 
 import { Oval } from "react-loader-spinner";
 import BaseImageInput from "@/system/components/input/base-image-input/BaseImageInput";
 import { handleFileChange, uploadImage } from "@/system/lib/helpers";
+
+import { genderOptions } from "@/system/lib/data";
 import FormSelect from "@/system/components/select/form-select/FormSelect";
-import useEditUser from "../../useEditUser";
-import { useSearchParams } from "react-router";
-import { useQueryClient } from "@tanstack/react-query";
-import { TUserDetails } from "@/system/stores/user/types";
-import { TApiResponse } from "@/system/lib/types";
-import { ThemedDialog } from "@/components/dialog/Dialog";
-import { TEditTrainerFormProps, TEditTrainerProps } from "./type";
+import useAddUser from "../../useAddUser";
+import { TAddTrainerFormProps, TAddTrainerProps } from "./type";
 import { trainerSchema } from "./validator";
 
-export default function EditTrainer({
-  selectedId,
+export default function AddTrainer({
   isDialogOpen,
   setIsDialogOpen,
-}: TEditTrainerProps) {
+}: TAddTrainerProps) {
   const [localImage, setLocalImage] = useState<File | string | undefined>();
   const [isPending, setIsPending] = useState<boolean>(false);
-  const [searchParams] = useSearchParams();
-  const filters = Object.fromEntries(searchParams.entries());
-  const queryClient = useQueryClient();
-  const [openDelete, setOpenDelete] = useState<boolean>(false);
-
-  const allTrainers = queryClient.getQueryData<TApiResponse<TUserDetails[]>>([
-    "trainers",
-    filters,
-  ]);
-
-  const trainer = allTrainers?.data.data?.find((e) => e._id === selectedId);
-
-  const { editUser, isSuccess, error } = useEditUser("trainers");
-
   const {
     register,
-    setValue,
     control,
     reset,
     handleSubmit,
-    formState: { errors, isDirty },
-  } = useForm<TEditTrainerFormProps>({
+    setValue,
+    formState: { errors },
+  } = useForm<TAddTrainerFormProps>({
+    // TODO : The default password will be the role and after adding user, a mail should go stating that the default password is 'trainer' suggesting user to change it
+    defaultValues: {
+      role: "trainer",
+      password: "asdasdasd",
+      passwordConfirm: "asdasdasd",
+    },
     resolver: zodResolver(trainerSchema),
   });
+
+  const { isSuccess, addUser, error } = useAddUser("trainers");
 
   useEffect(() => {
     if (isSuccess) {
       setIsPending(false);
       setIsDialogOpen(false);
+      setLocalImage(undefined);
+      reset();
     }
   }, [isSuccess]);
-
-  useEffect(() => {
-    if (!trainer) return;
-    reset({
-      name: trainer?.name,
-      address: trainer?.address,
-      birthDate: trainer?.birthDate.slice(0, 10),
-      email: trainer?.email,
-
-      gender: trainer?.gender,
-      userImage: trainer?.userImage,
-      status: trainer?.status,
-      phoneNumber: String(trainer?.phoneNumber),
-    });
-
-    if (trainer.userImage) {
-      setLocalImage(trainer.userImage);
-    } else {
-      setLocalImage(undefined);
-    }
-  }, [reset, trainer]);
 
   useEffect(() => {
     if (error) {
@@ -89,21 +57,20 @@ export default function EditTrainer({
     }
   }, [error]);
 
-  async function onSubmit(data: TEditTrainerFormProps) {
+  async function onSubmit(data: TAddTrainerFormProps) {
     setIsPending(true);
     if (localImage) {
-      // TODO : Replace the current image with the new one
-      const trainerImageUrl = await uploadImage(localImage as File);
-      setValue("userImage", trainerImageUrl, { shouldDirty: true });
-      data = { ...data, userImage: trainerImageUrl };
+      const maintainerImageUrl = await uploadImage(localImage as File);
+      setValue("userImage", maintainerImageUrl);
+      data = { ...data, userImage: maintainerImageUrl };
     }
-    await editUser({ editUserDetails: data, selectedId });
+    addUser(data);
   }
 
   const handleLocalFileChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    handleFileChange<TEditTrainerFormProps>(
+    handleFileChange<TAddTrainerFormProps>(
       "userImage",
       event,
       setLocalImage,
@@ -113,45 +80,22 @@ export default function EditTrainer({
 
   function handleCancel() {
     setIsDialogOpen(false);
-    setLocalImage(trainer?.userImage);
+    setLocalImage(undefined);
     reset();
-  }
-
-  function handleRemove() {
-    if (typeof localImage !== "string") {
-      setLocalImage(trainer?.userImage);
-      setValue("userImage", trainer?.userImage, {
-        shouldDirty: true,
-      });
-    } else {
-      // TODO : Handle Remove of the trainer
-      setOpenDelete(true);
-    }
-  }
-
-  async function handleRemoveProfilePicture() {
-    if (!trainer) return;
-    await editUser({
-      editUserDetails: { removeImage: true } as TEditTrainerFormProps,
-      selectedId: selectedId,
-    });
-    setOpenDelete(false);
-    setIsDialogOpen(false);
-    setValue("userImage", undefined, { shouldDirty: true });
   }
 
   return (
     <FormModal
-      icon="gravity-ui:person-worker"
-      title="Edit Trainer"
-      subtitle="Modify and Update Trainer Details"
+      icon="mdi:teach-poll"
+      title="Add Trainer"
+      subtitle="Fill in the form to add a trainer"
       open={isDialogOpen}
       setOpen={setIsDialogOpen}
       footer={
         <>
           <Button
             disabled={isPending}
-            className="shadow-none hover:shadow-none"
+            className="shadow-none hover:shadow-none h-10"
             variant={"primaryReverse"}
             onClick={handleCancel}
           >
@@ -163,7 +107,7 @@ export default function EditTrainer({
             onClick={handleSubmit(onSubmit)}
             className="px-6 shadow-none hover:shadow-none h-10 w-20"
             variant={"primary"}
-            disabled={isPending || !isDirty}
+            disabled={isPending}
           >
             {isPending ? (
               <Oval
@@ -175,7 +119,7 @@ export default function EditTrainer({
                 wrapperStyle={{}}
               />
             ) : (
-              "Save"
+              "Add"
             )}
           </Button>
         </>
@@ -216,9 +160,9 @@ export default function EditTrainer({
             error={errors.birthDate}
             label="Date of Birth"
             name="birthDate"
+            type="date"
             placeholder="Enter date of birth"
             register={register}
-            type="date"
           />
         </div>
         <div className="flex gap-4 items-start w-full">
@@ -246,24 +190,9 @@ export default function EditTrainer({
             />
           </div>
         </div>
-        <div className="w-full">
-          <Controller
-            name="status"
-            control={control}
-            render={({ field }) => (
-              <FormSelect
-                error={errors.status}
-                label={field.name}
-                field={field}
-                options={trainerStatusOptions}
-                placeholder="Select a status"
-              />
-            )}
-          />
-        </div>
         <BaseImageInput
           handleFileChange={handleLocalFileChange}
-          handleRemove={handleRemove}
+          handleRemove={() => setLocalImage(undefined)}
           localImage={localImage}
           setLocalImage={setLocalImage}
           error={errors.userImage}
@@ -272,16 +201,6 @@ export default function EditTrainer({
           type="file"
         />
       </form>
-      <ThemedDialog
-        isPending={false}
-        dialogOpen={openDelete}
-        setDialogOpen={setOpenDelete}
-        mutationFn={handleRemoveProfilePicture}
-        theme="destructive"
-        ctaText="Remove"
-        title="Remove Photo"
-        message="Do you really want to remove the current photo?"
-      />
     </FormModal>
   );
 }

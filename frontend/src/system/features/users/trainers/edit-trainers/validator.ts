@@ -1,17 +1,20 @@
 import z from "zod";
 
 export const trainerSchema = z.object({
-  _id: z.string(),
-  name: z.string().nonempty("Please specify trainer's name"),
-  email: z.string().nonempty("Please provide trainer's email"),
+  _id: z.string().optional(),
+  name: z.string().nonempty("Trainer's name is required."),
+  email: z.string().email("A valid email address is required."),
   phoneNumber: z
     .string()
-    .regex(/^(?:98[0-9]{8}|97[0-9]{8}|96[0-9]{8})$/, "Invalid phone number."),
-  birthDate: z.string().nonempty("Please mention trainer's DOB"),
-  gender: z.string().nonempty("Please specify trainer's gender"),
-  status: z.string().nonempty("Please provide a valid status"),
-  address: z.string().nonempty("Please specify trainer's address"),
+    .regex(
+      /^(?:98[0-9]{8}|97[0-9]{8}|96[0-9]{8})$/,
+      "Please provide a valid phone number."
+    ),
+  birthDate: z.string(),
+  gender: z.string().nonempty("Trainer's gender is required."),
+  status: z.string().nonempty("A valid status is required."),
+  address: z.string().nonempty("Trainer's address is required."),
   userImage: z.string().optional(),
   removeImage: z.boolean().optional(),
-  createdAt: z.string(),
+  createdAt: z.string().optional(),
 });

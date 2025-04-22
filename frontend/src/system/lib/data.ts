@@ -16,6 +16,7 @@ export type TOptions<T> = {
 export type TFilterFields = {
   equipments: TEntity;
   maintainers: TEntity;
+  trainers: TEntity;
   notices: TEntity;
   workoutPlanRequests: TEntity;
 };
@@ -96,6 +97,13 @@ export const filterFields: TFilterFields = {
     name: "maintainers",
     fields: [
       { label: "status", options: maintainerStatusOptions },
+      { label: "gender", options: genderOptions },
+    ],
+  },
+  trainers: {
+    name: "trainers",
+    fields: [
+      { label: "status", options: trainerStatusOptions },
       { label: "gender", options: genderOptions },
     ],
   },

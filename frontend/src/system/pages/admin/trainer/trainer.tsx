@@ -1,25 +1,24 @@
 import { Button } from "@/components";
+import { ThemedDialog } from "@/components/dialog/Dialog";
 import { Heading } from "@/components/heading/Heading";
+import Filter from "@/system/components/filter/Filter";
+import TableSearch from "@/system/components/table-search/TableSearch";
 import GeneralTable from "@/system/components/tables/general-table/GeneralTable";
 
+import AddTrainer from "@/system/features/users/trainers/add-trainer/add-trainer";
+import ColumnDefinition from "@/system/features/users/trainers/ColumnDefinition";
+import EditTrainer from "@/system/features/users/trainers/edit-trainers/EditTrainer";
+
+import useTrainers from "@/system/features/users/trainers/useTrainer";
+
+import useDeleteUser from "@/system/features/users/useDeleteUser";
+import ViewUser from "@/system/features/users/view-user/view-user";
+import { filterFields } from "@/system/lib/data";
+import { TUserDetails } from "@/system/stores/user/types";
 import { Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 
-import { ThemedDialog } from "@/components/dialog/Dialog";
-import Filter from "@/system/components/filter/Filter";
-import { filterFields } from "@/system/lib/data";
-
-import TableSearch from "@/system/components/table-search/TableSearch";
-
-import useMaintainers from "@/system/features/users/maintainers/useMaintainers";
-import ColumnDefinition from "@/system/features/users/maintainers/ColumnDefinition";
-import { TUserDetails } from "@/system/stores/user/types";
-import AddMaintainer from "@/system/features/users/maintainers/add-maintainers/AddMaintainers";
-import EditMaintainer from "@/system/features/users/maintainers/edit-maintainers/EditMaintainer";
-import useDeleteUser from "@/system/features/users/useDeleteUser";
-import ViewUser from "@/system/features/users/view-user/view-user";
-
-export default function Maintainer() {
+export default function Trainer() {
   const [openView, setOpenView] = useState<boolean>(false);
   const [openAdd, setOpenAdd] = useState<boolean>(false);
   const [openEdit, setOpenEdit] = useState<boolean>(false);
@@ -29,17 +28,13 @@ export default function Maintainer() {
   const {
     data: { data: maintainers, count },
     isPending,
-  } = useMaintainers();
+  } = useTrainers();
 
   const {
     deleteUser,
     isSuccess: isDeleteSuccess,
     isPending: isDeletePending,
-  } = useDeleteUser({ role: "maintainers" });
-
-  function handleOpenAdd() {
-    setOpenAdd(true);
-  }
+  } = useDeleteUser({ role: "trainers" });
 
   useEffect(() => {
     if (isDeleteSuccess) {
@@ -52,24 +47,22 @@ export default function Maintainer() {
     <section className="rounded-tl-xl h-[calc(100dvh-60px)] overflow-hidden">
       <div className="py-7 px-6 flex-1 flex flex-col gap-4 h-full">
         <Heading level={4} variant={"quaternary"}>
-          Maintainers
+          Trainers
         </Heading>
         <div className="bg-white rounded-xl shadow-general overflow-hidden h-full">
-          {/* Header Section with Search and Actions */}
           <div className="flex shadow-elevation items-center justify-between sticky top-0 bg-white p-[18px] z-[1]">
-            {/* Search Input */}
             <TableSearch
               isPending={isPending}
               placeholder="Search by Name, or Email"
             />
             <div className="flex items-center gap-4">
-              <Filter entity={filterFields.maintainers} />
+              <Filter entity={filterFields.trainers} />
               <Button
                 variant={"primary"}
                 className="font-medium"
-                onClick={handleOpenAdd}
+                onClick={() => setOpenAdd(true)}
               >
-                <Plus className="stroke-[3px]" /> Add Maintainer
+                <Plus className="stroke-[3px]" /> Add Trainer
               </Button>
             </div>
           </div>
@@ -95,13 +88,12 @@ export default function Maintainer() {
         setIsDialogOpen={setOpenView}
         setOpenEdit={setOpenEdit}
       />
-      <AddMaintainer isDialogOpen={openAdd} setIsDialogOpen={setOpenAdd} />
-
-      <EditMaintainer
+      <EditTrainer
         selectedId={selectedIds}
         isDialogOpen={openEdit}
         setIsDialogOpen={setOpenEdit}
       />
+      <AddTrainer isDialogOpen={openAdd} setIsDialogOpen={setOpenAdd} />
       <ThemedDialog
         isPending={isDeletePending}
         dialogOpen={openDelete}
@@ -109,8 +101,8 @@ export default function Maintainer() {
         mutationFn={() => deleteUser(selectedIds)}
         theme="destructive"
         ctaText="Delete"
-        title="Delete Maintainer"
-        message="Do you really want to delete this maintainer?"
+        title="Delete Trainer"
+        message="Do you really want to delete this trainer?"
       />
     </section>
   );

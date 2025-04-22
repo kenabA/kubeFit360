@@ -8,6 +8,7 @@ import { ROUTES } from "@/config/appRoutes";
 import ProtectedRoute from "@/system/features/authentication/ProtectedRoute";
 import { useQueryClient } from "@tanstack/react-query";
 import Spinner from "./system/components/spinner/Spinner";
+import Trainer from "./system/pages/admin/trainer/trainer";
 
 // ✅ Website Pages (lazy)
 const LandingPage = lazy(
@@ -131,6 +132,7 @@ export default function App() {
             }
           />
         </Route>
+
         <Route element={<LoginLayout />}>
           <Route path={ROUTES.LOGIN} element={<Login />} />
           <Route path={ROUTES.FORGOT_PASSWORD} element={<ForgotPassword />} />
@@ -172,6 +174,9 @@ export default function App() {
 
           <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
             <Route path={ROUTES.MAINTAINERS} element={<Maintainer />} />
+          </Route>
+          <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
+            <Route path={ROUTES.TRAINERS} element={<Trainer />} />
           </Route>
           <Route element={<ProtectedRoute allowedRoles={["member"]} />}>
             <Route
