@@ -1,7 +1,15 @@
+// Core React + Routing
+import React, { lazy, Suspense, useEffect } from "react";
 import { Route, Routes } from "react-router";
 
-import { lazy, Suspense } from "react";
+// Hook and utilities (keep normal)
+import ScrollToTop from "@/hooks/useScrollToTop";
+import { ROUTES } from "@/config/appRoutes";
+import ProtectedRoute from "@/system/features/authentication/ProtectedRoute";
+import { useQueryClient } from "@tanstack/react-query";
+import Spinner from "./system/components/spinner/Spinner";
 
+// ✅ Website Pages (lazy)
 const LandingPage = lazy(
   () => import("@/website/pages/LandingPage/LandingPage")
 );
@@ -13,46 +21,79 @@ const Membership = lazy(
   () => import("@/website/layout/sections/Membership/Membership")
 );
 
-import WebsiteLayout from "@/layout/WebsiteLayout";
+// ✅ Layouts (lazy)
+const WebsiteLayout = lazy(() => import("@/layout/WebsiteLayout"));
+const LoginLayout = lazy(() => import("./layout/auth/LoginLayout"));
+const SignupLayout = lazy(() => import("@/layout/auth/SignupLayout"));
+const SystemLayout = lazy(() => import("./layout/SystemLayout"));
 
-import Login from "@/system/pages/Login/Login";
-import Signup from "@/system/pages/SignUp/SignUp";
-import ForgotPassword from "@/system/pages/forgot-password/ForgotPassword";
-import ResetPassword from "@/system/pages/ResetPassword/ResetPassword";
+// ✅ Auth Pages (lazy)
+const Login = lazy(() => import("@/system/pages/Login/Login"));
+const Signup = lazy(() => import("@/system/pages/SignUp/SignUp"));
+const ForgotPassword = lazy(
+  () => import("@/system/pages/forgot-password/ForgotPassword")
+);
+const ResetPassword = lazy(
+  () => import("@/system/pages/ResetPassword/ResetPassword")
+);
+const PasswordChanged = lazy(
+  () => import("@/system/pages/ResetPassword/PasswordChanged")
+);
 
-import ScrollToTop from "@/hooks/useScrollToTop";
-import LoginLayout from "./layout/auth/LoginLayout";
-import SignupLayout from "@/layout/auth/SignupLayout";
-import PasswordChanged from "@/system/pages/ResetPassword/PasswordChanged";
-import { ROUTES } from "@/config/appRoutes";
+// ✅ Admin Pages (lazy)
+const AdminDashboard = lazy(
+  () => import("./system/pages/admin/Dashboard/Dashboard")
+);
+const Maintainer = lazy(
+  () => import("./system/pages/admin/Maintainer/Maintainer")
+);
 
-import ProtectedRoute from "@/system/features/authentication/ProtectedRoute";
-import React, { useEffect } from "react";
-import SystemLayout from "./layout/SystemLayout";
+// ✅ Maintainer Pages (lazy)
+const MaintainerDashboard = lazy(
+  () => import("./system/pages/Maintainer/Dashboard/Dashboard")
+);
+const Equipments = lazy(
+  () => import("./system/pages/Maintainer/Equipments/Equipments")
+);
 
-import AdminDashboard from "./system/pages/admin/Dashboard/Dashboard";
-import Equipments from "./system/pages/Maintainer/Equipments/Equipments";
-import MaintainerDashboard from "./system/pages/Maintainer/Dashboard/Dashboard";
-import Maintainer from "./system/pages/admin/Maintainer/Maintainer";
-import Unauthorized from "./components/unauthorized/Unauthorized";
-import PageNotFound from "./components/page-not-found/PageNotFound";
-import TrainerDashboard from "./system/pages/Trainer/Dashboard/Dashboard";
-import WorkoutPlanRequests from "./system/pages/Trainer/workout-plan-requests/WorkoutPlanRequests";
-import CreateWorkoutPlan from "./system/pages/Trainer/workout-plan/create-workout-plan/CreateWorkoutPlan";
-import ClientWorkoutPlan from "./system/pages/Member/client-workout-plan/client-workout-plan";
-import Settings from "./system/pages/settings/Settings";
-import { useQueryClient } from "@tanstack/react-query";
-import MemberDashboard from "./system/pages/Member/dashboard/dashboard";
-import Notices from "./system/pages/notices/notices";
-import { Oval } from "react-loader-spinner";
-import Spinner from "./system/components/spinner/Spinner";
+// ✅ Trainer Pages (lazy)
+const TrainerDashboard = lazy(
+  () => import("./system/pages/Trainer/Dashboard/Dashboard")
+);
+const WorkoutPlanRequests = lazy(
+  () =>
+    import("./system/pages/Trainer/workout-plan-requests/WorkoutPlanRequests")
+);
+const CreateWorkoutPlan = lazy(
+  () =>
+    import(
+      "./system/pages/Trainer/workout-plan/create-workout-plan/CreateWorkoutPlan"
+    )
+);
+
+// ✅ Member Pages (lazy)
+const MemberDashboard = lazy(
+  () => import("./system/pages/Member/dashboard/dashboard")
+);
+const ClientWorkoutPlan = lazy(
+  () => import("./system/pages/Member/client-workout-plan/client-workout-plan")
+);
+
+// ✅ Shared Pages (lazy)
+const Settings = lazy(() => import("./system/pages/settings/Settings"));
+const Notices = lazy(() => import("./system/pages/notices/notices"));
+const Unauthorized = lazy(
+  () => import("./components/unauthorized/Unauthorized")
+);
+const PageNotFound = lazy(
+  () => import("./components/page-not-found/PageNotFound")
+);
 
 export default function App() {
   const queryClient = useQueryClient();
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
-
     if (storedUser) {
       queryClient.setQueryData(["user"], JSON.parse(storedUser));
     }
@@ -73,8 +114,22 @@ export default function App() {
         >
           <Route index element={<LandingPage />} />
           <Route path={ROUTES.ABOUT} element={<About />} />
-          <Route path={ROUTES.TESTIMONIAL} element={<SuccessStories />} />
-          <Route path={ROUTES.MEMBERSHIP} element={<Membership />} />
+          <Route
+            path={ROUTES.TESTIMONIAL}
+            element={
+              <Suspense fallback={<Spinner />}>
+                <SuccessStories />
+              </Suspense>
+            }
+          />
+          <Route
+            path={ROUTES.MEMBERSHIP}
+            element={
+              <Suspense fallback={<Spinner />}>
+                <Membership />
+              </Suspense>
+            }
+          />
         </Route>
         <Route element={<LoginLayout />}>
           <Route path={ROUTES.LOGIN} element={<Login />} />

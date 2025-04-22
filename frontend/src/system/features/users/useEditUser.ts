@@ -3,9 +3,12 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { TEditMaintainerFormProps } from "./maintainers/edit-maintainers/type";
 import apiEditUser from "@/system/services/users/apiEditUser";
+import useAuthUser from "react-auth-kit/hooks/useAuthUser";
+import { TUserDetails } from "@/system/stores/user/types";
 
 function useEditUser(role: string) {
   const queryClient = useQueryClient();
+  const auth = useAuthUser<TUserDetails>();
   const { toast } = useToast();
   const {
     mutate: editUser,
@@ -22,8 +25,10 @@ function useEditUser(role: string) {
     }) => apiEditUser(editUserDetails, selectedId),
     onSuccess: async (data) => {
       queryClient.invalidateQueries({});
-      queryClient.setQueryData(["user"], data.data.data);
-      localStorage.setItem("user", JSON.stringify(data.data.data));
+      if (auth?.role !== "admin") {
+        queryClient.setQueryData(["user"], data.data.data);
+        localStorage.setItem("user", JSON.stringify(data.data.data));
+      }
       toast({
         variant: "success",
         title: "Success",

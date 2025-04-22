@@ -80,9 +80,45 @@ export default function ColumnDefinition(
       header: "Assigned To",
       cell: ({ row }) => (
         <span>
-          {row.original.trainer._id === user?._id
-            ? "You"
-            : row.original.trainer.name || "--"}
+          {row.original.trainer._id === user?._id ? (
+            <span className="text-gray flex items-center gap-3">
+              <figure className="size-[30px] rounded-full border-[1px] border-primary bg-secondary overflow-hidden shadow-button ">
+                {row.original.trainer.userImage ? (
+                  <img
+                    className="size-full object-cover object-center"
+                    src={row.original.trainer.userImage}
+                    alt="An icon of the maintainer"
+                  />
+                ) : (
+                  <>
+                    <div className="bg-tertiary size-full text-primary font-bold text-sm text-center items-center justify-center flex">
+                      {row.original.trainer.name.split(" ")[0][0] || "--"}
+                    </div>
+                  </>
+                )}
+              </figure>
+              <span className="font-bold text-gray-secondary">You</span>
+            </span>
+          ) : (
+            <span className="text-gray flex items-center gap-3">
+              <figure className="size-[30px] rounded-full border-[1px] border-primary bg-secondary overflow-hidden shadow-button ">
+                {row.original.trainer.userImage ? (
+                  <img
+                    className="size-full object-cover object-center"
+                    src={row.original.trainer.userImage}
+                    alt="An icon of the maintainer"
+                  />
+                ) : (
+                  <>
+                    <div className="bg-tertiary size-full text-primary font-bold text-sm text-center items-center justify-center flex">
+                      {row.original.trainer.name.split(" ")[0][0] || "--"}
+                    </div>
+                  </>
+                )}
+              </figure>
+              {row.original.trainer.name || "--"}
+            </span>
+          )}
         </span>
       ),
     },
@@ -122,7 +158,6 @@ export default function ColumnDefinition(
                 View
               </span>
             </button>
-
             <button
               className="flex items-center gap-[6px] group"
               onClick={() => {

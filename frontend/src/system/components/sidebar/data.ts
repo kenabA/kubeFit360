@@ -41,6 +41,11 @@ export const sidebarDataAdmin: TSidebarData[] = [
     icon: "lucide:package",
   },
   {
+    title: "Trainers",
+    to: ROUTES.TRAINERS,
+    icon: "mdi:teach-poll",
+  },
+  {
     title: "Notices",
     to: ROUTES.NOTICES,
     icon: "pepicons-pop:bulletin-notice",

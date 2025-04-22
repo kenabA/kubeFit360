@@ -30,12 +30,14 @@ import BaseImageInput from "@/system/components/input/base-image-input/BaseImage
 import { handleFileChange, uploadImage } from "@/system/lib/helpers";
 import FormSelect from "@/system/components/select/form-select/FormSelect";
 import { equipmentStatusOptions } from "@/system/lib/data";
+import { ThemedDialog } from "@/components/dialog/Dialog";
 
 export default function EditEquipments({
   selectedId,
   isDialogOpen,
   setIsDialogOpen,
 }: TEditEquipmentProps) {
+  const [openDelete, setOpenDelete] = useState<boolean>(false);
   const [localImage, setLocalImage] = useState<File | string | undefined>();
   const [isPending, setIsPending] = useState<boolean>(false);
   const [searchParams] = useSearchParams();
@@ -128,8 +130,19 @@ export default function EditEquipments({
       });
     } else {
       // TODO : Handle Remove of the equipment
-      alert(123);
+      setOpenDelete(true);
     }
+  }
+
+  async function handleRemoveProfilePicture() {
+    if (!equipment) return;
+    await editEquipment({
+      editEquipmentDetails: { removeImage: true } as TEditEquipmentFormProps,
+      selectedId: selectedId,
+    });
+    setOpenDelete(false);
+    setIsDialogOpen(false);
+    setValue("equipmentImage", undefined, { shouldDirty: true });
   }
 
   return (
@@ -276,6 +289,16 @@ export default function EditEquipments({
           type="file"
         />
       </form>
+      <ThemedDialog
+        isPending={false}
+        dialogOpen={openDelete}
+        setDialogOpen={setOpenDelete}
+        mutationFn={handleRemoveProfilePicture}
+        theme="destructive"
+        ctaText="Remove"
+        title="Remove Photo"
+        message="Do you really want to remove the current photo?"
+      />
     </FormModal>
   );
 }

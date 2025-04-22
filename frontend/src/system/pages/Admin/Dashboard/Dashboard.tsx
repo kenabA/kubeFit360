@@ -48,6 +48,7 @@ export default function AdminDashboard() {
               <>An Error Occurred : Make an error page here</>
             ) : (
               <Piechart
+                nameKey="status"
                 entity="Members"
                 stats={memberChartData}
                 config={memberChartConfig}
@@ -58,12 +59,13 @@ export default function AdminDashboard() {
           <Block
             type={"figure"}
             icon="lucide:package"
-            title="membership ratio"
-            className="col-span-full md:col-[2/-1] lg:col-[2/3]"
+            title="membership ratio | after client module"
+            className="col-span-full md:col-[2/-1] lg:col-[2/3] bg-destructive-light"
           >
             <Piechart
               entity="Members"
               config={equipmentChartConfig}
+              nameKey="status"
               stats={[
                 {
                   status: "active",
@@ -94,6 +96,7 @@ export default function AdminDashboard() {
               <>An Error Occurred : Make an error page here</>
             ) : (
               <Piechart
+                nameKey="status"
                 entity="Equipments"
                 stats={equipmentChartData}
                 config={equipmentChartConfig}
@@ -109,8 +112,8 @@ export default function AdminDashboard() {
           <Block
             type={"figure"}
             icon="lucide:package"
-            title="revenue collected"
-            className="col-span-full lg:col-[2/-1] w-full"
+            title="revenue collected | after client module"
+            className="col-span-full lg:col-[2/-1] w-full bg-destructive-light"
           >
             <Areachart className="mt-8" />
           </Block>

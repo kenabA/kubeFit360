@@ -19,7 +19,7 @@ function useDeleteWorkoutPlanRequest() {
       toast({
         variant: "success",
         title: "Success",
-        description: "Workout plan request deleted successfully",
+        description: "Workout plan deleted successfully",
       });
     },
 

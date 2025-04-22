@@ -22,6 +22,7 @@ export function ThemedDialog({
   title,
   message,
   theme,
+  className,
   ctaText,
 }: TDialog) {
   return (
@@ -32,7 +33,7 @@ export function ThemedDialog({
       }}
     >
       <DialogTrigger>{children}</DialogTrigger>
-      <DialogContent className="sm:w-[400px] !rounded-2xl">
+      <DialogContent className={cn("sm:w-[400px] !rounded-2xl", className)}>
         <DialogHeader className="px-6 py-3">
           <DialogTitle
             className={`${cn(
@@ -45,7 +46,7 @@ export function ThemedDialog({
               className="mb-4"
               alt="Icon representing the dialog"
             />
-            {title}
+            <span className="text-center">{title}</span>
           </DialogTitle>
           <DialogDescription className="text-[16px] font-normal text-gray-tertiary text-center !mb-8">
             {message}

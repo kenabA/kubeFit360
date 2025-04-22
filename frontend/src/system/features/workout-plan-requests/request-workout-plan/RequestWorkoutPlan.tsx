@@ -35,8 +35,6 @@ export default function RequestWorkoutPlan({
 
   const { trainerOptions } = useFetchTrainers();
 
-  console.log(trainerOptions);
-
   const { createWorkoutPlanTemplate, isPending } =
     useCreateWorkoutPlanRequest();
 

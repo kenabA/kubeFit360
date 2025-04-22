@@ -16,7 +16,11 @@ import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { useNavigate } from "react-router";
-import useDeleteWorkoutPlan from "../delete-plan-requests/useDeleteWorkoutPlan";
+import useDeleteWorkoutPlan from "../../workout-plan/useDeleteWorkoutPlan";
+import useDeleteWorkoutPlanRequest from "../delete-plan-requests/useDeleteWorkoutPlanRequest";
+import useGetWorkoutPlan from "../../workout-plan/useGetWorkoutPlan";
+import { TUserDetails } from "@/system/stores/user/types";
+import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 
 export default function ViewRequest({
   setOpenPlan,
@@ -38,14 +42,24 @@ export default function ViewRequest({
     enabled: isDialogOpen,
   });
 
+  const auth = useAuthUser<TUserDetails>();
+
   const navigate = useNavigate();
   const [pendingAction, setPendingAction] = useState<TWorkoutPlanStatus | null>(
     null
   );
   const { editPlanRequest, isPending, isSuccess, error } = useEditPlanRequest();
 
+  const { deleteWorkoutPlanRequest, isPending: isDeleteRequestPending } =
+    useDeleteWorkoutPlanRequest();
+
+  const { data } = useGetWorkoutPlan({
+    selectedId: workoutRequest?.generatedPlan || "",
+    enabled: isDialogOpen && workoutRequest?.generatedPlan !== "",
+  });
+
   const {
-    deleteWorkoutPlanRequest,
+    deleteWorkoutPlan,
     isPending: isDeletePending,
     isSuccess: isDeleteSuccess,
   } = useDeleteWorkoutPlan();
@@ -54,6 +68,12 @@ export default function ViewRequest({
     setPendingAction(status);
     editPlanRequest({ data: { status: status }, selectedId: selectedId });
   }
+
+  const isRejected = workoutRequest?.status === "rejected";
+  const isApproved = workoutRequest?.status === "approved";
+  const isGenerated = workoutRequest?.status === "generated";
+
+  const isAsignee = workoutRequest?.trainer._id === auth?.role;
 
   useEffect(() => {
     if (isSuccess || error) {
@@ -67,10 +87,6 @@ export default function ViewRequest({
       setSelectedId("");
     }
   }, [isDeleteSuccess]);
-
-  const isRejected = workoutRequest?.status === "rejected";
-  const isApproved = workoutRequest?.status === "approved";
-  const isGenerated = workoutRequest?.status === "generated";
 
   useEffect(() => {
     if (isGenerated && workoutRequest?.generatedPlan) {
@@ -87,7 +103,6 @@ export default function ViewRequest({
     >
       <DialogTitle className="hidden"></DialogTitle>
       <DialogDescription className="hidden"></DialogDescription>
-
       <DialogContent
         onOpenAutoFocus={(e) => e.preventDefault()}
         className={cn(
@@ -134,35 +149,68 @@ export default function ViewRequest({
                   )}
                 </Button>
               )}
-              {isRejected ||
-                (isGenerated && (
-                  <Button
-                    disabled={isDeletePending}
-                    onClick={() => {
-                      deleteWorkoutPlanRequest(selectedId);
-                    }}
-                    className={cn(
-                      "shadow-none w-40 hover:shadow-none h-10 border-[1px] border-destructive bg-destructive-light text-destructive font-semibold text-sm hover:text-destructive-hover hover:border-destructive-hover"
-                    )}
-                    variant={"outline"}
-                  >
-                    {isDeletePending ? (
-                      <Oval
-                        height="280"
-                        strokeWidth={8}
-                        secondaryColor="white"
-                        width="280"
-                        color="hsl(var(--destructive))"
-                        wrapperStyle={{}}
-                      />
-                    ) : (
-                      <>
-                        <Icon icon={"lucide:trash-2"} />
-                        Delete Request
-                      </>
-                    )}
-                  </Button>
-                ))}
+              {isRejected && (
+                <Button
+                  disabled={isDeleteRequestPending}
+                  onClick={async () => {
+                    await deleteWorkoutPlanRequest(selectedId);
+                    setIsDialogOpen(false);
+                  }}
+                  className={cn(
+                    "shadow-none w-40 hover:shadow-none h-10 border-[1px] border-destructive bg-destructive-light text-destructive font-semibold text-sm hover:text-destructive-hover hover:border-destructive-hover"
+                  )}
+                  variant={"outline"}
+                >
+                  {isDeleteRequestPending ? (
+                    <Oval
+                      height="280"
+                      strokeWidth={8}
+                      secondaryColor="white"
+                      width="280"
+                      color="hsl(var(--destructive))"
+                      wrapperStyle={{}}
+                    />
+                  ) : (
+                    <>
+                      <Icon icon={"lucide:trash-2"} />
+                      Delete Request
+                    </>
+                  )}
+                </Button>
+              )}
+
+              {isGenerated && (
+                <Button
+                  disabled={isDeletePending || !data?._id}
+                  onClick={() => {
+                    if (!data?._id) {
+                      alert("No workout plan found");
+                      return;
+                    }
+                    deleteWorkoutPlan(data._id);
+                  }}
+                  className={cn(
+                    "shadow-none w-40 hover:shadow-none h-10 border-[1px] border-destructive bg-destructive-light text-destructive font-semibold text-sm hover:text-destructive-hover hover:border-destructive-hover"
+                  )}
+                  variant={"outline"}
+                >
+                  {isDeletePending ? (
+                    <Oval
+                      height="280"
+                      strokeWidth={8}
+                      secondaryColor="white"
+                      width="280"
+                      color="hsl(var(--destructive))"
+                      wrapperStyle={{}}
+                    />
+                  ) : (
+                    <>
+                      <Icon icon={"lucide:trash-2"} />
+                      Delete Plan
+                    </>
+                  )}
+                </Button>
+              )}
               {!isApproved && !isRejected && !isGenerated && (
                 <Button
                   disabled={isPending || isDeletePending}

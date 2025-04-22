@@ -247,9 +247,7 @@ export default function TrainerAccountForm() {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className={cn(
-            "col-span-full flex items-center justify-end gap-3 lg:sticky lg:-bottom-6 bg-white border border-primary p-3 shadow-sm rounded-lg"
-          )}
+          className="col-span-full mt-auto flex items-center justify-end gap-3 lg:sticky lg:-bottom-3 bg-white border p-3 shadow-card rounded-lg"
         >
           <Button
             disabled={isPending}

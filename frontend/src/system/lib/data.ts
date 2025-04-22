@@ -71,6 +71,7 @@ export const requestPlanStatusOptions: TOptions<TWorkoutPlanStatus>[] = [
   { label: "Approved", value: "approved", theme: "hsl(var(--success))" },
   { label: "Pending", value: "pending", theme: "hsl(var(--primary))" },
   { label: "Rejected", value: "rejected", theme: "hsl(var(--destructive))" },
+  { label: "Generated", value: "generated", theme: "hsl(var(--accent))" },
 ];
 
 export const fitnessLevelOptions: TOptions<TFitnessLevel>[] = [

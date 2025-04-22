@@ -31,12 +31,12 @@ export default function TrainerDashboard() {
         <Heading level={4} variant={"quaternary"}>
           Dashboard
         </Heading>
-        <div className="h-full grid grid-cols-2 lg:grid-cols-3 lg:grid-rows-[auto,1fr] gap-6 mt-6 ">
+        <div className="h-full grid grid-cols-2 lg:grid-cols-3 lg:grid-rows-[auto,1fr] gap-6 mt-6">
           <Block
             type={"figure"}
             icon="lucide:package"
             title="plan creation"
-            className="col-span-full md:col-[1/2] lg:col-[1/2]"
+            className="col-span-full md:col-[1/2] lg:col-[1/2] bg-destructive-light"
           >
             <Barchart className="mt-8" />
           </Block>
@@ -47,6 +47,7 @@ export default function TrainerDashboard() {
             className="col-span-full md:col-[2/-1] lg:col-[2/3]"
           >
             <Piechart
+              nameKey="status"
               entity="Equipments"
               config={equipmentChartConfig}
               stats={chartData}

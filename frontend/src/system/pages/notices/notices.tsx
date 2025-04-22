@@ -34,10 +34,10 @@ export default function Notices() {
           Notices
         </Heading>
         <div className="bg-white rounded-xl shadow-general h-full overflow-hidden overflow-y-auto custom-scrollbar">
-          <div className="flex items-center justify-between sticky  top-0 bg-white p-[18px] pb-[9px] z-10">
+          <div className="flex items-center justify-between sticky  top-0 bg-white p-[18px] pb-[9px] z-[1]">
             <TableSearch
               isPending={false}
-              placeholder="Search by Notice Id or Notice Title"
+              placeholder="Search by Notice Title"
             />
             <div className="flex items-center gap-4">
               <Filter entity={filterFields.notices} />

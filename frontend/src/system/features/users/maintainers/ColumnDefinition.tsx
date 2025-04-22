@@ -23,20 +23,23 @@ export default function ColumnDefinition(
     setSelectedIds(id);
   };
 
-  // Return column definitions
   return [
     {
       accessorKey: "name",
       header: () => <span className="pl-[30px]">Full Name</span>,
       cell: ({ row }) => (
         <span className="text-gray flex items-center gap-3 pl-[30px]">
-          <figure className="size-[30px] rounded-full bg-secondary overflow-hidden shadow-button border">
-            {row.original.userImage && (
+          <figure className="size-[30px] rounded-full border-[1px] border-primary bg-secondary overflow-hidden shadow-button ">
+            {row.original.userImage ? (
               <img
                 className="size-full object-cover object-center"
                 src={row.original.userImage}
                 alt="An icon of the maintainer"
               />
+            ) : (
+              <div className="bg-tertiary size-full text-primary font-bold text-sm text-center items-center justify-center flex">
+                {row.original.name.split(" ")[0][0] || "--"}
+              </div>
             )}
           </figure>
           {row.original.name || "--"}

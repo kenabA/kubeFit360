@@ -6,7 +6,7 @@ function useDeleteWorkoutPlan() {
   const queryClient = useQueryClient();
   const { toast } = useToast();
   const {
-    mutate: deleteWorkoutPlanRequest,
+    mutate: deleteWorkoutPlan,
     isPending,
     isSuccess,
   } = useMutation({
@@ -28,7 +28,7 @@ function useDeleteWorkoutPlan() {
       });
     },
   });
-  return { deleteWorkoutPlanRequest, isPending, isSuccess };
+  return { deleteWorkoutPlan, isPending, isSuccess };
 }
 
 export default useDeleteWorkoutPlan;

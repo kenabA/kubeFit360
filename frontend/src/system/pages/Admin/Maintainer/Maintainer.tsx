@@ -49,16 +49,18 @@ export default function Maintainer() {
   }, [isDeleteSuccess]);
 
   return (
-    <section className="rounded-tl-xl overflow-y-auto custom-scrollbar flex-1">
-      <div className="py-7 px-6">
-        <Heading level={4} variant={"quaternary"} className="mb-4">
+    <section className="rounded-tl-xl h-[calc(100dvh-60px)] overflow-hidden">
+      <div className="py-7 px-6 flex-1 flex flex-col gap-4 h-full">
+        <Heading level={4} variant={"quaternary"}>
           Maintainers
         </Heading>
-        <div className="bg-white rounded-xl shadow-general h-full">
-          <div className="p-[18px] flex items-center justify-between ">
+        <div className="bg-white rounded-xl shadow-general overflow-hidden h-full">
+          {/* Header Section with Search and Actions */}
+          <div className="flex shadow-elevation items-center justify-between sticky top-0 bg-white p-[18px] z-[1]">
+            {/* Search Input */}
             <TableSearch
               isPending={isPending}
-              placeholder="Search by name, etc . . . "
+              placeholder="Search by Name, Email, and Phone Number"
             />
             <div className="flex items-center gap-4">
               <Filter entity={filterFields.maintainers} />
@@ -72,6 +74,9 @@ export default function Maintainer() {
             </div>
           </div>
           <GeneralTable<TUserDetails>
+            paginationClassName="bg-slate-50 px-6 sticky bottom-0"
+            noDataTitle="No Maintainers"
+            noDataDescription="Get started by adding a maintainer."
             resultCount={count || 0}
             data={maintainers}
             columns={ColumnDefinition(

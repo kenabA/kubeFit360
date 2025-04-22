@@ -15,8 +15,6 @@ import { genderOptions } from "@/system/lib/data";
 import FormSelect from "@/system/components/select/form-select/FormSelect";
 import useAddUser from "../../useAddUser";
 
-import DateInput from "@/system/components/input/date-input/DateInput";
-
 export default function AddMaintainer({
   isDialogOpen,
   setIsDialogOpen,
@@ -156,11 +154,13 @@ export default function AddMaintainer({
             placeholder="Enter the phone number"
             register={register}
           />
-          <DateInput<TAddMaintainerFormProps>
-            name="birthDate"
-            setValue={setValue}
+          <BaseInput
             error={errors.birthDate}
             label="Date of Birth"
+            name="birthDate"
+            type="date"
+            placeholder="Enter date of birth"
+            register={register}
           />
         </div>
         <div className="flex gap-4 items-start w-full">

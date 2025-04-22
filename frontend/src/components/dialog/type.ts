@@ -10,5 +10,6 @@ export type TDialog = {
   title: string;
   theme: "success" | "destructive" | "warn" | "info";
   message: string;
+  className?: string;
   ctaText: string;
 };

@@ -29,6 +29,7 @@ export default function ViewPlan({
         setIsDialogOpen(value);
       }}
     >
+      {}
       <DialogTitle className="hidden"></DialogTitle>
       <DialogDescription className="hidden"></DialogDescription>
 

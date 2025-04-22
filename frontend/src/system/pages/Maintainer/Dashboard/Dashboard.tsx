@@ -87,6 +87,7 @@ export default function MaintainerDashboard() {
               className="lg:h-fit h-full"
             >
               <Piechart
+                nameKey="status"
                 entity="Equipments"
                 config={equipmentChartConfig}
                 stats={chartData}

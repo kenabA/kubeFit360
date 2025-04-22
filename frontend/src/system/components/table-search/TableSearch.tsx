@@ -34,7 +34,7 @@ export default function TableSearch({
   }
 
   return (
-    <div className="w-[420px] h-[44px] border  rounded-[8px] border-slate-300 py-2.5 ps-4 pe-2 flex items-center gap-2">
+    <div className="w-[420px] h-[44px] border   rounded-[8px] border-slate-300 py-2.5 ps-4 pe-2 flex items-center gap-2">
       {!searchValue && (
         <label className="cursor-pointer" htmlFor="search">
           <Icon icon={"lucide:search"} className="text-gray" />

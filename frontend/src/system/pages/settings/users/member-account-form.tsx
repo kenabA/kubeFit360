@@ -46,6 +46,8 @@ export default function MemberAccountForm({
 
   const isFormEdited = Object.keys(dirtyFields).length > 0;
 
+  console.log(data);
+
   const handleLocalFileChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -103,7 +105,7 @@ export default function MemberAccountForm({
       status: data.status,
       userImage: data?.userImage,
       phoneNumber: String(data?.phoneNumber),
-      createdAt: formatTime(data?.createdAt, "MMM dd, yyyy"),
+      createdAt: formatTime(data?.createdAt ?? "", "MMM dd, yyyy"),
     });
     if (typeof localImage !== "string") {
       setLocalImage(data?.userImage);
@@ -125,7 +127,7 @@ export default function MemberAccountForm({
       status: data?.status,
       userImage: data?.userImage,
       phoneNumber: String(data?.phoneNumber),
-      createdAt: formatTime(data.createdAt, "MMM dd, yyyy"),
+      createdAt: formatTime(data?.createdAt || data?.joinDate, "MMM dd, yyyy"),
     });
 
     if (data.userImage) {
@@ -255,7 +257,7 @@ export default function MemberAccountForm({
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="col-span-full flex items-center justify-end bg-white gap-3 lg:sticky lg:bottom-6  p-3  rounded-lg shadow-inner"
+            className="col-span-full flex items-center justify-end bg-white gap-3 lg:sticky lg:bottom-6  p-3  rounded-lg shadow-card  border"
           >
             <Button
               disabled={isPending}

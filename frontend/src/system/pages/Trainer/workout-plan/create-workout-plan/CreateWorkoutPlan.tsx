@@ -33,6 +33,8 @@ const itemVariants = {
   },
 };
 
+// verify whtehr the request id is snet or member id
+
 export default function CreateWorkoutPlan() {
   const { id } = useParams(); // Extracts the ID from the URL
 
@@ -46,6 +48,7 @@ export default function CreateWorkoutPlan() {
   function handleCreateWorkoutPlan(content: string) {
     if (id) {
       const data: TCreateWorkoutPlanForm = {
+        member: workoutRequest?.member._id || "",
         request: id,
         workoutPlan: content,
       };

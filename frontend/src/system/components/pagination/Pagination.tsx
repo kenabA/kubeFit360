@@ -50,7 +50,7 @@ export default function Pagination({
   return (
     <div
       className={cn(
-        "py-[12px] border-t w-full flex items-center justify-between",
+        "py-[12px] border-t w-full flex items-center justify-between mt-auto",
         className
       )}
     >

@@ -16,12 +16,13 @@ import { Oval } from "react-loader-spinner";
 export default function ClientWorkoutPlan() {
   const [openDelete, setOpenDelete] = useState<boolean>(false);
   const [openAdd, setOpenAdd] = useState<boolean>(false);
-  const { deleteWorkoutPlanRequest, isPending: isDeleting } =
-    useDeleteWorkoutPlan();
+  const { deleteWorkoutPlan, isPending: isDeleting } = useDeleteWorkoutPlan();
   const auth = useAuthUser<TUserDetails>();
   const { isPending, data } = useGetWorkoutPlanByMemberId({
-    selectedId: auth?._id || "",
+    selectedId: auth?._id ?? "",
   });
+
+  console.log(auth?._id);
 
   function handleOpenAdd() {
     setOpenAdd(true);
@@ -42,7 +43,7 @@ export default function ClientWorkoutPlan() {
 
   async function handleCancelWorkoutPlan() {
     if (data?._id) {
-      await deleteWorkoutPlanRequest(data?._id);
+      await deleteWorkoutPlan(data?._id);
       setOpenDelete(false);
     }
   }

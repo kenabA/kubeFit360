@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 
 import { TEditMaintainerFormProps, TEditMaintainerProps } from "./type";
 
-import { genderOptions } from "@/system/lib/data";
+import { genderOptions, maintainerStatusOptions } from "@/system/lib/data";
 
 import { Oval } from "react-loader-spinner";
 import BaseImageInput from "@/system/components/input/base-image-input/BaseImageInput";
@@ -22,6 +22,7 @@ import { useSearchParams } from "react-router";
 import { useQueryClient } from "@tanstack/react-query";
 import { TUserDetails } from "@/system/stores/user/types";
 import { TApiResponse } from "@/system/lib/types";
+import { ThemedDialog } from "@/components/dialog/Dialog";
 
 export default function EditMaintainer({
   selectedId,
@@ -33,6 +34,7 @@ export default function EditMaintainer({
   const [searchParams] = useSearchParams();
   const filters = Object.fromEntries(searchParams.entries());
   const queryClient = useQueryClient();
+  const [openDelete, setOpenDelete] = useState<boolean>(false);
 
   const allMaintainers = queryClient.getQueryData<TApiResponse<TUserDetails[]>>(
     ["maintainers", filters]
@@ -59,7 +61,6 @@ export default function EditMaintainer({
     if (isSuccess) {
       setIsPending(false);
       setIsDialogOpen(false);
-      reset();
     }
   }, [isSuccess]);
 
@@ -68,10 +69,12 @@ export default function EditMaintainer({
     reset({
       name: maintainer?.name,
       address: maintainer?.address,
-      birthDate: maintainer?.birthDate,
+      birthDate: maintainer?.birthDate.slice(0, 10),
       email: maintainer?.email,
+
       gender: maintainer?.gender,
       userImage: maintainer?.userImage,
+      status: maintainer?.status,
       phoneNumber: String(maintainer?.phoneNumber),
     });
 
@@ -96,7 +99,7 @@ export default function EditMaintainer({
       setValue("userImage", maintainerImageUrl, { shouldDirty: true });
       data = { ...data, userImage: maintainerImageUrl };
     }
-    editUser({ editUserDetails: data, selectedId });
+    await editUser({ editUserDetails: data, selectedId });
   }
 
   const handleLocalFileChange = (
@@ -124,8 +127,19 @@ export default function EditMaintainer({
       });
     } else {
       // TODO : Handle Remove of the maintainer
-      alert(123);
+      setOpenDelete(true);
     }
+  }
+
+  async function handleRemoveProfilePicture() {
+    if (!maintainer) return;
+    await editUser({
+      editUserDetails: { removeImage: true } as TEditMaintainerFormProps,
+      selectedId: selectedId,
+    });
+    setOpenDelete(false);
+    setIsDialogOpen(false);
+    setValue("userImage", undefined, { shouldDirty: true });
   }
 
   return (
@@ -200,12 +214,6 @@ export default function EditMaintainer({
             placeholder="Enter the phone number"
             register={register}
           />
-          {/* <BaseInput<TEditMaintainerFormProps>
-            name="birthDate"
-            setValue={setValue}
-            error={errors.birthDate}
-            label="Date of Birth"
-          /> */}
           <BaseInput
             error={errors.birthDate}
             label="Date of Birth"
@@ -240,6 +248,21 @@ export default function EditMaintainer({
             />
           </div>
         </div>
+        <div className="w-full">
+          <Controller
+            name="status"
+            control={control}
+            render={({ field }) => (
+              <FormSelect
+                error={errors.status}
+                label={field.name}
+                field={field}
+                options={maintainerStatusOptions}
+                placeholder="Select a status"
+              />
+            )}
+          />
+        </div>
         <BaseImageInput
           handleFileChange={handleLocalFileChange}
           handleRemove={handleRemove}
@@ -251,6 +274,16 @@ export default function EditMaintainer({
           type="file"
         />
       </form>
+      <ThemedDialog
+        isPending={false}
+        dialogOpen={openDelete}
+        setDialogOpen={setOpenDelete}
+        mutationFn={handleRemoveProfilePicture}
+        theme="destructive"
+        ctaText="Remove"
+        title="Remove Photo"
+        message="Do you really want to remove the current photo?"
+      />
     </FormModal>
   );
 }

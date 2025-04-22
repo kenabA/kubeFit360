@@ -9,7 +9,7 @@ export default function Topbar() {
   });
 
   return (
-    <div className="px-6 py-3 bg-white  shadow-general">
+    <div className="px-6 py-3 bg-white  shadow-general z-[10]">
       <div className="flex gap-3 items-center">
         <figure className="bg-[#d9d9d9] size-[34px] rounded-full overflow-hidden shadow-userPanel border-2 border-secondary">
           {user?.userImage ? (

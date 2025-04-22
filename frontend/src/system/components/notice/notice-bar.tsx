@@ -94,8 +94,8 @@ export default function NoticeBar({
               {card.title}
             </Heading>
             <div className="flex gap-2 items-center">
-              <Badge variant={card.status}>{card.status}</Badge>
               <CountDown expiryDate={card.expiresAt} />
+              <Badge variant={card.status}>{card.status}</Badge>
               {role === "admin" && (
                 <ActionPopover
                   openActionPopover={openActionPopover}

@@ -198,7 +198,7 @@ export default function AdminAccountForm({
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="col-span-full flex items-center justify-end gap-3 lg:sticky lg:-bottom-3  p-3  rounded-lg shadow-inner"
+            className="col-span-full mt-auto flex items-center justify-end gap-3 lg:sticky lg:-bottom-3 bg-white border p-3 shadow-card rounded-lg"
           >
             <Button
               disabled={isPending}

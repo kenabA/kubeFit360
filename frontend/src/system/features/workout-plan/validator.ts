@@ -1,7 +1,8 @@
 import z from "zod";
 
 export const workoutPlanSchema = z.object({
-  request: z.string().nonempty("Please mention the brand name"),
+  member: z.string().nonempty("Please mention the member id"),
+  request: z.string().nonempty("Please mention the request id"),
   workoutPlan: z
     .string()
     .nonempty("Workout Plan cannot be empty")
