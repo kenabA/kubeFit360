@@ -50,6 +50,7 @@ export default function ClientWorkoutPlan() {
 
   const workoutPlanPresent = data?.workoutPlan;
   const trainer = data?.request?.trainer?.name || "Certified Trainer";
+
   const trainerProfile = data?.request?.trainer?.userImage;
 
   return (

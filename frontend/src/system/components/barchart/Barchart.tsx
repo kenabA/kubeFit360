@@ -9,23 +9,22 @@ import {
 } from "@/components/ui/chart";
 
 import { cn } from "@/lib/utils";
-const chartData = [
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 405 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 73 },
-  { month: "May", desktop: 209 },
-  { month: "June", desktop: 214 },
-];
 
 const chartConfig = {
-  desktop: {
-    label: "Desktop",
+  workoutPlan: {
+    label: "Workout Plan",
     color: "hsl(var(--accent))",
   },
 } satisfies ChartConfig;
 
-export function Barchart({ className }: { className: string }) {
+export function Barchart({
+  className,
+  stats,
+}: {
+  className: string;
+  stats: any;
+}) {
+  console.log(stats);
   return (
     <Card className="shadow-none border-none">
       <ChartContainer
@@ -37,7 +36,7 @@ export function Barchart({ className }: { className: string }) {
       >
         <BarChart
           accessibilityLayer
-          data={chartData}
+          data={stats}
           margin={{
             left: -24,
             right: 12,
@@ -62,8 +61,8 @@ export function Barchart({ className }: { className: string }) {
             content={<ChartTooltipContent indicator="dot" />}
           />
           <Bar
-            dataKey="desktop"
-            fill="var(--color-desktop)"
+            dataKey="workoutPlan"
+            fill="var(--color-workoutPlan)"
             radius={6}
             maxBarSize={46}
             type="natural"

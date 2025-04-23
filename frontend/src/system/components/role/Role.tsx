@@ -11,7 +11,7 @@ export function Role({ role }: { role: TRole }) {
       icon = "mdi:worker-outline";
       break;
     case "trainer":
-      icon = "lucide:biceps-flexed";
+      icon = "mdi:teach-poll";
       break;
     case "member":
       icon = "lucide:biceps-flexed";

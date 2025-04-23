@@ -142,7 +142,7 @@ export default function EditTrainer({
 
   return (
     <FormModal
-      icon="gravity-ui:person-worker"
+      icon="mdi:teach-poll"
       title="Edit Trainer"
       subtitle="Modify and Update Trainer Details"
       open={isDialogOpen}

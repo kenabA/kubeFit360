@@ -7,9 +7,14 @@ function useFetchTrainers() {
     isPending: isTrainersPending,
   } = useTrainers();
 
-  const trainerOptions: TOptions<string>[] = trainers.map((trainer) => {
-    return { label: trainer.name, value: trainer._id };
-  });
+  const trainerOptions: (TOptions<string> & { availability?: string })[] =
+    trainers.map((trainer) => {
+      return {
+        label: trainer.name,
+        value: trainer._id,
+        availability: trainer.status,
+      };
+    });
 
   return { trainerOptions, isTrainersPending };
 }

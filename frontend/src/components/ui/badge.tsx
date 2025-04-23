@@ -14,10 +14,14 @@ const badgeVariants = cva(
           "border-transparent bg-slate-100 text-slate-900 hover:bg-slate-100/80 dark:bg-slate-800 dark:text-slate-50 dark:hover:bg-slate-800/80",
         destructive:
           "border-transparent bg-red-500 text-slate-50 shadow hover:bg-red-500/80 dark:bg-red-900 dark:text-slate-50 dark:hover:bg-red-900/80",
+        inactive:
+          "border-transparent bg-red-500 text-slate-50 shadow hover:bg-red-500/80 dark:bg-red-900 dark:text-slate-50 dark:hover:bg-red-900/80",
         expired:
           "border-destructive bg-destructive-light text-destructive shadow hover:bg-destructive-light dark:bg-destructive-900 dark:text-slate-50 dark:hover:bg-destructive-900/80",
         outline: "text-slate-950 dark:text-slate-50",
         active:
+          "border-success bg-success-light text-success shadow hover:bg-success-light dark:bg-success-900 dark:text-slate-50 dark:hover:bg-success-light",
+        available:
           "border-success bg-success-light text-success shadow hover:bg-success-light dark:bg-success-900 dark:text-slate-50 dark:hover:bg-success-light",
       },
     },

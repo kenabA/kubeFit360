@@ -6,6 +6,9 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { TFormSelect } from "./type";
+import { cn } from "@/lib/utils";
+import Status from "../../status/Status";
+import { Badge } from "@/components/ui/badge";
 
 export default function FormSelect({
   field,
@@ -32,7 +35,8 @@ export default function FormSelect({
               <SelectItem
                 value={opt.value}
                 key={opt.label}
-                className="cursor-pointer"
+                className={cn("cursor-pointer relative !flex !flex-row")}
+                disabled={opt.availability === "inactive"}
               >
                 <div className="flex gap-2 items-center">
                   {opt.theme && (
@@ -45,6 +49,11 @@ export default function FormSelect({
                     {opt.label}
                   </span>
                 </div>
+                {opt.availability === "inactive" && (
+                  <div className="absolute right-5 top-1/2 -translate-y-1/2">
+                    <Badge variant={opt.availability}>{opt.availability}</Badge>
+                  </div>
+                )}
               </SelectItem>
             );
           })}

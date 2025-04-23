@@ -46,6 +46,11 @@ export const sidebarDataAdmin: TSidebarData[] = [
     icon: "mdi:teach-poll",
   },
   {
+    title: "Workout Requests",
+    to: ROUTES.WORKOUT_PLAN_REQUESTS,
+    icon: "icon-park-outline:plan",
+  },
+  {
     title: "Notices",
     to: ROUTES.NOTICES,
     icon: "pepicons-pop:bulletin-notice",

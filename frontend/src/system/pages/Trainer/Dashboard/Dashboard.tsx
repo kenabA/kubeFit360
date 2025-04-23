@@ -11,6 +11,7 @@ import ColumnDefinition from "@/system/components/tables/recent-activities/Colum
 import { TRecentActivities } from "@/system/features/recent-activities/type";
 import useEquipmentsAnalytics from "@/system/features/equipments/useEquipmentsAnalytics";
 import { Barchart } from "@/system/components/barchart/Barchart";
+import useWorkoutPlanAnalytics from "@/system/features/workout-plan/useWorkoutPlanAnalytics";
 
 export default function TrainerDashboard() {
   const [selectedIds, setSelectedIds] = useState<string>("");
@@ -19,7 +20,11 @@ export default function TrainerDashboard() {
   const { data: recentActivitiesData, error: activitiesError } =
     useRecentActivities();
 
+  const { chartData: workoutPlanChartData } = useWorkoutPlanAnalytics();
+
   const { stats, chartData, error } = useEquipmentsAnalytics();
+
+  console.log(chartData);
 
   if (error) {
     return <>An Error Occurred</>;
@@ -36,9 +41,9 @@ export default function TrainerDashboard() {
             type={"figure"}
             icon="lucide:package"
             title="plan creation"
-            className="col-span-full md:col-[1/2] lg:col-[1/2] bg-destructive-light"
+            className="col-span-full md:col-[1/2] lg:col-[1/2]"
           >
-            <Barchart className="mt-8" />
+            <Barchart stats={workoutPlanChartData} className="mt-8" />
           </Block>
           <Block
             type={"figure"}
