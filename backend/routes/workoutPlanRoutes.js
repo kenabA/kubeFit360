@@ -7,6 +7,7 @@ const {
   deleteAllWorkoutPlan,
   deleteWorkoutPlan,
   getWorkoutPlanByMemberId,
+  getMonthlyStatsByTrainer,
   // getWorkoutPlanByReqId,
 } = require('../controller/workoutPlanController');
 
@@ -19,10 +20,13 @@ router
   .get(restrictTo('trainer', 'admin'), getAllWorkoutPlan)
   .delete(restrictTo('trainer', 'admin'), deleteAllWorkoutPlan);
 
+router.route('/stats').get(restrictTo('trainer'), getMonthlyStatsByTrainer);
+
 router
   .route('/:id')
   .get(restrictTo('admin', 'trainer', 'member'), getWorkoutPlan)
   .delete(restrictTo('admin', 'trainer'), deleteWorkoutPlan);
+
 router
   .route('/member/:id')
   .get(restrictTo('admin', 'trainer', 'member'), getWorkoutPlanByMemberId);

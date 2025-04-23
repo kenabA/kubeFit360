@@ -30,7 +30,7 @@ router
   .post(restrictTo('admin'), addUser);
 router.route('/user-stats').get(restrictTo('admin'), getClientStats);
 
-router.use(restrictTo('admin'));
+// router.use(restrictTo('admin'));
 
 router.route('/maintainers').get(getUsersByRole('maintainer'));
 
