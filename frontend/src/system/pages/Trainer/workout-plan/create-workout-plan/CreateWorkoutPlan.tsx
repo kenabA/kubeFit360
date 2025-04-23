@@ -51,6 +51,7 @@ export default function CreateWorkoutPlan() {
         member: workoutRequest?.member._id || "",
         request: id,
         workoutPlan: content,
+        createdAt: "2024-11-29T00:00:00Z",
       };
       createWorkoutPlan(data);
     }

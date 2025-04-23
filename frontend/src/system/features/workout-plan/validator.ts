@@ -7,4 +7,5 @@ export const workoutPlanSchema = z.object({
     .string()
     .nonempty("Workout Plan cannot be empty")
     .min(1000, "Workout plan should be more than 1000 characters"),
+  createdAt: z.string().optional(),
 });

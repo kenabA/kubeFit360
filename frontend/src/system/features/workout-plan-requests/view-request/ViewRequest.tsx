@@ -21,6 +21,7 @@ import useDeleteWorkoutPlanRequest from "../delete-plan-requests/useDeleteWorkou
 import useGetWorkoutPlan from "../../workout-plan/useGetWorkoutPlan";
 import { TUserDetails } from "@/system/stores/user/types";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
+import { useToast } from "@/hooks/use-toast";
 
 export default function ViewRequest({
   setOpenPlan,
@@ -37,6 +38,8 @@ export default function ViewRequest({
   isDialogOpen: boolean;
   setIsDialogOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
+  const { toast } = useToast();
+
   const { data: workoutRequest } = useGetWorkoutRequest({
     selectedId: selectedId,
     enabled: isDialogOpen,
@@ -73,7 +76,7 @@ export default function ViewRequest({
   const isApproved = workoutRequest?.status === "approved";
   const isGenerated = workoutRequest?.status === "generated";
 
-  const isAsignee = workoutRequest?.trainer._id === auth?.role;
+  const isAssignee = workoutRequest?.trainer._id === auth?._id;
 
   useEffect(() => {
     if (isSuccess || error) {
@@ -123,7 +126,17 @@ export default function ViewRequest({
               {!isApproved && !isRejected && !isGenerated && (
                 <Button
                   disabled={isPending || workoutRequest.status === "rejected"}
-                  onClick={() => handleChangeStatus("rejected")}
+                  onClick={() => {
+                    if (!isAssignee) {
+                      toast({
+                        variant: "warning",
+                        title: "Unauthorized",
+                        description: "Only the assigned trainer can reject.",
+                      });
+                      return;
+                    }
+                    handleChangeStatus("rejected");
+                  }}
                   form="equipment-form"
                   type="submit"
                   className={cn(
@@ -153,6 +166,15 @@ export default function ViewRequest({
                 <Button
                   disabled={isDeleteRequestPending}
                   onClick={async () => {
+                    if (!isAssignee) {
+                      toast({
+                        variant: "warning",
+                        title: "Unauthorized",
+                        description:
+                          "Only the assigned trainer can delete the request.",
+                      });
+                      return;
+                    }
                     await deleteWorkoutPlanRequest(selectedId);
                     setIsDialogOpen(false);
                   }}
@@ -183,8 +205,21 @@ export default function ViewRequest({
                 <Button
                   disabled={isDeletePending || !data?._id}
                   onClick={() => {
+                    if (!isAssignee) {
+                      toast({
+                        variant: "warning",
+                        title: "Unauthorized",
+                        description:
+                          "Only the assigned trainer can delete the plan.",
+                      });
+                      return;
+                    }
                     if (!data?._id) {
-                      alert("No workout plan found");
+                      toast({
+                        variant: "warning",
+                        title: "No Workout Plan",
+                        description: "Workout Plan not found",
+                      });
                       return;
                     }
                     deleteWorkoutPlan(data._id);
@@ -214,7 +249,17 @@ export default function ViewRequest({
               {!isApproved && !isRejected && !isGenerated && (
                 <Button
                   disabled={isPending || isDeletePending}
-                  onClick={() => handleChangeStatus("approved")}
+                  onClick={() => {
+                    if (!isAssignee) {
+                      toast({
+                        variant: "warning",
+                        title: "Unauthorized",
+                        description: "Only the assigned trainer can approve.",
+                      });
+                      return;
+                    }
+                    handleChangeStatus("approved");
+                  }}
                   form="equipment-form"
                   type="submit"
                   className="shadow-none hover:shadow-none h-10 w-28 border-[1px] border-success hover:text-success-hover hover:border-success-hover bg-success-light text-success font-semibold text-sm"
@@ -272,9 +317,18 @@ export default function ViewRequest({
                       animate={{ x: 0 }}
                       exit={{ x: 20 }}
                       disabled={isPending}
-                      onClick={() =>
-                        navigate(`/workoutPlan/${selectedId}/create`)
-                      }
+                      onClick={() => {
+                        if (!isAssignee) {
+                          toast({
+                            variant: "warning",
+                            title: "Unauthorized",
+                            description:
+                              "Only the assigned trainer can generate a workout plan.",
+                          });
+                          return;
+                        }
+                        navigate(`/workoutPlan/${selectedId}/create`);
+                      }}
                       form="equipment-form"
                       type="submit"
                       className="shadow-none h-10 w-fit font-semibold text-sm flex items-center gap-2 bg-primary text-primary-foreground hover:bg-primary-hover hover:shadow-button px-4 py-2 rounded-lg"
