@@ -1,19 +1,23 @@
 import { Label, Pie, PieChart } from "recharts";
 import {
   ChartContainer,
+  ChartLegend,
+  ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
 export default function Component({
   count,
-  stats,
+  stats = "status",
   config,
   entity,
+  nameKey,
 }: {
   count: number | undefined;
   stats: any;
   config: any;
+  nameKey: string;
   entity: string;
 }) {
   return (
@@ -30,7 +34,7 @@ export default function Component({
           data={stats}
           dataKey="count"
           nameKey="status"
-          innerRadius={60}
+          innerRadius={55}
           strokeWidth={5}
         >
           <Label
@@ -63,6 +67,10 @@ export default function Component({
             }}
           />
         </Pie>
+        <ChartLegend
+          content={<ChartLegendContent nameKey={nameKey} />}
+          className="whitespace-nowrap"
+        />
       </PieChart>
     </ChartContainer>
   );

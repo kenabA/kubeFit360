@@ -1,4 +1,3 @@
-import ErrorPage from "@/components/errorPage/ErrorPage";
 import { Heading } from "@/components/heading/Heading";
 import { Areachart, Block, Piechart } from "@/system/components";
 import ColumnDefinition from "@/system/components/tables/recent-activities/ColumnDefinition";
@@ -46,9 +45,10 @@ export default function AdminDashboard() {
             className="col-span-full md:col-[1/2] lg:col-[1/2]"
           >
             {memberError ? (
-              <ErrorPage errMsg={memberError.message} />
+              <>An Error Occurred : Make an error page here</>
             ) : (
               <Piechart
+                nameKey="status"
                 entity="Members"
                 stats={memberChartData}
                 config={memberChartConfig}
@@ -59,12 +59,13 @@ export default function AdminDashboard() {
           <Block
             type={"figure"}
             icon="lucide:package"
-            title="equipments visualization"
-            className="col-span-full md:col-[2/-1] lg:col-[2/3]"
+            title="membership ratio | after client module"
+            className="col-span-full md:col-[2/-1] lg:col-[2/3] bg-destructive-light"
           >
             <Piechart
               entity="Members"
               config={equipmentChartConfig}
+              nameKey="status"
               stats={[
                 {
                   status: "active",
@@ -92,9 +93,10 @@ export default function AdminDashboard() {
             className="col-span-full md:col-[1/2] lg:col-[3/4]"
           >
             {equipmentError ? (
-              <ErrorPage errMsg={equipmentError.message} />
+              <>An Error Occurred : Make an error page here</>
             ) : (
               <Piechart
+                nameKey="status"
                 entity="Equipments"
                 stats={equipmentChartData}
                 config={equipmentChartConfig}
@@ -110,8 +112,8 @@ export default function AdminDashboard() {
           <Block
             type={"figure"}
             icon="lucide:package"
-            title="revenue collected"
-            className="col-span-full lg:col-[2/-1] w-full"
+            title="revenue collected | after client module"
+            className="col-span-full lg:col-[2/-1] w-full bg-destructive-light"
           >
             <Areachart className="mt-8" />
           </Block>

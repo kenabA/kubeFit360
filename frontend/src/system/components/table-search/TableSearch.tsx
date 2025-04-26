@@ -4,7 +4,13 @@ import { useEffect, useState } from "react";
 import { Oval } from "react-loader-spinner";
 import { useSearchParams } from "react-router";
 
-export default function TableSearch({ isPending }: { isPending: boolean }) {
+export default function TableSearch({
+  isPending,
+  placeholder,
+}: {
+  isPending: boolean;
+  placeholder: string;
+}) {
   const [searchValue, setSearchValue] = useState<string>("");
   const [params, setParams] = useSearchParams();
 
@@ -28,7 +34,7 @@ export default function TableSearch({ isPending }: { isPending: boolean }) {
   }
 
   return (
-    <div className="w-[420px] h-[44px] border  rounded-[8px] border-slate-300 py-2.5 ps-4 pe-2 flex items-center gap-2">
+    <div className="w-[420px] h-[44px] border   rounded-[8px] border-slate-300 py-2.5 ps-4 pe-2 flex items-center gap-2">
       {!searchValue && (
         <label className="cursor-pointer" htmlFor="search">
           <Icon icon={"lucide:search"} className="text-gray" />
@@ -45,7 +51,7 @@ export default function TableSearch({ isPending }: { isPending: boolean }) {
         }}
         value={searchValue}
         onChange={(e) => setSearchValue(e.target.value)}
-        placeholder={"Search by name, serial number, etc"}
+        placeholder={placeholder}
       />
       {searchValue && (
         <button

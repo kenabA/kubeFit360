@@ -1,32 +1,49 @@
+import { ROUTES } from "@/config/appRoutes";
 import { useToast } from "@/hooks/use-toast";
 import useHandleNavigate from "@/hooks/useHandleNavigate";
 import { TLoginFormProps } from "@/system/pages/Login/types";
 import apiLogin from "@/system/services/auth/apiLogin";
-import useUserStore from "@/system/stores/user/useUserStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import useSignIn from "react-auth-kit/hooks/useSignIn";
 
 function useLogin() {
   const handleNavigate = useHandleNavigate();
+  const signIn = useSignIn();
   const queryClient = useQueryClient();
-  const setUser = useUserStore((state) => state.setUser);
   const { toast } = useToast();
   const { mutate: login, isPending } = useMutation({
     mutationFn: (loginDetails: TLoginFormProps) => apiLogin(loginDetails),
-    onSuccess: (userData) => {
-      toast({
-        variant: "success",
-        title: "Success",
-        description: "Logged in successfully",
-      });
-      setUser(userData.data.data);
-      queryClient.setQueryData(["user"], userData);
-      switch (userData.data.data.role) {
-        case "maintainer":
-          handleNavigate("/maintainer-dashboard");
-          break;
-        case "admin":
-          handleNavigate("/admin-dashboard");
-          break;
+    onSuccess: async (userData) => {
+      if (
+        signIn({
+          auth: { token: userData.token, type: "Bearer" },
+          userState: userData.data.data,
+        })
+      ) {
+        toast({
+          variant: "success",
+          title: "Success",
+          description: "Logged in successfully",
+        });
+        // After successful login
+        console.log(userData);
+        localStorage.setItem("user", JSON.stringify(userData.data.data));
+        queryClient.setQueryData(["user"], userData.data.data);
+
+        switch (userData.data.data.role) {
+          case "maintainer":
+            handleNavigate(ROUTES.DASHBOARD.MAINTAINER);
+            break;
+          case "admin":
+            handleNavigate(ROUTES.DASHBOARD.ADMIN);
+            break;
+          case "member":
+            handleNavigate(ROUTES.DASHBOARD.MEMBER);
+            break;
+          case "trainer":
+            handleNavigate(ROUTES.DASHBOARD.TRAINER);
+            break;
+        }
       }
     },
     onError: (err) => {
@@ -42,11 +59,3 @@ function useLogin() {
 }
 
 export default useLogin;
-
-// 1. Request Login
-// 2. Set the token in the local storage
-// 3. Fetch the user profile
-//   1. Get the token from the local storage
-//   2. Set the token in the headers
-//   3. Fetch the user again
-// 4. Set the user in the global state

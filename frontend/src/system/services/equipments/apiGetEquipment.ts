@@ -5,7 +5,6 @@ import { TEquipmentsData } from "@/system/features/equipments/type";
 
 async function apiGetEquipment(id: string): Promise<TEquipmentsData> {
   try {
-    console.log(`${API_ROUTES.EQUIPMENTS.BASE}/${id}`);
     const response = await _axios.get(`${API_ROUTES.EQUIPMENTS.BASE}/${id}`);
     return response.data.data.data;
   } catch (err) {

@@ -10,4 +10,5 @@ export const editEquipmentSchema = z.object({
   category: z.string().nonempty("Please specify the category"),
   equipmentImage: z.string().optional(),
   status: z.string().nonempty("Please specify the status"),
+  removeImage: z.boolean().optional(),
 });

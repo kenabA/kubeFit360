@@ -48,6 +48,7 @@ export default function ViewEquipment({
             <figure className="size-full h-[400px] overflow-hidden relative">
               <div className="absolute inset-0 bg-primary opacity-50"></div>
               <img
+                loading="lazy"
                 src={equipment.equipmentImage || treadmill}
                 className="size-full object-cover object-center"
                 alt="Image of the equipment"

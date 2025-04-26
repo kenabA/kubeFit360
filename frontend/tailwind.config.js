@@ -78,6 +78,8 @@ export default {
         userPanel: "var(--cta-user-panel)",
         cta: "var(--cta-shadow)",
         general: "var(--general-shadow)",
+        inner: "var(--inner-shadow)",
+        card: "var(--card-shadow)",
       },
       spacing: {
         navbar: "72px",

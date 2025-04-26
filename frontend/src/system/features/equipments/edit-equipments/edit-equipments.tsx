@@ -23,18 +23,21 @@ import useEditEquipment from "./useEditEquipment";
 import { editEquipmentSchema } from "./validator";
 import { TEquipmentsData } from "../type";
 import { TApiResponse } from "@/system/lib/types";
-import CustomSelect from "@/system/components/select/form-select/FormSelect";
-import { statusOptions } from "@/system/lib/data";
+
 import { useSearchParams } from "react-router";
 import { Oval } from "react-loader-spinner";
 import BaseImageInput from "@/system/components/input/base-image-input/BaseImageInput";
 import { handleFileChange, uploadImage } from "@/system/lib/helpers";
+import FormSelect from "@/system/components/select/form-select/FormSelect";
+import { equipmentStatusOptions } from "@/system/lib/data";
+import { ThemedDialog } from "@/components/dialog/Dialog";
 
 export default function EditEquipments({
   selectedId,
   isDialogOpen,
   setIsDialogOpen,
 }: TEditEquipmentProps) {
+  const [openDelete, setOpenDelete] = useState<boolean>(false);
   const [localImage, setLocalImage] = useState<File | string | undefined>();
   const [isPending, setIsPending] = useState<boolean>(false);
   const [searchParams] = useSearchParams();
@@ -45,7 +48,7 @@ export default function EditEquipments({
   >(["equipments", filters]);
 
   const equipment = allEquipment?.data.data?.find((e) => e._id === selectedId);
-  const { editEquipment, isSuccess } = useEditEquipment();
+  const { editEquipment, isSuccess, error } = useEditEquipment();
 
   const {
     register,
@@ -85,6 +88,12 @@ export default function EditEquipments({
     }
   }, [reset, equipment]);
 
+  useEffect(() => {
+    if (error) {
+      setIsPending(false);
+    }
+  }, [error]);
+
   async function onSubmit(data: TEditEquipmentFormProps) {
     setIsPending(true);
     if (localImage) {
@@ -121,12 +130,24 @@ export default function EditEquipments({
       });
     } else {
       // TODO : Handle Remove of the equipment
-      alert(123);
+      setOpenDelete(true);
     }
+  }
+
+  async function handleRemoveProfilePicture() {
+    if (!equipment) return;
+    await editEquipment({
+      editEquipmentDetails: { removeImage: true } as TEditEquipmentFormProps,
+      selectedId: selectedId,
+    });
+    setOpenDelete(false);
+    setIsDialogOpen(false);
+    setValue("equipmentImage", undefined, { shouldDirty: true });
   }
 
   return (
     <FormModal
+      icon="lucide:package"
       title="Edit Equipment"
       subtitle="Modify and Update Equipment Details"
       open={isDialogOpen}
@@ -247,10 +268,12 @@ export default function EditEquipments({
             name="status"
             control={control}
             render={({ field }) => (
-              <CustomSelect
+              <FormSelect
+                error={errors.status}
                 label={field.name}
                 field={field}
-                options={statusOptions}
+                options={equipmentStatusOptions}
+                placeholder="Select a status"
               />
             )}
           />
@@ -266,6 +289,16 @@ export default function EditEquipments({
           type="file"
         />
       </form>
+      <ThemedDialog
+        isPending={false}
+        dialogOpen={openDelete}
+        setDialogOpen={setOpenDelete}
+        mutationFn={handleRemoveProfilePicture}
+        theme="destructive"
+        ctaText="Remove"
+        title="Remove Photo"
+        message="Do you really want to remove the current photo?"
+      />
     </FormModal>
   );
 }

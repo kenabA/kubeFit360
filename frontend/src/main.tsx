@@ -23,7 +23,7 @@ createRoot(document.getElementById("root")!).render(
           </BrowserRouter>
         </Suspense>
       </AuthProvider>
-      <ReactQueryDevtools initialIsOpen={false} />
+      <ReactQueryDevtools initialIsOpen={true} buttonPosition="top-right" />
     </QueryClientProvider>
   </StrictMode>
 );

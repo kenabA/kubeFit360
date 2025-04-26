@@ -1,10 +1,11 @@
 import { cn } from "@/lib/utils";
+import { TWorkoutPlanStatus } from "@/system/features/workout-plan-requests/types";
 
 export default function Status({
   status,
   className,
 }: {
-  status: string;
+  status: string | TWorkoutPlanStatus;
   className?: string;
 }) {
   let statusText;
@@ -23,9 +24,34 @@ export default function Status({
       statusText = "unavailable";
       break;
     case "underMaintenance":
+      statusText = "underMaintenance";
       primaryColor = "hsl(var(--primary))";
       secondaryColor = "hsl(var(--warn-light))";
-      statusText = "maintenance";
+      break;
+    case "approved":
+      primaryColor = "hsl(var(--success))";
+      secondaryColor = "hsl(var(--success-light))";
+      statusText = "approved";
+      break;
+    case "generated":
+      primaryColor = "hsl(var(--accent))";
+      secondaryColor = "hsl(var(--accent-light))";
+      statusText = "generated";
+      break;
+    case "rejected":
+      primaryColor = "hsl(var(--destructive))";
+      secondaryColor = "hsl(var(--destructive-light))";
+      statusText = "rejected";
+      break;
+    case "expired":
+      primaryColor = "hsl(var(--destructive))";
+      secondaryColor = "hsl(var(--destructive-light))";
+      statusText = "rejected";
+      break;
+    case "pending":
+      statusText = "pending";
+      primaryColor = "hsl(var(--primary))";
+      secondaryColor = "hsl(var(--warn-light))";
       break;
   }
 

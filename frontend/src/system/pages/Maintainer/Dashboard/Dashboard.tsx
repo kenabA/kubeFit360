@@ -1,7 +1,6 @@
 import { Heading } from "@/components/heading/Heading";
 import { Block, Piechart } from "@/system/components/index";
 
-import ErrorPage from "@/components/errorPage/ErrorPage";
 import { useState } from "react";
 
 import { equipmentChartConfig } from "@/system/features/equipments/equipmentChartData";
@@ -22,7 +21,7 @@ export default function MaintainerDashboard() {
   const { stats, chartData, error } = useEquipmentsAnalytics();
 
   if (error) {
-    return <ErrorPage errMsg={error.message} />;
+    return <>An Error Occurred</>;
   }
 
   return (
@@ -88,6 +87,7 @@ export default function MaintainerDashboard() {
               className="lg:h-fit h-full"
             >
               <Piechart
+                nameKey="status"
                 entity="Equipments"
                 config={equipmentChartConfig}
                 stats={chartData}

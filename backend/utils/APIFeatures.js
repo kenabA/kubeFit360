@@ -1,7 +1,10 @@
+const { default: mongoose } = require('mongoose');
+
 class APIFeatures {
-  constructor(query, queryString) {
+  constructor(query, queryString, config = {}) {
     this.query = query;
     this.queryString = queryString;
+    this.config = config;
   }
 
   filter() {
@@ -19,32 +22,61 @@ class APIFeatures {
     } else {
       this.query.find(queryStr);
     }
-
     return this;
   }
 
-  search(queryStr) {
+  async search(queryStr) {
     const searchRegex = { $regex: this.queryString.search, $options: 'i' };
-    const searchQuery = {
-      ...queryStr,
-      $or: [
-        { equipmentName: searchRegex },
-        { serialNumber: searchRegex },
-        { brandName: searchRegex },
-      ],
-    };
+    const isNumeric = !isNaN(searchRegex);
+
+    const {
+      includeUserFields = false,
+      userFields = ['member', 'trainer'], // optional: define which user-linked fields to use
+    } = this.config; // Destructing the options object
+
+    let userIds = [];
+
+    if (includeUserFields) {
+      // First find matching users
+      const matchingUsers = await mongoose
+        .model('User')
+        .find({
+          name: searchRegex,
+        })
+        .select('_id');
+
+      userIds = matchingUsers.map((user) => user._id);
+      console.log('User IDs matching the search term:');
+    }
+
+    // Build search conditions
+    const searchConditions = [
+      { name: searchRegex },
+      { email: searchRegex },
+      { equipmentName: searchRegex },
+      { serialNumber: searchRegex },
+      { brandName: searchRegex },
+      { model: searchRegex },
+    ];
+
+    if (includeUserFields && userIds.length > 0) {
+      userFields.forEach((field) => {
+        searchConditions.push({ [field]: { $in: userIds } });
+      });
+    }
+
+    if (isNumeric) {
+      searchConditions.push({ phoneNumber: parseInt(this.queryString.search) });
+    }
+
+    const searchQuery = { ...queryStr, $or: searchConditions };
 
     delete searchQuery['search'];
-
-    console.log(
-      'Final Query Sent to MongoDB:',
-      JSON.stringify(searchQuery, null, 2),
-    );
     this.query.find(searchQuery);
   }
 
-  sort() {
-    this.query = this.query.sort('-installationDate');
+  sort(timeStr) {
+    this.query = this.query.sort(timeStr || '-createdAt');
     return this;
   }
 

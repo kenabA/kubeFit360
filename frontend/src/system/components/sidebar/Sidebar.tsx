@@ -1,6 +1,6 @@
 import kf from "@/assets/shared/svg/kubeFitLogo/kubeFit360°-logo-black.svg";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { sidebarData } from "./data";
+
 import { NavLink, useLocation } from "react-router";
 import {
   Tooltip,
@@ -10,11 +10,20 @@ import {
 } from "@radix-ui/react-tooltip";
 import { AnimatePresence, motion } from "framer-motion";
 import Triangle from "@/components/triangle/Triangle";
+import React, { useState } from "react";
+import { useSidebarData } from "./useSidebar";
+import useAuthUser from "react-auth-kit/hooks/useAuthUser";
+import { TUserDetails } from "@/system/stores/user/types";
 import { ThemedDialog } from "@/components/dialog/Dialog";
-import React from "react";
+import useLogout from "@/system/features/authentication/useLogout";
 
 export default function Sidebar() {
   const location = useLocation();
+  const [logout, setLogout] = useState<boolean>(false);
+  // TODO Get the role of the user from the global state
+  const auth = useAuthUser<TUserDetails>();
+  const sidebarData = useSidebarData(auth ? auth.role : "default");
+  const { isPending, logoutUser } = useLogout();
 
   return (
     <div className="z-10 h-full flex flex-col p-3 pt-0 bg-white shadow-general">
@@ -82,6 +91,11 @@ export default function Sidebar() {
       <div className="pt-[14px] w-full flex justify-center">
         {/* TODO  : Add a logout functionality */}
         <ThemedDialog
+          dialogOpen={logout}
+          setDialogOpen={setLogout}
+          isPending={isPending}
+          disabled={isPending}
+          mutationFn={logoutUser}
           theme="warn"
           ctaText="Logout"
           title="Logout"

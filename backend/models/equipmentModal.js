@@ -1,46 +1,49 @@
 const mongoose = require('mongoose');
 
-const equipmentSchema = new mongoose.Schema({
-  equipmentName: {
-    type: String,
-    required: [true, 'A equipment must have a name'],
-  },
-  serialNumber: {
-    unique: true,
-    type: String,
-    required: [true, 'A equipment must have a serial number'],
-  },
-  installationDate: {
-    type: Date,
-    default: Date.now(),
-  },
-  status: {
-    type: String,
-    default: 'active',
-    enum: {
-      values: ['active', 'inactive', 'underMaintenance'],
-      message: 'Please provide a valid status',
+const equipmentSchema = new mongoose.Schema(
+  {
+    equipmentName: {
+      type: String,
+      required: [true, 'A equipment must have a name'],
     },
-  },
-  brandName: {
-    type: String,
-    required: [true, 'A equipment must have a brand name.'],
-  },
-  lastMaintenance: Date,
-  category: {
-    enum: {
-      values: ['strength', 'cardio', 'flexibility'],
-      message: 'Please provide a valid category',
+    serialNumber: {
+      unique: true,
+      type: String,
+      required: [true, 'A equipment must have a serial number'],
     },
-    type: String,
-    required: [true, 'A equipment must have a category.'],
+    installationDate: {
+      type: Date,
+      default: Date.now(),
+    },
+    status: {
+      type: String,
+      default: 'active',
+      enum: {
+        values: ['active', 'inactive', 'underMaintenance'],
+        message: 'Please provide a valid status',
+      },
+    },
+    brandName: {
+      type: String,
+      required: [true, 'A equipment must have a brand name.'],
+    },
+    lastMaintenance: Date,
+    category: {
+      enum: {
+        values: ['strength', 'cardio', 'flexibility'],
+        message: 'Please provide a valid category',
+      },
+      type: String,
+      required: [true, 'A equipment must have a category.'],
+    },
+    description: {
+      type: String,
+      required: [true, 'A equipment must have a description.'],
+    },
+    equipmentImage: String,
   },
-  description: {
-    type: String,
-    required: [true, 'A equipment must have a description.'],
-  },
-  equipmentImage: String,
-});
+  { timestamps: true },
+);
 
 // equipmentSchema.pre('findOneAndUpdate', async function (next) {
 //   const query = this.getQuery();

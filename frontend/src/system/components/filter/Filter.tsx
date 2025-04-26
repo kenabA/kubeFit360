@@ -12,7 +12,6 @@ import { useState } from "react";
 import { useSearchParams } from "react-router";
 
 // TO make the filter component not close, simply use the open, setOpenChange and so on to the popover
-
 export default function Filter({ entity }: { entity: TEntity }) {
   const [filterOpen, setFilterOpen] = useState<boolean>(false);
   const [filters, setFilters] = useState<{ field: string; value: string }[]>(

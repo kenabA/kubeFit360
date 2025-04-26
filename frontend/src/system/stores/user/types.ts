@@ -5,11 +5,15 @@ export type TUserStore = {
 
 export type TUserDetails = {
   _id: string;
+  address: string;
+  birthDate: string;
   name: string;
   email: string;
-  phoneNumber: number;
-  gender: ["male", "female", "others"];
-  role: string;
+  phoneNumber: string;
+  gender: string;
+  role: "maintainer" | "admin" | "trainer" | "member";
   joinDate: string;
   status: string;
+  userImage: string;
+  createdAt: string;
 };

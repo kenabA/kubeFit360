@@ -15,13 +15,19 @@ import Pagination from "../../pagination/Pagination";
 export default function GeneralTable<T>({
   resultCount,
   className,
+  paginationClassName,
   data,
   columns,
+  noDataTitle = "No data found",
+  noDataDescription = "Get started by creating a new one.",
 }: {
   resultCount: number;
   className?: string;
+  paginationClassName?: string;
   data: T[];
   columns: ColumnDef<T>[];
+  noDataTitle: string;
+  noDataDescription: string;
 }) {
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
   const table = useReactTable({
@@ -36,9 +42,14 @@ export default function GeneralTable<T>({
   });
 
   return (
-    <div className={cn("overflow-x-auto custom-scrollbar", className)}>
-      <table className="overflow-y-auto w-full min-w-[700px] divide-y divide-[#E2E7EB]">
-        <thead className="bg-[#F9F9F9]">
+    <div
+      className={cn(
+        "overflow-auto relative custom-scrollbar flex flex-col h-full pb-[80px]",
+        className
+      )}
+    >
+      <table className="w-full min-w-[700px] divide-y divide-[#E2E7EB]">
+        <thead className="bg-[#F9F9F9] sticky top-0 w-[calc(100%+6px)]">
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
@@ -67,7 +78,7 @@ export default function GeneralTable<T>({
             </tr>
           ))}
         </thead>
-        <tbody className="divide-y divide-gray-200">
+        <tbody className="divide-y divide-gray-200 sticky-0 bottom-0">
           {table.getRowModel().rows.map((row) => (
             <tr onClick={row.getToggleSelectedHandler()} key={row.id}>
               {row.getVisibleCells().map((cell) => (
@@ -83,13 +94,12 @@ export default function GeneralTable<T>({
         </tbody>
       </table>
 
-      {data.length <= 0 ? (
-        <NoData
-          description="Get started by creating a new equipment."
-          title="No items found"
-        />
-      ) : (
-        <Pagination className="px-6" resultCount={resultCount} />
+      {data.length <= 0 && (
+        <NoData description={noDataDescription} title={noDataTitle} />
+      )}
+
+      {data.length > 0 && (
+        <Pagination className={paginationClassName} resultCount={resultCount} />
       )}
     </div>
   );

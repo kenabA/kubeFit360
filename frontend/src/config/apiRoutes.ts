@@ -6,6 +6,7 @@ export const API_ROUTES = {
   AUTH: {
     AUTHENTICATE_USER: buildApiRoute("auth/authenticateUser"),
     LOGIN: buildApiRoute("auth/login"),
+    LOGOUT: buildApiRoute("auth/logout"),
     SIGNUP: buildApiRoute("auth/signup"),
     FORGOT_PASSWORD: buildApiRoute("auth/forgotPassword"),
     RESET_PASSWORD: buildApiRoute("auth/resetPassword"),
@@ -14,9 +15,24 @@ export const API_ROUTES = {
     BASE: buildApiRoute("equipments"),
     STATS: buildApiRoute("equipments/equipment-stats"),
   },
+  MAINTAINERS: {
+    BASE: buildApiRoute("maintainers"),
+  },
+
+  NOTICES: buildApiRoute("notices"),
+
+  TRAINERS: {
+    BASE: buildApiRoute("maintainers"),
+    WORKOUT_PLAN_REQUESTS: buildApiRoute("workoutPlanRequests"),
+    WORKOUT_PLAN_TEMPLATE: buildApiRoute("workoutPlanTemplate"),
+    WORKOUT_PLAN: buildApiRoute("workoutPlan"),
+    WORKOUT_PLAN_STATS: buildApiRoute("workoutPlan/stats"),
+  },
   RECENT_ACTIVITIES: buildApiRoute("recentActivities"),
   USER: {
     BASE: buildApiRoute("users"),
     STATS: buildApiRoute("users/user-stats"),
+    CR_USER: buildApiRoute("users/me"),
+    UPDATE_PASSWORD: buildApiRoute("users/updatePassword"),
   },
 };

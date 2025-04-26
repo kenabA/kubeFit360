@@ -1,67 +1,230 @@
+// Core React + Routing
+import React, { lazy, Suspense, useEffect } from "react";
 import { Route, Routes } from "react-router";
 
-import WebsiteLayout from "@/layout/WebsiteLayout";
-import LandingPage from "@/website/pages/LandingPage/LandingPage";
-import About from "@/website/pages/About/About";
-import Membership from "@/website/layout/sections/Membership/Membership";
-import SuccessStories from "@/website/layout/sections/SuccessStories/SuccessStories";
-
-import Login from "@/system/pages/Login/Login";
-import Signup from "@/system/pages/SignUp/SignUp";
-import ForgotPassword from "@/system/pages/ForgotPassword/ForgotPassword";
-import ResetPassword from "@/system/pages/ResetPassword/ResetPassword";
-
+// Hook and utilities (keep normal)
 import ScrollToTop from "@/hooks/useScrollToTop";
-import LoginLayout from "./layout/auth/LoginLayout";
-import SignupLayout from "@/layout/auth/SignupLayout";
-import PasswordChanged from "@/system/pages/ResetPassword/PasswordChanged";
 import { ROUTES } from "@/config/appRoutes";
-
 import ProtectedRoute from "@/system/features/authentication/ProtectedRoute";
-import React from "react";
-import SystemLayout from "./layout/SystemLayout";
-import ErrorPage from "@/components/errorPage/ErrorPage";
+import { useQueryClient } from "@tanstack/react-query";
+import Spinner from "./system/components/spinner/Spinner";
+import Trainer from "./system/pages/admin/trainer/trainer";
 
-import AdminDashboard from "./system/pages/Admin/Dashboard/Dashboard";
-import Equipments from "./system/pages/Maintainer/Equipments/Equipments";
-import MaintainerDashboard from "./system/pages/Maintainer/Dashboard/Dashboard";
+// ✅ Website Pages (lazy)
+const LandingPage = lazy(
+  () => import("@/website/pages/LandingPage/LandingPage")
+);
+const About = lazy(() => import("@/website/pages/About/About"));
+const SuccessStories = lazy(
+  () => import("@/website/layout/sections/SuccessStories/SuccessStories")
+);
+const Membership = lazy(
+  () => import("@/website/layout/sections/Membership/Membership")
+);
+
+// ✅ Layouts (lazy)
+const WebsiteLayout = lazy(() => import("@/layout/WebsiteLayout"));
+const LoginLayout = lazy(() => import("./layout/auth/LoginLayout"));
+const SignupLayout = lazy(() => import("@/layout/auth/SignupLayout"));
+const SystemLayout = lazy(() => import("./layout/SystemLayout"));
+
+// ✅ Auth Pages (lazy)
+const Login = lazy(() => import("@/system/pages/Login/Login"));
+const Signup = lazy(() => import("@/system/pages/SignUp/SignUp"));
+const ForgotPassword = lazy(
+  () => import("@/system/pages/forgot-password/ForgotPassword")
+);
+const ResetPassword = lazy(
+  () => import("@/system/pages/ResetPassword/ResetPassword")
+);
+const PasswordChanged = lazy(
+  () => import("@/system/pages/ResetPassword/PasswordChanged")
+);
+
+// ✅ Admin Pages (lazy)
+const AdminDashboard = lazy(
+  () => import("./system/pages/admin/Dashboard/Dashboard")
+);
+const Maintainer = lazy(
+  () => import("./system/pages/admin/Maintainer/Maintainer")
+);
+
+// ✅ Maintainer Pages (lazy)
+const MaintainerDashboard = lazy(
+  () => import("./system/pages/Maintainer/Dashboard/Dashboard")
+);
+const Equipments = lazy(
+  () => import("./system/pages/Maintainer/Equipments/Equipments")
+);
+
+// ✅ Trainer Pages (lazy)
+const TrainerDashboard = lazy(
+  () => import("./system/pages/Trainer/Dashboard/Dashboard")
+);
+const WorkoutPlanRequests = lazy(
+  () =>
+    import("./system/pages/Trainer/workout-plan-requests/WorkoutPlanRequests")
+);
+const CreateWorkoutPlan = lazy(
+  () =>
+    import(
+      "./system/pages/Trainer/workout-plan/create-workout-plan/CreateWorkoutPlan"
+    )
+);
+
+// ✅ Member Pages (lazy)
+const MemberDashboard = lazy(
+  () => import("./system/pages/Member/dashboard/dashboard")
+);
+const ClientWorkoutPlan = lazy(
+  () => import("./system/pages/Member/client-workout-plan/client-workout-plan")
+);
+
+// ✅ Shared Pages (lazy)
+const Settings = lazy(() => import("./system/pages/settings/Settings"));
+const Notices = lazy(() => import("./system/pages/notices/notices"));
+const Unauthorized = lazy(
+  () => import("./components/unauthorized/Unauthorized")
+);
+const PageNotFound = lazy(
+  () => import("./components/page-not-found/PageNotFound")
+);
 
 export default function App() {
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      queryClient.setQueryData(["user"], JSON.parse(storedUser));
+    }
+  }, [queryClient]);
+
   return (
     <React.Fragment>
       <ScrollToTop />
       <Routes>
-        <Route path="/" element={<WebsiteLayout />}>
+        {/* ======= WEBSITE ROUTES ======= */}
+        <Route
+          path="/"
+          element={
+            <Suspense fallback={<Spinner />}>
+              <WebsiteLayout />
+            </Suspense>
+          }
+        >
           <Route index element={<LandingPage />} />
           <Route path={ROUTES.ABOUT} element={<About />} />
-          <Route path={ROUTES.TESTIMONIAL} element={<SuccessStories />} />
-          <Route path={ROUTES.MEMBERSHIP} element={<Membership />} />
+          <Route
+            path={ROUTES.TESTIMONIAL}
+            element={
+              <Suspense fallback={<Spinner />}>
+                <SuccessStories />
+              </Suspense>
+            }
+          />
+          <Route
+            path={ROUTES.MEMBERSHIP}
+            element={
+              <Suspense fallback={<Spinner />}>
+                <Membership />
+              </Suspense>
+            }
+          />
         </Route>
+
         <Route element={<LoginLayout />}>
           <Route path={ROUTES.LOGIN} element={<Login />} />
           <Route path={ROUTES.FORGOT_PASSWORD} element={<ForgotPassword />} />
           <Route path={ROUTES.RESET_PASSWORD} element={<ResetPassword />} />
           <Route path={ROUTES.PASSWORD_CHANGED} element={<PasswordChanged />} />
         </Route>
-        <Route element={<ProtectedRoute />}>
-          <Route element={<SystemLayout />}>
+
+        <Route element={<SystemLayout />}>
+          <Route element={<ProtectedRoute allowedRoles={["maintainer"]} />}>
             <Route
               path={ROUTES.DASHBOARD.MAINTAINER}
               element={<MaintainerDashboard />}
             />
+          </Route>
+          <Route element={<ProtectedRoute allowedRoles={["member"]} />}>
+            <Route
+              path={ROUTES.DASHBOARD.MEMBER}
+              element={<MemberDashboard />}
+            />
+          </Route>
+          <Route
+            element={
+              <ProtectedRoute
+                allowedRoles={["admin", "maintainer", "trainer", "member"]}
+              />
+            }
+          >
+            <Route path={ROUTES.NOTICES} element={<Notices />} />
+          </Route>
+          <Route element={<ProtectedRoute allowedRoles={["trainer"]} />}>
+            <Route
+              path={ROUTES.DASHBOARD.TRAINER}
+              element={<TrainerDashboard />}
+            />
+          </Route>
+          <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
             <Route path={ROUTES.DASHBOARD.ADMIN} element={<AdminDashboard />} />
+          </Route>
+
+          <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
+            <Route path={ROUTES.MAINTAINERS} element={<Maintainer />} />
+          </Route>
+          <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
+            <Route path={ROUTES.TRAINERS} element={<Trainer />} />
+          </Route>
+          <Route element={<ProtectedRoute allowedRoles={["member"]} />}>
+            <Route
+              path={ROUTES.WORKOUT_PLAN.MEMBER}
+              element={<ClientWorkoutPlan />}
+            />
+          </Route>
+          <Route
+            element={<ProtectedRoute allowedRoles={["admin", "trainer"]} />}
+          >
+            <Route
+              path={ROUTES.WORKOUT_PLAN_REQUESTS}
+              element={<WorkoutPlanRequests />}
+            />
+          </Route>
+          <Route
+            element={<ProtectedRoute allowedRoles={["admin", "trainer"]} />}
+          >
+            <Route
+              path={ROUTES.WORKOUT_PLAN.CREATE}
+              element={<CreateWorkoutPlan />}
+            />
+          </Route>
+          <Route
+            element={
+              <ProtectedRoute
+                allowedRoles={["admin", "maintainer", "trainer"]}
+              />
+            }
+          >
             <Route path={ROUTES.EQUIPMENTS} element={<Equipments />} />
           </Route>
+          <Route
+            element={
+              <ProtectedRoute
+                allowedRoles={["admin", "maintainer", "trainer", "member"]}
+              />
+            }
+          >
+            <Route path={ROUTES.SETTINGS} element={<Settings />} />
+          </Route>
         </Route>
-
         <Route element={<SignupLayout />}>
           <Route path={ROUTES.SIGNUP} element={<Signup />} />
         </Route>
 
-        <Route
-          path="*"
-          element={<ErrorPage errMsg="Page could not be found" />}
-        />
+        <Route path="/unauthorized" element={<Unauthorized />} />
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     </React.Fragment>
   );

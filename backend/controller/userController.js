@@ -1,4 +1,5 @@
 const User = require('../models/userModal');
+const APIFeatures = require('../utils/APIFeatures');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const filterObj = require('../utils/filterObj');
@@ -34,14 +35,29 @@ exports.getClientStats = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllUsers = catchAsync(async (req, res, next) => {
-  console.log('first');
-  const { role } = req.query;
-  const query = role ? { role } : {};
-  const users = await User.find(query);
-  const count = await User.countDocuments(query);
-
-  res.status(201).json({ status: 'success', data: { count, users } });
+  const users = await User.find();
+  const count = await User.countDocuments();
+  res.status(200).json({ status: 'success', data: { count, users } });
 });
+
+exports.getUsersByRole = (role) =>
+  catchAsync(async (req, res, next) => {
+    const queryWithFilter = new APIFeatures(
+      User.find({ role: role }),
+      req.query,
+    ).filter();
+
+    const count = await User.countDocuments(queryWithFilter.query);
+
+    const finalQuery = queryWithFilter.sort().paginate().query;
+
+    const users = await finalQuery;
+
+    res.status(200).json({
+      status: 'success',
+      data: { count, data: users },
+    });
+  });
 
 exports.getMe = (req, res, next) => {
   req.params.id = req.user.id;
@@ -56,7 +72,7 @@ exports.getUser = catchAsync(async (req, res, next) => {
   if (!user) {
     return next(new AppError(`No user found with that id`, 404));
   }
-  res.status(201).json({ status: 'success', data: { user } });
+  res.status(201).json({ status: 'success', data: { data: user } });
 });
 
 exports.updateMe = catchAsync(async (req, res, next) => {
@@ -82,6 +98,10 @@ exports.updateMe = catchAsync(async (req, res, next) => {
 });
 
 exports.updateUser = catchAsync(async (req, res, next) => {
+  if (req.body.removeImage) {
+    req.body.userImage = '';
+  }
+
   const udpatedUser = await User.findOneAndUpdate(
     { _id: req.params.id },
     req.body,
@@ -92,7 +112,7 @@ exports.updateUser = catchAsync(async (req, res, next) => {
     return next(new AppError('No user found with that id', 404));
   }
 
-  res.status(201).json({ status: 'success', data: { user: udpatedUser } });
+  res.status(201).json({ status: 'success', data: { data: udpatedUser } });
 });
 
 exports.deleteUser = catchAsync(async (req, res, next) => {
@@ -105,4 +125,20 @@ exports.deleteUser = catchAsync(async (req, res, next) => {
   }
 
   res.status(204).json({ status: 'success' });
+});
+
+exports.addUser = catchAsync(async (req, res, next) => {
+  if (!req.body || Object.keys(req.body).length === 0) {
+    return res.status(400).json({
+      status: 'fail',
+      message: 'Request body is missing',
+    });
+  }
+  const newUser = await User.create(req.body);
+  newUser.password = undefined;
+
+  res.status(201).json({
+    status: 'success',
+    data: { data: newUser },
+  });
 });

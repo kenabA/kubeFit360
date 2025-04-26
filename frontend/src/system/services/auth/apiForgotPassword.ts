@@ -1,7 +1,7 @@
 import { API_ROUTES } from "@/config/apiRoutes";
 import { _axios } from "@/config/axios";
 import { AxiosError } from "axios";
-import { TForgotPasswordFormProps } from "../../pages/ForgotPassword/types";
+import { TForgotPasswordFormProps } from "../../pages/forgot-password/types";
 
 const apiForgotPassword = async (
   forgotPasswordDetails: TForgotPasswordFormProps

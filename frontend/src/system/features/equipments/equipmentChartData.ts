@@ -21,6 +21,7 @@ export const equipmentChartConfig = {
   },
   unavailable: {
     label: "Unavailable",
+
     color: "hsl(var(--chart-2))",
   },
   underMaintenance: {

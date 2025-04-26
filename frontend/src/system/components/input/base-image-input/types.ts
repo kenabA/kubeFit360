@@ -3,6 +3,7 @@ import { FieldError } from "react-hook-form";
 
 export type TBaseImageInputProps = {
   label: string;
+  isSettings?: boolean;
   type: React.HTMLInputTypeAttribute;
   name?: string;
   error?: FieldError | undefined;

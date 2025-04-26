@@ -10,6 +10,7 @@ function useEditEquipment() {
     mutate: editEquipment,
     isPending,
     isSuccess,
+    error,
   } = useMutation({
     mutationFn: ({
       editEquipmentDetails,
@@ -37,7 +38,7 @@ function useEditEquipment() {
       });
     },
   });
-  return { editEquipment, isPending, isSuccess };
+  return { editEquipment, isPending, isSuccess, error };
 }
 
 export default useEditEquipment;

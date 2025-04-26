@@ -10,24 +10,31 @@ export function BaseInput<T extends FieldValues>({
   name,
   register,
   placeholder,
+  disabled = false,
   error,
+  allowPastDate,
 }: TBaseInputProps<T>) {
   const [hidden, setHidden] = useState<boolean>(true);
+
+  // Calculate today's date in YYYY-MM-DD format
+  const today = new Date().toISOString().split("T")[0];
 
   return (
     <div className="flex flex-col w-full">
       <div className="group relative w-full flex flex-col gap-2">
         <label
           htmlFor={label}
-          className={`text-sm text-gray-tertiary font-normal`}
+          className={`text-sm text-gray-tertiary font-normal w-fit`}
         >
           {label}
         </label>
         <Input
+          disabled={disabled}
           className="w-full rounded-[8px] border border-slate-300 px-4 focus-visible:ring-1 focus-visible:ring-gray-tertiary  text-sm h-[44px]"
           id={label}
           type={type === "password" ? (hidden ? "password" : "text") : type}
           placeholder={placeholder}
+          min={type === "date" && !allowPastDate ? today : undefined}
           {...register(name as Path<T>)}
         />
 

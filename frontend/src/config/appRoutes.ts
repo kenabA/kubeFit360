@@ -11,8 +11,20 @@ export const ROUTES = {
   DASHBOARD: {
     MAINTAINER: "/maintainer-dashboard",
     ADMIN: "/admin-dashboard",
+    TRAINER: "/trainer-dashboard",
+    MEMBER: "/member-dashboard",
   },
   EQUIPMENTS: "/equipments",
+  MAINTAINERS: "/maintainers",
+  TRAINERS: "/trainers",
+  WORKOUT_PLAN_REQUESTS: "/workoutPlanRequests",
+  WORKOUT_PLAN: {
+    BASE: "/workoutPlan",
+    TRAINER: "/workoutPlan",
+    CREATE: "/workoutPlan/:id/create",
+    MEMBER: "/workoutPlan/member",
+  },
   NOTICES: "/notices",
   SETTINGS: "/settings",
+  UNAUTHORIZED: "/unauthorized",
 };

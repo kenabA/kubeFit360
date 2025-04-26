@@ -65,7 +65,7 @@ export default function BaseSelect({
             className
           )}
         >
-          <SelectValue placeholder="Select a status" />
+          <SelectValue placeholder="Select a field" />
         </SelectTrigger>
         <SelectContent>
           {options?.map((opt) => {
