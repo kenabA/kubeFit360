@@ -8,6 +8,7 @@ export const API_ROUTES = {
     LOGIN: buildApiRoute("auth/login"),
     LOGOUT: buildApiRoute("auth/logout"),
     SIGNUP: buildApiRoute("auth/signup"),
+    SIGNUP_REQUEST: buildApiRoute("auth/signupRequest"),
     FORGOT_PASSWORD: buildApiRoute("auth/forgotPassword"),
     RESET_PASSWORD: buildApiRoute("auth/resetPassword"),
   },
@@ -33,6 +34,8 @@ export const API_ROUTES = {
     BASE: buildApiRoute("users"),
     STATS: buildApiRoute("users/user-stats"),
     CR_USER: buildApiRoute("users/me"),
+    SIGNUP_REQUEST: buildApiRoute("users/clients"),
+    PROCESS_SIGNUP_REQUEST: buildApiRoute("users/processClientRequest"),
     UPDATE_PASSWORD: buildApiRoute("users/updatePassword"),
   },
 };

@@ -9,6 +9,7 @@ import ProtectedRoute from "@/system/features/authentication/ProtectedRoute";
 import { useQueryClient } from "@tanstack/react-query";
 import Spinner from "./system/components/spinner/Spinner";
 import Trainer from "./system/pages/admin/trainer/trainer";
+import SignUpRequest from "./system/pages/admin/client/signup-request/signup-request";
 
 // ✅ Website Pages (lazy)
 const LandingPage = lazy(
@@ -177,6 +178,9 @@ export default function App() {
           </Route>
           <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
             <Route path={ROUTES.TRAINERS} element={<Trainer />} />
+          </Route>
+          <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
+            <Route path={ROUTES.SIGNUP_REQUEST} element={<SignUpRequest />} />
           </Route>
           <Route element={<ProtectedRoute allowedRoles={["member"]} />}>
             <Route

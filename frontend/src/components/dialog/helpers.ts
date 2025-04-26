@@ -1,12 +1,13 @@
 import warn from "@/assets/system/svg/warn.svg";
 import alert from "@/assets/system/svg/alert.svg";
+import success from "@/assets/system/svg/success.svg";
 
 export const themeStyles = {
   success: {
     text: "text-success",
     background: "bg-success",
     backgroundLight: "bg-success-light",
-    icon: warn,
+    icon: success,
   },
   destructive: {
     text: "text-destructive",

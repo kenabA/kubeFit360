@@ -31,6 +31,11 @@ export const sidebarDataAdmin: TSidebarData[] = [
     icon: "lucide:home",
   },
   {
+    title: "Client Requests",
+    to: ROUTES.SIGNUP_REQUEST,
+    icon: "fluent:form-new-24-regular",
+  },
+  {
     title: "Maintainers",
     to: ROUTES.MAINTAINERS,
     icon: "gravity-ui:person-worker",

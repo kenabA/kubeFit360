@@ -1,3 +1,4 @@
+import { TClientStatus } from "../features/authentication/useGetSignUpRequests";
 import {
   TBodyType,
   TDays,
@@ -19,6 +20,7 @@ export type TFilterFields = {
   trainers: TEntity;
   notices: TEntity;
   workoutPlanRequests: TEntity;
+  signUpRequests: TEntity;
 };
 
 export type TFields = { label: string; options: TOptions<string>[] };
@@ -67,12 +69,22 @@ export const categoryOptions: TOptions<string>[] = [
   { label: "Flexibility", value: "flexibility" },
   { label: "Strength", value: "strength" },
 ];
+export const membershipOptions: TOptions<string>[] = [
+  { label: "Basic", value: "basic" },
+  { label: "Enterprise", value: "enterprise" },
+];
 
 export const requestPlanStatusOptions: TOptions<TWorkoutPlanStatus>[] = [
   { label: "Approved", value: "approved", theme: "hsl(var(--success))" },
   { label: "Pending", value: "pending", theme: "hsl(var(--primary))" },
   { label: "Rejected", value: "rejected", theme: "hsl(var(--destructive))" },
   { label: "Generated", value: "generated", theme: "hsl(var(--accent))" },
+];
+
+export const signUpRequestStatusOptions: TOptions<TClientStatus>[] = [
+  { label: "Approved", value: "approved", theme: "hsl(var(--success))" },
+  { label: "Pending", value: "pending", theme: "hsl(var(--primary))" },
+  { label: "Rejected", value: "rejected", theme: "hsl(var(--destructive))" },
 ];
 
 export const fitnessLevelOptions: TOptions<TFitnessLevel>[] = [
@@ -87,6 +99,13 @@ export const filterFields: TFilterFields = {
     fields: [
       { label: "status", options: equipmentStatusOptions },
       { label: "category", options: categoryOptions },
+    ],
+  },
+  signUpRequests: {
+    name: "signUpRequests",
+    fields: [
+      { label: "membershipType", options: membershipOptions },
+      { label: "status", options: signUpRequestStatusOptions },
     ],
   },
   notices: {

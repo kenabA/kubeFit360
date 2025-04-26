@@ -9,6 +9,7 @@ import { signupSchema } from "./validator";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AnimatePresence, motion } from "framer-motion";
+import useSignUpRequest from "@/system/features/authentication/useSignUpRequest";
 
 const cardVariants = {
   hidden: { opacity: 0, y: -10 },
@@ -17,6 +18,8 @@ const cardVariants = {
 
 export function SignupForm() {
   const { toggleShow, show, resetShow } = useShowStore();
+
+  const { createSignInRequest } = useSignUpRequest();
 
   const {
     register,
@@ -30,7 +33,7 @@ export function SignupForm() {
     mode: "onChange",
   });
 
-  const selectedMembership = watch("membershipPlan"); // Watch the selected plan
+  const selectedMembership = watch("membershipType"); // Watch the selected plan
 
   useEffect(() => {
     return () => {
@@ -44,7 +47,14 @@ export function SignupForm() {
   }
 
   function onSubmit(data: TSignupFormProps) {
-    console.log(data);
+    if (!data) return;
+    data = {
+      ...data,
+      membershipType: data.membershipType
+        ? data.membershipType.toLowerCase()
+        : "",
+    };
+    createSignInRequest(data);
   }
 
   return (
@@ -71,7 +81,7 @@ export function SignupForm() {
             <MembershipCards
               variant="webapp"
               selectedMembership={selectedMembership || ""}
-              onSelect={(value) => setValue("membershipPlan", value)}
+              onSelect={(value) => setValue("membershipType", value)}
             />
           </motion.div>
         )}
@@ -81,10 +91,10 @@ export function SignupForm() {
         <>
           <FloatingInput
             register={register}
-            name="fullName"
+            name="name"
             label="Full Name"
             type="text"
-            error={errors.fullName}
+            error={errors.name}
           />
           <FloatingInput
             register={register}

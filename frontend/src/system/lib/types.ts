@@ -1,6 +1,7 @@
 export type TBaseApiResponse<T> = {
   data: { count?: number; data: T };
   status: string;
+  message: string;
 };
 
 export type TApiResponse<T> = TBaseApiResponse<T>;

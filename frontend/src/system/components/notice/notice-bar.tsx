@@ -11,9 +11,8 @@ import { TNoticeData } from "@/system/features/notices/type";
 import { useGetDayMonth } from "@/hooks/useGetDayMonth";
 import useDeleteNotice from "@/system/features/notices/delete-notice/useDeleteNotice";
 import { cn } from "@/lib/utils";
-import Status from "../status/Status";
+
 import { Badge } from "@/components/ui/badge";
-import Tag from "../tag/Tag";
 
 export default function NoticeBar({
   role,

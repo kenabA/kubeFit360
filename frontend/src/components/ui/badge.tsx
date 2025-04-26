@@ -23,6 +23,9 @@ const badgeVariants = cva(
           "border-success bg-success-light text-success shadow hover:bg-success-light dark:bg-success-900 dark:text-slate-50 dark:hover:bg-success-light",
         available:
           "border-success bg-success-light text-success shadow hover:bg-success-light dark:bg-success-900 dark:text-slate-50 dark:hover:bg-success-light",
+        basic:
+          "border-accent bg-accent text-accent-foreground shadow hover:bg-accent-hover dark:bg-accent-900 dark:text-slate-50 dark:hover:bg-accent-900/80",
+        gold: "border-[#fdc100] bg-[#fdc100] text-[#493209] shadow hover:bg-primary-light dark:bg-primary-900 dark:text-slate-50 dark:hover:bg-primary-900/80",
       },
     },
     defaultVariants: {
