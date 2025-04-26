@@ -1,8 +1,10 @@
+const Client = require('../models/clientModal');
 const User = require('../models/userModal');
 const APIFeatures = require('../utils/APIFeatures');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const filterObj = require('../utils/filterObj');
+const sendEmail = require('./../utils/email');
 
 exports.getClientStats = catchAsync(async (req, res, next) => {
   const stats = await User.aggregate([
@@ -140,5 +142,94 @@ exports.addUser = catchAsync(async (req, res, next) => {
   res.status(201).json({
     status: 'success',
     data: { data: newUser },
+  });
+});
+
+exports.getAllClients = () =>
+  catchAsync(async (req, res, next) => {
+    const queryWithFilter = new APIFeatures(Client.find(), req.query).filter();
+
+    const count = await Client.countDocuments(queryWithFilter.query);
+
+    const finalQuery = queryWithFilter.sort().paginate().query;
+
+    const clients = await finalQuery;
+
+    res.status(200).json({
+      status: 'success',
+      data: { count, data: clients },
+    });
+  });
+
+exports.processClientRequest = catchAsync(async (req, res, next) => {
+  const clientIdFromParams = req.params.id;
+  const { status } = req.body;
+
+  if (!['approved', 'rejected'].includes(status)) {
+    return res.status(400).json({
+      status: 'fail',
+      message: "Decision must be either 'approved' or 'rejected'",
+    });
+  }
+
+  const client = await Client.findById(clientIdFromParams);
+  if (!client) {
+    return res.status(404).json({
+      status: 'fail',
+      message: 'No client found with that ID',
+    });
+  }
+  if (!client.status || client.status !== 'pending') {
+    return res.status(400).json({
+      status: 'fail',
+      message: 'This client request has already been processed',
+    });
+  }
+
+  if (status === 'approved') {
+    client.status = 'approved';
+    // 3) Send it to the user's email
+    const paymentURL = `PAYMENT URL`;
+
+    const message = `Congratulations! Your membership request has been approved.\n\nPlease complete the payment using the link below:\n${paymentURL}\n`;
+
+    try {
+      await sendEmail({
+        email: client.email,
+        subject: 'Membership Request Approved!',
+        message,
+      });
+    } catch {
+      return next(
+        new AppError(
+          'There was an error sending the email. Try again later.',
+          500,
+        ),
+      );
+    }
+  } else if (status === 'rejected') {
+    client.status = 'rejected';
+    const message = `We are sorry to inform you that your membership request has been rejected. If you have any questions, please contact us.`;
+    try {
+      await sendEmail({
+        email: client.email,
+        subject: 'Membership Request Rejected!',
+        message,
+      });
+    } catch {
+      return next(
+        new AppError(
+          'There was an error sending the email. Try again later.',
+          500,
+        ),
+      );
+    }
+  }
+  await client.save({ validateBeforeSave: false });
+
+  res.status(200).json({
+    status: 'success',
+    message: `Client request has been ${status} successfully`,
+    data: { data: client },
   });
 });

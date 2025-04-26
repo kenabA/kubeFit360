@@ -7,17 +7,61 @@ const crypto = require('crypto');
 
 const jwt = require('jsonwebtoken');
 const createAndSendToken = require('../utils/token');
+const Client = require('../models/clientModal');
 
-exports.signup = catchAsync(async (req, res, next) => {
+// exports.signup = catchAsync(async (req, res, next) => {
+
+exports.signupMemberRequest = catchAsync(async (req, res, next) => {
   if (!req.body || Object.keys(req.body).length === 0) {
     return res.status(400).json({
       status: 'fail',
       message: 'Request body is missing',
     });
   }
-  const newUser = await User.create(req.body);
-  newUser.password = undefined;
-  createAndSendToken(newUser, 201, res);
+
+  if (req.body.role && req.body.role !== 'member') {
+    return res.status(403).json({
+      status: 'fail',
+      message: 'This route is only for client signup requests.',
+    });
+  }
+
+  const { name, email, phoneNumber, gender, address, membershipType } =
+    req.body;
+
+  // ✅ Check if a pending client already exists with same email
+  const existingRequest = await User.findOne({
+    email,
+    role: 'member',
+    status: 'pending',
+  });
+
+  if (existingRequest) {
+    return res.status(400).json({
+      status: 'fail',
+      message:
+        'A signup request with this email is already pending for approval.',
+    });
+  }
+
+  // ✅ Create new member request
+  const clientFormRequest = await Client.create({
+    name,
+    email,
+    phoneNumber,
+    gender,
+    address,
+    membershipType,
+    role: 'member',
+    status: 'pending',
+    active: false,
+  });
+
+  res.status(201).json({
+    status: 'success',
+    message: 'Signup request created successfully!',
+    data: { user: clientFormRequest },
+  });
 });
 
 exports.login = catchAsync(async (req, res, next) => {

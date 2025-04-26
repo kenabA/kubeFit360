@@ -9,6 +9,8 @@ const {
   getClientStats,
   getUsersByRole,
   addUser,
+  getAllClients,
+  processClientRequest,
 } = require('../controller/userController');
 const {
   updatePassword,
@@ -34,7 +36,13 @@ router.route('/user-stats').get(restrictTo('admin'), getClientStats);
 
 router.route('/maintainers').get(getUsersByRole('maintainer'));
 
+router.route('/clients').get(getAllClients());
+
 router.route('/trainers').get(getUsersByRole('trainer'));
+
+router
+  .route('/processClientRequest/:id')
+  .patch(restrictTo('admin'), processClientRequest);
 
 router.route('/:id').get(getUser).patch(updateUser).delete(deleteUser);
 

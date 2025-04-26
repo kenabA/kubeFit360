@@ -41,14 +41,19 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: 'active',
       enum: {
-        values: ['active', 'inactive', 'deleted'],
+        values: ['active', 'inactive', 'deleted', 'pending'],
         message: 'Please provide a valid status',
       },
     },
     address: String,
     password: {
       type: String,
-      required: [true, 'A user must have a password'],
+      required: function () {
+        return (
+          this.role !== 'member' ||
+          (this.role === 'member' && this.status === 'active')
+        );
+      },
       minLength: 8,
       select: false,
     },
@@ -57,11 +62,17 @@ const userSchema = new mongoose.Schema(
       validate: {
         // Works only on Create or Save
         validator: function (value) {
-          return this.password === value;
+          if (this.password) {
+            return this.password === value;
+          }
+          return true;
         },
         message: 'Passwords do not match',
       },
-      required: [true, 'A user must re-type their password'],
+      required: function () {
+        return this.password ? true : false;
+      },
+      message: 'A user must re-type their password.',
     },
     userImage: String,
     passwordChangedAt: Date,

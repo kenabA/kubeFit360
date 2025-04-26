@@ -1,16 +1,18 @@
 const express = require('express');
 const {
-  signup,
+  // signup,
   login,
   forgotPassword,
   resetPassword,
   logout,
   authenticateUser,
+  signupMemberRequest,
 } = require('../controller/authController');
 
 const router = express.Router();
 
-router.post('/signup', signup);
+// Change the route of sign up to request
+router.post('/signupRequest', signupMemberRequest);
 router.post('/login', login);
 router.get('/logout', logout);
 router.get('/authenticateUser', authenticateUser);

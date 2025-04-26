@@ -10,11 +10,11 @@ exports.createWorkoutPlanRequests = catchAsync(async (req, res, next) => {
       message: 'Request body is missing',
     });
   }
-  const newUser = await WorkoutPlanRequests.create(req.body);
+  const newWorkoutPlanRequest = await WorkoutPlanRequests.create(req.body);
 
   res.status(201).json({
     status: 'success',
-    data: { data: newUser },
+    data: { data: newWorkoutPlanRequest },
   });
 });
 
