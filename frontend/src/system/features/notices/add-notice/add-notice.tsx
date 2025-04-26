@@ -134,6 +134,7 @@ export default function AddNotice({
           label="Expiry Date"
           name="expiresAt"
           type="date"
+          allowPastDate={false}
           placeholder="Enter the expiry date"
           register={register}
         />

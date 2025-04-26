@@ -8,4 +8,5 @@ export type TBaseInputProps<T extends FieldValues> = {
   name: string;
   error?: FieldError | undefined;
   register: UseFormRegister<T>;
+  allowPastDate?: boolean;
 };

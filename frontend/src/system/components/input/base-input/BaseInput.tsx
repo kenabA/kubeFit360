@@ -12,8 +12,12 @@ export function BaseInput<T extends FieldValues>({
   placeholder,
   disabled = false,
   error,
+  allowPastDate,
 }: TBaseInputProps<T>) {
   const [hidden, setHidden] = useState<boolean>(true);
+
+  // Calculate today's date in YYYY-MM-DD format
+  const today = new Date().toISOString().split("T")[0];
 
   return (
     <div className="flex flex-col w-full">
@@ -30,6 +34,7 @@ export function BaseInput<T extends FieldValues>({
           id={label}
           type={type === "password" ? (hidden ? "password" : "text") : type}
           placeholder={placeholder}
+          min={type === "date" && !allowPastDate ? today : undefined}
           {...register(name as Path<T>)}
         />
 

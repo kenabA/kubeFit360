@@ -133,49 +133,67 @@ export default function ColumnDefinition(
       accessorKey: "actions",
       enableSorting: false,
       header: "",
-      cell: ({ row }) => (
-        <Popover>
-          <PopoverTrigger className="cursor-pointer" asChild>
-            <EllipsisVertical className="text-gray-tertiary size-5" />
-          </PopoverTrigger>
-          <PopoverContent
-            sideOffset={10}
-            onOpenAutoFocus={(e) => e.preventDefault()}
-            className="flex rounded-[8px] shadow-general flex-col gap-3 p-3 w-[120px]"
+      cell: ({ row }) => {
+        return user?.role === "trainer" ? (
+          <Popover>
+            <PopoverTrigger className="cursor-pointer" asChild>
+              <EllipsisVertical className="text-gray-tertiary size-5" />
+            </PopoverTrigger>
+            <PopoverContent
+              sideOffset={10}
+              onOpenAutoFocus={(e) => e.preventDefault()}
+              className="flex rounded-[8px] shadow-general flex-col gap-3 p-3 w-[120px]"
+            >
+              <button
+                onClick={() => {
+                  toggleRowSelection(row.original._id);
+                  setOpenView(true);
+                }}
+                className="flex items-center gap-[6px] group cursor-pointer"
+              >
+                <Icon
+                  icon={"ri:eye-line"}
+                  className="text-gray-tertiary group-hover:text-gray"
+                />
+                <span className="text-gray-tertiary group-hover:text-gray font-medium">
+                  View
+                </span>
+              </button>
+              <button
+                className="flex items-center gap-[6px] group"
+                onClick={() => {
+                  toggleRowSelection(row.original._id);
+                  setOpenDelete(true);
+                }}
+              >
+                <Icon
+                  icon={"lucide:trash-2"}
+                  className="text-gray-tertiary group-hover:text-gray "
+                />
+                <span className="text-gray-tertiary  group-hover:text-gray font-medium">
+                  Delete
+                </span>
+              </button>
+            </PopoverContent>
+          </Popover>
+        ) : (
+          <button
+            onClick={() => {
+              toggleRowSelection(row.original._id);
+              setOpenView(true);
+            }}
+            className="flex items-center gap-[4px] group cursor-pointer"
           >
-            <button
-              onClick={() => {
-                toggleRowSelection(row.original._id);
-                setOpenView(true);
-              }}
-              className="flex items-center gap-[6px] group cursor-pointer"
-            >
-              <Icon
-                icon={"ri:eye-line"}
-                className="text-gray-tertiary group-hover:text-gray"
-              />
-              <span className="text-gray-tertiary group-hover:text-gray font-medium">
-                View
-              </span>
-            </button>
-            <button
-              className="flex items-center gap-[6px] group"
-              onClick={() => {
-                toggleRowSelection(row.original._id);
-                setOpenDelete(true);
-              }}
-            >
-              <Icon
-                icon={"lucide:trash-2"}
-                className="text-gray-tertiary group-hover:text-gray "
-              />
-              <span className="text-gray-tertiary  group-hover:text-gray font-medium">
-                Delete
-              </span>
-            </button>
-          </PopoverContent>
-        </Popover>
-      ),
+            <Icon
+              icon={"ri:eye-line"}
+              className="text-gray-tertiary group-hover:text-gray"
+            />
+            <span className="text-gray-tertiary group-hover:text-gray font-medium">
+              View
+            </span>
+          </button>
+        );
+      },
     },
   ];
 }
