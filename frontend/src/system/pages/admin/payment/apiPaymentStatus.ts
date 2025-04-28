@@ -6,7 +6,7 @@ async function apiPaymentStatus(id: string): Promise<any> {
   try {
     console.log(id);
     const response = await axios.post(`${API_ROUTES.USER.PAYMENT_STATUS}`, {
-      product_id: id,
+      transaction_uuid: id,
     });
     return response;
   } catch (err) {
@@ -18,3 +18,5 @@ async function apiPaymentStatus(id: string): Promise<any> {
 }
 
 export default apiPaymentStatus;
+
+// 1. LOGIN USR ONCE COMPLEED

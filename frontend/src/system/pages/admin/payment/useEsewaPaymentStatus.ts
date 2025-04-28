@@ -10,12 +10,9 @@ function useEsewaPaymentStatus() {
     isPending,
   } = useMutation({
     mutationFn: (id: string) => {
-      console.log(id);
       return apiPaymentStatus(id);
     },
-    onSuccess: (data) => {
-      console.log(data);
-    },
+
     onError: (err) => {
       console.log(err.message);
       toast({

@@ -100,11 +100,16 @@ export default function ColumnDefinition(
                   "flex items-center gap-[4px] group cursor-pointer bg-success-light border-success border rounded-[12px] p-[6px] !disabled:cursor-not-allowed",
                   row.original.status === "pending"
                     ? "transition-transform hover:-translate-y-1"
-                    : "pointer-events-none"
+                    : "pointer-events-none bg-[#F7FEF9] border-[#B1D5AA]"
                 )}
               >
                 <Check
-                  className={"text-success group-hover:text-success-hover"}
+                  className={cn(
+                    "group-hover:text-success-hover",
+                    row.original.status === "pending"
+                      ? "text-success"
+                      : "text-[#B1D5AA]"
+                  )}
                   size={16}
                 />
               </button>
@@ -127,13 +132,16 @@ export default function ColumnDefinition(
                   "flex items-center  gap-[4px] group  cursor-pointer bg-destructive-light border-destructive border rounded-[12px] p-[6px] hover:text-destructive-hover",
                   row.original.status === "pending"
                     ? "transition-transform hover:-translate-y-1"
-                    : "pointer-events-none"
+                    : "pointer-events-none bg-[#FDF5F5] border-[#EAA69F]"
                 )}
               >
                 <X
-                  className={
-                    "text-destructive group-hover:text-destructive-hover"
-                  }
+                  className={cn(
+                    "text-destructive group-hover:text-destructive-hover",
+                    row.original.status === "pending"
+                      ? "text-destructive"
+                      : "text-[#EAA69F]"
+                  )}
                   size={16}
                 />
               </button>
