@@ -26,10 +26,14 @@ export default function TooltipAction({
 }) {
   return (
     <React.Fragment key={key}>
-      <TooltipProvider delayDuration={200}>
-        <Tooltip>
-          <TooltipTrigger disabled={disabled}> {children}</TooltipTrigger>
-          {!disabled && (
+      {disabled ? (
+        children
+      ) : (
+        <TooltipProvider delayDuration={200}>
+          <Tooltip>
+            <TooltipTrigger disabled={disabled} className="">
+              {children}
+            </TooltipTrigger>
             <TooltipContent sideOffset={12} side="top">
               <AnimatePresence initial={true}>
                 <motion.div
@@ -41,7 +45,7 @@ export default function TooltipAction({
                 >
                   <div
                     className={cn(
-                      "bg-primary text-white py-1 px-2 rounded-[8px] z-[2]",
+                      "bg-primary text-white py-1 px-2 rounded-[8px]",
                       className
                     )}
                   >
@@ -56,9 +60,9 @@ export default function TooltipAction({
                 </motion.div>
               </AnimatePresence>
             </TooltipContent>
-          )}
-        </Tooltip>
-      </TooltipProvider>
+          </Tooltip>
+        </TooltipProvider>
+      )}
     </React.Fragment>
   );
 }

@@ -36,6 +36,7 @@ export const API_ROUTES = {
     CR_USER: buildApiRoute("users/me"),
     SIGNUP_REQUEST: buildApiRoute("users/clients"),
     PROCESS_SIGNUP_REQUEST: buildApiRoute("users/processClientRequest"),
+    PAYMENT_STATUS: buildApiRoute("users/payment-status"),
     UPDATE_PASSWORD: buildApiRoute("users/updatePassword"),
   },
 };

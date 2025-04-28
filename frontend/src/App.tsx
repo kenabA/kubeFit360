@@ -10,6 +10,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import Spinner from "./system/components/spinner/Spinner";
 import Trainer from "./system/pages/admin/trainer/trainer";
 import SignUpRequest from "./system/pages/admin/client/signup-request/signup-request";
+import PaymentStatus from "./system/pages/admin/payment/payment-status";
 
 // ✅ Website Pages (lazy)
 const LandingPage = lazy(
@@ -227,7 +228,14 @@ export default function App() {
           <Route path={ROUTES.SIGNUP} element={<Signup />} />
         </Route>
 
-        <Route path="/unauthorized" element={<Unauthorized />} />
+        <Route
+          path="/payment-success"
+          element={<PaymentStatus status="success" />}
+        />
+        <Route
+          path="/payment-failure"
+          element={<PaymentStatus status="failure" />}
+        />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </React.Fragment>

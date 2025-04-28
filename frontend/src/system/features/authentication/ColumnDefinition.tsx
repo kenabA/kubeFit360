@@ -89,6 +89,7 @@ export default function ColumnDefinition(
               triangleClassName="fill-[hsl(var(--success))]"
             >
               <button
+                role="button"
                 disabled={row.original.status !== "pending"}
                 onClick={() => {
                   toggleRowSelection(row.original._id);
@@ -96,10 +97,10 @@ export default function ColumnDefinition(
                   setOpenDialog(true);
                 }}
                 className={cn(
-                  "flex   items-center gap-[4px] group cursor-pointer bg-success-light border-success border rounded-[12px] p-[6px]",
+                  "flex items-center gap-[4px] group cursor-pointer bg-success-light border-success border rounded-[12px] p-[6px] !disabled:cursor-not-allowed",
                   row.original.status === "pending"
                     ? "transition-transform hover:-translate-y-1"
-                    : "opacity-50 pointer-events-none"
+                    : "pointer-events-none"
                 )}
               >
                 <Check
@@ -126,7 +127,7 @@ export default function ColumnDefinition(
                   "flex items-center  gap-[4px] group  cursor-pointer bg-destructive-light border-destructive border rounded-[12px] p-[6px] hover:text-destructive-hover",
                   row.original.status === "pending"
                     ? "transition-transform hover:-translate-y-1"
-                    : "opacity-50 pointer-events-none"
+                    : "pointer-events-none"
                 )}
               >
                 <X
