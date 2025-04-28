@@ -17,7 +17,14 @@ const {
   protect,
   restrictTo,
 } = require('../controller/authController');
+const {
+  EsewaInitiatePayment,
+  paymentStatus,
+} = require('../controller/esewaController');
 const router = express.Router();
+
+router.route('/initiate-payment').post(EsewaInitiatePayment);
+router.route('/payment-status').post(paymentStatus);
 
 router.use(protect);
 

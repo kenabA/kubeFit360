@@ -188,11 +188,8 @@ exports.processClientRequest = catchAsync(async (req, res, next) => {
 
   if (status === 'approved') {
     client.status = 'approved';
-    // 3) Send it to the user's email
     const paymentURL = `PAYMENT URL`;
-
     const message = `Congratulations! Your membership request has been approved.\n\nPlease complete the payment using the link below:\n${paymentURL}\n`;
-
     try {
       await sendEmail({
         email: client.email,
