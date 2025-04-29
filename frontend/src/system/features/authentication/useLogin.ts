@@ -26,7 +26,6 @@ function useLogin() {
           description: "Logged in successfully",
         });
         // After successful login
-        console.log(userData);
         localStorage.setItem("user", JSON.stringify(userData.data.data));
         queryClient.setQueryData(["user"], userData.data.data);
 

@@ -1,11 +1,10 @@
 import { API_ROUTES } from "@/config/apiRoutes";
 import { _axios } from "@/config/axios";
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 
 async function apiPaymentStatus(id: string): Promise<any> {
   try {
-    console.log(id);
-    const response = await axios.post(`${API_ROUTES.USER.PAYMENT_STATUS}`, {
+    const response = await _axios.post(`${API_ROUTES.USER.PAYMENT_STATUS}`, {
       transaction_uuid: id,
     });
     return response;

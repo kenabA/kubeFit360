@@ -49,7 +49,7 @@ export default function TrainerAccountForm() {
       _id: data?._id,
       name: data?.name,
       address: data?.address,
-      birthDate: data?.birthDate.slice(0, 10),
+      birthDate: data?.birthDate?.slice(0, 10),
       email: data?.email,
       gender: data?.gender,
       status: data.status,
@@ -71,7 +71,7 @@ export default function TrainerAccountForm() {
       _id: data?._id,
       name: data?.name,
       address: data?.address,
-      birthDate: data?.birthDate.slice(0, 10),
+      birthDate: data?.birthDate?.slice(0, 10),
       email: data?.email,
       gender: data?.gender,
       status: data?.status,
@@ -90,12 +90,11 @@ export default function TrainerAccountForm() {
   async function onSubmit(data: TEditTrainerFormProps) {
     setIsPending(true);
     if (localImage) {
-      //   // TODO : Replace the current image with the new one
       const trainerImageUrl = await uploadImage(localImage as File);
       setValue("userImage", trainerImageUrl, { shouldDirty: true });
       data = { ...data, userImage: trainerImageUrl };
     }
-    await editUser({ editUserDetails: data, selectedId: data?._id });
+    await editUser({ editUserDetails: data, selectedId: data?._id ?? "" });
     reset();
     setIsPending(false);
   }
