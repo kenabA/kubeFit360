@@ -41,7 +41,14 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: 'active',
       enum: {
-        values: ['active', 'inactive', 'deleted', 'pending'],
+        values: [
+          'active',
+          'inactive',
+          'deleted',
+          'pending',
+          'approved',
+          'rejected',
+        ],
         message: 'Please provide a valid status',
       },
     },

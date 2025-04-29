@@ -71,6 +71,12 @@ exports.getMe = (req, res, next) => {
   next();
 };
 
+exports.checkNewUser = (req, res, next) => {
+  res.status(200).json({
+    passwordSet: !!req.user.password,
+  });
+};
+
 exports.getUser = catchAsync(async (req, res, next) => {
   const user = await User.findOne({
     _id: req.params.id,

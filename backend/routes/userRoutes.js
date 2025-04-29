@@ -11,11 +11,13 @@ const {
   addUser,
   getAllClients,
   processClientRequest,
+  checkNewUser,
 } = require('../controller/userController');
 const {
   updatePassword,
   protect,
   restrictTo,
+  setPassword,
 } = require('../controller/authController');
 const {
   EsewaInitiatePayment,
@@ -29,9 +31,11 @@ router.route('/payment-status').post(paymentStatus);
 router.use(protect);
 
 router.get('/me', getMe, getUser);
+router.get('/check-new-user', getMe, checkNewUser);
 
 router.patch('/updateMe', updateMe);
 router.patch('/updatePassword', updatePassword);
+router.patch('/setPassword', setPassword);
 
 router
   .route('/')
