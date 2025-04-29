@@ -39,48 +39,50 @@ export default function WorkoutPlanRequests() {
   }, [selectedIds]);
 
   return (
-    <section className="rounded-tl-xl h-[calc(100dvh-60px)] overflow-hidden">
-      <div className="py-7 px-6 flex-1 flex flex-col gap-4 h-full">
-        <Heading level={4} variant={"quaternary"}>
-          Workout Plan Requests
-        </Heading>
-        <div className="bg-white rounded-xl shadow-general overflow-hidden h-full">
-          <div className="flex shadow-elevation items-center justify-between sticky  top-0 bg-white p-[18px] z-[1]">
-            <TableSearch
-              isPending={false}
-              placeholder="Search by Client or Trainer Name"
-            />
-            <div className="flex items-center gap-4">
-              <Filter entity={filterFields.workoutPlanRequests} />
+    <>
+      <section className="rounded-tl-xl h-[calc(100dvh-60px)] overflow-hidden">
+        <div className="py-7 px-6 flex-1 flex flex-col gap-4 h-full">
+          <Heading level={4} variant={"quaternary"}>
+            Workout Plan Requests
+          </Heading>
+          <div className="bg-white rounded-xl shadow-general overflow-hidden h-full">
+            <div className="flex shadow-elevation items-center justify-between sticky  top-0 bg-white p-[18px] z-[1]">
+              <TableSearch
+                isPending={false}
+                placeholder="Search by Client or Trainer Name"
+              />
+              <div className="flex items-center gap-4">
+                <Filter entity={filterFields.workoutPlanRequests} />
+              </div>
             </div>
+            <GeneralTable<TWorkoutPlanRequest>
+              noDataTitle="Nothing yet to show"
+              noDataDescription="Come back later to see the requests."
+              paginationClassName="bg-slate-50 px-6 sticky bottom-0"
+              resultCount={count || 0}
+              data={workoutPlanRequests}
+              columns={ColumnDefinition(
+                setSelectedIds,
+                setOpenDelete,
+                setOpenView
+              )}
+            />
           </div>
-          <GeneralTable<TWorkoutPlanRequest>
-            noDataTitle="Nothing yet to show"
-            noDataDescription="Come back later to see the requests."
-            paginationClassName="bg-slate-50 px-6 sticky bottom-0"
-            resultCount={count || 0}
-            data={workoutPlanRequests}
-            columns={ColumnDefinition(
-              setSelectedIds,
-              setOpenDelete,
-              setOpenView
-            )}
-          />
         </div>
-      </div>
-      <ViewRequest
-        setOpenPlan={setOpenViewPlan}
-        setSelectedId={setSelectedIds}
-        setSelectedWorkoutPlanId={setSelectedWorkoutPlanId}
-        selectedId={selectedIds}
-        isDialogOpen={openView}
-        setIsDialogOpen={setOpenView}
-      />
-      <ViewPlan
-        selectedId={selectedWorkoutPlanId}
-        isDialogOpen={openViewPlan}
-        setIsDialogOpen={setOpenViewPlan}
-      />
+        <ViewRequest
+          setOpenPlan={setOpenViewPlan}
+          setSelectedId={setSelectedIds}
+          setSelectedWorkoutPlanId={setSelectedWorkoutPlanId}
+          selectedId={selectedIds}
+          isDialogOpen={openView}
+          setIsDialogOpen={setOpenView}
+        />
+        <ViewPlan
+          selectedId={selectedWorkoutPlanId}
+          isDialogOpen={openViewPlan}
+          setIsDialogOpen={setOpenViewPlan}
+        />
+      </section>
       {user?.role === "trainer" && (
         <ThemedDialog
           isPending={isDeletePending}
@@ -92,10 +94,10 @@ export default function WorkoutPlanRequests() {
           }}
           theme="destructive"
           ctaText="Delete"
-          title="Delete Workout Plan Request"
-          message="Do you really want to delete this Workout Plan Request?"
+          title="Delete Plan Request"
+          message="Do you really want to delete it?"
         />
       )}
-    </section>
+    </>
   );
 }

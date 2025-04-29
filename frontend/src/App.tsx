@@ -12,6 +12,7 @@ import Trainer from "./system/pages/admin/trainer/trainer";
 import SignUpRequest from "./system/pages/admin/client/signup-request/signup-request";
 import PaymentStatus from "./system/pages/admin/payment/payment-success";
 import PaymentFailure from "./system/pages/admin/payment/payment-failure";
+import CheckNewUser from "./system/components/app-initializer";
 
 // ✅ Website Pages (lazy)
 const LandingPage = lazy(
@@ -32,16 +33,16 @@ const SignupLayout = lazy(() => import("@/layout/auth/SignupLayout"));
 const SystemLayout = lazy(() => import("./layout/SystemLayout"));
 
 // ✅ Auth Pages (lazy)
-const Login = lazy(() => import("@/system/pages/Login/Login"));
-const Signup = lazy(() => import("@/system/pages/SignUp/SignUp"));
+const Login = lazy(() => import("@/system/pages/login/Login"));
+const Signup = lazy(() => import("@/system/pages/signup/SignUp"));
 const ForgotPassword = lazy(
   () => import("@/system/pages/forgot-password/ForgotPassword")
 );
 const ResetPassword = lazy(
-  () => import("@/system/pages/ResetPassword/ResetPassword")
+  () => import("@/system/pages/reset-password/ResetPassword")
 );
 const PasswordChanged = lazy(
-  () => import("@/system/pages/ResetPassword/PasswordChanged")
+  () => import("@/system/pages/reset-password/PasswordChanged")
 );
 
 // ✅ Admin Pages (lazy)
@@ -54,41 +55,39 @@ const Maintainer = lazy(
 
 // ✅ Maintainer Pages (lazy)
 const MaintainerDashboard = lazy(
-  () => import("./system/pages/Maintainer/Dashboard/Dashboard")
+  () => import("./system/pages/maintainer/Dashboard/Dashboard")
 );
 const Equipments = lazy(
-  () => import("./system/pages/Maintainer/Equipments/Equipments")
+  () => import("./system/pages/maintainer/Equipments/Equipments")
 );
 
 // ✅ Trainer Pages (lazy)
 const TrainerDashboard = lazy(
-  () => import("./system/pages/Trainer/Dashboard/Dashboard")
+  () => import("./system/pages/trainer/Dashboard/Dashboard")
 );
 const WorkoutPlanRequests = lazy(
   () =>
-    import("./system/pages/Trainer/workout-plan-requests/WorkoutPlanRequests")
+    import("./system/pages/trainer/workout-plan-requests/WorkoutPlanRequests")
 );
 const CreateWorkoutPlan = lazy(
   () =>
     import(
-      "./system/pages/Trainer/workout-plan/create-workout-plan/CreateWorkoutPlan"
+      "./system/pages/trainer/workout-plan/create-workout-plan/CreateWorkoutPlan"
     )
 );
 
 // ✅ Member Pages (lazy)
 const MemberDashboard = lazy(
-  () => import("./system/pages/Member/dashboard/dashboard")
+  () => import("./system/pages/member/dashboard/dashboard")
 );
 const ClientWorkoutPlan = lazy(
-  () => import("./system/pages/Member/client-workout-plan/client-workout-plan")
+  () => import("./system/pages/member/client-workout-plan/client-workout-plan")
 );
 
 // ✅ Shared Pages (lazy)
 const Settings = lazy(() => import("./system/pages/settings/Settings"));
 const Notices = lazy(() => import("./system/pages/notices/notices"));
-const Unauthorized = lazy(
-  () => import("./components/unauthorized/Unauthorized")
-);
+
 const PageNotFound = lazy(
   () => import("./components/page-not-found/PageNotFound")
 );
@@ -106,6 +105,7 @@ export default function App() {
   return (
     <React.Fragment>
       <ScrollToTop />
+      <CheckNewUser />
       <Routes>
         {/* ======= WEBSITE ROUTES ======= */}
         <Route
@@ -150,7 +150,14 @@ export default function App() {
               element={<MaintainerDashboard />}
             />
           </Route>
-          <Route element={<ProtectedRoute allowedRoles={["member"]} />}>
+          <Route
+            element={
+              <>
+                <CheckNewUser />
+                <ProtectedRoute allowedRoles={["member"]} />
+              </>
+            }
+          >
             <Route
               path={ROUTES.DASHBOARD.MEMBER}
               element={<MemberDashboard />}

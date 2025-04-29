@@ -130,6 +130,7 @@ export default function AddNotice({
           register={register}
         />
         <BaseInput
+          allowFuture={true}
           error={errors.expiresAt}
           label="Expiry Date"
           name="expiresAt"

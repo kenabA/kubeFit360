@@ -1,12 +1,14 @@
+// SEGGRAGATE THIS IN TO EDIT ME CUSTOM HOOK
+
 import { useToast } from "@/hooks/use-toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { TEditMaintainerFormProps } from "./maintainers/edit-maintainers/type";
 import apiEditUser from "@/system/services/users/apiEditUser";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import { TUserDetails } from "@/system/stores/user/types";
 
-function useEditUser(role: string) {
+// CHECK THIS WHEN YOU GET HOME
+function useEditUser<T>(isEditingCurrentUser?: boolean) {
   const queryClient = useQueryClient();
   const auth = useAuthUser<TUserDetails>();
   const { toast } = useToast();
@@ -20,15 +22,17 @@ function useEditUser(role: string) {
       editUserDetails,
       selectedId,
     }: {
-      editUserDetails: TEditMaintainerFormProps;
+      editUserDetails: T;
       selectedId: string;
-    }) => apiEditUser(editUserDetails, selectedId),
+    }) => apiEditUser<T>(editUserDetails, selectedId),
     onSuccess: async (data) => {
       queryClient.invalidateQueries({});
-      if (auth?.role !== "admin") {
+      // TAKE THIS IN EDIT ME CUSTOM HOOK AND SET THE QUERY DATA OF THE RESPECTIVE USER HERE!
+      if (isEditingCurrentUser) {
         queryClient.setQueryData(["user"], data.data.data);
         localStorage.setItem("user", JSON.stringify(data.data.data));
       }
+
       toast({
         variant: "success",
         title: "Success",

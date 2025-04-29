@@ -13,6 +13,7 @@ export function BaseInput<T extends FieldValues>({
   disabled = false,
   error,
   allowPastDate,
+  allowFuture,
 }: TBaseInputProps<T>) {
   const [hidden, setHidden] = useState<boolean>(true);
 
@@ -35,6 +36,7 @@ export function BaseInput<T extends FieldValues>({
           type={type === "password" ? (hidden ? "password" : "text") : type}
           placeholder={placeholder}
           min={type === "date" && !allowPastDate ? today : undefined}
+          max={type === "date" && allowFuture ? undefined : today}
           {...register(name as Path<T>)}
         />
 

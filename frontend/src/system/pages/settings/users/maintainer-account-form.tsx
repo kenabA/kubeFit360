@@ -34,7 +34,7 @@ export default function MaintainerAccountForm() {
 
   const [openDelete, setOpenDelete] = useState<boolean>(false);
 
-  const { editUser } = useEditUser("maintainer");
+  const { editUser } = useEditUser<TEditMaintainerFormProps>("maintainer");
 
   const [isPending, setIsPending] = useState<boolean>(false);
 
@@ -216,6 +216,8 @@ export default function MaintainerAccountForm() {
       </div>
 
       <BaseInput
+        allowPastDate={true}
+        allowFuture={false}
         error={errors.birthDate}
         label="Date of Birth"
         name="birthDate"

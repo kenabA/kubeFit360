@@ -7,4 +7,5 @@ export type TAuthInputProps<T extends FieldValues> = {
   name: string;
   error: FieldError | undefined;
   register: UseFormRegister<T>;
+  className?: string;
 };

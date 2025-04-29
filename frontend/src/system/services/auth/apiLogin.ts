@@ -1,10 +1,11 @@
 import { API_ROUTES } from "@/config/apiRoutes";
-import { TLoginFormProps } from "../../pages/Login/types";
+
 import { _axios } from "@/config/axios";
 import { AxiosError } from "axios";
 
 import { TUserDetails } from "@/system/stores/user/types";
 import { TAuthApiResponse } from "@/system/lib/types";
+import { TLoginFormProps } from "@/system/pages/Login/types";
 
 const apiLogin = async (
   loginDetails: TLoginFormProps

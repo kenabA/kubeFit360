@@ -1,10 +1,9 @@
 import { useToast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
 
-import { TSignupFormProps } from "@/system/pages/SignUp/types";
 import apiCreateSignUpRequest from "@/system/services/auth/apiSignUpRequest";
 import useHandleNavigate from "@/hooks/useHandleNavigate";
-import { ROUTES } from "@/config/appRoutes";
+import { TSignupFormProps } from "@/system/pages/SignUp/types";
 
 function useSignUpRequest() {
   const handleNavigate = useHandleNavigate();
@@ -17,7 +16,7 @@ function useSignUpRequest() {
   } = useMutation({
     mutationFn: (data: TSignupFormProps) => apiCreateSignUpRequest(data),
     onSuccess: async () => {
-      handleNavigate(ROUTES.LOGIN);
+      handleNavigate("/");
       toast({
         variant: "success",
         title: "Request Submitted",

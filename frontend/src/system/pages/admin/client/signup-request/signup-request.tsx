@@ -37,35 +37,37 @@ export default function SignUpRequest() {
 
   const status = dialogTheme === "success" ? "Approve" : "Reject";
   return (
-    <section className="rounded-tl-xl h-[calc(100dvh-60px)] overflow-hidden">
-      <div className="py-7 px-6 flex-1 flex flex-col gap-4 h-full">
-        <Heading level={4} variant={"quaternary"}>
-          Client Requests
-        </Heading>
-        <div className="bg-white rounded-xl shadow-general overflow-hidden h-full">
-          <div className="flex shadow-elevation items-center justify-between sticky top-0 bg-white p-[18px] z-[1]">
-            <TableSearch
-              isPending={isPending}
-              placeholder="Search by Name, or Email"
-            />
-            <div className="flex items-center gap-4">
-              <Filter entity={filterFields.signUpRequests} />
+    <>
+      <section className="rounded-tl-xl h-[calc(100dvh-60px)] overflow-hidden">
+        <div className="py-7 px-6 flex-1 flex flex-col gap-4 h-full">
+          <Heading level={4} variant={"quaternary"}>
+            Client Requests
+          </Heading>
+          <div className="bg-white rounded-xl shadow-general overflow-hidden h-full">
+            <div className="flex shadow-elevation items-center justify-between sticky top-0 bg-white p-[18px] z-[1]">
+              <TableSearch
+                isPending={isPending}
+                placeholder="Search by Name, or Email"
+              />
+              <div className="flex items-center gap-4">
+                <Filter entity={filterFields.signUpRequests} />
+              </div>
             </div>
+            <GeneralTable<TSignUpRequests>
+              paginationClassName="bg-slate-50 px-6 sticky bottom-0"
+              noDataTitle="No Client Requests"
+              noDataDescription="Comeback later to view client's request."
+              resultCount={count || 0}
+              data={clientRequests}
+              columns={ColumnDefinition(
+                setSelectedIds,
+                setOpenDialog,
+                setDialogTheme
+              )}
+            />
           </div>
-          <GeneralTable<TSignUpRequests>
-            paginationClassName="bg-slate-50 px-6 sticky bottom-0"
-            noDataTitle="No Client Requests"
-            noDataDescription="Comeback later to view client's request."
-            resultCount={count || 0}
-            data={clientRequests}
-            columns={ColumnDefinition(
-              setSelectedIds,
-              setOpenDialog,
-              setDialogTheme
-            )}
-          />
         </div>
-      </div>
+      </section>
       <ThemedDialog
         isPending={isValidatingSignUpRequest}
         dialogOpen={openDialog}
@@ -81,6 +83,6 @@ export default function SignUpRequest() {
         title={`${status} Client`}
         message={`Do you really want to ${status} this client?`}
       />
-    </section>
+    </>
   );
 }

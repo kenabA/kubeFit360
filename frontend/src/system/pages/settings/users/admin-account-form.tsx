@@ -37,7 +37,7 @@ export default function AdminAccountForm({
 
   const { data } = useGetCurrentUser();
 
-  const { editUser } = useEditUser("admin");
+  const { editUser } = useEditUser<TEditAdminFormProps>("admin");
 
   const [localImage, setLocalImage] = useState<File | string | undefined>();
 
@@ -57,7 +57,7 @@ export default function AdminAccountForm({
   async function handleRemoveProfilePicture() {
     if (!data) return;
     await editUser({
-      editUserDetails: { removeImage: true },
+      editUserDetails: { removeImage: true } as TEditAdminFormProps,
       selectedId: data?._id,
     });
     setOpenDelete(false);

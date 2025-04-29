@@ -1,7 +1,7 @@
 import { useToast } from "@/hooks/use-toast";
 import useHandleNavigate from "@/hooks/useHandleNavigate";
 
-import { TResetPasswordFormProps } from "@/system/pages/ResetPassword/types";
+import { TResetPasswordFormProps } from "@/system/pages/reset-password/types";
 import apiResetPassword from "@/system/services/auth/apiResetPassword";
 
 import { useMutation } from "@tanstack/react-query";

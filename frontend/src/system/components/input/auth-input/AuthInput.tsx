@@ -3,6 +3,7 @@ import { Input } from "@/components";
 import { useState } from "react";
 import { TAuthInputProps } from "./types";
 import { FieldValues, Path } from "react-hook-form";
+import { cn } from "@/lib/utils";
 
 export function AuthInput<T extends FieldValues>({
   label,
@@ -10,6 +11,7 @@ export function AuthInput<T extends FieldValues>({
   name,
   register,
   error,
+  className,
 }: TAuthInputProps<T>) {
   const [hidden, setHidden] = useState<boolean>(true);
 
@@ -17,7 +19,10 @@ export function AuthInput<T extends FieldValues>({
     <div className="flex flex-col w-full">
       <div className="group relative w-full">
         <Input
-          className="floating-input h-[54px] !w-full peer rounded-xl border border-slate-300 py-2 px-4 focus-visible:ring-1 focus-visible:ring-primary focus-visible:border-primary !text-[16px]"
+          className={cn(
+            "floating-input h-[54px] !w-full peer rounded-xl border border-slate-300 py-2 px-4 focus-visible:ring-1 focus-visible:ring-primary focus-visible:border-primary !text-[16px]",
+            className
+          )}
           id={label}
           type={type === "password" ? (hidden ? "password" : "text") : type}
           placeholder=""

@@ -157,6 +157,8 @@ export default function AddTrainer({
             register={register}
           />
           <BaseInput
+            allowFuture={false}
+            allowPastDate={true}
             error={errors.birthDate}
             label="Date of Birth"
             name="birthDate"

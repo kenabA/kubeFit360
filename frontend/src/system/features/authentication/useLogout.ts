@@ -23,6 +23,7 @@ function useLogout() {
       });
       queryClient.removeQueries();
       signOut();
+      localStorage.clear();
       navigate(ROUTES.LOGIN, { replace: true });
     },
     onError: (err: AxiosError) => {

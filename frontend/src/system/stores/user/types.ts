@@ -1,4 +1,6 @@
 export type TUserStore = {
+  isNewUser: boolean | null;
+  setIsNewUser: (state: boolean) => void;
   user: TUserDetails | null;
   setUser: (user: TUserDetails) => void;
 };

@@ -33,7 +33,7 @@ export default function TrainerAccountForm() {
   });
   const [openDelete, setOpenDelete] = useState<boolean>(false);
 
-  const { editUser } = useEditUser("trainer");
+  const { editUser } = useEditUser<TEditTrainerFormProps>("trainer");
 
   const [isPending, setIsPending] = useState<boolean>(false);
 
@@ -207,6 +207,8 @@ export default function TrainerAccountForm() {
       </div>
 
       <BaseInput
+        allowPastDate={true}
+        allowFuture={false}
         error={errors.birthDate}
         label="Date of Birth"
         name="birthDate"

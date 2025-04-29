@@ -40,7 +40,7 @@ export default function MemberAccountForm({
 
   const { data } = useGetCurrentUser();
 
-  const { editUser } = useEditUser("member");
+  const { editUser } = useEditUser<TEditMemberFormProps>("member");
 
   const [localImage, setLocalImage] = useState<File | string | undefined>();
 
@@ -234,6 +234,8 @@ export default function MemberAccountForm({
         </div>
 
         <BaseInput
+          allowPastDate={true}
+          allowFuture={false}
           error={errors.birthDate}
           label="Date of Birth"
           name="birthDate"

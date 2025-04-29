@@ -53,67 +53,69 @@ export default function Equipments() {
   }, [isDeleteSuccess]);
 
   return (
-    <section className="rounded-tl-xl h-[calc(100dvh-60px)] overflow-hidden">
-      <div className="py-7 px-6 flex-1 flex flex-col gap-4 h-full">
-        <Heading level={4} variant={"quaternary"}>
-          Equipments
-        </Heading>
-        <div className="bg-white rounded-xl shadow-general overflow-hidden h-full">
-          {/* Header Section with Search and Actions */}
-          <div className="flex shadow-elevation items-center justify-between sticky top-0 bg-white p-[18px] z-[1]">
-            {/* Search Input */}
-            <TableSearch
-              isPending={isPending}
-              placeholder="Search by Serial Number, Name, or Brand"
-            />
-            {/* Action Buttons */}
-            <div className="flex items-center gap-4">
-              {/* Filter Component */}
-              <Filter entity={filterFields.equipments} />
-              {/* Add Equipment Button (Visible for Admins and Maintainers) */}
-              {(user?.role === "maintainer" || user?.role === "admin") && (
-                <Button
-                  variant={"primary"}
-                  className="font-medium"
-                  onClick={handleOpenAdd}
-                >
-                  <Plus className="stroke-[3px]" /> Add Equipment
-                </Button>
-              )}
-              {user?.role === "trainer" && (
-                <Button
-                  variant={"primaryReverse"}
-                  className="font-medium"
-                  onClick={handleOpenAdd}
-                >
-                  <Plus className="stroke-[3px]" /> Recommend Equipment
-                </Button>
-              )}
+    <>
+      <section className="rounded-tl-xl h-[calc(100dvh-60px)] overflow-hidden">
+        <div className="py-7 px-6 flex-1 flex flex-col gap-4 h-full">
+          <Heading level={4} variant={"quaternary"}>
+            Equipments
+          </Heading>
+          <div className="bg-white rounded-xl shadow-general overflow-hidden h-full">
+            {/* Header Section with Search and Actions */}
+            <div className="flex shadow-elevation items-center justify-between sticky top-0 bg-white p-[18px] z-[1]">
+              {/* Search Input */}
+              <TableSearch
+                isPending={isPending}
+                placeholder="Search by Serial Number, Name, or Brand"
+              />
+              {/* Action Buttons */}
+              <div className="flex items-center gap-4">
+                {/* Filter Component */}
+                <Filter entity={filterFields.equipments} />
+                {/* Add Equipment Button (Visible for Admins and Maintainers) */}
+                {(user?.role === "maintainer" || user?.role === "admin") && (
+                  <Button
+                    variant={"primary"}
+                    className="font-medium"
+                    onClick={handleOpenAdd}
+                  >
+                    <Plus className="stroke-[3px]" /> Add Equipment
+                  </Button>
+                )}
+                {user?.role === "trainer" && (
+                  <Button
+                    variant={"primaryReverse"}
+                    className="font-medium"
+                    onClick={handleOpenAdd}
+                  >
+                    <Plus className="stroke-[3px]" /> Recommend Equipment
+                  </Button>
+                )}
+              </div>
             </div>
+            {/* Main Table Section */}
+            <GeneralTable<TEquipmentsData>
+              noDataDescription="Come back later to see the equipments or add new ones."
+              noDataTitle="No Equipments"
+              paginationClassName="bg-slate-50 px-6 sticky bottom-0"
+              resultCount={count || 0}
+              data={equipments}
+              columns={ColumnDefinition(
+                setSelectedIds,
+                setOpenEdit,
+                setOpenDelete,
+                setOpenView
+              )}
+            />
           </div>
-          {/* Main Table Section */}
-          <GeneralTable<TEquipmentsData>
-            noDataDescription="Come back later to see the equipments or add new ones."
-            noDataTitle="No Equipments"
-            paginationClassName="bg-slate-50 px-6 sticky bottom-0"
-            resultCount={count || 0}
-            data={equipments}
-            columns={ColumnDefinition(
-              setSelectedIds,
-              setOpenEdit,
-              setOpenDelete,
-              setOpenView
-            )}
+          <ViewEquipment
+            edit={user?.role === "maintainer" || user?.role === "admin"}
+            selectedId={selectedIds}
+            isDialogOpen={openView}
+            setIsDialogOpen={setOpenView}
+            setOpenEdit={setOpenEdit}
           />
         </div>
-      </div>
-      <ViewEquipment
-        edit={user?.role === "maintainer" || user?.role === "admin"}
-        selectedId={selectedIds}
-        isDialogOpen={openView}
-        setIsDialogOpen={setOpenView}
-        setOpenEdit={setOpenEdit}
-      />
+      </section>
       {(user?.role === "admin" || user?.role === "maintainer") && (
         <>
           <AddEquipments isDialogOpen={openAdd} setIsDialogOpen={setOpenAdd} />
@@ -134,6 +136,6 @@ export default function Equipments() {
           />
         </>
       )}
-    </section>
+    </>
   );
 }

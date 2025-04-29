@@ -155,6 +155,8 @@ export default function AddMaintainer({
             register={register}
           />
           <BaseInput
+            allowPastDate={true}
+            allowFuture={false}
             error={errors.birthDate}
             label="Date of Birth"
             name="birthDate"

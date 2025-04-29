@@ -44,43 +44,45 @@ export default function Trainer() {
   }, [isDeleteSuccess]);
 
   return (
-    <section className="rounded-tl-xl h-[calc(100dvh-60px)] overflow-hidden">
-      <div className="py-7 px-6 flex-1 flex flex-col gap-4 h-full">
-        <Heading level={4} variant={"quaternary"}>
-          Trainers
-        </Heading>
-        <div className="bg-white rounded-xl shadow-general overflow-hidden h-full">
-          <div className="flex shadow-elevation items-center justify-between sticky top-0 bg-white p-[18px] z-[1]">
-            <TableSearch
-              isPending={isPending}
-              placeholder="Search by Name, or Email"
-            />
-            <div className="flex items-center gap-4">
-              <Filter entity={filterFields.trainers} />
-              <Button
-                variant={"primary"}
-                className="font-medium"
-                onClick={() => setOpenAdd(true)}
-              >
-                <Plus className="stroke-[3px]" /> Add Trainer
-              </Button>
+    <>
+      <section className="rounded-tl-xl h-[calc(100dvh-60px)] overflow-hidden">
+        <div className="py-7 px-6 flex-1 flex flex-col gap-4 h-full">
+          <Heading level={4} variant={"quaternary"}>
+            Trainers
+          </Heading>
+          <div className="bg-white rounded-xl shadow-general overflow-hidden h-full">
+            <div className="flex shadow-elevation items-center justify-between sticky top-0 bg-white p-[18px] z-[1]">
+              <TableSearch
+                isPending={isPending}
+                placeholder="Search by Name, or Email"
+              />
+              <div className="flex items-center gap-4">
+                <Filter entity={filterFields.trainers} />
+                <Button
+                  variant={"primary"}
+                  className="font-medium"
+                  onClick={() => setOpenAdd(true)}
+                >
+                  <Plus className="stroke-[3px]" /> Add Trainer
+                </Button>
+              </div>
             </div>
+            <GeneralTable<TUserDetails>
+              paginationClassName="bg-slate-50 px-6 sticky bottom-0"
+              noDataTitle="No Maintainers"
+              noDataDescription="Get started by adding a maintainer."
+              resultCount={count || 0}
+              data={maintainers}
+              columns={ColumnDefinition(
+                setSelectedIds,
+                setOpenEdit,
+                setOpenDelete,
+                setOpenView
+              )}
+            />
           </div>
-          <GeneralTable<TUserDetails>
-            paginationClassName="bg-slate-50 px-6 sticky bottom-0"
-            noDataTitle="No Maintainers"
-            noDataDescription="Get started by adding a maintainer."
-            resultCount={count || 0}
-            data={maintainers}
-            columns={ColumnDefinition(
-              setSelectedIds,
-              setOpenEdit,
-              setOpenDelete,
-              setOpenView
-            )}
-          />
         </div>
-      </div>
+      </section>
       <ViewUser
         edit
         selectedId={selectedIds}
@@ -104,6 +106,6 @@ export default function Trainer() {
         title="Delete Trainer"
         message="Do you really want to delete this trainer?"
       />
-    </section>
+    </>
   );
 }

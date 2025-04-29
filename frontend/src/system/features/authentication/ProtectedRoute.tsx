@@ -4,12 +4,15 @@ import { ROUTES } from "@/config/appRoutes";
 import { TRole } from "@/system/lib/types";
 import { TUserDetails } from "@/system/stores/user/types";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
+import useUserStore from "@/system/stores/user/useUserStore";
+import SetPasswordLayout from "@/layout/auth/SetPasswordLayout";
 
 export default function ProtectedRoute({
   allowedRoles,
 }: {
   allowedRoles: TRole[];
 }) {
+  const isNewUser = useUserStore((state) => state.isNewUser);
   const user = useAuthUser<TUserDetails>();
   const isAuthenticated = useIsAuthenticated();
 
@@ -22,6 +25,14 @@ export default function ProtectedRoute({
     (allowedRoles.length > 0 && !allowedRoles.includes(user?.role))
   ) {
     return <Navigate to={ROUTES.UNAUTHORIZED} replace />;
+  }
+
+  if (user?.role === "member" && isNewUser) {
+    return (
+      <SetPasswordLayout>
+        <Outlet />
+      </SetPasswordLayout>
+    );
   }
 
   return <Outlet />;

@@ -1,7 +1,13 @@
+import { Heading } from "@/components/heading/Heading";
+
 export default function MemberDashboard() {
   return (
-    <div>
-      Hey Beaautiful Folks, this will be the dashboard for my project okay?
-    </div>
+    <section className="rounded-tl-xl overflow-y-auto custom-scrollbar flex-1">
+      <div className="py-7 px-6">
+        <Heading level={4} variant={"quaternary"}>
+          Dashboard
+        </Heading>
+      </div>
+    </section>
   );
 }

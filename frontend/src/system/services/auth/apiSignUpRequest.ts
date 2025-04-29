@@ -2,7 +2,7 @@ import { API_ROUTES } from "@/config/apiRoutes";
 import { _axios } from "@/config/axios";
 
 import { TApiResponse } from "@/system/lib/types";
-import { TSignupFormProps } from "@/system/pages/SignUp/types";
+import { TSignupFormProps } from "@/system/pages/signup/types";
 import { AxiosError } from "axios";
 
 async function apiCreateSignUpRequest(

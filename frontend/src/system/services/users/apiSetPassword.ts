@@ -2,16 +2,15 @@ import { API_ROUTES } from "@/config/apiRoutes";
 import { _axios } from "@/config/axios";
 import { AxiosError } from "axios";
 import { TApiResponse } from "@/system/lib/types";
-import { TUserDetails } from "@/system/stores/user/types";
 
-// TODO Make the type for the add user form universal so that trainer will use the same
-async function apiEditUser<T>(
-  userData: T,
-  selectedId: string
-): Promise<TApiResponse<TUserDetails>> {
+import { TSetPasswordFormProps } from "@/system/features/users/set-password/types";
+
+async function apiSetPassword(
+  userData: TSetPasswordFormProps
+): Promise<TApiResponse<{ status: string }>> {
   try {
     const response = await _axios.patch(
-      `${API_ROUTES.USER.BASE}/${selectedId}`,
+      `${API_ROUTES.USER.SET_PASSWORD}`,
       userData
     );
     return response.data;
@@ -23,4 +22,4 @@ async function apiEditUser<T>(
   }
 }
 
-export default apiEditUser;
+export default apiSetPassword;

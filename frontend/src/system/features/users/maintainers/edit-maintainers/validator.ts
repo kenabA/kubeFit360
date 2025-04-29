@@ -12,7 +12,7 @@ export const maintainerSchema = z.object({
     ),
   birthDate: z.string(),
   gender: z.string().nonempty("Trainer's gender is required."),
-  status: z.string().nonempty("A valid status is required."),
+  status: z.string().optional(),
   address: z.string().nonempty("Trainer's address is required."),
   userImage: z.string().optional(),
   removeImage: z.boolean().optional(),
