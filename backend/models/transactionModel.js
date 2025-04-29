@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 
 const transactionSchema = new mongoose.Schema(
   {
-    // user: {
-    //   type: mongoose.Schema.ObjectId,
-    //   ref: 'User',
-    //   required: true,
-    // },
+    user: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Client',
+      required: true,
+    },
     amount: {
       type: Number,
       required: true,
@@ -25,7 +25,7 @@ const transactionSchema = new mongoose.Schema(
     planType: {
       type: String,
       required: true,
-      enum: ['BASIC', 'ENTERPRISE'],
+      enum: ['basic', 'enterprise'],
     },
     transaction_uuid: {
       type: String,

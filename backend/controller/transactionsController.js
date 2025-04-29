@@ -4,7 +4,7 @@ const catchAsync = require('../utils/catchAsync');
 
 exports.getAllTransactions = catchAsync(async (req, res, next) => {
   const queryWithFilter = new APIFeatures(
-    Transaction.find(),
+    Transaction.find().populate('user').sort({ createdAt: -1 }),
     req.query,
   ).filter();
 
@@ -17,4 +17,11 @@ exports.getAllTransactions = catchAsync(async (req, res, next) => {
   res
     .status(200)
     .json({ status: 'success', data: { count, data: transactions } });
+});
+
+exports.deleteAllTransactions = catchAsync(async (req, res, next) => {
+  await Transaction.deleteMany();
+  res.status(204).json({
+    status: 'success',
+  });
 });

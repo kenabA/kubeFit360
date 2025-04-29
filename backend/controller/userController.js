@@ -4,6 +4,11 @@ const APIFeatures = require('../utils/APIFeatures');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const filterObj = require('../utils/filterObj');
+const { generateUniqueId } = require('esewajs');
+
+const {
+  initiateEsewaPaymentInternal,
+} = require('../utils/initiateEsewaPayment');
 const sendEmail = require('./../utils/email');
 
 exports.getClientStats = catchAsync(async (req, res, next) => {
@@ -188,8 +193,13 @@ exports.processClientRequest = catchAsync(async (req, res, next) => {
 
   if (status === 'approved') {
     client.status = 'approved';
-    const paymentURL = `PAYMENT URL`;
-    const message = `Congratulations! Your membership request has been approved.\n\nPlease complete the payment using the link below:\n${paymentURL}\n`;
+    const paymentUrl = await initiateEsewaPaymentInternal({
+      user_id: client._id,
+      membershipType: client.membershipType,
+      transaction_uuid: generateUniqueId(),
+    });
+
+    const message = `Congratulations! Your membership request has been approved.\n\nPlease complete the payment using the link below:\n${paymentUrl}\n`;
     try {
       await sendEmail({
         email: client.email,
