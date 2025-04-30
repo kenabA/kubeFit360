@@ -5,6 +5,7 @@ export const buildApiRoute = (path: string) => `${BASE_URL}/${path}`;
 export const API_ROUTES = {
   AUTH: {
     AUTHENTICATE_USER: buildApiRoute("auth/authenticateUser"),
+    ONE_TIME_VERIFICATION: buildApiRoute("auth/one-time-verification"),
     LOGIN: buildApiRoute("auth/login"),
     LOGOUT: buildApiRoute("auth/logout"),
     SIGNUP: buildApiRoute("auth/signup"),

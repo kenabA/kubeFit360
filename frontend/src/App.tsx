@@ -13,6 +13,7 @@ import SignUpRequest from "./system/pages/admin/client/signup-request/signup-req
 import PaymentStatus from "./system/pages/admin/payment/payment-success";
 import PaymentFailure from "./system/pages/admin/payment/payment-failure";
 import CheckNewUser from "./system/components/app-initializer";
+import PostPaymentLogin from "./system/pages/post-payment-login/post-payment-login";
 
 // ✅ Website Pages (lazy)
 const LandingPage = lazy(
@@ -235,6 +236,8 @@ export default function App() {
         <Route element={<SignupLayout />}>
           <Route path={ROUTES.SIGNUP} element={<Signup />} />
         </Route>
+
+        <Route path="/post-payment-login" element={<PostPaymentLogin />} />
 
         <Route
           path="/payment-success"
