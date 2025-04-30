@@ -1,4 +1,6 @@
 const jwt = require('jsonwebtoken');
+const sendEmail = require('./../utils/email');
+const AppError = require('./appError');
 
 const signToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -6,7 +8,7 @@ const signToken = (id) => {
   });
 };
 
-const createAndSendToken = (user, statusCode, res) => {
+const setupCookie = async (user) => {
   const token = signToken(user.id);
   const cookieOptions = {
     expires: new Date(
@@ -17,6 +19,41 @@ const createAndSendToken = (user, statusCode, res) => {
   if (process.env.NODE_ENV === 'production') {
     cookieOptions.secure = true;
   }
+  return { token, cookieOptions };
+};
+
+const createAndSendToken = async (user, statusCode, res) => {
+  const { token, cookieOptions } = await setupCookie(user);
+  res.cookie('jwt', token, cookieOptions);
+
+  res
+    .status(statusCode)
+    .json({ status: 'Success', token, data: { data: user } });
+};
+
+const createAndSendAndMailToken = async (user, statusCode, res) => {
+  const { token, cookieOptions } = await setupCookie(user);
+  try {
+    const loginURL = `${process.env.CLIENT_URL}/post-payment-login?token=${token}`;
+
+    await sendEmail({
+      email: user.email,
+      subject: 'Login to your dashboard',
+      message: `Click here to access your dashboard: ${loginURL}`,
+    });
+  } catch {
+    return new AppError(
+      'There was an error sending the email. Try again later.',
+      500,
+    );
+  }
+
+  user.oneTimeLoginToken = token;
+  user.oneTimeLoginTokenExpires = new Date(
+    Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000,
+  );
+
+  await user.save({ validateBeforeSave: false });
 
   res.cookie('jwt', token, cookieOptions);
   res
@@ -24,4 +61,7 @@ const createAndSendToken = (user, statusCode, res) => {
     .json({ status: 'Success', token, data: { data: user } });
 };
 
-module.exports = createAndSendToken;
+module.exports = {
+  createAndSendToken,
+  createAndSendAndMailToken,
+};

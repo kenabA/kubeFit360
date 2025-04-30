@@ -6,7 +6,7 @@ const sendEmail = require('./../utils/email');
 const crypto = require('crypto');
 
 const jwt = require('jsonwebtoken');
-const createAndSendToken = require('../utils/token');
+const { createAndSendToken } = require('../utils/token');
 const Client = require('../models/clientModal');
 
 // exports.signup = catchAsync(async (req, res, next) => {
@@ -275,15 +275,37 @@ exports.setPassword = catchAsync(async (req, res, next) => {
     return next(new AppError('Please provide all the passwords first.'));
   }
 
-  // 3. If so, update password
+  // Clear token fields
+  if (currentUser.oneTimeLoginToken) {
+    currentUser.oneTimeLoginToken = undefined;
+    currentUser.oneTimeLoginTokenExpires = undefined;
+  }
+
   currentUser.password = req.body.password;
   currentUser.passwordConfirm = req.body.passwordConfirm;
   await currentUser.save();
 
-  // 4. Log user out and send response.
   res.cookie('jwt', 'loggedOut', {
     expires: new Date(Date.now() + 10 * 1000),
     httpOnly: true,
   });
   res.status(200).json({ status: 'success' });
+});
+
+exports.oneTimeLogin = catchAsync(async (req, res, next) => {
+  const { token } = req.query;
+
+  const user = await Client.findOne({
+    oneTimeLoginToken: token,
+    oneTimeLoginTokenExpires: { $gt: Date.now() },
+  });
+
+  if (!user) {
+    return next(new AppError('Token is invalid or has expired', 400));
+  }
+
+  await user.save({ validateBeforeSave: false });
+
+  // Log in and send JWT
+  createAndSendToken(user, 200, res);
 });

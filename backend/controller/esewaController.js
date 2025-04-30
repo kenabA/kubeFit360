@@ -2,7 +2,8 @@ import { EsewaCheckStatus } from 'esewajs';
 import Transaction from '../models/transactionModel.js';
 import { initiateEsewaPaymentInternal } from '../utils/initiateEsewaPayment.js';
 import Client from '../models/clientModal.js';
-import createAndSendToken from '../utils/token.js';
+
+import { createAndSendAndMailToken } from '../utils/token.js';
 
 const EsewaInitiatePayment = async (req, res) => {
   const { user_id, membershipType, transaction_uuid } = req.body;
@@ -61,22 +62,14 @@ const paymentStatus = async (req, res) => {
 
       await transaction.save();
 
-      await Client.findOneAndUpdate(
-        {
-          _id: transaction.user._id,
-        },
-        { active: true },
-      );
-
-      const user = { id: String(transaction.user) };
-
-      createAndSendToken(user, 200, res);
-
-      //   return res
-      //     .status(200)
-      //     .json({ message: 'Transaction status updated successfully' });
+      const client = await Client.findById(transaction.user._id);
+      if (!client) {
+        return res.status(404).json({ message: 'Client not found' });
+      }
+      // Modify the client object
+      client.active = true;
+      await createAndSendAndMailToken(client, 200, res);
     } else {
-      // Payment failed or pending
       return res
         .status(400)
         .json({ message: 'Payment not completed yet or failed' });
@@ -88,7 +81,3 @@ const paymentStatus = async (req, res) => {
 };
 
 export { EsewaInitiatePayment, paymentStatus };
-
-// Left to do
-// 2. If it works, let the admin handle the payment link sending process
-// 3. Show the payment success process properly for both situations

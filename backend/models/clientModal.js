@@ -16,6 +16,8 @@ const clientSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  oneTimeLoginToken: String,
+  oneTimeLoginTokenExpires: Date,
 });
 
 // Create a discriminator (inherits User model)
