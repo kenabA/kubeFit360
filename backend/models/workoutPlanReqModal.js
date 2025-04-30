@@ -93,6 +93,9 @@ const workoutPlanRequests = new mongoose.Schema(
   { timestamps: true },
 );
 
+// ✅ Correct index added here
+workoutPlanRequests.index({ member: 1, createdAt: -1 });
+
 const WorkoutPlanRequests = mongoose.model(
   'WorkoutPlanRequests',
   workoutPlanRequests,

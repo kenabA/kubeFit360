@@ -25,7 +25,7 @@ router.route('/stats').get(restrictTo('trainer'), getMonthlyStatsByTrainer);
 router
   .route('/:id')
   .get(restrictTo('admin', 'trainer', 'member'), getWorkoutPlan)
-  .delete(restrictTo('admin', 'trainer'), deleteWorkoutPlan);
+  .delete(restrictTo('admin', 'trainer', 'member'), deleteWorkoutPlan);
 
 router
   .route('/member/:id')
