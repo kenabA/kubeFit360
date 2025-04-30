@@ -19,3 +19,9 @@ export type TUserDetails = {
   userImage: string;
   createdAt: string;
 };
+
+export type TClientDetails = TUserDetails & {
+  membershipType: "basic" | "enterprise";
+  renewalDate: string;
+  active: boolean;
+};

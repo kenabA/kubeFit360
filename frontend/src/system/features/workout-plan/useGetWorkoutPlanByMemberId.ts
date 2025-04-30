@@ -6,13 +6,17 @@ import apiGetWorkoutPlanByMemberId from "@/system/services/workout-plan/apiGetWo
 
 function useGetWorkoutPlanByMemberId({ selectedId, enabled }: TGetWorkoutPlan) {
   // verify the get workout plan in the backend first and then only work forward.
-  const { isPending, data, error } = useQuery<TWorkoutPlan, AxiosError>({
+  const { isPending, data, error, isSuccess } = useQuery<
+    TWorkoutPlan,
+    AxiosError
+  >({
     queryFn: () => apiGetWorkoutPlanByMemberId(selectedId),
     queryKey: ["workoutPlan", selectedId],
     enabled: enabled && !!selectedId,
+    retry: false,
   });
 
-  return { isPending, data, error };
+  return { isPending, data, error, isSuccess };
 }
 
 export default useGetWorkoutPlanByMemberId;

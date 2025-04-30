@@ -22,8 +22,6 @@ export default function ClientWorkoutPlan() {
     selectedId: auth?._id ?? "",
   });
 
-  console.log(auth?._id);
-
   function handleOpenAdd() {
     setOpenAdd(true);
   }
