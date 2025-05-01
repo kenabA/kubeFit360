@@ -17,6 +17,7 @@ import { useState } from "react";
 import { AnimatedQuote } from "@/system/components/animated-quote/animated-quote";
 import { RadialChart } from "@/system/components/radial-chart/radial-chart";
 import useGetClientDashboardStats from "@/system/features/users/members/useGetClientDashboardStats";
+import AnimatedBorderWrapper from "@/system/components/animated-border/animated-border";
 
 export default function MemberDashboard() {
   const navigate = useNavigate();
@@ -33,6 +34,25 @@ export default function MemberDashboard() {
 
   const status = isSuccess ? "active" : "inactive";
 
+  const membershipBlock = (
+    <Block
+      type={"qualitative"}
+      theme={user?.membershipType === "basic" ? "info" : "warn"}
+      data={
+        <span
+          className={cn(
+            "uppercase font-semibold",
+            user?.membershipType === "basic" ? "text-info" : "text-warn"
+          )}
+        >
+          {user?.membershipType}
+        </span>
+      }
+      icon="material-symbols:card-membership-outline"
+      title="membership type"
+    />
+  );
+
   return (
     <section className="rounded-tl-xl overflow-y-auto custom-scrollbar flex-1">
       <div className="py-7 px-6">
@@ -41,23 +61,15 @@ export default function MemberDashboard() {
         </Heading>
         <div className="grid grid-cols-2 grid-rows-[auto] gap-6 mt-6 ">
           <div className="space-y-6">
-            <Block
-              className="col-span-full md:col-[1/2] lg:col-[1/2] h-fit"
-              type={"qualitative"}
-              theme={user?.membershipType === "basic" ? "info" : "warn"}
-              data={
-                <span
-                  className={cn(
-                    "uppercase font-semibold",
-                    user?.membershipType === "basic" ? "text-info" : "text-warn"
-                  )}
-                >
-                  {user?.membershipType}
-                </span>
-              }
-              icon="material-symbols:card-membership-outline"
-              title="membership type"
-            />
+            {user?.membershipType === "basic" ? (
+              <div className="col-span-full md:col-[1/2] lg:col-[1/2] h-fit w-full">
+                {membershipBlock}
+              </div>
+            ) : (
+              <AnimatedBorderWrapper className="col-span-full md:col-[1/2] lg:col-[1/2] h-fit w-full">
+                {membershipBlock}
+              </AnimatedBorderWrapper>
+            )}
             <Block
               className="col-span-full md:col-[2/-1] flex flex-col gap-4 h-fit"
               type={"custom"}
