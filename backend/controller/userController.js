@@ -10,6 +10,7 @@ const {
   initiateEsewaPaymentInternal,
 } = require('../utils/initiateEsewaPayment');
 const sendEmail = require('./../utils/email');
+const Transaction = require('../models/transactionModel');
 
 exports.getClientStats = catchAsync(async (req, res, next) => {
   const stats = await User.aggregate([
@@ -244,5 +245,50 @@ exports.processClientRequest = catchAsync(async (req, res, next) => {
     status: 'success',
     message: `Client request has been ${status} successfully`,
     data: { data: client },
+  });
+});
+
+exports.getClientDashabordStats = catchAsync(async (req, res, next) => {
+  const userId = req.user.id;
+
+  if (!userId) {
+    return next(new AppError('No client found with that ID', 404));
+  }
+
+  const transaction = await Transaction.findOne({ user: userId })
+    .sort({ paidAt: -1 })
+    .exec();
+
+  if (!transaction) {
+    return next(
+      new AppError('No transaction found with that Transaction ID', 404),
+    );
+  }
+
+  const paidAt = new Date(transaction.paidAt);
+  const expiresOn = new Date(transaction.expiresOn);
+  const now = new Date();
+
+  const totalDays = Math.ceil(
+    (new Date(expiresOn) - new Date(paidAt)) / (1000 * 60 * 60 * 24),
+  );
+  const daysCompleted = Math.max(
+    0,
+    Math.floor((now - new Date(paidAt)) / (1000 * 60 * 60 * 24)),
+  );
+  const daysLeft = Math.max(0, totalDays - daysCompleted);
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      totalDays,
+      daysLeft,
+      daysCompleted,
+      planType: transaction.planType,
+      paidAt: transaction.paidAt,
+      expiresOn: transaction.expiresOn,
+      transactionId: transaction.transaction_uuid,
+      amount: transaction.amount,
+    },
   });
 });

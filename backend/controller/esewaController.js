@@ -45,7 +45,6 @@ const paymentStatus = async (req, res) => {
     ) {
       // ✅ Set payment completed date
       transaction.status = 'COMPLETE';
-      transaction.paidAt = new Date();
 
       // ✅ Calculate expiry based on planType
       let monthsToAdd = 0;
@@ -55,8 +54,12 @@ const paymentStatus = async (req, res) => {
         monthsToAdd = 6;
       }
 
+      const nowUTC = new Date();
+      const nepalTime = new Date(nowUTC.getTime() + 345 * 60 * 1000);
+      transaction.paidAt = nepalTime;
+
       // ✅ Set expiry date // WATCH OUT FOR THEIR DUPLICATED VALUES IN THEIR BACKEND
-      const expiresOn = new Date();
+      const expiresOn = new Date(nepalTime);
       expiresOn.setMonth(expiresOn.getMonth() + monthsToAdd);
       transaction.expiresOn = expiresOn;
 

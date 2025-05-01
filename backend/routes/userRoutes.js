@@ -12,6 +12,7 @@ const {
   getAllClients,
   processClientRequest,
   checkNewUser,
+  getClientDashabordStats,
 } = require('../controller/userController');
 const {
   updatePassword,
@@ -42,6 +43,9 @@ router
   .get(restrictTo('admin'), getAllUsers)
   .post(restrictTo('admin'), addUser);
 router.route('/user-stats').get(restrictTo('admin'), getClientStats);
+router
+  .route('/client-stats')
+  .get(restrictTo('admin', 'member'), getClientDashabordStats);
 
 // router.use(restrictTo('admin'));
 
