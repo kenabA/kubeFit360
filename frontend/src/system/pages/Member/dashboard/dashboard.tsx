@@ -16,6 +16,7 @@ import ViewPlan from "@/system/features/workout-plan/ViewPlan";
 import { useState } from "react";
 import { AnimatedQuote } from "@/system/components/animated-quote/animated-quote";
 import { RadialChart } from "@/system/components/radial-chart/radial-chart";
+import useGetClientDashboardStats from "@/system/features/users/members/useGetClientDashboardStats";
 
 export default function MemberDashboard() {
   const navigate = useNavigate();
@@ -24,6 +25,7 @@ export default function MemberDashboard() {
   const { isPending, isSuccess, data } = useGetWorkoutPlanByMemberId({
     selectedId: user?._id ?? "",
   });
+  const { data: clientData } = useGetClientDashboardStats();
 
   if (isPending) {
     return <Spinner />;
@@ -42,9 +44,14 @@ export default function MemberDashboard() {
             <Block
               className="col-span-full md:col-[1/2] lg:col-[1/2] h-fit"
               type={"qualitative"}
-              theme={"info"}
+              theme={user?.membershipType === "basic" ? "info" : "warn"}
               data={
-                <span className="text-info uppercase  font-semibold">
+                <span
+                  className={cn(
+                    "uppercase font-semibold",
+                    user?.membershipType === "basic" ? "text-info" : "text-warn"
+                  )}
+                >
                   {user?.membershipType}
                 </span>
               }
@@ -108,7 +115,11 @@ export default function MemberDashboard() {
             </div>
           </div>
           <Block type="figure" icon="lucide:package" title="Members Status">
-            <RadialChart />
+            <RadialChart
+              daysCompleted={clientData?.data.daysCompleted}
+              daysLeft={clientData?.data.daysLeft}
+              totalDays={clientData?.data.totalDays}
+            />
           </Block>
         </div>
       </div>

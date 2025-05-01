@@ -34,6 +34,7 @@ export const API_ROUTES = {
   USER: {
     BASE: buildApiRoute("users"),
     STATS: buildApiRoute("users/user-stats"),
+    DETAILS: buildApiRoute("users/client-stats"),
     CHECK_NEW_USER: buildApiRoute("users/check-new-user"),
     CR_USER: buildApiRoute("users/me"),
     SIGNUP_REQUEST: buildApiRoute("users/clients"),

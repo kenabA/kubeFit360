@@ -8,20 +8,15 @@ import {
 
 import { ChartConfig, ChartContainer } from "@/components/ui/chart";
 import { Card, CardContent, CardFooter } from "@/components";
-import { TrendingUp } from "lucide-react";
+import { Calendar } from "lucide-react";
+import React, { useMemo } from "react";
+import { cn } from "@/lib/utils";
 
-// Example values
-const totalDays = 90;
-const daysLeft = 11;
-
-// Progress: How much time has passed (in %)
-const progress = 100 - ((totalDays - daysLeft) / totalDays) * 100;
-
-// Data with two layers: background (full ring) and foreground (progress)
-const chartData = [
-  { name: "Background", progress: 100, fill: "hsl(var(--accent-light))" }, // light background
-  { name: "Progress", progress, fill: "var(--color-progress)" },
-];
+type RadialChartProps = {
+  totalDays: number;
+  daysLeft: number;
+  daysCompleted: number;
+};
 
 const chartConfig = {
   progress: {
@@ -30,7 +25,35 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function RadialChart() {
+export const RadialChart = React.memo(function RadialChart({
+  totalDays,
+  daysLeft,
+  daysCompleted,
+}: RadialChartProps) {
+  const progress = useMemo(() => {
+    return Math.round(((totalDays - daysLeft) / totalDays) * 100);
+  }, [totalDays, daysLeft]);
+
+  const chartData = useMemo(
+    () => [
+      {
+        name: "Background",
+        progress: 100,
+        fill:
+          daysLeft > 3
+            ? "hsl(var(--accent-light))"
+            : "hsl(var(--destructive-light))",
+      },
+      {
+        name: "Progress",
+        progress: 100 - progress,
+        fill:
+          daysLeft > 3 ? "var(--color-progress)" : "hsl(var(--destructive))",
+      },
+    ],
+    [progress]
+  );
+
   return (
     <Card className="border-none shadow-none">
       <CardContent>
@@ -48,7 +71,9 @@ export function RadialChart() {
             <PolarGrid
               gridType="circle"
               radialLines={false}
-              stroke="fill-accent-light"
+              stroke={
+                daysLeft > 3 ? "fill-accent-light" : "fill-destructive-light"
+              }
               className="fill-white"
               polarRadius={[86, 74]}
             />
@@ -71,7 +96,12 @@ export function RadialChart() {
                         <tspan
                           x={viewBox.cx}
                           y={viewBox.cy}
-                          className="fill-foreground text-4xl font-bold"
+                          className={cn(
+                            "text-4xl font-bold",
+                            daysLeft > 3
+                              ? "fill-foreground"
+                              : "fill-destructive"
+                          )}
                         >
                           {daysLeft}
                         </tspan>
@@ -91,15 +121,16 @@ export function RadialChart() {
             </PolarRadiusAxis>
           </RadialBarChart>
         </ChartContainer>
-        <CardFooter className="flex-col gap-2 text-sm">
-          <div className="flex items-center gap-2 font-medium leading-none">
-            Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
+        <CardFooter className="flex-col gap-3 text-sm">
+          <div className="flex items-center gap-2 font-medium leading-none text-gray-secondary">
+            <Calendar className="h-4 w-4" />
+            {daysCompleted} days completed
           </div>
-          <div className="leading-none text-muted-foreground">
-            Showing total visitors for the last 6 months
+          <div className="leading-none text-gray-tertiary">
+            {Math.round(progress)}% of your program completed
           </div>
         </CardFooter>
       </CardContent>
     </Card>
   );
-}
+});

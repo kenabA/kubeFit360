@@ -58,7 +58,7 @@ export default function ({
               className="text-gray-tertiary text-xs "
               variant={"secondary"}
             >
-              Rs. 1500
+              Rs. {theme === "info" ? 1500 : 6000}
             </Badge>
           )}
         </Heading>
