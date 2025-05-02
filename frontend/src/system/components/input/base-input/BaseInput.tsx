@@ -12,8 +12,8 @@ export function BaseInput<T extends FieldValues>({
   placeholder,
   disabled = false,
   error,
-  allowPastDate,
-  allowFuture,
+  allowPastDate = false,
+  allowFuture = true,
 }: TBaseInputProps<T>) {
   const [hidden, setHidden] = useState<boolean>(true);
 

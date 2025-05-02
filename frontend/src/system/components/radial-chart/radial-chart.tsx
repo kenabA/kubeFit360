@@ -4,6 +4,7 @@ import {
   RadialBar,
   RadialBarChart,
   Label,
+  ResponsiveContainer,
 } from "recharts";
 
 import { ChartConfig, ChartContainer } from "@/components/ui/chart";
@@ -59,67 +60,70 @@ export const RadialChart = React.memo(function RadialChart({
       <CardContent>
         <ChartContainer
           config={chartConfig}
-          className="mx-auto aspect-square max-h-[250px]"
+          className="mx-auto relative w-full max-h-[200px] aspect-[1/1]"
         >
-          <RadialBarChart
-            data={chartData}
-            startAngle={90}
-            endAngle={-270}
-            innerRadius={80}
-            outerRadius={110}
-          >
-            <PolarGrid
-              gridType="circle"
-              radialLines={false}
-              stroke={
-                daysLeft > 3 ? "fill-accent-light" : "fill-destructive-light"
-              }
-              className="fill-white"
-              polarRadius={[86, 74]}
-            />
-            <RadialBar
-              background={false}
-              dataKey="progress"
-              cornerRadius={10}
-            />
-            <PolarRadiusAxis tick={false} tickLine={false} axisLine={false}>
-              <Label
-                content={({ viewBox }) => {
-                  if (viewBox && "cx" in viewBox && "cy" in viewBox) {
-                    return (
-                      <text
-                        x={viewBox.cx}
-                        y={viewBox.cy}
-                        textAnchor="middle"
-                        dominantBaseline="middle"
-                      >
-                        <tspan
+          <ResponsiveContainer width="100%" height="100%">
+            <RadialBarChart
+              data={chartData}
+              startAngle={90}
+              endAngle={-270}
+              innerRadius="69%"
+              outerRadius="103%"
+            >
+              <PolarGrid
+                gridType="circle"
+                radialLines={false}
+                stroke={
+                  daysLeft > 3 ? "fill-accent-light" : "fill-destructive-light"
+                }
+                className="fill-white"
+                polarRadius={[86, 74]}
+              />
+              <RadialBar
+                background={false}
+                dataKey="progress"
+                strokeWidth={2}
+                cornerRadius={10}
+              />
+              <PolarRadiusAxis tick={false} tickLine={false} axisLine={false}>
+                <Label
+                  content={({ viewBox }) => {
+                    if (viewBox && "cx" in viewBox && "cy" in viewBox) {
+                      return (
+                        <text
                           x={viewBox.cx}
                           y={viewBox.cy}
-                          className={cn(
-                            "text-4xl font-bold",
-                            daysLeft > 3
-                              ? "fill-foreground"
-                              : "fill-destructive"
-                          )}
+                          textAnchor="middle"
+                          dominantBaseline="middle"
                         >
-                          {daysLeft}
-                        </tspan>
-                        <tspan
-                          x={viewBox.cx}
-                          y={(viewBox.cy || 0) + 24}
-                          className="fill-muted-foreground text-sm"
-                        >
-                          Days Left
-                        </tspan>
-                      </text>
-                    );
-                  }
-                  return null;
-                }}
-              />
-            </PolarRadiusAxis>
-          </RadialBarChart>
+                          <tspan
+                            x={viewBox.cx}
+                            y={viewBox.cy}
+                            className={cn(
+                              "text-4xl font-bold",
+                              daysLeft > 3
+                                ? "fill-foreground"
+                                : "fill-destructive"
+                            )}
+                          >
+                            {daysLeft}
+                          </tspan>
+                          <tspan
+                            x={viewBox.cx}
+                            y={(viewBox.cy || 0) + 24}
+                            className="fill-muted-foreground text-sm"
+                          >
+                            Days Left
+                          </tspan>
+                        </text>
+                      );
+                    }
+                    return null;
+                  }}
+                />
+              </PolarRadiusAxis>
+            </RadialBarChart>
+          </ResponsiveContainer>
         </ChartContainer>
         <CardFooter className="flex-col gap-3 text-sm">
           <div className="flex items-center gap-2 font-medium leading-none text-gray-secondary">

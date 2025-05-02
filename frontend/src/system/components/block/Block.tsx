@@ -7,6 +7,7 @@ import { Calendar } from "@/components";
 import { Badge } from "@/components/ui/badge";
 
 export default function ({
+  select,
   title,
   icon,
   data,
@@ -27,18 +28,22 @@ export default function ({
       <div className="flex justify-between w-full">
         <span className="capitalize block text-gray-tertiary">{title}</span>
         {theme && icon && (
-          <div
-            className={cn(
-              "text-[24px]  p-2 rounded-full",
-              themeStyles[theme]?.light
-            )}
-          >
-            <Icon
-              icon={icon}
-              className={cn("text-[24px]", themeStyles[theme]?.base)}
-            />
+          <div className="flex items-center gap-2">
+            {select}
+            <div
+              className={cn(
+                "text-[24px]  p-2 rounded-full",
+                themeStyles[theme]?.light
+              )}
+            >
+              <Icon
+                icon={icon}
+                className={cn("text-[24px]", themeStyles[theme]?.base)}
+              />
+            </div>
           </div>
         )}
+
         {status}
       </div>
       {(type === "numeric" || type === "qualitative") && (

@@ -18,19 +18,28 @@ import { AnimatedQuote } from "@/system/components/animated-quote/animated-quote
 import { RadialChart } from "@/system/components/radial-chart/radial-chart";
 import useGetClientDashboardStats from "@/system/features/users/members/useGetClientDashboardStats";
 import AnimatedBorderWrapper from "@/system/components/animated-border/animated-border";
+import { WeightProgressChart } from "@/system/components/areachart/areachart-interactive";
+
+import useFormattedWeightData from "@/system/features/weights/useFormattedWeightData";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export default function MemberDashboard() {
   const navigate = useNavigate();
+  const [selectedRange, setSelectedRange] = useState<string>("90d");
   const user = useAuthUser<TClientDetails>();
   const [openViewPlan, setOpenViewPlan] = useState<boolean>(false);
   const { isPending, isSuccess, data } = useGetWorkoutPlanByMemberId({
     selectedId: user?._id ?? "",
   });
-  const { data: clientData } = useGetClientDashboardStats();
+  const { formattedWeightsData } = useFormattedWeightData(selectedRange);
 
-  if (isPending) {
-    return <Spinner />;
-  }
+  const { data: clientData } = useGetClientDashboardStats();
 
   const status = isSuccess ? "active" : "inactive";
 
@@ -53,25 +62,27 @@ export default function MemberDashboard() {
     />
   );
 
+  if (isPending) return <Spinner />;
+
   return (
     <section className="rounded-tl-xl overflow-y-auto custom-scrollbar flex-1">
       <div className="py-7 px-6">
         <Heading level={4} variant={"quaternary"}>
           Dashboard
         </Heading>
-        <div className="grid grid-cols-2 grid-rows-[auto] gap-6 mt-6 ">
-          <div className="space-y-6">
+        <div className="h-full grid grid-cols-2 lg:grid-cols-3 lg:grid-rows-[auto,1fr] gap-6 mt-6 ">
+          <div className="col-span-full md:col-[1/3] h-full grid grid-cols-2 grid-rows-[auto,1fr] gap-6">
             {user?.membershipType === "basic" ? (
-              <div className="col-span-full md:col-[1/2] lg:col-[1/2] h-fit w-full">
+              <div className="h-fit w-full col-span-full md:col-[1/2] lg:col-[1/2]">
                 {membershipBlock}
               </div>
             ) : (
-              <AnimatedBorderWrapper className="col-span-full md:col-[1/2] lg:col-[1/2] h-fit w-full">
+              <AnimatedBorderWrapper className="h-fit w-full col-[1/2]">
                 {membershipBlock}
               </AnimatedBorderWrapper>
             )}
             <Block
-              className="col-span-full md:col-[2/-1] flex flex-col gap-4 h-fit"
+              className="col-[2/4] h-fit flex flex-col gap-3"
               type={"custom"}
               status={<Badge variant={status}>{status}</Badge>}
               data={
@@ -118,19 +129,66 @@ export default function MemberDashboard() {
                 </>
               )}
             </Block>
+
             <div
               className={`${cn(
-                " bg-white h-fit shadow-general border-slate-100 border py-3 px-6 rounded-2xl"
+                "bg-white h-full shadow-general border-slate-100 py-3 px-6 rounded-2xl col-[1/4]"
               )}`}
             >
               <AnimatedQuote />
             </div>
           </div>
-          <Block type="figure" icon="lucide:package" title="Members Status">
+          <Block
+            type="figure"
+            icon="lucide:package"
+            title="Members Status"
+            className="col-span-full lg:col-[3/-1] h-fit"
+          >
             <RadialChart
               daysCompleted={clientData?.data.daysCompleted}
               daysLeft={clientData?.data.daysLeft}
               totalDays={clientData?.data.totalDays}
+            />
+          </Block>
+          <div className="relative overflow-hidden shadow-general col-[1/2]">
+            <div className="bg-primary absolute  -top-40 w-full h-48 rounded-full filter blur-lg opacity-[0.1]"></div>
+            <Block type={"calendar"} />
+          </div>
+
+          <Block
+            select={
+              <Select
+                value={selectedRange}
+                onValueChange={(val) => {
+                  if (val !== selectedRange) setSelectedRange(val);
+                }}
+              >
+                <SelectTrigger className="w-[160px] rounded-lg sm:ml-auto">
+                  <SelectValue placeholder="Select time range" />
+                </SelectTrigger>
+                <SelectContent className="rounded-xl">
+                  <SelectItem value="90d" className="rounded-lg">
+                    Last 3 months
+                  </SelectItem>
+                  <SelectItem value="30d" className="rounded-lg">
+                    Last 30 days
+                  </SelectItem>
+                  <SelectItem value="7d" className="rounded-lg">
+                    Last 7 days
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+            }
+            className="w-full col-[2/-1]"
+            type="figure"
+            theme="warn"
+            icon="lucide:package"
+            title="Progress (Weight)"
+          >
+            <WeightProgressChart
+              data={formattedWeightsData || []}
+              selectedRange={selectedRange}
+              setSelectedRange={setSelectedRange}
             />
           </Block>
         </div>

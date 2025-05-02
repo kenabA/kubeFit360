@@ -22,6 +22,7 @@ export const API_ROUTES = {
   },
 
   NOTICES: buildApiRoute("notices"),
+  WEIGHTS: buildApiRoute("weights"),
 
   TRAINERS: {
     BASE: buildApiRoute("maintainers"),

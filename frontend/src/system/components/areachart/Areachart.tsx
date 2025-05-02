@@ -45,8 +45,6 @@ export default function Component({ className }: { className: string }) {
         >
           <CartesianGrid stroke="#E2E7EB" vertical={false} />
           <XAxis
-            stroke="red"
-            color="red"
             dataKey="month"
             tickLine={false}
             axisLine={false}
@@ -54,8 +52,6 @@ export default function Component({ className }: { className: string }) {
             tickFormatter={(value) => value.slice(0, 3)}
           />
           <YAxis
-            stroke="red"
-            color="red"
             tickLine={false}
             axisLine={false}
             tickMargin={8}

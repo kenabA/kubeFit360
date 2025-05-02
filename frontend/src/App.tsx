@@ -151,7 +151,7 @@ export default function App() {
             </Suspense>
           }
         >
-          <Route path={ROUTES.LOGIN} element={<Login />} />
+          <Route path={"/login"} element={<Login />} />
           <Route path={ROUTES.FORGOT_PASSWORD} element={<ForgotPassword />} />
           <Route path={ROUTES.RESET_PASSWORD} element={<ResetPassword />} />
           <Route path={ROUTES.PASSWORD_CHANGED} element={<PasswordChanged />} />

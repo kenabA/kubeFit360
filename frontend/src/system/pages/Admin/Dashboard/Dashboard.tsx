@@ -60,7 +60,7 @@ export default function AdminDashboard() {
             type={"figure"}
             icon="lucide:package"
             title="membership ratio | after client module"
-            className="col-span-full md:col-[2/-1] lg:col-[2/3] bg-destructive-light"
+            className="col-span-full md:col-[2/-1] lg:col-[2/3] "
           >
             <Piechart
               entity="Members"
@@ -113,7 +113,7 @@ export default function AdminDashboard() {
             type={"figure"}
             icon="lucide:package"
             title="revenue collected | after client module"
-            className="col-span-full lg:col-[2/-1] w-full bg-destructive-light"
+            className="col-span-full lg:col-[2/-1] w-full "
           >
             <Areachart className="mt-8" />
           </Block>

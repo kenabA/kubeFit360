@@ -33,6 +33,7 @@ export function BodyMetricsInput<T extends FieldValues>({
             id={label}
             type={type === "password" ? (hidden ? "password" : "text") : type}
             placeholder={placeholder}
+            min={type === "number" ? 1 : undefined}
             {...register(name as Path<T>, { valueAsNumber: true })}
           />
           <div className="cursor-default flex h-[44px] items-center rounded-r-md border border-l-1 bg-slate-50 px-3 text-sm text-gray-tertiary font-medium border-slate-300">

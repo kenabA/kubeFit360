@@ -1,6 +1,7 @@
 import React from "react";
 
 export type TBlockType = {
+  select?: React.ReactElement | null;
   title?: string;
   icon?: string;
   data?: string | number | React.ReactElement;

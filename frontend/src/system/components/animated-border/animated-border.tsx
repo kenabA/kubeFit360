@@ -15,7 +15,7 @@ const AnimatedBorderWrapper = ({
   return (
     <div
       className={cn(
-        "relative inline-flex overflow-hidden rounded-2xl p-[2px] shadow-[0_4px_20px_rgba(227,139,55,0.3)]",
+        "relative inline-flex overflow-hidden rounded-2xl p-[4px] shadow-[0_4px_20px_rgba(227,139,55,0.3)]",
         className
       )}
     >
