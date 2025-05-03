@@ -1,15 +1,18 @@
 import useGetWeights from "./useWeightsData";
 
 function useFormattedWeightData(selectedRange: string) {
-  const { data: weightData, isPending: isGettingWeights } =
-    useGetWeights(selectedRange);
+  const {
+    data: weightData,
+    isPending: isGettingWeights,
+    error,
+  } = useGetWeights(selectedRange);
 
   const formattedWeightsData = weightData?.map((entry) => ({
-    date: entry.loggedAt.slice(0, 10),
+    date: entry.loggedAt,
     weight: entry.weight,
   }));
 
-  return { formattedWeightsData, isGettingWeights };
+  return { formattedWeightsData, isGettingWeights, error };
 }
 
 export default useFormattedWeightData;

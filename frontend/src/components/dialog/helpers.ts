@@ -1,6 +1,7 @@
 import warn from "@/assets/system/svg/warn.svg";
 import alert from "@/assets/system/svg/alert.svg";
 import success from "@/assets/system/svg/success.svg";
+import info from "@/assets/system/svg/info.svg";
 
 export const themeStyles = {
   success: {
@@ -25,7 +26,7 @@ export const themeStyles = {
     text: "text-info",
     background: "bg-info",
     backgroundLight: "bg-info-light",
-    icon: warn,
+    icon: info,
   },
   default: {
     text: "text-primary",

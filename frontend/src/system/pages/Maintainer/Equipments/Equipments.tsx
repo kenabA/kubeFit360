@@ -28,8 +28,6 @@ export default function Equipments() {
   const [openDelete, setOpenDelete] = useState<boolean>(false);
   const user = useAuthUser<TUserDetails>();
 
-  const role = user?.role;
-
   const {
     data: { data: equipments, count },
     isPending,

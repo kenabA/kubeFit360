@@ -9,8 +9,8 @@ function useRecordWeight() {
   const {
     mutate: addNotice,
     isPending,
-    error,
     isSuccess,
+    error,
   } = useMutation({
     mutationFn: (addWeight: TWeightFormProps) => apiAddWeight(addWeight),
     onSuccess: async () => {
@@ -21,14 +21,6 @@ function useRecordWeight() {
         variant: "success",
         title: "Success",
         description: "Weight recorded successfully",
-      });
-    },
-    onError: (err) => {
-      console.log(err.message);
-      toast({
-        variant: "error",
-        title: err.name,
-        description: err.message,
       });
     },
   });

@@ -125,14 +125,14 @@ export const RadialChart = React.memo(function RadialChart({
             </RadialBarChart>
           </ResponsiveContainer>
         </ChartContainer>
-        <CardFooter className="flex-col gap-3 text-sm">
-          <div className="flex items-center gap-2 font-medium leading-none text-gray-secondary">
+        <CardFooter className="flex-col gap-3 text-sm p-0">
+          <div className="flex items-center gap-2 font-medium leading-none text-gray-secondary justify-center w-full">
             <Calendar className="h-4 w-4" />
             {daysCompleted} days completed
           </div>
-          <div className="leading-none text-gray-tertiary">
+          <p className="leading-none text-gray-tertiary text-center w-full">
             {Math.round(progress)}% of your program completed
-          </div>
+          </p>
         </CardFooter>
       </CardContent>
     </Card>

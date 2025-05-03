@@ -11,16 +11,18 @@ export default function InfoBar({
   value: string | number;
 }) {
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex items-center justify-between w-full gap-4">
       <div className="flex items-center gap-2">
         <div className={cn("p-1.5 rounded-full bg-accent-light")}>
           <Icon icon={icon} className={cn("text-[24px] text-accent")} />
         </div>
-        <span className="text-gray-secondary text-md font-semibold">
+        <span className="text-gray-secondary text-md font-semibold whitespace-nowrap">
           {label}
         </span>
       </div>
-      <span className="text-gray-secondary font-normal text-md">{value}</span>
+      <span className="text-gray-secondary font-normal text-md whitespace-nowrap">
+        {value}
+      </span>
     </div>
   );
 }

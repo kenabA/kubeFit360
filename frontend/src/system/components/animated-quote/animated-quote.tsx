@@ -40,7 +40,7 @@ export function AnimatedQuote() {
 
   return (
     <div className="flex flex-col justify-center">
-      <p className="text-lg text-slate-700 mb-3 leading-relaxed italic">
+      <p className="para-md text-slate-700 mb-3 leading-relaxed italic">
         "{displayText}"
         <span
           className={cn(
@@ -54,7 +54,7 @@ export function AnimatedQuote() {
       </p>
       <p
         className={cn(
-          "text-sm text-slate-500 transition-opacity duration-300",
+          " text-slate-500 transition-opacity duration-300 para-sm",
           showAuthor ? "opacity-100" : "opacity-0"
         )}
       >

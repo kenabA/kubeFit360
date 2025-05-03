@@ -66,23 +66,23 @@ export default function MemberDashboard() {
 
   return (
     <section className="rounded-tl-xl overflow-y-auto custom-scrollbar flex-1">
-      <div className="py-7 px-6">
+      <div className="py-7 px-6 flex-1 flex flex-col lg:h-full">
         <Heading level={4} variant={"quaternary"}>
           Dashboard
         </Heading>
-        <div className="h-full grid grid-cols-2 lg:grid-cols-3 lg:grid-rows-[auto,1fr] gap-6 mt-6 ">
-          <div className="col-span-full md:col-[1/3] h-full grid grid-cols-2 grid-rows-[auto,1fr] gap-6">
+        <div className="h-full grid grid-cols-2 lg:grid-cols-3 lg:grid-rows-[auto,1fr] gap-6 mt-6">
+          <div className="col-span-full md:col-[1/3] h-full grid grid-cols-2 grid-rows-[auto,1fr] gap-y-6 sm:gap-6">
             {user?.membershipType === "basic" ? (
-              <div className="h-fit w-full col-span-full md:col-[1/2] lg:col-[1/2]">
+              <div className="md:col-[1/2] lg:col-[1/2] h-fit w-full col-span-full sm:col-[1/2]">
                 {membershipBlock}
               </div>
             ) : (
-              <AnimatedBorderWrapper className="h-fit w-full col-[1/2]">
+              <AnimatedBorderWrapper className="h-fit w-full col-span-full sm:col-[1/2]">
                 {membershipBlock}
               </AnimatedBorderWrapper>
             )}
             <Block
-              className="col-[2/4] h-fit flex flex-col gap-3"
+              className="col-span-full sm:col-[2/4] h-fit flex flex-col gap-3"
               type={"custom"}
               status={<Badge variant={status}>{status}</Badge>}
               data={
@@ -94,7 +94,7 @@ export default function MemberDashboard() {
             >
               {isSuccess ? (
                 <>
-                  <div className="space-y-2">
+                  <div className="space-y-2 overflow-x-auto custom-scrollbar">
                     <InfoBar
                       icon="mdi:teach-poll"
                       label="Trainer"
@@ -142,7 +142,7 @@ export default function MemberDashboard() {
             type="figure"
             icon="lucide:package"
             title="Members Status"
-            className="col-span-full lg:col-[3/-1] h-fit"
+            className="col-span-full sm:col-[2/3] lg:col-[3/-1] h-fit"
           >
             <RadialChart
               daysCompleted={clientData?.data.daysCompleted}
@@ -150,11 +150,10 @@ export default function MemberDashboard() {
               totalDays={clientData?.data.totalDays}
             />
           </Block>
-          <div className="relative overflow-hidden shadow-general col-[1/2]">
+          <div className="h-full relative overflow-hidden shadow-general row-[4/5] sm:row-[2/3] lg:row-[2/-1] col-span-full sm:col-[1/2]">
             <div className="bg-primary absolute  -top-40 w-full h-48 rounded-full filter blur-lg opacity-[0.1]"></div>
             <Block type={"calendar"} />
           </div>
-
           <Block
             select={
               <Select
@@ -179,11 +178,11 @@ export default function MemberDashboard() {
                 </SelectContent>
               </Select>
             }
-            className="w-full col-[2/-1]"
+            className="w-full h-full row-[3/4] lg:row-[2/-1] lg:col-[2/-1] col-[1/-1]"
             type="figure"
             theme="warn"
             icon="lucide:package"
-            title="Progress (Weight)"
+            title="Weightrack"
           >
             <WeightProgressChart
               data={formattedWeightsData || []}

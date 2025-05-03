@@ -43,16 +43,18 @@ export default function ({
             </div>
           </div>
         )}
-
         {status}
       </div>
       {(type === "numeric" || type === "qualitative") && (
         <Heading
           level={4}
           variant={"quinary"}
-          className="flex items-center gap-2"
+          className={cn(
+            "flex items-center gap-2",
+            type === "qualitative" && "flex-col-reverse items-start gap-2"
+          )}
         >
-          {data}{" "}
+          {data}
           {type === "numeric" && (
             <span className="text-sm text-gray-tertiary font-normal">
               / {total}
