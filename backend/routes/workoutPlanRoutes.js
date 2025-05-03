@@ -17,14 +17,14 @@ router.use(protect);
 router
   .route('/')
   .post(restrictTo('trainer'), createWorkoutPlan)
-  .get(restrictTo('trainer', 'admin'), getAllWorkoutPlan)
+  .get(restrictTo('trainer', 'admin', 'member'), getAllWorkoutPlan)
   .delete(restrictTo('trainer', 'admin'), deleteAllWorkoutPlan);
 
 router.route('/stats').get(restrictTo('trainer'), getMonthlyStatsByTrainer);
 
 router
   .route('/:id')
-  .get(restrictTo('admin', 'trainer', 'member'), getWorkoutPlan)
+  .get(restrictTo('member', 'admin', 'trainer'), getWorkoutPlan)
   .delete(restrictTo('admin', 'trainer', 'member'), deleteWorkoutPlan);
 
 router

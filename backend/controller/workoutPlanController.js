@@ -44,7 +44,6 @@ exports.getWorkoutPlan = catchAsync(async (req, res, next) => {
 
 exports.getWorkoutPlanByMemberId = catchAsync(async (req, res, next) => {
   const memberId = req.params.id;
-
   const request = await WorkoutPlanRequests.findOne({
     member: memberId,
     generatedPlan: { $ne: null },
