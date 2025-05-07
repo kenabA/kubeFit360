@@ -8,7 +8,7 @@ export default function NoData({
 }: {
   title: string;
   description: string;
-  className: string;
+  className?: string;
 }) {
   return (
     <div

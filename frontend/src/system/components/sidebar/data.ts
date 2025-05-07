@@ -78,6 +78,11 @@ export const sidebarDataMember: TSidebarData[] = [
     icon: "icon-park-outline:plan",
   },
   {
+    title: "Membership",
+    to: ROUTES.CLIENT_MEMBERSHIP,
+    icon: "material-symbols:card-membership-outline",
+  },
+  {
     title: "Notices",
     to: ROUTES.NOTICES,
     icon: "pepicons-pop:bulletin-notice",

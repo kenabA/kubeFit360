@@ -102,7 +102,7 @@ export default function ClientWorkoutPlan() {
 
         <div className="grid grid-rows-[1fr_auto] flex-1 h-0 min-h-0  gap-4">
           <div
-            className="p-6 mb-4 bg-white rounded-xl shadow-general
+            className="p-6 bg-white rounded-xl shadow-general
            h-full  overflow-x-hidden overflow-y-auto custom-scrollbar "
           >
             {workoutPlanPresent ? (

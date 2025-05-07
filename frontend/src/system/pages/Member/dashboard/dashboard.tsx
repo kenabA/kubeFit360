@@ -66,7 +66,7 @@ export default function MemberDashboard() {
 
   return (
     <section className="rounded-tl-xl overflow-y-auto custom-scrollbar flex-1">
-      <div className="py-7 px-6 flex-1 flex flex-col lg:h-full">
+      <div className="py-7 px-6 flex-1 flex flex-col ">
         <Heading level={4} variant={"quaternary"}>
           Dashboard
         </Heading>
@@ -178,7 +178,7 @@ export default function MemberDashboard() {
                 </SelectContent>
               </Select>
             }
-            className="w-full h-full row-[3/4] lg:row-[2/-1] lg:col-[2/-1] col-[1/-1]"
+            className="w-full row-[3/4] lg:row-[2/-1] lg:col-[2/-1] col-[1/-1]"
             type="figure"
             theme="warn"
             icon="lucide:package"

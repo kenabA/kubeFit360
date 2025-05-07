@@ -14,6 +14,7 @@ import PaymentStatus from "./system/pages/admin/payment/payment-success";
 import PaymentFailure from "./system/pages/admin/payment/payment-failure";
 import CheckNewUser from "./system/components/app-initializer";
 import PostPaymentLogin from "./system/pages/post-payment-login/post-payment-login";
+import ClientMembership from "./system/pages/member/client-membership/client-membership";
 
 // ✅ Website Pages (lazy)
 const LandingPage = lazy(
@@ -206,6 +207,16 @@ export default function App() {
               element={
                 <Suspense fallback={<Spinner />}>
                   <Notices />
+                </Suspense>
+              }
+            />
+          </Route>
+          <Route element={<ProtectedRoute allowedRoles={["member"]} />}>
+            <Route
+              path={ROUTES.CLIENT_MEMBERSHIP}
+              element={
+                <Suspense fallback={<Spinner />}>
+                  <ClientMembership />
                 </Suspense>
               }
             />

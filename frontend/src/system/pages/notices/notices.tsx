@@ -18,7 +18,7 @@ export default function Notices() {
 
   const [openAdd, setOpenAdd] = useState<boolean>(false);
 
-  const { data, isPending } = useNotices();
+  const { data } = useNotices();
 
   function handleOpenAdd() {
     setOpenAdd(true);
@@ -28,7 +28,7 @@ export default function Notices() {
   const role = user?.role;
 
   return (
-    <section className="rounded-tl-xl h-[calc(100dvh-60px)]">
+    <section className="rounded-tl-xl h-[calc(100dvh-60px)] overflow-y-hidden">
       <div className="py-7 px-6 flex-1 flex flex-col gap-4 h-full">
         <Heading level={4} variant={"quaternary"}>
           Notices

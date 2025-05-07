@@ -19,7 +19,7 @@ export default function Settings() {
   const userId = auth?._id || "";
 
   return (
-    <section className="rounded-tl-xl h-[calc(100dvh-60px)]">
+    <section className="rounded-tl-xl h-[calc(100dvh-60px)] overflow-y-hidden">
       <div className="rounded-[18px] flex-1 flex flex-col py-7 px-6 gap-4 h-full">
         <Heading level={4} variant={"quaternary"}>
           Settings
