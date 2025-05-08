@@ -292,3 +292,70 @@ exports.getClientDashabordStats = catchAsync(async (req, res, next) => {
     },
   });
 });
+
+exports.extendMembership = catchAsync(async (req, res, next) => {
+  const clientIdFromParams = req.params.id;
+  const { membershipType } = req.body;
+
+  const client = await Client.findById(clientIdFromParams);
+  if (!client) {
+    return res.status(404).json({
+      status: 'fail',
+      message: 'No client found with that ID',
+    });
+  }
+
+  if (!membershipType) {
+    return res.status(400).json({
+      status: 'fail',
+      message: 'No Membership Type Submitted',
+    });
+  }
+
+  if (!['basic', 'enterprise'].includes(membershipType)) {
+    return res.status(400).json({
+      status: 'fail',
+      message: "Decision must be either 'basic' or 'enterprise'",
+    });
+  }
+
+  if (
+    client.active &&
+    membershipType === 'basic' &&
+    client.membershipType === 'enterprise'
+  ) {
+    return res.status(400).json({
+      status: 'fail',
+      message:
+        'Downgrades to Basic can only be made after your current plan expires.',
+    });
+  }
+
+  const paymentUrl = await initiateEsewaPaymentInternal({
+    user_id: clientIdFromParams,
+    membershipType: membershipType,
+    transaction_uuid: generateUniqueId(),
+  });
+
+  const message = `Hi ${client.name},\n\nThank you for choosing to continue your fitness journey with us!\n\nTo complete your membership extension, please use the secure payment link below:\n\n👉 ${paymentUrl}\n\nThis link will remain active for the next 24 hours, so we recommend completing your payment as soon as possible.\n\nIf you have any questions or need help, feel free to reply to this email or contact our support team.\n\nStay strong and stay committed,\nkubeFit360° Team 💪`;
+
+  try {
+    await sendEmail({
+      email: client.email,
+      subject: 'Membership Request Approved!',
+      message,
+    });
+  } catch {
+    return next(
+      new AppError(
+        'There was an error sending the email. Try again later.',
+        500,
+      ),
+    );
+  }
+
+  res.status(200).json({
+    status: 'success',
+    message: `Payment link has been sent to your email successfully.`,
+  });
+});

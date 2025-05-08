@@ -13,6 +13,7 @@ const {
   processClientRequest,
   checkNewUser,
   getClientDashabordStats,
+  extendMembership,
 } = require('../controller/userController');
 const {
   updatePassword,
@@ -58,6 +59,10 @@ router.route('/trainers').get(getUsersByRole('trainer'));
 router
   .route('/processClientRequest/:id')
   .patch(restrictTo('admin'), processClientRequest);
+
+router
+  .route('/extendMembership/:id')
+  .patch(restrictTo('member', 'admin'), extendMembership);
 
 router.route('/:id').get(getUser).patch(updateUser).delete(deleteUser);
 

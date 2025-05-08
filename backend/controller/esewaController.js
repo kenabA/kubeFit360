@@ -3,7 +3,10 @@ import Transaction from '../models/transactionModel.js';
 import { initiateEsewaPaymentInternal } from '../utils/initiateEsewaPayment.js';
 import Client from '../models/clientModal.js';
 
-import { createAndSendAndMailToken } from '../utils/token.js';
+import {
+  createAndSendAndMailToken,
+  createAndSendToken,
+} from '../utils/token.js';
 
 const EsewaInitiatePayment = async (req, res) => {
   const { user_id, membershipType, transaction_uuid } = req.body;
@@ -46,32 +49,84 @@ const paymentStatus = async (req, res) => {
       // ✅ Set payment completed date
       transaction.status = 'COMPLETE';
 
-      // ✅ Calculate expiry based on planType
-      let monthsToAdd = 0;
-      if (transaction.planType === 'basic') {
-        monthsToAdd = 1;
-      } else if (transaction.planType === 'enterprise') {
-        monthsToAdd = 6;
-      }
-
-      const nowUTC = new Date();
-      const nepalTime = new Date(nowUTC.getTime() + 345 * 60 * 1000);
-      transaction.paidAt = nepalTime;
-
-      // ✅ Set expiry date // WATCH OUT FOR THEIR DUPLICATED VALUES IN THEIR BACKEND
-      const expiresOn = new Date(nepalTime);
-      expiresOn.setMonth(expiresOn.getMonth() + monthsToAdd);
-      transaction.expiresOn = expiresOn;
-
-      await transaction.save();
-
       const client = await Client.findById(transaction.user._id);
       if (!client) {
         return res.status(404).json({ message: 'Client not found' });
       }
-      // Modify the client object
-      client.active = true;
-      await createAndSendAndMailToken(client, 200, res);
+
+      if (client.active) {
+        if (client.membershipType === transaction.planType) {
+          //find a way to set the transaction to old + new date
+
+          // ✅ Calculate expiry based on planType
+          let monthsToAdd = 0;
+          if (transaction.planType === 'basic') {
+            monthsToAdd = 1;
+          } else if (transaction.planType === 'enterprise') {
+            monthsToAdd = 6;
+          }
+          const nowUTC = new Date();
+          const nepalTime = new Date(nowUTC.getTime() + 345 * 60 * 1000);
+          transaction.paidAt = nepalTime;
+
+          // ✅ Set expiry date // WATCH OUT FOR THEIR DUPLICATED VALUES IN THEIR BACKEND
+
+          const newExpiry = new Date(client.renewalDate);
+          newExpiry.setMonth(newExpiry.getMonth() + monthsToAdd);
+          transaction.expiresOn = newExpiry;
+          client.renewalDate = newExpiry;
+
+          await transaction.save();
+          await client.save({ validateBeforeSave: false });
+          await createAndSendToken(client, 200, res);
+        } else {
+          const nowUTC = new Date();
+          const nepalTime = new Date(nowUTC.getTime() + 345 * 60 * 1000);
+          transaction.paidAt = nepalTime;
+          let monthsToAdd = 0;
+          if (transaction.planType === 'basic') {
+            return;
+          } else if (transaction.planType === 'enterprise') {
+            console.log('basic to enterprise');
+            monthsToAdd = 6;
+            client.membershipType = 'enterprise';
+            // ✅ Set expiry date // WATCH OUT FOR THEIR DUPLICATED VALUES IN THEIR BACKEND
+            const newExpiry = new Date(client.renewalDate);
+            newExpiry.setMonth(newExpiry.getMonth() + monthsToAdd);
+            transaction.expiresOn = newExpiry;
+            client.renewalDate = newExpiry;
+
+            await transaction.save();
+            await createAndSendAndMailToken(client, 200, res);
+          }
+        }
+      } else {
+        // ✅ Calculate expiry based on planType
+        console.log('hi');
+        let monthsToAdd = 0;
+        if (transaction.planType === 'basic') {
+          monthsToAdd = 1;
+        } else if (transaction.planType === 'enterprise') {
+          monthsToAdd = 6;
+        }
+
+        const nowUTC = new Date();
+        const nepalTime = new Date(nowUTC.getTime() + 345 * 60 * 1000);
+        transaction.paidAt = nepalTime;
+
+        // ✅ Set expiry date // WATCH OUT FOR THEIR DUPLICATED VALUES IN THEIR BACKEND
+        const expiresOn = new Date(nepalTime);
+        expiresOn.setMonth(expiresOn.getMonth() + monthsToAdd);
+        transaction.expiresOn = expiresOn;
+
+        await transaction.save();
+
+        // Modify the client object
+        client.active = true;
+        client.renewalDate = expiresOn;
+
+        await createAndSendAndMailToken(client, 200, res);
+      }
     } else {
       return res
         .status(400)
