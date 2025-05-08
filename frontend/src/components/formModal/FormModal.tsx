@@ -86,7 +86,7 @@ export function FormModal({
             </DialogDescription>
           </div>
         </DialogHeader>
-        <div className="py-4 px-6 max-h-[550px] overflow-hidden overflow-y-auto custom-scrollbar">
+        <div className="py-4 px-6 max-h-[550px] overflow-hidden overflow-y-auto custom-scrollbar w-full">
           {children}
         </div>
         <DialogFooter

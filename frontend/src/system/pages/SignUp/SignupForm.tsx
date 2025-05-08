@@ -11,7 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { AnimatePresence, motion } from "framer-motion";
 import useSignUpRequest from "@/system/features/authentication/useSignUpRequest";
 
-const cardVariants = {
+export const cardVariants = {
   hidden: { opacity: 0, y: -10 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.5, delay: 0.3 } },
 };

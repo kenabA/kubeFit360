@@ -10,7 +10,6 @@ import NoData from "@/system/components/no-data/NoData";
 
 export default function ViewPlan({
   selectedId,
-
   isDialogOpen,
   setIsDialogOpen,
 }: {

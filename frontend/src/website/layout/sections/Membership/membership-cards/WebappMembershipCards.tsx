@@ -5,9 +5,13 @@ import { membershipPlanDetails } from "./data";
 import { cn } from "@/lib/utils";
 
 export default function WebappMembershipCards({
+  className,
+  outerStyle,
   selectedMembership,
   onSelect,
 }: {
+  className: string;
+  outerStyle: string;
   selectedMembership: string;
   onSelect: (value: string) => void;
 }) {
@@ -20,7 +24,7 @@ export default function WebappMembershipCards({
   }
 
   return (
-    <div className="flex gap-8 flex-col md:flex-row w-full">
+    <div className={cn("flex gap-8 flex-col md:flex-row w-full", outerStyle)}>
       {membershipPlanDetails.map((data) => {
         const textColor =
           data.theme === "primary" ? "text-primary" : "text-accent";
@@ -35,9 +39,12 @@ export default function WebappMembershipCards({
         return (
           <div
             key={data.title}
-            className={`flex-1 transition-all px-12 py-8 rounded-[18px] bg-white border-2 border-transparent shadow-lg flex flex-col gap-8 ${
-              selectedMembership === data.title && border
-            }`}
+            className={cn(
+              `flex-1 transition-all px-12 py-8 rounded-[18px] bg-white border-2 border-transparent shadow-lg flex flex-col gap-8 ${
+                selectedMembership === data.title && border
+              }`,
+              className
+            )}
           >
             <div>
               <p
@@ -69,7 +76,6 @@ export default function WebappMembershipCards({
                 </div>
               ))}
             </div>
-
             <Button
               type="button"
               onClick={() => handleSelect(data.title)}
