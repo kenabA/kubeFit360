@@ -1,6 +1,6 @@
 import { Heading } from "@/components/heading/Heading";
 import { Badge } from "@/components/ui/badge";
-
+import { motion } from "framer-motion";
 import { Block } from "@/system/components";
 import { TClientDetails } from "@/system/stores/user/types";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
@@ -11,7 +11,7 @@ import Spinner from "@/system/components/spinner/Spinner";
 import { Plus } from "lucide-react";
 
 import { useNavigate } from "react-router";
-import { cn, formatTime } from "@/lib/utils";
+import { cn, dynamicContainerVariants } from "@/lib/utils";
 import ViewPlan from "@/system/features/workout-plan/ViewPlan";
 import { useState } from "react";
 import { AnimatedQuote } from "@/system/components/animated-quote/animated-quote";
@@ -28,6 +28,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { formatTime } from "@/lib/utils";
 
 export default function MemberDashboard() {
   const navigate = useNavigate();
@@ -73,123 +74,156 @@ export default function MemberDashboard() {
         <div className="h-full grid grid-cols-2 lg:grid-cols-3 lg:grid-rows-[auto,1fr] gap-6 mt-6">
           <div className="col-span-full md:col-[1/3] h-full grid grid-cols-2 grid-rows-[auto,1fr] gap-y-6 sm:gap-6">
             {user?.membershipType === "basic" ? (
-              <div className="md:col-[1/2] lg:col-[1/2] h-fit w-full col-span-full sm:col-[1/2]">
+              <motion.div
+                variants={dynamicContainerVariants(0)}
+                initial="hidden"
+                animate="visible"
+                className="md:col-[1/2] lg:col-[1/2] h-fit w-full col-span-full sm:col-[1/2]"
+              >
                 {membershipBlock}
-              </div>
+              </motion.div>
             ) : (
               <AnimatedBorderWrapper className="h-fit w-full col-span-full sm:col-[1/2]">
                 {membershipBlock}
               </AnimatedBorderWrapper>
             )}
-            <Block
+            <motion.div
+              variants={dynamicContainerVariants(1)}
+              initial="hidden"
+              animate="visible"
               className="col-span-full sm:col-[2/4] h-fit flex flex-col gap-3"
-              type={"custom"}
-              status={<Badge variant={status}>{status}</Badge>}
-              data={
-                <span className="text-info uppercase  font-semibold">
-                  {user?.membershipType}
-                </span>
-              }
-              title="workout plan"
             >
-              {isSuccess ? (
-                <>
-                  <div className="space-y-2 overflow-x-auto custom-scrollbar">
-                    <InfoBar
-                      icon="mdi:teach-poll"
-                      label="Trainer"
-                      value={data?.request.trainer.name || "Professional"}
-                    />
-                    <InfoBar
-                      icon="mingcute:time-fill"
-                      label="Created At"
-                      value={formatTime(data?.createdAt || "")}
-                    />
-                  </div>
-                  <Button
-                    variant={"primaryReverse"}
-                    className="font-medium"
-                    onClick={() => setOpenViewPlan(true)}
-                  >
-                    View Plan
-                  </Button>
-                </>
-              ) : (
-                <>
-                  <span className="italic text-gray-secondary">
-                    No workout plan has been created yet.
+              <Block
+                className="flex flex-col gap-3"
+                type={"custom"}
+                status={<Badge variant={status}>{status}</Badge>}
+                data={
+                  <span className="text-info uppercase  font-semibold">
+                    {user?.membershipType}
                   </span>
-                  <Button
-                    variant={"primary"}
-                    className="font-medium"
-                    onClick={() => navigate("/workoutPlan/member")}
-                  >
-                    <Plus className="stroke-[3px]" /> Request Workout Plan
-                  </Button>
-                </>
-              )}
-            </Block>
-
-            <div
+                }
+                title="workout plan"
+              >
+                {isSuccess ? (
+                  <>
+                    <div className="space-y-2 overflow-x-auto custom-scrollbar">
+                      <InfoBar
+                        icon="mdi:teach-poll"
+                        label="Trainer"
+                        value={data?.request.trainer.name || "Professional"}
+                      />
+                      <InfoBar
+                        icon="mingcute:time-fill"
+                        label="Created At"
+                        value={formatTime(data?.createdAt || "")}
+                      />
+                    </div>
+                    <Button
+                      variant={"primaryReverse"}
+                      className="font-medium"
+                      onClick={() => setOpenViewPlan(true)}
+                    >
+                      View Plan
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <span className="italic text-gray-secondary">
+                      No workout plan has been created yet.
+                    </span>
+                    <Button
+                      variant={"primary"}
+                      className="font-medium"
+                      onClick={() => navigate("/workoutPlan/member")}
+                    >
+                      <Plus className="stroke-[3px]" /> Request Workout Plan
+                    </Button>
+                  </>
+                )}
+              </Block>
+            </motion.div>
+            <motion.div
+              variants={dynamicContainerVariants(2)}
+              initial="hidden"
+              animate="visible"
               className={`${cn(
                 "bg-white h-full shadow-general border-slate-100 py-3 px-6 rounded-2xl col-[1/4]"
               )}`}
             >
               <AnimatedQuote />
-            </div>
+            </motion.div>
           </div>
-          <Block
-            type="figure"
-            icon="lucide:package"
-            title="Members Status"
+          <motion.div
+            variants={dynamicContainerVariants(3)}
+            initial="hidden"
+            animate="visible"
             className="col-span-full sm:col-[2/3] lg:col-[3/-1] h-fit"
           >
-            <RadialChart
-              daysCompleted={clientData?.data.daysCompleted}
-              daysLeft={clientData?.data.daysLeft}
-              totalDays={clientData?.data.totalDays}
-            />
-          </Block>
-          <div className="h-full relative overflow-hidden shadow-general row-[4/5] sm:row-[2/3] lg:row-[2/-1] col-span-full sm:col-[1/2]">
+            <Block
+              type="figure"
+              icon="lucide:package"
+              title="Members Status"
+              className=""
+            >
+              <RadialChart
+                daysCompleted={clientData?.data.daysCompleted}
+                daysLeft={clientData?.data.daysLeft}
+                totalDays={clientData?.data.totalDays}
+              />
+            </Block>
+          </motion.div>
+          <motion.div
+            variants={dynamicContainerVariants(4)}
+            initial="hidden"
+            animate="visible"
+            className="h-full relative overflow-hidden shadow-general row-[4/5] sm:row-[2/3] lg:row-[2/-1] col-span-full sm:col-[1/2]"
+          >
             <div className="bg-primary absolute  -top-40 w-full h-48 rounded-full filter blur-lg opacity-[0.1]"></div>
             <Block type={"calendar"} />
-          </div>
-          <Block
-            select={
-              <Select
-                value={selectedRange}
-                onValueChange={(val) => {
-                  if (val !== selectedRange) setSelectedRange(val);
-                }}
-              >
-                <SelectTrigger className="w-[160px] rounded-lg sm:ml-auto">
-                  <SelectValue placeholder="Select time range" />
-                </SelectTrigger>
-                <SelectContent className="rounded-xl">
-                  <SelectItem value="90d" className="rounded-lg">
-                    Last 3 months
-                  </SelectItem>
-                  <SelectItem value="30d" className="rounded-lg">
-                    Last 30 days
-                  </SelectItem>
-                  <SelectItem value="7d" className="rounded-lg">
-                    Last 7 days
-                  </SelectItem>
-                </SelectContent>
-              </Select>
-            }
+          </motion.div>
+          <motion.div
+            variants={dynamicContainerVariants(5)}
             className="w-full row-[3/4] lg:row-[2/-1] lg:col-[2/-1] col-[1/-1]"
-            type="figure"
-            theme="warn"
-            icon="lucide:package"
-            title="Weightrack"
+            initial="hidden"
+            animate="visible"
           >
-            <WeightProgressChart
-              data={formattedWeightsData || []}
-              selectedRange={selectedRange}
-              setSelectedRange={setSelectedRange}
-            />
-          </Block>
+            <Block
+              select={
+                <Select
+                  value={selectedRange}
+                  onValueChange={(val) => {
+                    if (val !== selectedRange) setSelectedRange(val);
+                  }}
+                >
+                  <SelectTrigger className="w-[160px] rounded-lg sm:ml-auto">
+                    <SelectValue placeholder="Select time range" />
+                  </SelectTrigger>
+                  <SelectContent className="rounded-xl">
+                    <SelectItem value="90d" className="rounded-lg">
+                      Last 3 months
+                    </SelectItem>
+                    <SelectItem value="30d" className="rounded-lg">
+                      Last 30 days
+                    </SelectItem>
+                    <SelectItem value="7d" className="rounded-lg">
+                      Last 7 days
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+              }
+              className="w-full"
+              type="figure"
+              theme="warn"
+              icon="lucide:package"
+              title="Weightrack"
+            >
+              <WeightProgressChart
+                data={formattedWeightsData || []}
+                selectedRange={selectedRange}
+                setSelectedRange={setSelectedRange}
+              />
+            </Block>
+          </motion.div>
         </div>
       </div>
       <ViewPlan

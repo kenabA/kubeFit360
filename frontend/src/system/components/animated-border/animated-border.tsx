@@ -1,5 +1,6 @@
-import { cn } from "@/lib/utils";
+import { cn, dynamicContainerVariants } from "@/lib/utils";
 import React from "react";
+import { motion } from "framer-motion";
 
 type Props = {
   children: React.ReactNode;
@@ -13,7 +14,10 @@ const AnimatedBorderWrapper = ({
   innerClassName,
 }: Props) => {
   return (
-    <div
+    <motion.div
+      variants={dynamicContainerVariants(0)}
+      initial="hidden"
+      animate="visible"
       className={cn(
         "relative inline-flex overflow-hidden rounded-2xl p-[4px] shadow-[0_4px_20px_rgba(227,139,55,0.3)]",
         className
@@ -31,7 +35,7 @@ const AnimatedBorderWrapper = ({
       >
         {children}
       </div>
-    </div>
+    </motion.div>
   );
 };
 

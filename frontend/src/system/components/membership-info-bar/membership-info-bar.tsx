@@ -1,18 +1,27 @@
+import { motion } from "framer-motion";
 import { Heading } from "@/components/heading/Heading";
+import { dynamicContainerVariants } from "@/lib/utils";
 import { TMembershipInfo } from "@/system/pages/member/client-membership/client-membership";
 import React from "react";
 
 export default function MembershipInfoBar({
+  index,
   title,
   data,
   footer,
 }: {
+  index: number;
   title: string;
   data: TMembershipInfo[];
   footer?: React.ReactElement;
 }) {
   return (
-    <div className="bg-white p-5 shadow-general rounded-xl flex gap-3 flex-col">
+    <motion.div
+      variants={dynamicContainerVariants(index)}
+      initial="hidden"
+      animate="visible"
+      className="bg-white p-5 shadow-general rounded-xl flex gap-3 flex-col"
+    >
       <Heading
         level={6}
         variant={"senary"}
@@ -40,6 +49,6 @@ export default function MembershipInfoBar({
         ))}
       </div>
       {footer}
-    </div>
+    </motion.div>
   );
 }

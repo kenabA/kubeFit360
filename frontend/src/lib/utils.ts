@@ -59,3 +59,17 @@ export const containerVariants = {
     },
   },
 };
+
+export const dynamicContainerVariants = (index: number) => ({
+  hidden: { opacity: 0, y: -20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      type: "spring",
+      stiffness: 100,
+      damping: 12,
+      delay: index * 0.1,
+    },
+  },
+});

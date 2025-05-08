@@ -1,7 +1,8 @@
 import { Button } from "@/components";
 import { Heading } from "@/components/heading/Heading";
+import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
-import { cn, formatTime } from "@/lib/utils";
+import { cn, dynamicContainerVariants, formatTime } from "@/lib/utils";
 import MembershipInfoBar from "@/system/components/membership-info-bar/membership-info-bar";
 import ExtendClientMembership from "@/system/features/client-membership/extend-client-membership";
 import useGetClientDashboardStats from "@/system/features/users/members/useGetClientDashboardStats";
@@ -100,14 +101,17 @@ export default function ClientMembership() {
           </Heading>
           <div className="rounded-xl  flex flex-col gap-6 h-full overflow-y-auto custom-scrollbar">
             <MembershipInfoBar
+              index={0}
               title={"your membership overview"}
               data={membershipOverview}
             />
             <MembershipInfoBar
+              index={1}
               title={"membership details"}
               data={membershipDates}
             />
             <MembershipInfoBar
+              index={2}
               title={"payment details"}
               data={paymentDetails}
               footer={
@@ -167,7 +171,12 @@ export default function ClientMembership() {
                 </div>
               }
             />
-            <div className="bg-white p-5 shadow-general rounded-xl flex gap-3 flex-col">
+            <motion.div
+              variants={dynamicContainerVariants(3)}
+              initial="hidden"
+              animate="visible"
+              className="bg-white p-5 shadow-general rounded-xl flex gap-3 flex-col"
+            >
               <Heading
                 level={6}
                 variant={"senary"}
@@ -185,7 +194,7 @@ export default function ClientMembership() {
               >
                 Extend Membership <ChevronRight className="stroke-[3]" />
               </Button>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
