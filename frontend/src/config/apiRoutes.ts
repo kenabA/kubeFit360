@@ -40,6 +40,7 @@ export const API_ROUTES = {
     CR_USER: buildApiRoute("users/me"),
     SIGNUP_REQUEST: buildApiRoute("users/clients"),
     PROCESS_SIGNUP_REQUEST: buildApiRoute("users/processClientRequest"),
+    EXTEND_MEMBERSHIP: buildApiRoute("users/extendMembership"),
     PAYMENT_STATUS: buildApiRoute("users/payment-status"),
     SET_PASSWORD: buildApiRoute("users/setPassword"),
     UPDATE_PASSWORD: buildApiRoute("users/updatePassword"),

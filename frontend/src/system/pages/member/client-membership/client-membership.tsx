@@ -190,6 +190,7 @@ export default function ClientMembership() {
         </div>
       </section>
       <ExtendClientMembership
+        selectedId={user?._id || ""}
         isDialogOpen={openExtendMembership}
         setIsDialogOpen={setOpenExtendMembership}
       />
