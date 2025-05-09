@@ -1,5 +1,5 @@
 import { TApiResponse } from "@/system/lib/types";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useSearchParams } from "react-router";
 import { TNoticeData } from "./type";
@@ -9,16 +9,21 @@ function useNotices() {
   const [searchParams] = useSearchParams();
   const params = Object.fromEntries(searchParams.entries());
 
-  const {
-    isPending,
-    data: { data },
-    error,
-  } = useSuspenseQuery<TApiResponse<TNoticeData[]>, AxiosError>({
+  const { isLoading, isError, data, error } = useQuery<
+    TApiResponse<TNoticeData[]>,
+    AxiosError
+  >({
     queryFn: () => apiGetAllNotices(params),
     queryKey: ["notices", params],
+    retry: false,
   });
 
-  return { isPending, data, error };
+  return {
+    isLoading,
+    isError,
+    error,
+    data: data?.data ?? [], // fallback to empty array if data is undefined
+  };
 }
 
 export default useNotices;

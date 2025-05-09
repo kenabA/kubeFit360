@@ -25,8 +25,6 @@ export default function TrainerDashboard() {
 
   const { stats, chartData, error } = useEquipmentsAnalytics();
 
-  console.log(chartData);
-
   if (error) {
     return <>An Error Occurred</>;
   }

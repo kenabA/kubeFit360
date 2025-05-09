@@ -7,7 +7,7 @@ function useRecordWeight() {
   const queryClient = useQueryClient();
   const { toast } = useToast();
   const {
-    mutate: addNotice,
+    mutate: addWeight,
     isPending,
     isSuccess,
     error,
@@ -23,8 +23,15 @@ function useRecordWeight() {
         description: "Weight recorded successfully",
       });
     },
+    onError: async (res) => {
+      toast({
+        variant: "error",
+        title: "Fail",
+        description: res.message,
+      });
+    },
   });
-  return { addNotice, isPending, isSuccess, error };
+  return { addWeight, isPending, isSuccess, error };
 }
 
 export default useRecordWeight;

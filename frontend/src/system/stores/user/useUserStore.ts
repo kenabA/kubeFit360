@@ -3,7 +3,9 @@ import { TUserDetails, TUserStore } from "./types";
 
 const useUserStore = create<TUserStore>()((set) => ({
   isNewUser: null,
+  subscriptionStatus: true,
   setIsNewUser: (state) => set({ isNewUser: state }),
+  setSubscriptionStatus: (state) => set({ subscriptionStatus: state }),
   user: (() => {
     const storedUser = localStorage.getItem("user");
     try {

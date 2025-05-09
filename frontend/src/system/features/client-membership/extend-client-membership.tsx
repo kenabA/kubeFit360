@@ -92,7 +92,7 @@ export default function ExtendClientMembership({
           >
             <MembershipCards
               outerStyle="gap-6 py-2"
-              className="border-2 shadow-none border-slate-200"
+              className="border shadow-sm border-[#E4E4E7] bg-slate-50-50"
               variant="webapp"
               selectedMembership={selectedMembership}
               onSelect={setSelectedMembership}

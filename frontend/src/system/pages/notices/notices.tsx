@@ -3,6 +3,7 @@ import { Heading } from "@/components/heading/Heading";
 import { ExpandableCardDemo } from "@/system/components/expandable-card/expandable-card";
 import Filter from "@/system/components/filter/Filter";
 import NoData from "@/system/components/no-data/NoData";
+import Spinner from "@/system/components/spinner/Spinner";
 
 import TableSearch from "@/system/components/table-search/TableSearch";
 import AddNotice from "@/system/features/notices/add-notice/add-notice";
@@ -18,14 +19,19 @@ export default function Notices() {
 
   const [openAdd, setOpenAdd] = useState<boolean>(false);
 
-  const { data } = useNotices();
+  const { data: noticesData, isLoading } = useNotices();
+  const data = Array.isArray(noticesData) ? [] : noticesData?.data;
 
   function handleOpenAdd() {
     setOpenAdd(true);
   }
 
-  const notices = data.data;
+  const notices = data;
   const role = user?.role;
+
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   return (
     <section className="rounded-tl-xl h-[calc(100dvh-60px)] overflow-y-hidden">
@@ -60,6 +66,7 @@ export default function Notices() {
             />
           ) : (
             <NoData
+              className="py-24 w-full"
               title="No Notices Available"
               description="There are currently no notices to display. Please check back later for updates."
             />

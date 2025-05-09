@@ -5,12 +5,13 @@ import { Badge } from "@/components/ui/badge";
 import { cn, dynamicContainerVariants, formatTime } from "@/lib/utils";
 import MembershipInfoBar from "@/system/components/membership-info-bar/membership-info-bar";
 import ExtendClientMembership from "@/system/features/client-membership/extend-client-membership";
-import useGetClientDashboardStats from "@/system/features/users/members/useGetClientDashboardStats";
 import { TClientDetails } from "@/system/stores/user/types";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { ChevronRight } from "lucide-react";
 import { useMemo, useState } from "react";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
+import useClientDashboardStore from "@/system/stores/useClientDashboardStore";
+import useGetClientDashboardStats from "@/system/features/users/members/useGetClientDashboardStats";
 
 export type TMembershipInfo = {
   label: string;
@@ -21,6 +22,7 @@ export type TMembershipInfo = {
 export default function ClientMembership() {
   const [openExtendMembership, setOpenExtendMembership] =
     useState<boolean>(false);
+
   const { data: clientData } = useGetClientDashboardStats();
   const user = useAuthUser<TClientDetails>();
 

@@ -14,7 +14,7 @@ export default function Topbar() {
     null
   );
   const [openPopover, setOpenPopover] = useState<boolean>(false);
-  const { addNotice, isPending: isAddingWeight, error } = useRecordWeight();
+  const { addWeight, isPending: isAddingWeight, error } = useRecordWeight();
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
   const { data: user } = useQuery<TUserDetails>({
     queryKey: ["user"],
@@ -24,7 +24,7 @@ export default function Topbar() {
   // When submitting:
   const handleRecordWeight = async (data: TWeightFormProps) => {
     setLastWeightData(data); // store for potential overwrite
-    await addNotice(data);
+    await addWeight(data);
   };
 
   useEffect(() => {
@@ -88,7 +88,7 @@ export default function Topbar() {
         disabled={isAddingWeight}
         mutationFn={async () => {
           if (lastWeightData) {
-            await addNotice({ ...lastWeightData, overwrite: true });
+            await addWeight({ ...lastWeightData, overwrite: true });
             setDialogOpen(false);
           }
         }}
