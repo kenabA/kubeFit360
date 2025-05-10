@@ -248,7 +248,7 @@ exports.processClientRequest = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.getClientDashabordStats = catchAsync(async (req, res, next) => {
+exports.getClientDashboardStats = catchAsync(async (req, res, next) => {
   const userId = req.user.id;
 
   if (!userId) {
@@ -318,6 +318,10 @@ exports.extendMembership = catchAsync(async (req, res, next) => {
       message: "Decision must be either 'basic' or 'enterprise'",
     });
   }
+
+  console.log(client.active);
+  console.log(client.membershipType);
+  console.log(membershipType);
 
   if (
     client.active &&

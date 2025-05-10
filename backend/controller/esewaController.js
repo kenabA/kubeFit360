@@ -95,9 +95,9 @@ const paymentStatus = async (req, res) => {
             newExpiry.setMonth(newExpiry.getMonth() + monthsToAdd);
             transaction.expiresOn = newExpiry;
             client.renewalDate = newExpiry;
-
             await transaction.save();
-            await createAndSendAndMailToken(client, 200, res);
+            await client.save({ validateBeforeSave: false });
+            await createAndSendToken(client, 200, res);
           }
         }
       } else {

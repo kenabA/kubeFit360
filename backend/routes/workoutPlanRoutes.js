@@ -1,5 +1,9 @@
 const express = require('express');
-const { protect, restrictTo } = require('../controller/authController');
+const {
+  protect,
+  restrictTo,
+  checkMembership,
+} = require('../controller/authController');
 const {
   createWorkoutPlan,
   getWorkoutPlan,
@@ -29,6 +33,10 @@ router
 
 router
   .route('/member/:id')
-  .get(restrictTo('admin', 'trainer', 'member'), getWorkoutPlanByMemberId);
+  .get(
+    restrictTo('admin', 'trainer', 'member'),
+    checkMembership,
+    getWorkoutPlanByMemberId,
+  );
 
 module.exports = router;

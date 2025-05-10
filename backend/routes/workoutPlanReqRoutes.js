@@ -1,6 +1,10 @@
 const express = require('express');
 
-const { protect, restrictTo } = require('../controller/authController');
+const {
+  protect,
+  restrictTo,
+  checkMembership,
+} = require('../controller/authController');
 const {
   getAllWorkoutPlanRequests,
   createWorkoutPlanRequests,
@@ -13,7 +17,9 @@ const {
 const router = express.Router();
 
 router.use(protect);
-router.route('/').post(restrictTo('member'), createWorkoutPlanRequests);
+router
+  .route('/')
+  .post(restrictTo('member'), checkMembership, createWorkoutPlanRequests);
 router.use(restrictTo('admin', 'trainer'));
 router
   .route('/')
@@ -26,3 +32,5 @@ router
   .delete(deleteWorkoutPlanRequest);
 
 module.exports = router;
+
+// render the sidebar items to one only

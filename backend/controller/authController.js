@@ -176,6 +176,7 @@ exports.protect = catchAsync(async (req, res, next) => {
       new AppError('You are not logged in! Please log in to get access.', 401),
     );
   }
+
   // 2) Verify token (Decodes the payload which is the id in this case)
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
@@ -308,4 +309,22 @@ exports.oneTimeLogin = catchAsync(async (req, res, next) => {
 
   // Log in and send JWT
   createAndSendToken(user, 200, res);
+});
+
+exports.checkMembership = catchAsync(async (req, res, next) => {
+  const { role, renewalDate, _id } = req.user;
+
+  if (role === 'member') {
+    const renewal = new Date(renewalDate);
+
+    if (isNaN(renewal) || new Date() > renewal) {
+      await Client.findByIdAndUpdate(_id, { active: false });
+
+      return res.status(403).json({
+        message: 'Membership expired. Your account has been deactivated.',
+        membershipExpired: true,
+      });
+    }
+  }
+  next();
 });

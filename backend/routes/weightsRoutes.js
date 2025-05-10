@@ -5,15 +5,19 @@ const {
   seedLast6MonthsWeights,
   deleteAllWeights,
 } = require('../controller/weightLogController');
-const { protect, restrictTo } = require('../controller/authController');
+const {
+  protect,
+  restrictTo,
+  checkMembership,
+} = require('../controller/authController');
 const router = express.Router();
 
 router.use(protect);
 
 router
   .route('/')
-  .post(restrictTo('member'), inputWeight)
-  .get(getWeights)
+  .post(restrictTo('member'), checkMembership, inputWeight)
+  .get(checkMembership, getWeights)
   .delete(deleteAllWeights);
 
 router.post('/seed-last-6-months', seedLast6MonthsWeights);

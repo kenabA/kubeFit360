@@ -12,7 +12,7 @@ const {
   getAllClients,
   processClientRequest,
   checkNewUser,
-  getClientDashabordStats,
+  getClientDashboardStats,
   extendMembership,
 } = require('../controller/userController');
 const {
@@ -20,6 +20,7 @@ const {
   protect,
   restrictTo,
   setPassword,
+  checkMembership,
 } = require('../controller/authController');
 const {
   EsewaInitiatePayment,
@@ -34,6 +35,7 @@ router.use(protect);
 
 router.get('/me', getMe, getUser);
 router.get('/check-new-user', getMe, checkNewUser);
+router.get('/check-membership', checkMembership);
 
 router.patch('/updateMe', updateMe);
 router.patch('/updatePassword', updatePassword);
@@ -44,9 +46,10 @@ router
   .get(restrictTo('admin'), getAllUsers)
   .post(restrictTo('admin'), addUser);
 router.route('/user-stats').get(restrictTo('admin'), getClientStats);
+
 router
   .route('/client-stats')
-  .get(restrictTo('admin', 'member'), getClientDashabordStats);
+  .get(restrictTo('admin', 'member'), getClientDashboardStats);
 
 // router.use(restrictTo('admin'));
 
