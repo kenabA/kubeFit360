@@ -22,6 +22,8 @@ export default function Notices() {
   const { data: noticesData, isLoading } = useNotices();
   const data = Array.isArray(noticesData) ? [] : noticesData?.data;
 
+  console.log(data);
+
   function handleOpenAdd() {
     setOpenAdd(true);
   }

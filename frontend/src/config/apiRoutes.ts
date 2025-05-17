@@ -37,6 +37,7 @@ export const API_ROUTES = {
     STATS: buildApiRoute("users/user-stats"),
     DETAILS: buildApiRoute("users/client-stats"),
     CHECK_NEW_USER: buildApiRoute("users/check-new-user"),
+    CHECK_MEMBERSHIP: buildApiRoute("users/check-membership"),
     CR_USER: buildApiRoute("users/me"),
     SIGNUP_REQUEST: buildApiRoute("users/clients"),
     PROCESS_SIGNUP_REQUEST: buildApiRoute("users/processClientRequest"),

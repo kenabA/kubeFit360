@@ -26,7 +26,7 @@ async function apiGetAllNotices(params: {
 
     const status = backendError.response?.status;
     const data = backendError.response?.data;
-
+    console.log(data);
     if (status === 403 && data?.membershipExpired) {
       const setSubscriptionStatus =
         useUserStore.getState().setSubscriptionStatus;
