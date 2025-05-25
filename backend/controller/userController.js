@@ -9,8 +9,9 @@ const { generateUniqueId } = require('esewajs');
 const {
   initiateEsewaPaymentInternal,
 } = require('../utils/initiateEsewaPayment');
-const sendEmail = require('./../utils/email');
+
 const Transaction = require('../models/transactionModel');
+const Email = require('./../utils/email');
 
 exports.getClientStats = catchAsync(async (req, res, next) => {
   const stats = await User.aggregate([
@@ -172,6 +173,8 @@ exports.addUser = catchAsync(async (req, res, next) => {
   const newUser = await User.create(req.body);
   newUser.password = undefined;
 
+  await new Email(newUser).sendWelcomeStaff();
+
   res.status(201).json({
     status: 'success',
     data: { data: newUser },
@@ -227,13 +230,8 @@ exports.processClientRequest = catchAsync(async (req, res, next) => {
       transaction_uuid: generateUniqueId(),
     });
 
-    const message = `Congratulations! Your membership request has been approved.\n\nPlease complete the payment using the link below:\n${paymentUrl}\n`;
     try {
-      await sendEmail({
-        email: client.email,
-        subject: 'Membership Request Approved!',
-        message,
-      });
+      await new Email(client, paymentUrl).sendClientApproval();
     } catch {
       return next(
         new AppError(
@@ -244,13 +242,8 @@ exports.processClientRequest = catchAsync(async (req, res, next) => {
     }
   } else if (status === 'rejected') {
     client.status = 'rejected';
-    const message = `We are sorry to inform you that your membership request has been rejected. If you have any questions, please contact us.`;
     try {
-      await sendEmail({
-        email: client.email,
-        subject: 'Membership Request Rejected!',
-        message,
-      });
+      await new Email(client).sendClientRejection();
     } catch {
       return next(
         new AppError(
@@ -360,14 +353,8 @@ exports.extendMembership = catchAsync(async (req, res, next) => {
     transaction_uuid: generateUniqueId(),
   });
 
-  const message = `Hi ${client.name},\n\nThank you for choosing to continue your fitness journey with us!\n\nTo complete your membership extension, please use the secure payment link below:\n\n👉 ${paymentUrl}\n\nThis link will remain active for the next 24 hours, so we recommend completing your payment as soon as possible.\n\nIf you have any questions or need help, feel free to reply to this email or contact our support team.\n\nStay strong and stay committed,\nkubeFit360° Team 💪`;
-
   try {
-    await sendEmail({
-      email: client.email,
-      subject: 'Membership Request Approved!',
-      message,
-    });
+    await new Email(client, paymentUrl).sendPayment();
   } catch {
     return next(
       new AppError(

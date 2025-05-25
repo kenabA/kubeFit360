@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
-const sendEmail = require('./../utils/email');
+
 const AppError = require('./appError');
+const Email = require('../utils/email');
 
 const signToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -31,16 +32,11 @@ const createAndSendToken = async (user, statusCode, res) => {
     .json({ status: 'Success', token, data: { data: user } });
 };
 
-const createAndSendAndMailToken = async (user, statusCode, res) => {
+const createAndSendAndMailToken = async (user, statusCode, res, req) => {
   const { token, cookieOptions } = await setupCookie(user);
   try {
     const loginURL = `${process.env.CLIENT_URL}/post-payment-login?token=${token}`;
-
-    await sendEmail({
-      email: user.email,
-      subject: 'Login to your dashboard',
-      message: `Click here to access your dashboard: ${loginURL}`,
-    });
+    await new Email(user, loginURL).sendWelcome();
   } catch {
     return new AppError(
       'There was an error sending the email. Try again later.',

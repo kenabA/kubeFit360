@@ -124,7 +124,7 @@ const paymentStatus = async (req, res) => {
         client.active = true;
         client.renewalDate = expiresOn;
 
-        await createAndSendAndMailToken(client, 200, res);
+        await createAndSendAndMailToken(client, 200, res, req);
       }
     } else {
       return res

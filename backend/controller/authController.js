@@ -2,12 +2,13 @@ const { promisify } = require('util');
 const User = require('../models/userModal');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
-const sendEmail = require('./../utils/email');
+
 const crypto = require('crypto');
 
 const jwt = require('jsonwebtoken');
 const { createAndSendToken } = require('../utils/token');
 const Client = require('../models/clientModal');
+const Email = require('./../utils/email');
 
 // exports.signup = catchAsync(async (req, res, next) => {
 
@@ -122,16 +123,10 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   await user.save({ validateBeforeSave: false });
 
   // 3) Send it to the user's email
-  const resetUrl = `${req.protocol}://${req.get('host')}/api/v1/users/resetPassword/${resetToken}`;
-
-  const message = `Forgot your password? Submit a PATCH request with your new password and passwordConfirm to : ${resetUrl}`;
+  const resetUrl = `${process.env.CLIENT_URL}/resetPassword/${resetToken}`;
 
   try {
-    await sendEmail({
-      email: user.email,
-      subject: 'Your password reset',
-      message,
-    });
+    await new Email(user, resetUrl).sendPasswordReset();
 
     res.status(200).json({
       status: 'success',
