@@ -6,6 +6,7 @@ const {
   updateEquipment,
   deleteEquipment,
   getEquipmentStats,
+  getAllRecommendedEquipments,
 } = require('../controller/equipmentController');
 const { protect, restrictTo } = require('../controller/authController');
 
@@ -19,14 +20,20 @@ router
 router
   .route('/')
   .get(restrictTo('admin', 'maintainer', 'trainer'), getAllEquipments);
+router
+  .route('/recommended')
+  .get(restrictTo('admin', 'maintainer'), getAllRecommendedEquipments);
 
 router
   .route('/:id')
   .get(restrictTo('admin', 'maintainer', 'trainer'), getEquipment);
 
-router.use(restrictTo('admin', 'maintainer'));
-
-router.route('/').post(addEquipment);
-router.route('/:id').patch(updateEquipment).delete(deleteEquipment);
+router
+  .route('/')
+  .post(restrictTo('admin', 'maintainer', 'trainer'), addEquipment);
+router
+  .route('/:id')
+  .patch(restrictTo('admin', 'maintainer'), updateEquipment)
+  .delete(restrictTo('admin', 'maintainer'), deleteEquipment);
 
 module.exports = router;

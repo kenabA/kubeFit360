@@ -19,7 +19,7 @@ const equipmentSchema = new mongoose.Schema(
       type: String,
       default: 'active',
       enum: {
-        values: ['active', 'inactive', 'underMaintenance'],
+        values: ['active', 'inactive', 'underMaintenance', 'recommended'],
         message: 'Please provide a valid status',
       },
     },
@@ -41,6 +41,15 @@ const equipmentSchema = new mongoose.Schema(
       required: [true, 'A equipment must have a description.'],
     },
     equipmentImage: String,
+    isRecommended: {
+      type: Boolean,
+      default: false,
+    },
+    recommendedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: false,
+      ref: 'User',
+    },
   },
   { timestamps: true },
 );

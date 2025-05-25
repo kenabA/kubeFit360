@@ -27,7 +27,6 @@ const EsewaInitiatePayment = async (req, res) => {
 
 const paymentStatus = async (req, res) => {
   const { transaction_uuid } = req.body; // Extract data from request body
-
   try {
     // Find the transaction by its signature
     const transaction = await Transaction.findOne({ transaction_uuid });
@@ -56,8 +55,6 @@ const paymentStatus = async (req, res) => {
 
       if (client.active) {
         if (client.membershipType === transaction.planType) {
-          //find a way to set the transaction to old + new date
-
           // ✅ Calculate expiry based on planType
           let monthsToAdd = 0;
           if (transaction.planType === 'basic') {
@@ -65,16 +62,18 @@ const paymentStatus = async (req, res) => {
           } else if (transaction.planType === 'enterprise') {
             monthsToAdd = 6;
           }
+
           const nowUTC = new Date();
           const nepalTime = new Date(nowUTC.getTime() + 345 * 60 * 1000);
           transaction.paidAt = nepalTime;
 
           // ✅ Set expiry date // WATCH OUT FOR THEIR DUPLICATED VALUES IN THEIR BACKEND
-
           const newExpiry = new Date(client.renewalDate);
           newExpiry.setMonth(newExpiry.getMonth() + monthsToAdd);
+
           transaction.expiresOn = newExpiry;
           client.renewalDate = newExpiry;
+          client.active = true;
 
           await transaction.save();
           await client.save({ validateBeforeSave: false });
@@ -87,7 +86,6 @@ const paymentStatus = async (req, res) => {
           if (transaction.planType === 'basic') {
             return;
           } else if (transaction.planType === 'enterprise') {
-            console.log('basic to enterprise');
             monthsToAdd = 6;
             client.membershipType = 'enterprise';
             // ✅ Set expiry date // WATCH OUT FOR THEIR DUPLICATED VALUES IN THEIR BACKEND
@@ -95,6 +93,7 @@ const paymentStatus = async (req, res) => {
             newExpiry.setMonth(newExpiry.getMonth() + monthsToAdd);
             transaction.expiresOn = newExpiry;
             client.renewalDate = newExpiry;
+            client.active = true;
             await transaction.save();
             await client.save({ validateBeforeSave: false });
             await createAndSendToken(client, 200, res);
@@ -102,7 +101,6 @@ const paymentStatus = async (req, res) => {
         }
       } else {
         // ✅ Calculate expiry based on planType
-        console.log('hi');
         let monthsToAdd = 0;
         if (transaction.planType === 'basic') {
           monthsToAdd = 1;
@@ -122,6 +120,7 @@ const paymentStatus = async (req, res) => {
         await transaction.save();
 
         // Modify the client object
+        client.status = 'active';
         client.active = true;
         client.renewalDate = expiresOn;
 

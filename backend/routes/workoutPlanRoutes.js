@@ -1,9 +1,5 @@
 const express = require('express');
-const {
-  protect,
-  restrictTo,
-  checkMembership,
-} = require('../controller/authController');
+const { protect, restrictTo } = require('../controller/authController');
 const {
   createWorkoutPlan,
   getWorkoutPlan,
@@ -31,12 +27,10 @@ router
   .get(restrictTo('member', 'admin', 'trainer'), getWorkoutPlan)
   .delete(restrictTo('admin', 'trainer', 'member'), deleteWorkoutPlan);
 
-router
-  .route('/member/:id')
-  .get(
-    restrictTo('admin', 'trainer', 'member'),
-    checkMembership,
-    getWorkoutPlanByMemberId,
-  );
+router.route('/member/:id').get(
+  restrictTo('admin', 'trainer', 'member'),
+
+  getWorkoutPlanByMemberId,
+);
 
 module.exports = router;

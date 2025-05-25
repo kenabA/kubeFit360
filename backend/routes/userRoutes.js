@@ -14,6 +14,7 @@ const {
   checkNewUser,
   getClientDashboardStats,
   extendMembership,
+  getUsersCountByRole,
 } = require('../controller/userController');
 const {
   updatePassword,
@@ -31,11 +32,11 @@ const router = express.Router();
 router.route('/initiate-payment').post(EsewaInitiatePayment);
 router.route('/payment-status').post(paymentStatus);
 
+router.get('/getUsersAnalytics', getUsersCountByRole);
+
 router.use(protect);
 
 router.get('/me', getMe, getUser);
-router.get('/check-new-user', getMe, checkNewUser);
-router.get('/check-membership', checkMembership);
 
 router.patch('/updateMe', updateMe);
 router.patch('/updatePassword', updatePassword);
@@ -56,7 +57,9 @@ router
 router.route('/maintainers').get(getUsersByRole('maintainer'));
 
 router.route('/clients').get(getAllClients());
+// router.route('/getAllClients').get(getTotalClients);
 
+router.route('/members').get(getUsersByRole('member'));
 router.route('/trainers').get(getUsersByRole('trainer'));
 
 router
@@ -66,6 +69,9 @@ router
 router
   .route('/extendMembership/:id')
   .patch(restrictTo('member', 'admin'), extendMembership);
+
+router.get('/check-new-user', getMe, checkNewUser);
+router.get('/check-membership', checkMembership);
 
 router.route('/:id').get(getUser).patch(updateUser).delete(deleteUser);
 

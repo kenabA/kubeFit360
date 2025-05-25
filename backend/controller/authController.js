@@ -66,7 +66,6 @@ exports.signupMemberRequest = catchAsync(async (req, res, next) => {
 
 exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
-
   // 1) Check if email and password exists
   if (!email || !password) {
     return next(new AppError('Please provide your email and password', 404));
@@ -74,6 +73,17 @@ exports.login = catchAsync(async (req, res, next) => {
 
   // 2) Check if user exists on the database
   const user = await User.findOne({ email }).select('+password'); // + to select the field that is deselected on the schema
+
+  if (
+    user &&
+    user.role === 'member' &&
+    user.status !== 'active' &&
+    user.status !== 'inactive'
+  ) {
+    return next(
+      new AppError('User has not been registered into the system yet.', 404),
+    );
+  }
 
   if (!user || !(await user.correctPassword(password, user.password))) {
     return next(new AppError('Incorrect email or password', 401));
@@ -100,6 +110,13 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   if (!user) {
     return next(new AppError('There is no user with email address.', 404));
   }
+
+  if (!user.active) {
+    return next(
+      new AppError('User has not been registered into the system yet.', 404),
+    );
+  }
+
   // 2) Generate random token
   const resetToken = user.createPasswordResetToken();
   await user.save({ validateBeforeSave: false });
@@ -259,6 +276,7 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
 
 exports.restrictTo = (...roles) => {
   return (req, res, next) => {
+    console.log(req.user.role);
     if (!roles.includes(req.user.role)) {
       return next(
         new AppError('You do not have permission to perform this action', 403),
@@ -319,8 +337,7 @@ exports.checkMembership = catchAsync(async (req, res, next) => {
 
     if (isNaN(renewal) || new Date() > renewal) {
       await Client.findByIdAndUpdate(_id, { active: false });
-
-      return res.status(403).json({
+      return res.status(200).json({
         message: 'Membership expired. Your account has been deactivated.',
         membershipExpired: true,
       });

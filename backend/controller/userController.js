@@ -15,17 +15,24 @@ const Transaction = require('../models/transactionModel');
 exports.getClientStats = catchAsync(async (req, res, next) => {
   const stats = await User.aggregate([
     {
-      $match: { role: 'member' },
+      // Match only documents where the discriminator key equals 'Client'
+      $match: { __t: 'Client', role: 'member' },
     },
     {
       $group: {
         _id: null,
         total: { $sum: 1 },
         active: {
-          $sum: { $cond: [{ $eq: ['$status', 'active'] }, 1, 0] },
+          $sum: { $cond: [{ $eq: ['$active', true] }, 1, 0] },
         },
         inactive: {
-          $sum: { $cond: [{ $eq: ['$status', 'inactive'] }, 1, 0] },
+          $sum: { $cond: [{ $eq: ['$active', false] }, 1, 0] },
+        },
+        basic: {
+          $sum: { $cond: [{ $eq: ['$membershipType', 'basic'] }, 1, 0] },
+        },
+        enterprise: {
+          $sum: { $cond: [{ $eq: ['$membershipType', 'enterprise'] }, 1, 0] },
         },
       },
     },
@@ -35,6 +42,8 @@ exports.getClientStats = catchAsync(async (req, res, next) => {
         total: 1,
         active: 1,
         inactive: 1,
+        basic: 1,
+        enterprise: 1,
       },
     },
   ]);
@@ -50,10 +59,22 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
 
 exports.getUsersByRole = (role) =>
   catchAsync(async (req, res, next) => {
-    const queryWithFilter = new APIFeatures(
-      User.find({ role: role }),
-      req.query,
-    ).filter();
+    let queryWithFilter;
+    if (role === 'member') {
+      queryWithFilter = new APIFeatures(
+        User.find({
+          role: role,
+          active: { $in: [true, false] },
+          status: 'active',
+        }),
+        req.query,
+      ).filter();
+    } else {
+      queryWithFilter = new APIFeatures(
+        User.find({ role: role }),
+        req.query,
+      ).filter();
+    }
 
     const count = await User.countDocuments(queryWithFilter.query);
 
@@ -272,6 +293,8 @@ exports.getClientDashboardStats = catchAsync(async (req, res, next) => {
   const totalDays = Math.ceil(
     (new Date(expiresOn) - new Date(paidAt)) / (1000 * 60 * 60 * 24),
   );
+
+  console.log('Total days: ', totalDays);
   const daysCompleted = Math.max(
     0,
     Math.floor((now - new Date(paidAt)) / (1000 * 60 * 60 * 24)),
@@ -319,10 +342,6 @@ exports.extendMembership = catchAsync(async (req, res, next) => {
     });
   }
 
-  console.log(client.active);
-  console.log(client.membershipType);
-  console.log(membershipType);
-
   if (
     client.active &&
     membershipType === 'basic' &&
@@ -362,4 +381,34 @@ exports.extendMembership = catchAsync(async (req, res, next) => {
     status: 'success',
     message: `Payment link has been sent to your email successfully.`,
   });
+});
+
+exports.getUsersCountByRole = catchAsync(async (req, res, next) => {
+  try {
+    const counts = await User.aggregate([
+      {
+        $group: {
+          _id: '$role',
+          total: { $sum: 1 },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          role: '$_id',
+          total: 1,
+        },
+      },
+    ]);
+
+    res.status(200).json({
+      status: 'success',
+      data: { data: counts },
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: 'error',
+      message: error.message,
+    });
+  }
 });

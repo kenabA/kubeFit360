@@ -16,7 +16,31 @@ exports.addEquipment = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllEquipments = catchAsync(async (req, res, next) => {
-  const queryWithFilter = new APIFeatures(Equipment.find(), req.query).filter();
+  const queryWithFilter = new APIFeatures(
+    Equipment.find({
+      status: { $ne: 'recommended' },
+    }),
+    req.query,
+  ).filter();
+
+  const count = await Equipment.countDocuments(queryWithFilter.query);
+
+  const finalQuery = queryWithFilter.sort().paginate().query;
+
+  const equipments = await finalQuery;
+
+  res
+    .status(200)
+    .json({ status: 'success', data: { count, data: equipments } });
+});
+
+exports.getAllRecommendedEquipments = catchAsync(async (req, res, next) => {
+  const queryWithFilter = new APIFeatures(
+    Equipment.find({
+      status: 'recommended',
+    }),
+    req.query,
+  ).filter();
 
   const count = await Equipment.countDocuments(queryWithFilter.query);
 
