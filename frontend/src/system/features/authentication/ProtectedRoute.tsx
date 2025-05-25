@@ -6,6 +6,7 @@ import { TUserDetails } from "@/system/stores/user/types";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import useUserStore from "@/system/stores/user/useUserStore";
 import SetPasswordLayout from "@/layout/auth/SetPasswordLayout";
+import MembershipPlanLayout from "@/layout/auth/MembershipPlanLayout";
 
 export default function ProtectedRoute({
   allowedRoles,
@@ -13,6 +14,9 @@ export default function ProtectedRoute({
   allowedRoles: TRole[];
 }) {
   const isNewUser = useUserStore((state) => state.isNewUser);
+  const subscriptionExpired = useUserStore(
+    (state) => state.subscriptionExpired
+  );
   const user = useAuthUser<TUserDetails>();
   const isAuthenticated = useIsAuthenticated();
 
@@ -27,7 +31,15 @@ export default function ProtectedRoute({
     return <Navigate to={ROUTES.UNAUTHORIZED} replace />;
   }
 
-  if (user?.role === "member" && isNewUser) {
+  if (user?.role === "member" && subscriptionExpired) {
+    return (
+      <MembershipPlanLayout>
+        <Outlet />
+      </MembershipPlanLayout>
+    );
+  }
+
+  if (user?.role === "member" && isNewUser && !subscriptionExpired) {
     return (
       <SetPasswordLayout>
         <Outlet />

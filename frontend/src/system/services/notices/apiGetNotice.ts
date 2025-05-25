@@ -23,11 +23,11 @@ async function apiGetNotice(id: string): Promise<TNoticeData> {
     const status = backendError.response?.status;
     const data = backendError.response?.data;
 
-    if (status === 403 && data?.membershipExpired) {
-      const setSubscriptionStatus =
-        useUserStore.getState().setSubscriptionStatus;
-      setSubscriptionStatus(false);
-    }
+    // if (status === 403 && data?.membershipExpired) {
+    //   const setSubscriptionStatus =
+    //     useUserStore.getState().setSubscriptionStatus;
+    //   setSubscriptionStatus(false);
+    // }
 
     throw new Error(data?.message || backendError.message);
   }

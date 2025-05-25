@@ -29,9 +29,16 @@ export default function MaintainerDashboard() {
   return (
     <section className="rounded-tl-xl overflow-y-auto custom-scrollbar flex-1">
       <div className="py-7 px-6">
-        <Heading level={4} variant={"quaternary"}>
-          Dashboard
-        </Heading>
+        <motion.div
+          variants={dynamicContainerVariants(0)}
+          initial="hidden"
+          animate="visible"
+        >
+          <Heading level={4} variant={"quaternary"}>
+            Dashboard
+          </Heading>
+        </motion.div>
+
         <div className="h-full grid grid-cols-2 lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] gap-6 mt-6 ">
           <motion.div
             variants={dynamicContainerVariants(1)}

@@ -7,7 +7,9 @@ import {
 } from "@/components/ui/select";
 import { TFormSelect } from "./type";
 import { cn } from "@/lib/utils";
-import Status from "../../status/Status";
+import ectomorph from "@/assets/system/svg/ectomorph.svg";
+import endomorph from "@/assets/system/svg/endomorph.svg";
+import mesomorph from "@/assets/system/svg/mesomorph.svg";
 import { Badge } from "@/components/ui/badge";
 
 export default function FormSelect({
@@ -45,9 +47,33 @@ export default function FormSelect({
                       style={{ backgroundColor: opt.theme }}
                     ></div>
                   )}
-                  <span className="font-medium" style={{ color: opt.theme }}>
-                    {opt.label}
-                  </span>
+                  {opt.label === "Ectomorph" ||
+                  opt.label === "Mesomorph" ||
+                  opt.label === "Endomorph" ? (
+                    <span
+                      className="font-medium flex gap-1 items-center"
+                      style={{ color: opt.theme }}
+                    >
+                      <img
+                        src={
+                          opt.label === "Ectomorph"
+                            ? ectomorph
+                            : opt.label === "Mesomorph"
+                            ? mesomorph
+                            : opt.label === "Endomorph"
+                            ? endomorph
+                            : ""
+                        }
+                        className=""
+                        alt={opt.label}
+                      />
+                      {opt.label}
+                    </span>
+                  ) : (
+                    <span className="font-medium" style={{ color: opt.theme }}>
+                      {opt.label}
+                    </span>
+                  )}
                 </div>
                 {opt.availability === "inactive" && (
                   <div className="absolute right-5 top-1/2 -translate-y-1/2">

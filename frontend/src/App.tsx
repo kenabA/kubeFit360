@@ -15,6 +15,9 @@ import PaymentFailure from "./system/pages/admin/payment/payment-failure";
 import CheckNewUser from "./system/components/app-initializer";
 import PostPaymentLogin from "./system/pages/post-payment-login/post-payment-login";
 import ClientMembership from "./system/pages/member/client-membership/client-membership";
+import CheckMembership from "./system/components/check-membership";
+import Client from "./system/pages/admin/client/client";
+import PublicRoute from "./system/features/authentication/PublicRoute";
 
 // ✅ Website Pages (lazy)
 const LandingPage = lazy(
@@ -110,41 +113,42 @@ export default function App() {
       <CheckNewUser />
       <Routes>
         {/* ======= WEBSITE ROUTES ======= */}
-        <Route
-          path="/"
-          element={
-            <Suspense fallback={<Spinner />}>
-              <WebsiteLayout />
-            </Suspense>
-          }
-        >
-          <Route index element={<LandingPage />} />
+        <Route element={<PublicRoute />}>
           <Route
-            path={ROUTES.ABOUT}
+            path="/"
             element={
               <Suspense fallback={<Spinner />}>
-                <About />
+                <WebsiteLayout />
               </Suspense>
             }
-          />
-          <Route
-            path={ROUTES.TESTIMONIAL}
-            element={
-              <Suspense fallback={<Spinner />}>
-                <SuccessStories />
-              </Suspense>
-            }
-          />
-          <Route
-            path={ROUTES.MEMBERSHIP}
-            element={
-              <Suspense fallback={<Spinner />}>
-                <Membership />
-              </Suspense>
-            }
-          />
+          >
+            <Route index element={<LandingPage />} />
+            <Route
+              path={ROUTES.ABOUT}
+              element={
+                <Suspense fallback={<Spinner />}>
+                  <About />
+                </Suspense>
+              }
+            />
+            <Route
+              path={ROUTES.TESTIMONIAL}
+              element={
+                <Suspense fallback={<Spinner />}>
+                  <SuccessStories />
+                </Suspense>
+              }
+            />
+            <Route
+              path={ROUTES.MEMBERSHIP}
+              element={
+                <Suspense fallback={<Spinner />}>
+                  <Membership />
+                </Suspense>
+              }
+            />
+          </Route>
         </Route>
-
         <Route
           element={
             <Suspense fallback={<Spinner />}>
@@ -152,10 +156,15 @@ export default function App() {
             </Suspense>
           }
         >
-          <Route path={"/login"} element={<Login />} />
-          <Route path={ROUTES.FORGOT_PASSWORD} element={<ForgotPassword />} />
-          <Route path={ROUTES.RESET_PASSWORD} element={<ResetPassword />} />
-          <Route path={ROUTES.PASSWORD_CHANGED} element={<PasswordChanged />} />
+          <Route element={<PublicRoute />}>
+            <Route path={ROUTES.LOGIN} element={<Login />} />
+            <Route path={ROUTES.FORGOT_PASSWORD} element={<ForgotPassword />} />
+            <Route path={ROUTES.RESET_PASSWORD} element={<ResetPassword />} />
+            <Route
+              path={ROUTES.PASSWORD_CHANGED}
+              element={<PasswordChanged />}
+            />
+          </Route>
         </Route>
         <Route
           element={
@@ -190,6 +199,7 @@ export default function App() {
               path={ROUTES.DASHBOARD.MEMBER}
               element={
                 <Suspense fallback={<Spinner />}>
+                  <CheckMembership />
                   <MemberDashboard />
                 </Suspense>
               }
@@ -206,6 +216,7 @@ export default function App() {
               path={ROUTES.NOTICES}
               element={
                 <Suspense fallback={<Spinner />}>
+                  <CheckMembership />
                   <Notices />
                 </Suspense>
               }
@@ -258,6 +269,16 @@ export default function App() {
               element={
                 <Suspense fallback={<Spinner />}>
                   <Trainer />
+                </Suspense>
+              }
+            />
+          </Route>
+          <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
+            <Route
+              path={ROUTES.CLIENTS}
+              element={
+                <Suspense fallback={<Spinner />}>
+                  <Client />
                 </Suspense>
               }
             />
@@ -333,6 +354,7 @@ export default function App() {
               path={ROUTES.SETTINGS}
               element={
                 <Suspense fallback={<Spinner />}>
+                  <CheckMembership />
                   <Settings />
                 </Suspense>
               }

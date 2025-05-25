@@ -7,4 +7,5 @@ export type TAddEquipmentFormProps = z.infer<typeof equipmentSchema>;
 export type TAddEquipmentProps = {
   isDialogOpen: boolean;
   setIsDialogOpen: Dispatch<SetStateAction<boolean>>;
+  recommendedBy?: string;
 };

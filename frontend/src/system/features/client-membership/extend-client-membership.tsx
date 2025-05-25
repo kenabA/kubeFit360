@@ -30,6 +30,7 @@ export default function ExtendClientMembership({
 
   useEffect(() => {
     if (isSuccess) {
+      alert("done successfully");
       setIsDialogOpen(false);
       setSelectedMembership("");
     }

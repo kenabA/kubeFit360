@@ -1,6 +1,8 @@
 import { Button } from "@/components";
 import { ThemedDialog } from "@/components/dialog/Dialog";
 import { Heading } from "@/components/heading/Heading";
+import { dynamicContainerVariants } from "@/lib/utils";
+import { motion } from "framer-motion";
 import NoData from "@/system/components/no-data/NoData";
 import RequestWorkoutPlan from "@/system/features/workout-plan-requests/request-workout-plan/RequestWorkoutPlan";
 import useDeleteWorkoutPlan from "@/system/features/workout-plan/useDeleteWorkoutPlan";
@@ -55,11 +57,22 @@ export default function ClientWorkoutPlan() {
     <section className="rounded-tl-xl h-[calc(100dvh-60px)]">
       <div className="rounded-[18px] flex-1 flex flex-col py-7 px-6 gap-4 h-full">
         <header className="flex justify-between items-center">
-          <Heading level={4} variant={"quaternary"}>
-            Workout Plan
-          </Heading>
+          <motion.div
+            variants={dynamicContainerVariants(0)}
+            initial="hidden"
+            animate="visible"
+          >
+            <Heading level={4} variant={"quaternary"}>
+              Workout Plan
+            </Heading>
+          </motion.div>
 
-          <div className="flex items-center gap-2">
+          <motion.div
+            variants={dynamicContainerVariants(1)}
+            initial="hidden"
+            animate="visible"
+            className="flex items-center gap-2"
+          >
             {workoutPlanPresent && (
               <Button
                 onClick={() => setOpenDelete(true)}
@@ -97,11 +110,14 @@ export default function ClientWorkoutPlan() {
               />
               Request New Plan
             </Button>
-          </div>
+          </motion.div>
         </header>
 
         <div className="grid grid-rows-[1fr_auto] flex-1 h-0 min-h-0  gap-4">
-          <div
+          <motion.div
+            variants={dynamicContainerVariants(2)}
+            initial="hidden"
+            animate="visible"
             className="p-6 bg-white rounded-xl shadow-general
            h-full  overflow-x-hidden overflow-y-auto custom-scrollbar "
           >
@@ -131,9 +147,14 @@ export default function ClientWorkoutPlan() {
                 />
               </div>
             )}
-          </div>
+          </motion.div>
           {workoutPlanPresent && (
-            <div className="p-6 bg-white flex justify-between items-center shadow-elevation rounded-xl relative overflow-hidden">
+            <motion.div
+              variants={dynamicContainerVariants(3)}
+              initial="hidden"
+              animate="visible"
+              className="p-6 bg-white flex justify-between items-center shadow-elevation rounded-xl relative overflow-hidden"
+            >
               <div className="absolute bg-primary w-1/2 h-24 rounded-full  filter blur-xl right-0 opacity-[0.1]"></div>
               <Button
                 onClick={() => handlePrint(data.workoutPlan)}
@@ -169,7 +190,7 @@ export default function ClientWorkoutPlan() {
                   </span>
                 </div>
               </div>
-            </div>
+            </motion.div>
           )}
         </div>
 

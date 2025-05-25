@@ -20,9 +20,10 @@ import useEditUser from "../../useEditUser";
 
 import { useSearchParams } from "react-router";
 import { useQueryClient } from "@tanstack/react-query";
-import { TUserDetails } from "@/system/stores/user/types";
+import { TClientDetails } from "@/system/stores/user/types";
 import { TApiResponse } from "@/system/lib/types";
 import { memberSchema } from "./validator";
+import { ThemedDialog } from "@/components/dialog/Dialog";
 
 export default function EditMember({
   selectedId,
@@ -34,14 +35,25 @@ export default function EditMember({
   const [searchParams] = useSearchParams();
   const filters = Object.fromEntries(searchParams.entries());
   const queryClient = useQueryClient();
+  const [openDelete, setOpenDelete] = useState<boolean>(false);
 
-  const allMaintainers = queryClient.getQueryData<TApiResponse<TUserDetails[]>>(
-    ["maintainers", filters]
-  );
+  const allMembers = queryClient.getQueryData<TApiResponse<TClientDetails[]>>([
+    "members",
+    filters,
+  ]);
 
-  const maintainer = allMaintainers?.data.data?.find(
-    (e) => e._id === selectedId
-  );
+  const members = allMembers?.data.data?.find((e) => e._id === selectedId);
+
+  async function handleRemoveProfilePicture() {
+    if (!members) return;
+    await editUser({
+      editUserDetails: { removeImage: true } as TEditMemberFormProps,
+      selectedId: selectedId,
+    });
+    setOpenDelete(false);
+    setIsDialogOpen(false);
+    setValue("userImage", undefined, { shouldDirty: true });
+  }
 
   const { editUser, isSuccess, error } = useEditUser("members");
 
@@ -56,6 +68,7 @@ export default function EditMember({
     resolver: zodResolver(memberSchema),
   });
 
+  console.log(members?.birthDate);
   useEffect(() => {
     if (isSuccess) {
       setIsPending(false);
@@ -65,23 +78,23 @@ export default function EditMember({
   }, [isSuccess]);
 
   useEffect(() => {
-    if (!maintainer) return;
+    if (!members) return;
     reset({
-      name: maintainer?.name,
-      address: maintainer?.address,
-      birthDate: maintainer?.birthDate,
-      email: maintainer?.email,
-      gender: maintainer?.gender,
-      userImage: maintainer?.userImage,
-      phoneNumber: String(maintainer?.phoneNumber),
+      name: members?.name,
+      address: members?.address,
+      birthDate: members?.birthDate.slice(0, 10),
+      email: members?.email,
+      gender: members?.gender,
+      userImage: members?.userImage,
+      phoneNumber: String(members?.phoneNumber),
     });
 
-    if (maintainer.userImage) {
-      setLocalImage(maintainer.userImage);
+    if (members.userImage) {
+      setLocalImage(members.userImage);
     } else {
       setLocalImage(undefined);
     }
-  }, [reset, maintainer]);
+  }, [reset, members]);
 
   useEffect(() => {
     if (error) {
@@ -113,27 +126,27 @@ export default function EditMember({
 
   function handleCancel() {
     setIsDialogOpen(false);
-    setLocalImage(maintainer?.userImage);
+    setLocalImage(members?.userImage);
     reset();
   }
 
   function handleRemove() {
     if (typeof localImage !== "string") {
-      setLocalImage(maintainer?.userImage);
-      setValue("userImage", maintainer?.userImage, {
+      setLocalImage(members?.userImage);
+      setValue("userImage", members?.userImage, {
         shouldDirty: true,
       });
     } else {
-      // TODO : Handle Remove of the maintainer
-      alert(123);
+      // TODO : Handle Remove of the members
+      setOpenDelete(true);
     }
   }
 
   return (
     <FormModal
-      icon="gravity-ui:person-worker"
-      title="Edit Maintainer"
-      subtitle="Modify and Update Maintainer Details"
+      icon="majesticons:users-line"
+      title="Edit Members"
+      subtitle="Modify and Update Members Details"
       open={isDialogOpen}
       setOpen={setIsDialogOpen}
       footer={
@@ -147,7 +160,7 @@ export default function EditMember({
             Cancel
           </Button>
           <Button
-            form="maintainer-form"
+            form="members-form"
             type="submit"
             onClick={handleSubmit(onSubmit)}
             className="px-6 shadow-none hover:shadow-none h-10 w-20"
@@ -171,7 +184,7 @@ export default function EditMember({
       }
     >
       <form
-        id="maintainer-form"
+        id="members-form"
         className="w-full flex flex-col items-center gap-4"
       >
         <div className="flex gap-4 items-start w-full">
@@ -187,6 +200,7 @@ export default function EditMember({
             error={errors.email}
             label="Email"
             name="email"
+            disabled={!!members?.email}
             type="email"
             placeholder="Enter the email"
             register={register}
@@ -201,12 +215,6 @@ export default function EditMember({
             placeholder="Enter the phone number"
             register={register}
           />
-          {/* <BaseInput<TEditMemberFormProps>
-            name="birthDate"
-            setValue={setValue}
-            error={errors.birthDate}
-            label="Date of Birth"
-          /> */}
           <BaseInput
             error={errors.birthDate}
             label="Date of Birth"
@@ -247,11 +255,21 @@ export default function EditMember({
           localImage={localImage}
           setLocalImage={setLocalImage}
           error={errors.userImage}
-          label="Maintainer's Image"
+          label="Members's Image"
           name="userImage"
           type="file"
         />
       </form>
+      <ThemedDialog
+        isPending={false}
+        dialogOpen={openDelete}
+        setDialogOpen={setOpenDelete}
+        mutationFn={handleRemoveProfilePicture}
+        theme="destructive"
+        ctaText="Remove"
+        title="Remove Photo"
+        message="Do you really want to remove the current photo?"
+      />
     </FormModal>
   );
 }

@@ -95,7 +95,11 @@ export default function GeneralTable<T>({
       </table>
 
       {data.length <= 0 && (
-        <NoData description={noDataDescription} title={noDataTitle} />
+        <NoData
+          className="h-full"
+          description={noDataDescription}
+          title={noDataTitle}
+        />
       )}
 
       {data.length > 0 && (

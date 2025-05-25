@@ -1,10 +1,11 @@
 import { Button } from "@/components";
 import { Heading } from "@/components/heading/Heading";
+import { dynamicContainerVariants } from "@/lib/utils";
 import { ExpandableCardDemo } from "@/system/components/expandable-card/expandable-card";
 import Filter from "@/system/components/filter/Filter";
 import NoData from "@/system/components/no-data/NoData";
 import Spinner from "@/system/components/spinner/Spinner";
-
+import { motion } from "framer-motion";
 import TableSearch from "@/system/components/table-search/TableSearch";
 import AddNotice from "@/system/features/notices/add-notice/add-notice";
 import useNotices from "@/system/features/notices/useNotices";
@@ -38,10 +39,21 @@ export default function Notices() {
   return (
     <section className="rounded-tl-xl h-[calc(100dvh-60px)] overflow-y-hidden">
       <div className="py-7 px-6 flex-1 flex flex-col gap-4 h-full">
-        <Heading level={4} variant={"quaternary"}>
-          Notices
-        </Heading>
-        <div className="bg-white rounded-xl shadow-general h-full overflow-hidden overflow-y-auto custom-scrollbar">
+        <motion.div
+          variants={dynamicContainerVariants(0)}
+          initial="hidden"
+          animate="visible"
+        >
+          <Heading level={4} variant={"quaternary"}>
+            Notices
+          </Heading>
+        </motion.div>
+        <motion.div
+          variants={dynamicContainerVariants(1)}
+          initial="hidden"
+          animate="visible"
+          className="bg-white rounded-xl shadow-general h-full overflow-hidden overflow-y-auto custom-scrollbar"
+        >
           <div className="flex items-center justify-between sticky  top-0 bg-white p-[18px] pb-[9px] z-[1]">
             <TableSearch
               isPending={false}
@@ -73,7 +85,7 @@ export default function Notices() {
               description="There are currently no notices to display. Please check back later for updates."
             />
           )}
-        </div>
+        </motion.div>
       </div>
       <AddNotice isDialogOpen={openAdd} setIsDialogOpen={setOpenAdd} />
     </section>

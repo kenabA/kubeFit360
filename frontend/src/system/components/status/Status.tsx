@@ -4,9 +4,11 @@ import { TWorkoutPlanStatus } from "@/system/features/workout-plan-requests/type
 export default function Status({
   status,
   className,
+  passedTextNode,
 }: {
   status: string | TWorkoutPlanStatus;
   className?: string;
+  passedTextNode?: string | null;
 }) {
   let statusText;
   let primaryColor;
@@ -74,7 +76,7 @@ export default function Status({
         style={{ backgroundColor: primaryColor }}
         className="size-[6px] rounded-full"
       ></div>
-      {statusText}
+      {passedTextNode || statusText}
     </div>
   );
 }

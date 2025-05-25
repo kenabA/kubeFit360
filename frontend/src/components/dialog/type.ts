@@ -12,4 +12,5 @@ export type TDialog = {
   message: string;
   className?: string;
   ctaText: string;
+  cancelButton?: boolean;
 };

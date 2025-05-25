@@ -1,6 +1,6 @@
 export type TUserStore = {
-  subscriptionStatus: boolean;
-  setSubscriptionStatus: (state: boolean) => void;
+  subscriptionExpired: boolean;
+  setSubscriptionExpired: (state: boolean) => void;
   isNewUser: boolean | null;
   setIsNewUser: (state: boolean) => void;
   user: TUserDetails | null;

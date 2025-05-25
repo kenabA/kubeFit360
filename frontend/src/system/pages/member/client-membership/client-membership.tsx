@@ -10,7 +10,6 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import { ChevronRight } from "lucide-react";
 import { useMemo, useState } from "react";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
-import useClientDashboardStore from "@/system/stores/useClientDashboardStore";
 import useGetClientDashboardStats from "@/system/features/users/members/useGetClientDashboardStats";
 
 export type TMembershipInfo = {
@@ -24,9 +23,10 @@ export default function ClientMembership() {
     useState<boolean>(false);
 
   const { data: clientData } = useGetClientDashboardStats();
+
   const user = useAuthUser<TClientDetails>();
 
-  const daysLeft = clientData.data.daysLeft;
+  const daysLeft = clientData?.data.daysLeft || 0;
 
   const membershipOverview = useMemo(
     () => [
@@ -55,6 +55,7 @@ export default function ClientMembership() {
     ],
     [user]
   );
+
   const membershipDates = useMemo(
     () => [
       {
@@ -63,16 +64,21 @@ export default function ClientMembership() {
       },
       {
         label: "expiration date",
-        value: formatTime(clientData.data.expiresOn || "", "MMM dd, yyyy"),
+        value: clientData?.data?.expiresOn
+          ? formatTime(clientData.data.expiresOn, "MMM dd, yyyy")
+          : "N/A",
       },
     ],
     [user]
   );
+
   const paymentDetails = useMemo(
     () => [
       {
         label: "next payment due",
-        value: formatTime(clientData.data.expiresOn || "", "MMM dd, yyyy"),
+        value: clientData?.data?.expiresOn
+          ? formatTime(clientData.data.expiresOn, "MMM dd, yyyy")
+          : "N/A",
       },
       {
         label: "days until expiration",
@@ -98,9 +104,16 @@ export default function ClientMembership() {
     <>
       <section className="rounded-tl-xl h-[calc(100dvh-60px)] overflow-hidden">
         <div className="py-7 px-6 flex-1 flex flex-col gap-4 h-full">
-          <Heading level={4} variant={"quaternary"}>
-            Membership Details
-          </Heading>
+          <motion.div
+            variants={dynamicContainerVariants(0)}
+            initial="hidden"
+            animate="visible"
+          >
+            <Heading level={4} variant={"quaternary"}>
+              Membership Details
+            </Heading>
+          </motion.div>
+
           <div className="rounded-xl  flex flex-col gap-6 h-full overflow-y-auto custom-scrollbar">
             <MembershipInfoBar
               index={0}

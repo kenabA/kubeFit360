@@ -3,9 +3,9 @@ import { _axios } from "@/config/axios";
 import { AxiosError } from "axios";
 import { TApiResponse } from "@/system/lib/types";
 
-import { TMembersStats } from "@/system/features/users/members/useMembersAnalytics";
+import { TStats } from "@/system/features/users/members/useMembersAnalytics";
 
-async function apiMembersStats(): Promise<TApiResponse<TMembersStats[]>> {
+async function apiMembersStats(): Promise<TApiResponse<TStats[]>> {
   try {
     const response = await _axios.get(`${API_ROUTES.USER.STATS}`);
     return response.data;

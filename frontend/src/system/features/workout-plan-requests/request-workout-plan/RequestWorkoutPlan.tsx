@@ -149,7 +149,7 @@ export default function RequestWorkoutPlan({
             control={control}
             render={({ field }) => (
               <FormSelect
-                error={errors.fitnessLevel}
+                error={errors.trainer}
                 placeholder="Select your desired trainer"
                 label={field.name}
                 field={field}

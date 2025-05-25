@@ -1,7 +1,7 @@
 import z from "zod";
 
 export const memberSchema = z.object({
-  _id: z.string(),
+  _id: z.string().optional(),
   name: z.string().nonempty("Please specify member's name"),
   email: z.string().nonempty("Please provide member's email"),
   phoneNumber: z
@@ -13,5 +13,5 @@ export const memberSchema = z.object({
   address: z.string().optional(),
   userImage: z.string().optional(),
   removeImage: z.boolean().optional(),
-  createdAt: z.string(),
+  createdAt: z.string().optional(),
 });

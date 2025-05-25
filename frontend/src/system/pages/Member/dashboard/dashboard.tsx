@@ -29,6 +29,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { formatTime } from "@/lib/utils";
+import NoData from "@/system/components/no-data/NoData";
 
 export default function MemberDashboard() {
   const navigate = useNavigate();
@@ -68,25 +69,43 @@ export default function MemberDashboard() {
   return (
     <section className="rounded-tl-xl overflow-y-auto custom-scrollbar flex-1">
       <div className="py-7 px-6 flex-1 flex flex-col ">
-        <Heading level={4} variant={"quaternary"}>
-          Dashboard
-        </Heading>
+        <motion.div
+          variants={dynamicContainerVariants(0)}
+          initial="hidden"
+          animate="visible"
+        >
+          <Heading level={4} variant={"quaternary"}>
+            Dashboard
+          </Heading>
+        </motion.div>
+
         <div className="h-full grid grid-cols-2 lg:grid-cols-3 lg:grid-rows-[auto,1fr] gap-6 mt-6">
           <div className="col-span-full md:col-[1/3] h-full grid grid-cols-2 grid-rows-[auto,1fr] gap-y-6 sm:gap-6">
-            {user?.membershipType === "basic" ? (
-              <motion.div
-                variants={dynamicContainerVariants(0)}
-                initial="hidden"
-                animate="visible"
-                className="md:col-[1/2] lg:col-[1/2] h-fit w-full col-span-full sm:col-[1/2]"
-              >
-                {membershipBlock}
-              </motion.div>
+            {clientData ? (
+              <>
+                {user?.membershipType === "basic" ? (
+                  <motion.div
+                    variants={dynamicContainerVariants(0)}
+                    initial="hidden"
+                    animate="visible"
+                    className="md:col-[1/2] lg:col-[1/2] h-fit w-full col-span-full sm:col-[1/2]"
+                  >
+                    {membershipBlock}
+                  </motion.div>
+                ) : (
+                  <AnimatedBorderWrapper className="h-fit w-full col-span-full sm:col-[1/2]">
+                    {membershipBlock}
+                  </AnimatedBorderWrapper>
+                )}
+              </>
             ) : (
-              <AnimatedBorderWrapper className="h-fit w-full col-span-full sm:col-[1/2]">
-                {membershipBlock}
-              </AnimatedBorderWrapper>
+              <NoData
+                className="bg-white"
+                title="No Membership Data"
+                description="Membership Data is not available at the moment"
+              />
             )}
+
             <motion.div
               variants={dynamicContainerVariants(1)}
               initial="hidden"
@@ -166,9 +185,9 @@ export default function MemberDashboard() {
               className=""
             >
               <RadialChart
-                daysCompleted={clientData?.data.daysCompleted}
-                daysLeft={clientData?.data.daysLeft}
-                totalDays={clientData?.data.totalDays}
+                daysCompleted={clientData?.data.daysCompleted || 0}
+                daysLeft={clientData?.data.daysLeft || 0}
+                totalDays={clientData?.data.totalDays || 0}
               />
             </Block>
           </motion.div>

@@ -6,6 +6,7 @@ import useUserStore from "../stores/user/useUserStore";
 
 export default function CheckNewUser() {
   // CHECK FOR MEMBERSHIP AS WELL HERE NAI
+
   const { data, isPending } = useCheckNewUser();
   const setIsNewUser = useUserStore((state) => state.setIsNewUser);
 

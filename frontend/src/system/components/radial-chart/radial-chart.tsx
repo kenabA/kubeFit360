@@ -31,7 +31,10 @@ export const RadialChart = React.memo(function RadialChart({
   daysLeft,
   daysCompleted,
 }: RadialChartProps) {
+  console.log(totalDays, daysLeft, daysCompleted);
   const progress = useMemo(() => {
+    if (totalDays <= 0) return 100;
+    if (daysLeft <= 0) return 100;
     return Math.round(((totalDays - daysLeft) / totalDays) * 100);
   }, [totalDays, daysLeft]);
 

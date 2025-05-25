@@ -4,8 +4,6 @@ import axios, { AxiosError } from "axios";
 
 import { TWorkoutPlan } from "@/system/features/workout-plan/types";
 
-import useUserStore from "@/system/stores/user/useUserStore";
-
 async function apiGetWorkoutPlanByMemberId(id: string): Promise<TWorkoutPlan> {
   try {
     const response = await _axios.get(
@@ -27,11 +25,11 @@ async function apiGetWorkoutPlanByMemberId(id: string): Promise<TWorkoutPlan> {
     const status = backendError.response?.status;
     const data = backendError.response?.data;
 
-    if (status === 403 && data?.membershipExpired) {
-      const setSubscriptionStatus =
-        useUserStore.getState().setSubscriptionStatus;
-      setSubscriptionStatus(false);
-    }
+    // if (status === 403 && data?.membershipExpired) {
+    //   const setSubscriptionStatus =
+    //     useUserStore.getState().setSubscriptionStatus;
+    //   setSubscriptionStatus(false);
+    // }
 
     throw new Error(data?.message || backendError.message);
   }

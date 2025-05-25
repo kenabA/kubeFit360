@@ -1,7 +1,7 @@
 import { Button } from "@/components";
 import { Heading } from "@/components/heading/Heading";
 import GeneralTable from "@/system/components/tables/general-table/GeneralTable";
-
+import { motion } from "framer-motion";
 import useEquipments from "@/system/features/equipments/useEquipments";
 import { Plus } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -19,10 +19,16 @@ import ViewEquipment from "@/system/features/equipments/view-equipment/ViewEquip
 import AddEquipments from "@/system/features/equipments/add-equipments/AddEquipments";
 import { TUserDetails } from "@/system/stores/user/types";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
+import { dynamicContainerVariants } from "@/lib/utils";
+import RecommendEquipments from "@/system/features/equipments/recommend-equipments/RecommendEquipments";
+import { Icon } from "@iconify/react/dist/iconify.js";
+import RecommendEquipmentTable from "@/system/components/equipments/recommended-equipments-modal";
 
 export default function Equipments() {
   const [openView, setOpenView] = useState<boolean>(false);
   const [openAdd, setOpenAdd] = useState<boolean>(false);
+  const [openRecommend, setOpenRecommend] = useState<boolean>(false);
+  const [openRecommendTable, setOpenRecommendTable] = useState<boolean>(false);
   const [openEdit, setOpenEdit] = useState<boolean>(false);
   const [selectedIds, setSelectedIds] = useState<string>("");
   const [openDelete, setOpenDelete] = useState<boolean>(false);
@@ -43,6 +49,13 @@ export default function Equipments() {
     setOpenAdd(true);
   }
 
+  function handleOpenRecommend() {
+    setOpenRecommend(true);
+  }
+  function handleOpenRecommendTable() {
+    setOpenRecommendTable(true);
+  }
+
   useEffect(() => {
     if (isDeleteSuccess) {
       setSelectedIds("");
@@ -54,12 +67,23 @@ export default function Equipments() {
     <>
       <section className="rounded-tl-xl h-[calc(100dvh-60px)] overflow-hidden">
         <div className="py-7 px-6 flex-1 flex flex-col gap-4 h-full">
-          <Heading level={4} variant={"quaternary"}>
-            Equipments
-          </Heading>
-          <div className="bg-white rounded-xl shadow-general overflow-hidden h-full">
+          <motion.div
+            variants={dynamicContainerVariants(0)}
+            initial="hidden"
+            animate="visible"
+          >
+            <Heading level={4} variant={"quaternary"}>
+              Equipments
+            </Heading>
+          </motion.div>
+          <motion.div
+            variants={dynamicContainerVariants(1)}
+            initial="hidden"
+            animate="visible"
+            className="bg-white rounded-xl shadow-general overflow-hidden h-full"
+          >
             {/* Header Section with Search and Actions */}
-            <div className="flex shadow-elevation items-center justify-between sticky top-0 bg-white p-[18px] z-[1]">
+            <motion.div className="flex shadow-elevation items-center justify-between sticky top-0 bg-white p-[18px] z-[1]">
               {/* Search Input */}
               <TableSearch
                 isPending={isPending}
@@ -68,7 +92,17 @@ export default function Equipments() {
               {/* Action Buttons */}
               <div className="flex items-center gap-4">
                 {/* Filter Component */}
+
                 <Filter entity={filterFields.equipments} />
+                {(user?.role === "admin" || user?.role === "maintainer") && (
+                  <Button
+                    variant={"accentReverse"}
+                    className="font-medium h-full p-3"
+                    onClick={handleOpenRecommendTable}
+                  >
+                    <Icon icon={"charm:git-request"} className="size-[24px]" />
+                  </Button>
+                )}
                 {/* Add Equipment Button (Visible for Admins and Maintainers) */}
                 {(user?.role === "maintainer" || user?.role === "admin") && (
                   <Button
@@ -79,17 +113,19 @@ export default function Equipments() {
                     <Plus className="stroke-[3px]" /> Add Equipment
                   </Button>
                 )}
+
                 {user?.role === "trainer" && (
                   <Button
                     variant={"primaryReverse"}
                     className="font-medium"
-                    onClick={handleOpenAdd}
+                    onClick={handleOpenRecommend}
                   >
                     <Plus className="stroke-[3px]" /> Recommend Equipment
                   </Button>
                 )}
               </div>
-            </div>
+            </motion.div>
+
             {/* Main Table Section */}
             <GeneralTable<TEquipmentsData>
               noDataDescription="Come back later to see the equipments or add new ones."
@@ -104,7 +140,7 @@ export default function Equipments() {
                 setOpenView
               )}
             />
-          </div>
+          </motion.div>
           <ViewEquipment
             edit={user?.role === "maintainer" || user?.role === "admin"}
             selectedId={selectedIds}
@@ -116,6 +152,10 @@ export default function Equipments() {
       </section>
       {(user?.role === "admin" || user?.role === "maintainer") && (
         <>
+          <RecommendEquipmentTable
+            isDialogOpen={openRecommendTable}
+            setIsDialogOpen={setOpenRecommendTable}
+          />
           <AddEquipments isDialogOpen={openAdd} setIsDialogOpen={setOpenAdd} />
           <EditEquipments
             selectedId={selectedIds}
@@ -131,6 +171,15 @@ export default function Equipments() {
             ctaText="Delete"
             title="Delete Equipment"
             message="Do you really want to delete this equipment?"
+          />
+        </>
+      )}
+      {user?.role === "trainer" && (
+        <>
+          <RecommendEquipments
+            isDialogOpen={openRecommend}
+            setIsDialogOpen={setOpenRecommend}
+            recommendedBy={user._id}
           />
         </>
       )}

@@ -5,7 +5,6 @@ import { TGetWorkoutPlan, TWorkoutPlan } from "./types";
 import apiGetWorkoutPlanByMemberId from "@/system/services/workout-plan/apiGetWorkoutPlanByMemberId";
 
 function useGetWorkoutPlanByMemberId({ selectedId, enabled }: TGetWorkoutPlan) {
-  // verify the get workout plan in the backend first and then only work forward.
   const { isPending, data, error, isSuccess } = useQuery<
     TWorkoutPlan,
     AxiosError

@@ -1,5 +1,6 @@
 import { Button } from "@/components";
 import { Heading } from "@/components/heading/Heading";
+import { motion } from "framer-motion";
 import GeneralTable from "@/system/components/tables/general-table/GeneralTable";
 
 import { Plus } from "lucide-react";
@@ -18,6 +19,7 @@ import AddMaintainer from "@/system/features/users/maintainers/add-maintainers/A
 import EditMaintainer from "@/system/features/users/maintainers/edit-maintainers/EditMaintainer";
 import useDeleteUser from "@/system/features/users/useDeleteUser";
 import ViewUser from "@/system/features/users/view-user/view-user";
+import { dynamicContainerVariants } from "@/lib/utils";
 
 export default function Maintainer() {
   const [openView, setOpenView] = useState<boolean>(false);
@@ -52,10 +54,21 @@ export default function Maintainer() {
     <>
       <section className="rounded-tl-xl h-[calc(100dvh-60px)] overflow-hidden">
         <div className="py-7 px-6 flex-1 flex flex-col gap-4 h-full">
-          <Heading level={4} variant={"quaternary"}>
-            Maintainers
-          </Heading>
-          <div className="bg-white rounded-xl shadow-general overflow-hidden h-full">
+          <motion.div
+            variants={dynamicContainerVariants(0)}
+            initial="hidden"
+            animate="visible"
+          >
+            <Heading level={4} variant={"quaternary"}>
+              Maintainers
+            </Heading>
+          </motion.div>
+          <motion.div
+            variants={dynamicContainerVariants(1)}
+            initial="hidden"
+            animate="visible"
+            className="bg-white rounded-xl shadow-general overflow-hidden h-full"
+          >
             {/* Header Section with Search and Actions */}
             <div className="flex shadow-elevation items-center justify-between sticky top-0 bg-white p-[18px] z-[1]">
               {/* Search Input */}
@@ -87,7 +100,7 @@ export default function Maintainer() {
                 setOpenView
               )}
             />
-          </div>
+          </motion.div>
         </div>
       </section>
       <ViewUser

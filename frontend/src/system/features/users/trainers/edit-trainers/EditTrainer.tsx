@@ -69,7 +69,6 @@ export default function EditTrainer({
       address: trainer?.address,
       birthDate: trainer?.birthDate.slice(0, 10),
       email: trainer?.email,
-
       gender: trainer?.gender,
       userImage: trainer?.userImage,
       status: trainer?.status,

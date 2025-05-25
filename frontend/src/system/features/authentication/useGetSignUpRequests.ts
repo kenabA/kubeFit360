@@ -5,7 +5,12 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useSearchParams } from "react-router";
 
-export type TClientStatus = "pending" | "approved" | "rejected";
+export type TClientStatus =
+  | "pending"
+  | "approved"
+  | "rejected"
+  | "active"
+  | "inactive";
 type TMembershipType = "basic" | "enterprise";
 
 export type TSignUpRequests = {

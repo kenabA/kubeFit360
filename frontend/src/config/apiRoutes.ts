@@ -15,6 +15,7 @@ export const API_ROUTES = {
   },
   EQUIPMENTS: {
     BASE: buildApiRoute("equipments"),
+    RECOMMENDED: buildApiRoute("equipments/recommended"),
     STATS: buildApiRoute("equipments/equipment-stats"),
   },
   MAINTAINERS: {
@@ -23,7 +24,10 @@ export const API_ROUTES = {
 
   NOTICES: buildApiRoute("notices"),
   WEIGHTS: buildApiRoute("weights"),
-
+  TRANSACTIONS: {
+    BASE: buildApiRoute("transactions"),
+    GET_AGGREGATED: buildApiRoute("transactions/get-aggregated-transactions"),
+  },
   TRAINERS: {
     BASE: buildApiRoute("maintainers"),
     WORKOUT_PLAN_REQUESTS: buildApiRoute("workoutPlanRequests"),

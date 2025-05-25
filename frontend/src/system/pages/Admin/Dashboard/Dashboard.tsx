@@ -1,6 +1,6 @@
 import { Heading } from "@/components/heading/Heading";
 import { dynamicContainerVariants } from "@/lib/utils";
-import { Areachart, Block, Piechart } from "@/system/components";
+import { Block, Piechart } from "@/system/components";
 import ColumnDefinition from "@/system/components/tables/recent-activities/ColumnDefinition";
 import RecentActivities from "@/system/components/tables/recent-activities/RecentActivities";
 import { equipmentChartConfig } from "@/system/features/equipments/equipmentChartData";
@@ -12,6 +12,9 @@ import useRecentActivities from "@/system/features/recent-activities/useRecentAc
 import { memberChartConfig } from "@/system/features/users/members/membersChartData";
 import useMembersAnalytics from "@/system/features/users/members/useMembersAnalytics";
 import { useState } from "react";
+import { membershipChartConfig } from "@/system/features/users/members/membershipChartData";
+import useFormattedTransactionData from "@/system/features/transaction/useFormattedTransactionData";
+import TransactionsAreaChart from "@/system/components/areachart/TransactionsAreaChart";
 
 export default function AdminDashboard() {
   const [selectedIds, setSelectedIds] = useState<string>("");
@@ -19,6 +22,8 @@ export default function AdminDashboard() {
 
   const { data: recentActivitiesData, error: activitiesError } =
     useRecentActivities();
+
+  const { formattedTransactionData } = useFormattedTransactionData();
 
   const {
     stats: equipmentStats,
@@ -30,14 +35,23 @@ export default function AdminDashboard() {
     stats: memberStats,
     chartData: memberChartData,
     error: memberError,
+    membershipChartData,
+    membershipRatio,
   } = useMembersAnalytics();
 
   return (
     <section className="rounded-tl-xl overflow-y-auto custom-scrollbar flex-1">
       <div className="py-7 px-6">
-        <Heading level={4} variant={"quaternary"}>
-          Dashboard
-        </Heading>
+        <motion.div
+          variants={dynamicContainerVariants(0)}
+          initial="hidden"
+          animate="visible"
+        >
+          <Heading level={4} variant={"quaternary"}>
+            Dashboard
+          </Heading>
+        </motion.div>
+
         <div className="h-full grid grid-cols-2 lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] gap-6 mt-6 ">
           <motion.div
             variants={dynamicContainerVariants(1)}
@@ -68,30 +82,14 @@ export default function AdminDashboard() {
             <Block
               type={"figure"}
               icon="lucide:package"
-              title="membership ratio | after client module"
+              title="membership ratio"
             >
               <Piechart
                 entity="Members"
-                config={equipmentChartConfig}
+                config={membershipChartConfig}
                 nameKey="status"
-                stats={[
-                  {
-                    status: "active",
-                    count: 25,
-                    fill: "#1A5E63",
-                  },
-                  {
-                    status: "inactive",
-                    count: 10,
-                    fill: "#7FD7DC",
-                  },
-                  {
-                    status: "pending",
-                    count: 15,
-                    fill: "#CFF0F2",
-                  },
-                ]}
-                count={23}
+                stats={membershipChartData}
+                count={membershipRatio.total}
               />
             </Block>
           </motion.div>
@@ -137,10 +135,10 @@ export default function AdminDashboard() {
             <Block
               type={"figure"}
               icon="lucide:package"
-              title="revenue collected | after client module"
+              title="revenue collected"
               className="w-full"
             >
-              <Areachart className="mt-8" />
+              <TransactionsAreaChart data={formattedTransactionData || []} />
             </Block>
           </motion.div>
           <motion.div

@@ -24,6 +24,7 @@ export function ThemedDialog({
   theme,
   className,
   ctaText,
+  cancelButton = true,
 }: TDialog) {
   return (
     <Dialog
@@ -52,27 +53,29 @@ export function ThemedDialog({
             {message}
           </DialogDescription>
           <DialogFooter className="flex items-center gap-1 gap-y-2">
-            <Button
-              disabled={isPending}
-              className={`${cn(
-                "w-full shadow-md md:h-11",
-                themeStyles[theme].backgroundLight,
-                themeStyles[theme].text
-              )}`}
-              onClick={(e) => {
-                setDialogOpen(false);
-                e.stopPropagation();
-              }}
-              variant={"ghost"}
-            >
-              Cancel
-            </Button>
+            {cancelButton && (
+              <Button
+                disabled={isPending}
+                className={`${cn(
+                  "w-full shadow-md md:h-11",
+                  themeStyles[theme].backgroundLight,
+                  themeStyles[theme].text
+                )}`}
+                onClick={(e) => {
+                  setDialogOpen(false);
+                  e.stopPropagation();
+                }}
+                variant={"ghost"}
+              >
+                Cancel
+              </Button>
+            )}
             <Button
               onClick={(e) => {
                 mutationFn();
                 e.stopPropagation();
               }}
-              className="w-full shadow-md hover:shadow-md md:h-11"
+              className={cn("shadow-md hover:shadow-md md:h-11 w-full")}
               variant={theme}
               disabled={isPending}
             >

@@ -48,7 +48,18 @@ export default function ColumnDefinition(
     {
       accessorKey: "status",
       header: "Status",
-      cell: ({ row }) => <Status status={row.original.status} />,
+      cell: ({ row }) => (
+        <Status
+          status={row.original.status}
+          passedTextNode={
+            row.original.status === "active"
+              ? "active"
+              : row.original.status === "inactive"
+              ? "inactive"
+              : ""
+          }
+        />
+      ),
     },
     {
       accessorKey: "membershipType",

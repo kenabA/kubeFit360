@@ -9,4 +9,8 @@ export const equipmentSchema = z.object({
   brandName: z.string().nonempty("Please mention the brand name"),
   category: z.string().nonempty("Please specify the category"),
   equipmentImage: z.string().optional(),
+  // ✅ Recommendation-related fields
+  isRecommended: z.boolean().default(false), // true if a trainer recommends it
+  recommendedBy: z.string().optional(), // trainer's name or ID
+  status: z.string().optional(), // trainer's name or ID
 });

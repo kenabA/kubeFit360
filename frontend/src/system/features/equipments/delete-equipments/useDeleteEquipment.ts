@@ -15,6 +15,9 @@ function useDeleteEquipments() {
       await queryClient.invalidateQueries({
         queryKey: ["equipments"],
       });
+      await queryClient.invalidateQueries({
+        queryKey: ["recommendedEquipments"],
+      });
       toast({
         variant: "success",
         title: "Success",

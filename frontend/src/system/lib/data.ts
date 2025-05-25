@@ -16,6 +16,7 @@ export type TOptions<T> = {
 
 export type TFilterFields = {
   equipments: TEntity;
+  members: TEntity;
   maintainers: TEntity;
   trainers: TEntity;
   notices: TEntity;
@@ -87,6 +88,11 @@ export const signUpRequestStatusOptions: TOptions<TClientStatus>[] = [
   { label: "Rejected", value: "rejected", theme: "hsl(var(--destructive))" },
 ];
 
+export const clientStatusOptions: TOptions<TClientStatus>[] = [
+  { label: "Active", value: "active", theme: "hsl(var(--success))" },
+  { label: "Inactive", value: "inactive", theme: "hsl(var(--destructive))" },
+];
+
 export const fitnessLevelOptions: TOptions<TFitnessLevel>[] = [
   { label: "Beginner", value: "beginner" },
   { label: "Intermediate", value: "intermediate" },
@@ -112,6 +118,13 @@ export const filterFields: TFilterFields = {
     name: "notices",
     fields: [{ label: "status", options: noticesStatusOptions }],
   },
+  members: {
+    name: "members",
+    fields: [
+      { label: "membershipType", options: membershipOptions },
+      { label: "status", options: clientStatusOptions },
+    ],
+  },
   maintainers: {
     name: "maintainers",
     fields: [
@@ -135,7 +148,7 @@ export const filterFields: TFilterFields = {
   },
 };
 
-export const bodyTypeOptions: TOptions<TBodyType>[] = [
+export const bodyTypeOptions: TOptions<React.ReactNode>[] = [
   { label: "Ectomorph", value: "ectomorph" },
   { label: "Mesomorph", value: "mesomorph" },
   { label: "Endomorph", value: "endomorph" },
