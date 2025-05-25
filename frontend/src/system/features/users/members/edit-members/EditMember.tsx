@@ -68,7 +68,6 @@ export default function EditMember({
     resolver: zodResolver(memberSchema),
   });
 
-  console.log(members?.birthDate);
   useEffect(() => {
     if (isSuccess) {
       setIsPending(false);
@@ -82,7 +81,7 @@ export default function EditMember({
     reset({
       name: members?.name,
       address: members?.address,
-      birthDate: members?.birthDate.slice(0, 10),
+      birthDate: members?.birthDate ? members?.birthDate.slice(0, 10) : "",
       email: members?.email,
       gender: members?.gender,
       userImage: members?.userImage,
@@ -216,6 +215,8 @@ export default function EditMember({
             register={register}
           />
           <BaseInput
+            allowPastDate={true}
+            allowFuture={false}
             error={errors.birthDate}
             label="Date of Birth"
             name="birthDate"

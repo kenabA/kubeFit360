@@ -32,8 +32,8 @@ export default function AddMaintainer({
     // TODO : The default password will be the role and after adding user, a mail should go stating that the default password is 'maintainer' suggesting user to change it
     defaultValues: {
       role: "maintainer",
-      password: "maintainer",
-      passwordConfirm: "maintainer",
+      password: "asdasdasd",
+      passwordConfirm: "asdasdasd",
     },
     resolver: zodResolver(maintainerSchema),
   });
