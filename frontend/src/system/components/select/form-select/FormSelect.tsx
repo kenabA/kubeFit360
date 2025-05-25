@@ -38,7 +38,7 @@ export default function FormSelect({
                 value={opt.value}
                 key={opt.label}
                 className={cn("cursor-pointer relative !flex !flex-row")}
-                disabled={opt.availability === "inactive"}
+                disabled={(opt as any).availability === "inactive"}
               >
                 <div className="flex gap-2 items-center">
                   {opt.theme && (
@@ -75,9 +75,11 @@ export default function FormSelect({
                     </span>
                   )}
                 </div>
-                {opt.availability === "inactive" && (
+                {(opt as any).availability === "inactive" && (
                   <div className="absolute right-5 top-1/2 -translate-y-1/2">
-                    <Badge variant={opt.availability}>{opt.availability}</Badge>
+                    <Badge variant={(opt as any).availability}>
+                      {(opt as any).availability}
+                    </Badge>
                   </div>
                 )}
               </SelectItem>

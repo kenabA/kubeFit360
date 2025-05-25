@@ -26,7 +26,6 @@ export default function Client() {
 
   const {
     data: { data: members, count },
-    isPending,
   } = useMembers();
 
   const {

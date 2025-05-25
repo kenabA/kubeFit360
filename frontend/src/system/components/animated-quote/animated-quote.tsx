@@ -7,6 +7,7 @@ export function AnimatedQuote() {
   const [currentQuote, setCurrentQuote] = useState<Quote>(quotes[0]);
   const [displayText, setDisplayText] = useState("");
   const [isTyping, setIsTyping] = useState(true);
+  console.log(setIsTyping);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showAuthor, setShowAuthor] = useState(false);
 

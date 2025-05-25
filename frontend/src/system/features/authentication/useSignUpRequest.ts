@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 
 import apiCreateSignUpRequest from "@/system/services/auth/apiSignUpRequest";
 import useHandleNavigate from "@/hooks/useHandleNavigate";
-import { TSignupFormProps } from "@/system/pages/SignUp/types";
+import { TSignupFormProps } from "@/system/pages/signup/types";
 
 function useSignUpRequest() {
   const handleNavigate = useHandleNavigate();

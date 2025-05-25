@@ -4,6 +4,7 @@ import { TEditNoticeFormProps } from "./types";
 import apiEditNotice from "@/system/services/notices/apiEditNotice";
 
 function useEditNotice({ selectedId }: { selectedId: string }) {
+  console.log(selectedId);
   const queryClient = useQueryClient();
   const { toast } = useToast();
   const {

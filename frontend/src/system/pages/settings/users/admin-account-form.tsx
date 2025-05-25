@@ -17,7 +17,7 @@ import { ThemedDialog } from "@/components/dialog/Dialog";
 export default function AdminAccountForm() {
   const {
     register,
-    control,
+
     reset,
     setValue,
     handleSubmit,
@@ -32,7 +32,7 @@ export default function AdminAccountForm() {
 
   const { data } = useGetCurrentUser();
 
-  const { editUser } = useEditUser<TEditAdminFormProps>("admin");
+  const { editUser } = useEditUser<TEditAdminFormProps>(true);
 
   const [localImage, setLocalImage] = useState<File | string | undefined>();
 

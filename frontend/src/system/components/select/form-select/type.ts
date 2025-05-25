@@ -4,7 +4,7 @@ import { FieldError } from "react-hook-form";
 export type TFormSelect = {
   field: any;
   label: string;
-  options: TOptions[];
+  options: TOptions<any>[];
   placeholder: string;
   error?: FieldError | undefined;
 };

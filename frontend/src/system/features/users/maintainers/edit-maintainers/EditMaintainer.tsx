@@ -44,7 +44,7 @@ export default function EditMaintainer({
     (e) => e._id === selectedId
   );
 
-  const { editUser, isSuccess, error } = useEditUser("maintainers");
+  const { editUser, isSuccess, error } = useEditUser(false);
 
   const {
     register,

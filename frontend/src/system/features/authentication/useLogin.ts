@@ -1,7 +1,7 @@
 import { ROUTES } from "@/config/appRoutes";
 import { useToast } from "@/hooks/use-toast";
 import useHandleNavigate from "@/hooks/useHandleNavigate";
-import { TLoginFormProps } from "@/system/pages/Login/types";
+import { TLoginFormProps } from "@/system/pages/login/types";
 
 import apiLogin from "@/system/services/auth/apiLogin";
 import { useMutation, useQueryClient } from "@tanstack/react-query";

@@ -34,7 +34,7 @@ export default function MaintainerAccountForm() {
 
   const [openDelete, setOpenDelete] = useState<boolean>(false);
 
-  const { editUser } = useEditUser<TEditMaintainerFormProps>("maintainer");
+  const { editUser } = useEditUser<TEditMaintainerFormProps>(true);
 
   const [isPending, setIsPending] = useState<boolean>(false);
 

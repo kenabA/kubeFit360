@@ -5,7 +5,7 @@ import { AxiosError } from "axios";
 
 import { TUserDetails } from "@/system/stores/user/types";
 import { TAuthApiResponse } from "@/system/lib/types";
-import { TLoginFormProps } from "@/system/pages/Login/types";
+import { TLoginFormProps } from "@/system/pages/login/types";
 
 const apiLogin = async (
   loginDetails: TLoginFormProps

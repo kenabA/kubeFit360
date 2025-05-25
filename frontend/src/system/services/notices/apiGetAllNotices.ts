@@ -3,7 +3,6 @@ import { _axios } from "@/config/axios";
 import axios, { AxiosError } from "axios";
 import { TApiResponse } from "@/system/lib/types";
 import { TNoticeData } from "@/system/features/notices/type";
-import useUserStore from "@/system/stores/user/useUserStore";
 
 async function apiGetAllNotices(params: {
   [key: string]: string;
@@ -24,7 +23,6 @@ async function apiGetAllNotices(params: {
       membershipExpired?: boolean;
     }>;
 
-    const status = backendError.response?.status;
     const data = backendError.response?.data;
 
     // if (status === 403 && data?.membershipExpired) {

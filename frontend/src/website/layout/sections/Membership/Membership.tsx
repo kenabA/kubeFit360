@@ -16,7 +16,11 @@ export default function Membership() {
           Tailored membership plans to match your fitness aspirations.
         </p>
       </div>
-      <MembershipCards variant="website" />
+      <MembershipCards
+        variant="website"
+        selectedMembership=""
+        onSelect={() => {}}
+      />
     </section>
   );
 }

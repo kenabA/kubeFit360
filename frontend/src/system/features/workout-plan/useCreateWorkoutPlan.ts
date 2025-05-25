@@ -17,7 +17,7 @@ function useCreateWorkoutPlan() {
     error,
   } = useMutation({
     mutationFn: (data: TCreateWorkoutPlanForm) => apiCreatePlan(data),
-    onSuccess: async (data) => {
+    onSuccess: async () => {
       await Promise.all([
         queryClient.removeQueries({ queryKey: ["workoutPlan"] }),
         queryClient.invalidateQueries({ queryKey: ["workoutPlanRequests"] }),

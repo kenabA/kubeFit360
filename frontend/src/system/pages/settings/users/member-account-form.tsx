@@ -36,7 +36,7 @@ export default function MemberAccountForm() {
 
   const { data } = useGetCurrentUser();
 
-  const { editUser } = useEditUser<TEditMemberFormProps>("member");
+  const { editUser } = useEditUser<TEditMemberFormProps>(true);
 
   const [localImage, setLocalImage] = useState<File | string | undefined>();
 
@@ -82,7 +82,7 @@ export default function MemberAccountForm() {
       data = { ...data, userImage: trainerImageUrl };
     }
     // HANDLE THIS
-    await editUser({ editUserDetails: data, selectedId: data?._id });
+    await editUser({ editUserDetails: data, selectedId: data?._id ?? "" });
     reset();
     setIsPending(false);
   }

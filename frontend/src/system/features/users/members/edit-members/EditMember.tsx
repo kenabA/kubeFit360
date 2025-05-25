@@ -55,7 +55,7 @@ export default function EditMember({
     setValue("userImage", undefined, { shouldDirty: true });
   }
 
-  const { editUser, isSuccess, error } = useEditUser("members");
+  const { editUser, isSuccess, error } = useEditUser(false);
 
   const {
     register,

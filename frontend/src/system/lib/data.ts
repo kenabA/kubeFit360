@@ -1,6 +1,5 @@
 import { TClientStatus } from "../features/authentication/useGetSignUpRequests";
 import {
-  TBodyType,
   TDays,
   TFitnessLevel,
   TWorkoutGoals,

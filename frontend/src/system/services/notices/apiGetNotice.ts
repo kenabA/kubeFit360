@@ -2,7 +2,6 @@ import { API_ROUTES } from "@/config/apiRoutes";
 import { _axios } from "@/config/axios";
 import axios, { AxiosError } from "axios";
 import { TNoticeData } from "@/system/features/notices/type";
-import useUserStore from "@/system/stores/user/useUserStore";
 
 async function apiGetNotice(id: string): Promise<TNoticeData> {
   try {
@@ -20,7 +19,6 @@ async function apiGetNotice(id: string): Promise<TNoticeData> {
       membershipExpired?: boolean;
     }>;
 
-    const status = backendError.response?.status;
     const data = backendError.response?.data;
 
     // if (status === 403 && data?.membershipExpired) {

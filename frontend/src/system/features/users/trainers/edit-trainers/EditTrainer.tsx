@@ -42,7 +42,7 @@ export default function EditTrainer({
 
   const trainer = allTrainers?.data.data?.find((e) => e._id === selectedId);
 
-  const { editUser, isSuccess, error } = useEditUser("trainers");
+  const { editUser, isSuccess, error } = useEditUser(false);
 
   const {
     register,

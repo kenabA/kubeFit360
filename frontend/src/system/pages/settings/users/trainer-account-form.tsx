@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 import { TEditTrainerFormProps } from "@/system/features/users/trainers/edit-trainers/type";
-import { cn, containerVariants, formatTime } from "@/lib/utils";
+import { containerVariants, formatTime } from "@/lib/utils";
 import { handleFileChange, uploadImage } from "@/system/lib/helpers";
 import useEditUser from "@/system/features/users/useEditUser";
 import { Oval } from "react-loader-spinner";
@@ -33,7 +33,7 @@ export default function TrainerAccountForm() {
   });
   const [openDelete, setOpenDelete] = useState<boolean>(false);
 
-  const { editUser } = useEditUser<TEditTrainerFormProps>("trainer");
+  const { editUser } = useEditUser<TEditTrainerFormProps>(true);
 
   const [isPending, setIsPending] = useState<boolean>(false);
 

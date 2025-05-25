@@ -7,7 +7,6 @@ import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import TrainerAccountForm from "./users/trainer-account-form";
 import MaintainerAccountForm from "./users/maintainer-account-form";
 import AdminAccountForm from "./users/admin-account-form";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import MemberAccountForm from "./users/member-account-form";
 import { useState } from "react";
 import ChangePasswordModal from "@/system/features/users/change-password/change-password";

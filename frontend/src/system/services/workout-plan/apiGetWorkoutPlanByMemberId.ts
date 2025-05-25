@@ -22,7 +22,6 @@ async function apiGetWorkoutPlanByMemberId(id: string): Promise<TWorkoutPlan> {
       membershipExpired?: boolean;
     }>;
 
-    const status = backendError.response?.status;
     const data = backendError.response?.data;
 
     // if (status === 403 && data?.membershipExpired) {

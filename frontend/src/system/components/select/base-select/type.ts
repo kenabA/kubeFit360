@@ -7,6 +7,6 @@ export type TBaseSelect = {
     React.SetStateAction<{ field: string; value: string }[]>
   >;
   label: string;
-  options: TOptions[];
+  options: TOptions<any>[];
   className: string;
 };

@@ -4,13 +4,11 @@ import { useToast } from "@/hooks/use-toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import apiEditUser from "@/system/services/users/apiEditUser";
-import useAuthUser from "react-auth-kit/hooks/useAuthUser";
-import { TUserDetails } from "@/system/stores/user/types";
 
 // CHECK THIS WHEN YOU GET HOME
 function useEditUser<T>(isEditingCurrentUser?: boolean) {
   const queryClient = useQueryClient();
-  const auth = useAuthUser<TUserDetails>();
+
   const { toast } = useToast();
   const {
     mutate: editUser,

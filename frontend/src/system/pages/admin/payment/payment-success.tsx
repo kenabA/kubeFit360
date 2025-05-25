@@ -6,7 +6,7 @@ import useHandleNavigate from "@/hooks/useHandleNavigate";
 import { capitalize } from "@/lib/utils";
 import { ArrowRight } from "lucide-react";
 import kubeFitLogo from "@/assets/shared/svg/kubeFitLogo/kubeFit360°-logo-white.svg";
-import { Link, useLocation, useNavigate } from "react-router";
+import { Link, useLocation } from "react-router";
 import { base64Decode } from "esewajs";
 
 import { useEffect } from "react";
@@ -19,7 +19,6 @@ export default function PaymentSuccess({
 }: {
   status: "success" | "failure";
 }) {
-  const navigate = useNavigate();
   const location = useLocation();
   // Create a new URLSearchParams object using the search string from location
   const queryParams = new URLSearchParams(location.search);

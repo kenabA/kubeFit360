@@ -38,7 +38,7 @@ export default function EditNotice({
     resolver: zodResolver(noticeSchema),
   });
 
-  const { editNotice, isSuccess } = useEditNotice({ selectedId: selectedId });
+  const { editNotice } = useEditNotice({ selectedId: selectedId });
 
   async function handleRemoveProfilePicture() {
     if (!noticeData) return;

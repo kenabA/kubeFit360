@@ -18,7 +18,7 @@ export default function NoticeBar({
   role,
   card,
   id,
-  setIsDialogOpen,
+
   setActive,
 }: {
   role: "maintainer" | "admin" | "trainer" | "member" | undefined;

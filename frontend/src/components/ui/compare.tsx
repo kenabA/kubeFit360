@@ -23,7 +23,7 @@ export const Compare = ({
   secondImageClassname,
   initialSliderPercentage = 50,
   slideMode = "hover",
-  showHandlebar = true,
+  // showHandlebar = true,
   autoplay = false,
   autoplayDuration = 5000,
 }: CompareProps) => {
@@ -33,6 +33,8 @@ export const Compare = ({
   const sliderRef = useRef<HTMLDivElement>(null);
 
   const [isMouseOver, setIsMouseOver] = useState(false);
+
+  console.log(isMouseOver);
 
   const autoplayRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -83,6 +85,7 @@ export const Compare = ({
 
   const handleStart = useCallback(
     (clientX: number) => {
+      console.log(clientX);
       if (slideMode === "drag") {
         setIsDragging(true);
       }

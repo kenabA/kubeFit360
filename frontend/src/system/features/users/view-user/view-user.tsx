@@ -12,7 +12,7 @@ import treadmill from "@/assets/website/images/hero-bg.jpg";
 import { cn, formatTime } from "@/lib/utils";
 
 import { Role } from "@/system/components/role/Role";
-import { Icon, InlineIcon } from "@iconify/react/dist/iconify.js";
+import { Icon } from "@iconify/react/dist/iconify.js";
 import { UserDetailBlock } from "@/components/user-detail-block/UserDetailBlock";
 import useGetUser from "../useGetUser";
 import { Badge } from "@/components/ui/badge";
