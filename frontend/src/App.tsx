@@ -18,6 +18,7 @@ import ClientMembership from "./system/pages/member/client-membership/client-mem
 import CheckMembership from "./system/components/check-membership";
 import Client from "./system/pages/admin/client/client";
 import PublicRoute from "./system/features/authentication/PublicRoute";
+import AdminDashboard from "./system/pages/admin/Dashboard/Dashboard";
 
 // ✅ Website Pages (lazy)
 const LandingPage = lazy(
@@ -38,8 +39,8 @@ const SignupLayout = lazy(() => import("@/layout/auth/SignupLayout"));
 const SystemLayout = lazy(() => import("./layout/SystemLayout"));
 
 // ✅ Auth Pages (lazy)
-const Login = lazy(() => import("@/system/pages/login/Login"));
-const Signup = lazy(() => import("@/system/pages/signup/SignUp"));
+const Login = lazy(() => import("./system/pages/login/Login"));
+const Signup = lazy(() => import("./system/pages/signup/SignUp"));
 const ForgotPassword = lazy(
   () => import("@/system/pages/forgot-password/ForgotPassword")
 );
@@ -51,9 +52,7 @@ const PasswordChanged = lazy(
 );
 
 // ✅ Admin Pages (lazy)
-const AdminDashboard = lazy(
-  () => import("./system/pages/admin/Dashboard/Dashboard")
-);
+// const AdminDashboard = lazy(() => import(""));
 const Maintainer = lazy(
   () => import("./system/pages/admin/Maintainer/Maintainer")
 );
