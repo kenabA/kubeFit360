@@ -4,7 +4,7 @@ import { dynamicContainerVariants } from "@/lib/utils";
 import { ExpandableCardDemo } from "@/system/components/expandable-card/expandable-card";
 import Filter from "@/system/components/filter/Filter";
 import NoData from "@/system/components/no-data/NoData";
-import Spinner from "@/system/components/spinner/Spinner";
+import Spinner from "@/system/components/spinner/spinner";
 import { motion } from "framer-motion";
 import TableSearch from "@/system/components/table-search/TableSearch";
 import AddNotice from "@/system/features/notices/add-notice/add-notice";

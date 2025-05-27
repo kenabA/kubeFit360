@@ -7,7 +7,7 @@ import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import InfoBar from "./info-bar";
 import { Button } from "@/components";
 import useGetWorkoutPlanByMemberId from "@/system/features/workout-plan/useGetWorkoutPlanByMemberId";
-import Spinner from "@/system/components/spinner/Spinner";
+import Spinner from "@/system/components/spinner/spinner";
 import { Plus } from "lucide-react";
 
 import { useNavigate } from "react-router";
