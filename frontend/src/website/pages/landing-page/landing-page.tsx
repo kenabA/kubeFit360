@@ -2,9 +2,10 @@ import Hero from "@/website/layout/sections/Hero/Hero";
 import TrustedBy from "@/website/layout/sections/TrustedBy/TrustedBy";
 import About from "@/website/layout/sections/About/About";
 import Services from "@/website/layout/sections/Services/Services";
-import Membership from "@/website/layout/sections/Membership/Membership";
+
 import CTA from "@/website/layout/sections/CTA/CTA";
-import SuccessStories from "@/website/layout/sections/SuccessStories/SuccessStories";
+import SuccessStories from "@/website/layout/sections/success-stories/success-stories";
+import Membership from "@/website/layout/sections/membership/membership";
 
 export default function LandingPage() {
   return (

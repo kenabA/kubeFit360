@@ -5,8 +5,8 @@ import { TRole } from "@/system/lib/types";
 import { TUserDetails } from "@/system/stores/user/types";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import useUserStore from "@/system/stores/user/useUserStore";
-import SetPasswordLayout from "@/layout/auth/SetPasswordLayout";
-import MembershipPlanLayout from "@/layout/auth/MembershipPlanLayout";
+import SetPasswordLayout from "@/layout/auth/set-password-layout";
+import MembershipPlanLayout from "@/layout/auth/membership-plan-layout";
 
 export default function ProtectedRoute({
   allowedRoles,

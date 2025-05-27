@@ -5,7 +5,7 @@ import { Route, Routes } from "react-router";
 // Hook and utilities (keep normal)
 import ScrollToTop from "@/hooks/useScrollToTop";
 import { ROUTES } from "@/config/appRoutes";
-import ProtectedRoute from "@/system/features/authentication/ProtectedRoute";
+import ProtectedRoute from "@/system/features/authentication/protected-route.tsx";
 import { useQueryClient } from "@tanstack/react-query";
 import Spinner from "./system/components/spinner/Spinner";
 import Trainer from "./system/pages/admin/trainer/trainer";
@@ -17,68 +17,68 @@ import PostPaymentLogin from "./system/pages/post-payment-login/post-payment-log
 import ClientMembership from "./system/pages/member/client-membership/client-membership";
 import CheckMembership from "./system/components/check-membership";
 import Client from "./system/pages/admin/client/client";
-import PublicRoute from "./system/features/authentication/PublicRoute";
-import AdminDashboard from "./system/pages/admin/Dashboard/Dashboard";
+import PublicRoute from "./system/features/authentication/public-route.tsx";
+import AdminDashboard from "./system/pages/admin/dashboard/dashboard.tsx";
 
 // ✅ Website Pages (lazy)
 const LandingPage = lazy(
-  () => import("@/website/pages/LandingPage/LandingPage.tsx")
+  () => import("@/website/pages/landing-page/landing-page.tsx")
 );
-const About = lazy(() => import("@/website/pages/About/About.tsx"));
+const About = lazy(() => import("@/website/pages/about/about.tsx"));
 const SuccessStories = lazy(
-  () => import("@/website/layout/sections/SuccessStories/SuccessStories.tsx")
+  () => import("@/website/layout/sections/success-stories/success-stories.tsx")
 );
 const Membership = lazy(
-  () => import("@/website/layout/sections/Membership/Membership.tsx")
+  () => import("@/website/layout/sections/membership/membership.tsx")
 );
 
 // ✅ Layouts (lazy)
-const WebsiteLayout = lazy(() => import("@/layout/WebsiteLayout.tsx"));
-const LoginLayout = lazy(() => import("./layout/auth/LoginLayout.tsx"));
-const SignupLayout = lazy(() => import("@/layout/auth/SignupLayout.tsx"));
-const SystemLayout = lazy(() => import("./layout/SystemLayout.tsx"));
+const WebsiteLayout = lazy(() => import("@/layout/website-layout.tsx"));
+const LoginLayout = lazy(() => import("./layout/auth/login-layout.tsx"));
+const SignupLayout = lazy(() => import("@/layout/auth/sign-layout.tsx"));
+const SystemLayout = lazy(() => import("./layout/system-layout.tsx"));
 
 // ✅ Auth Pages (lazy)
-const Login = lazy(() => import("./system/pages/login/Login.tsx"));
-const Signup = lazy(() => import("./system/pages/signup/SignUp.tsx"));
+const Login = lazy(() => import("./system/pages/login/login.tsx"));
+const Signup = lazy(() => import("./system/pages/signup/sign-up.tsx"));
 const ForgotPassword = lazy(
-  () => import("@/system/pages/forgot-password/ForgotPassword.tsx")
+  () => import("@/system/pages/forgot-password/forgot-password.tsx")
 );
 const ResetPassword = lazy(
-  () => import("@/system/pages/reset-password/ResetPassword.tsx")
+  () => import("@/system/pages/reset-password/reset-password.tsx")
 );
 const PasswordChanged = lazy(
-  () => import("@/system/pages/reset-password/PasswordChanged.tsx")
+  () => import("@/system/pages/reset-password/password-changed.tsx")
 );
 
 // ✅ Admin Pages (lazy)
 // const AdminDashboard = lazy(() => import(""));
 const Maintainer = lazy(
-  () => import("./system/pages/admin/Maintainer/Maintainer.tsx")
+  () => import("./system/pages/admin/maintainer/maintainer.tsx")
 );
 
 // ✅ Maintainer Pages (lazy)
 const MaintainerDashboard = lazy(
-  () => import("./system/pages/maintainer/Dashboard/Dashboard.tsx")
+  () => import("./system/pages/maintainer/dashboard/dashboard.tsx")
 );
 const Equipments = lazy(
-  () => import("./system/pages/maintainer/Equipments/Equipments.tsx")
+  () => import("./system/pages/maintainer/equipments/equipments.tsx")
 );
 
 // ✅ Trainer Pages (lazy)
 const TrainerDashboard = lazy(
-  () => import("./system/pages/trainer/Dashboard/Dashboard.tsx")
+  () => import("./system/pages/trainer/dashboard/dashboard.tsx")
 );
 const WorkoutPlanRequests = lazy(
   () =>
     import(
-      "./system/pages/trainer/workout-plan-requests/WorkoutPlanRequests.tsx"
+      "./system/pages/trainer/workout-plan-requests/workout-plan-requests.tsx"
     )
 );
 const CreateWorkoutPlan = lazy(
   () =>
     import(
-      "./system/pages/trainer/workout-plan/create-workout-plan/CreateWorkoutPlan.tsx"
+      "./system/pages/trainer/workout-plan/create-workout-plan/create-workout-plan.tsx"
     )
 );
 
@@ -92,7 +92,7 @@ const ClientWorkoutPlan = lazy(
 );
 
 // ✅ Shared Pages (lazy)
-const Settings = lazy(() => import("./system/pages/settings/Settings.tsx"));
+const Settings = lazy(() => import("./system/pages/settings/settings.tsx"));
 const Notices = lazy(() => import("./system/pages/notices/notices.tsx"));
 
 const PageNotFound = lazy(

@@ -5,7 +5,7 @@ import {
   TWorkoutPlanRequest,
   TWorkoutTypePreference,
 } from "@/system/features/workout-plan-requests/types";
-import AdditionalUserInfoBlock from "./AdditionalUserInfoBlock";
+import AdditionalUserInfoBlock from "./additional-user-info-block";
 
 export default function AdditionalUserInfo({
   className,

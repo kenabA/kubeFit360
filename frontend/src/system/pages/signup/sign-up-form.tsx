@@ -1,7 +1,7 @@
 import { Button } from "@/components";
 import FloatingInput from "@/system/components/input/auth-input/AuthInput";
 import { useShowStore } from "@/system/stores/useShowStore";
-import { MembershipCards } from "@/website/layout/sections/Membership/membership-cards/MembershipCards";
+import { MembershipCards } from "@/website/layout/sections/membership/membership-cards/MembershipCards";
 import { ArrowLeft } from "lucide-react";
 import { FormEvent, useEffect } from "react";
 import { TSignupFormProps } from "./types";

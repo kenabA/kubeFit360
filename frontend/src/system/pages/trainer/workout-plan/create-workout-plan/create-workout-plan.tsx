@@ -1,8 +1,8 @@
 import { Heading } from "@/components/heading/Heading";
-import UserProfileCard from "./UserProfileCard";
+import UserProfileCard from "./user-profile-card";
 import Loading from "@/components/loading/Loading";
-import AdditionalUserInfo from "./AdditionalUserInfo";
-import WorkoutPlanEditor from "./WorkoutPlanEditor";
+import AdditionalUserInfo from "./additional-user-info";
+import WorkoutPlanEditor from "./workout-plan-editor";
 import { motion } from "framer-motion";
 import useGetWorkoutRequest from "@/system/features/workout-plan-requests/useGetWorkoutRequest";
 import { useParams } from "react-router";

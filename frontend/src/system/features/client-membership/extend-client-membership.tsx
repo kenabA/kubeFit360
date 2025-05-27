@@ -1,7 +1,7 @@
 import { Button } from "@/components";
 import { FormModal } from "@/components/formModal/FormModal";
 import { cardVariants } from "@/system/components";
-import { MembershipCards } from "@/website/layout/sections/Membership/membership-cards/MembershipCards";
+import { MembershipCards } from "@/website/layout/sections/membership/membership-cards/MembershipCards";
 import { AnimatePresence, motion } from "framer-motion";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Oval } from "react-loader-spinner";
