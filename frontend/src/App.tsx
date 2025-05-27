@@ -22,78 +22,81 @@ import AdminDashboard from "./system/pages/admin/Dashboard/Dashboard";
 
 // ✅ Website Pages (lazy)
 const LandingPage = lazy(
-  () => import("@/website/pages/LandingPage/LandingPage")
+  () => import("@/website/pages/LandingPage/LandingPage.tsx")
 );
-const About = lazy(() => import("@/website/pages/About/About"));
+const About = lazy(() => import("@/website/pages/About/About.tsx"));
 const SuccessStories = lazy(
-  () => import("@/website/layout/sections/SuccessStories/SuccessStories")
+  () => import("@/website/layout/sections/SuccessStories/SuccessStories.tsx")
 );
 const Membership = lazy(
-  () => import("@/website/layout/sections/Membership/Membership")
+  () => import("@/website/layout/sections/Membership/Membership.tsx")
 );
 
 // ✅ Layouts (lazy)
-const WebsiteLayout = lazy(() => import("@/layout/WebsiteLayout"));
-const LoginLayout = lazy(() => import("./layout/auth/LoginLayout"));
-const SignupLayout = lazy(() => import("@/layout/auth/SignupLayout"));
-const SystemLayout = lazy(() => import("./layout/SystemLayout"));
+const WebsiteLayout = lazy(() => import("@/layout/WebsiteLayout.tsx"));
+const LoginLayout = lazy(() => import("./layout/auth/LoginLayout.tsx"));
+const SignupLayout = lazy(() => import("@/layout/auth/SignupLayout.tsx"));
+const SystemLayout = lazy(() => import("./layout/SystemLayout.tsx"));
 
 // ✅ Auth Pages (lazy)
-const Login = lazy(() => import("./system/pages/login/Login"));
-const Signup = lazy(() => import("./system/pages/signup/SignUp"));
+const Login = lazy(() => import("./system/pages/login/Login.tsx"));
+const Signup = lazy(() => import("./system/pages/signup/SignUp.tsx"));
 const ForgotPassword = lazy(
-  () => import("@/system/pages/forgot-password/ForgotPassword")
+  () => import("@/system/pages/forgot-password/ForgotPassword.tsx")
 );
 const ResetPassword = lazy(
-  () => import("@/system/pages/reset-password/ResetPassword")
+  () => import("@/system/pages/reset-password/ResetPassword.tsx")
 );
 const PasswordChanged = lazy(
-  () => import("@/system/pages/reset-password/PasswordChanged")
+  () => import("@/system/pages/reset-password/PasswordChanged.tsx")
 );
 
 // ✅ Admin Pages (lazy)
 // const AdminDashboard = lazy(() => import(""));
 const Maintainer = lazy(
-  () => import("./system/pages/admin/Maintainer/Maintainer")
+  () => import("./system/pages/admin/Maintainer/Maintainer.tsx")
 );
 
 // ✅ Maintainer Pages (lazy)
 const MaintainerDashboard = lazy(
-  () => import("./system/pages/maintainer/Dashboard/Dashboard")
+  () => import("./system/pages/maintainer/Dashboard/Dashboard.tsx")
 );
 const Equipments = lazy(
-  () => import("./system/pages/maintainer/Equipments/Equipments")
+  () => import("./system/pages/maintainer/Equipments/Equipments.tsx")
 );
 
 // ✅ Trainer Pages (lazy)
 const TrainerDashboard = lazy(
-  () => import("./system/pages/trainer/Dashboard/Dashboard")
+  () => import("./system/pages/trainer/Dashboard/Dashboard.tsx")
 );
 const WorkoutPlanRequests = lazy(
   () =>
-    import("./system/pages/trainer/workout-plan-requests/WorkoutPlanRequests")
+    import(
+      "./system/pages/trainer/workout-plan-requests/WorkoutPlanRequests.tsx"
+    )
 );
 const CreateWorkoutPlan = lazy(
   () =>
     import(
-      "./system/pages/trainer/workout-plan/create-workout-plan/CreateWorkoutPlan"
+      "./system/pages/trainer/workout-plan/create-workout-plan/CreateWorkoutPlan.tsx"
     )
 );
 
 // ✅ Member Pages (lazy)
 const MemberDashboard = lazy(
-  () => import("./system/pages/member/dashboard/dashboard")
+  () => import("./system/pages/member/dashboard/dashboard.tsx")
 );
 const ClientWorkoutPlan = lazy(
-  () => import("./system/pages/member/client-workout-plan/client-workout-plan")
+  () =>
+    import("./system/pages/member/client-workout-plan/client-workout-plan.tsx")
 );
 
 // ✅ Shared Pages (lazy)
-const Settings = lazy(() => import("./system/pages/settings/Settings"));
-const Notices = lazy(() => import("./system/pages/notices/notices"));
+const Settings = lazy(() => import("./system/pages/settings/Settings.tsx"));
+const Notices = lazy(() => import("./system/pages/notices/notices.tsx"));
 
 const PageNotFound = lazy(
-  () => import("./components/page-not-found/PageNotFound")
+  () => import("./components/page-not-found/PageNotFound.tsx")
 );
 
 export default function App() {
