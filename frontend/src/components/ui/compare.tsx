@@ -32,9 +32,7 @@ export const Compare = ({
 
   const sliderRef = useRef<HTMLDivElement>(null);
 
-  const [isMouseOver, setIsMouseOver] = useState(false);
-
-  console.log(isMouseOver);
+  const [, setIsMouseOver] = useState(false);
 
   const autoplayRef = useRef<NodeJS.Timeout | null>(null);
 

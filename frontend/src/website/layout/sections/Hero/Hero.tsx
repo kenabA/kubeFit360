@@ -59,7 +59,7 @@ export default function Hero() {
                   <CountUp
                     startOnMount={false}
                     start={0}
-                    end={memberCount[0].total - 1 || 30}
+                    end={memberCount[0].total}
                     duration={2}
                   />
                   +
@@ -76,7 +76,7 @@ export default function Hero() {
                   <CountUp
                     startOnMount={false}
                     start={0}
-                    end={trainerCount[0].total - 1 || 30}
+                    end={trainerCount[0].total}
                     duration={2}
                   />
                   +

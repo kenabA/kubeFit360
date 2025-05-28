@@ -64,6 +64,14 @@ export default function WorkoutPlanEditor({
 
   const { toast } = useToast();
 
+  function handleGenerateWithAI() {
+    toast({
+      variant: "info",
+      title: "Coming Soon!",
+      description: "Hang tight! A game-changing update is almost here.",
+    });
+  }
+
   function handleSendtoClient() {
     if (!editor) {
       return;
@@ -96,6 +104,7 @@ export default function WorkoutPlanEditor({
           <Button
             className="shadow-none hover:shadow-none h-10 w-fit sm:w-44 border-[1px] border-primary hover:text-primary-hover hover:border-primary-hover bg-tertiary text-primary-hover font-semibold text-sm"
             variant={"outline"}
+            onClick={handleGenerateWithAI}
             disabled={isPending}
           >
             <Icon icon={"mingcute:ai-fill"} />
