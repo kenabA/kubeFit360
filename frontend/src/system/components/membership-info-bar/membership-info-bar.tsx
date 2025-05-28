@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Heading } from "@/components/heading/Heading";
 import { dynamicContainerVariants } from "@/lib/utils";
-import { TMembershipInfo } from "@/system/pages/member/client-membership/client-membership";
+import { TMembershipInfo } from "@/system/pages/member/client-membership/client-membership-page";
 import React from "react";
 
 export default function MembershipInfoBar({
