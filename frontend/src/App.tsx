@@ -12,7 +12,7 @@ import SuccessStories from "./website/layout/sections/success-stories/success-st
 
 import Membership from "./website/layout/sections/membership/membership";
 import LoginLayout from "./layout/auth/login-layout";
-import Login from "./system/pages/login/login";
+import Login from "./system/pages/login/login-page";
 import ForgotPassword from "./system/pages/forgot-password/forgot-password";
 import ResetPassword from "./system/pages/reset-password/reset-password";
 import PasswordChanged from "./system/pages/reset-password/password-changed";
@@ -32,7 +32,7 @@ import Trainer from "./system/pages/admin/trainer/trainer";
 import Client from "./system/pages/admin/client/client";
 import SignUpRequest from "./system/pages/admin/client/signup-request/signup-request";
 import ClientWorkoutPlan from "./system/pages/member/client-workout-plan/client-workout-plan";
-import WorkoutPlanRequests from "./system/pages/trainer/workout-plan-requests/workout-plan-requests";
+import WorkoutPlanRequests from "./system/pages/trainer/workout-plan-requests/workout-plan-requests";®
 import CreateWorkoutPlan from "./system/pages/trainer/workout-plan/create-workout-plan/create-workout-plan";
 import Equipments from "./system/pages/maintainer/equipments/equipments";
 import Settings from "./system/pages/settings/settings";
