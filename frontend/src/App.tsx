@@ -4,7 +4,7 @@ import ScrollToTop from "./hooks/useScrollToTop";
 import CheckNewUser from "./system/components/app-initializer";
 import { Route, Routes } from "react-router";
 import PublicRoute from "./system/features/authentication/public-route";
-import Spinner from "./system/components/spinner/spinner";
+import Spinner from "./system/components/spinner";
 import WebsiteLayout from "./layout/website-layout";
 import LandingPage from "./website/pages/landing-page/landing-page";
 import { ROUTES } from "./config/appRoutes";

@@ -11,7 +11,7 @@ import { base64Decode } from "esewajs";
 
 import { useEffect } from "react";
 import useEsewaPaymentStatus from "./useEsewaPaymentStatus";
-import Spinner from "@/system/components/spinner/spinner";
+import Spinner from "@/system/components/spinner";
 import { ROUTES } from "@/config/appRoutes";
 
 export default function PaymentSuccess({

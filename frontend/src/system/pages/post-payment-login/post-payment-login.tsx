@@ -1,7 +1,7 @@
 // pages/PostPaymentLogin.tsx
 import { useEffect } from "react";
 
-import Spinner from "@/system/components/spinner/spinner";
+import Spinner from "@/system/components/spinner";
 import usePostPaymentLogin from "./usePostPaymentLogin";
 
 export default function PostPaymentLogin() {
