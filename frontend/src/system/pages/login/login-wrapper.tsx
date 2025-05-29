@@ -21,7 +21,6 @@ export function LoginWrapper({ children }: { children: React.ReactNode }) {
         dialogOpen={openDialog}
         setDialogOpen={setOpenDialog}
       />
-
       <div className="flex gap-[42px] flex-col items-center w-full ">
         <div className="flex flex-col gap-3 items-center">
           <Heading variant={"quinary"} level={5}>
