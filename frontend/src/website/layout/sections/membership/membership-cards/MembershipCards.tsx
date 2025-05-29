@@ -1,5 +1,5 @@
-import WebappMembershipCards from "./WebappMembershipCards";
-import { WebsiteMembershipCards } from "./WebsiteMembership";
+import WebappMembershipCards from "./WebappMembershipCards.tsx";
+import { WebsiteMembershipCards } from "./WebsiteMembership.tsx";
 
 export function MembershipCards({
   className = "",
