@@ -9,18 +9,21 @@ export function LoginWrapper({ children }: { children: React.ReactNode }) {
   function handleSignUp() {
     setOpenDialog(true);
   }
+
   return (
     <>
-      <ThemedDialog
-        theme="info"
-        ctaText="Yes, Proceed"
-        message="Sign Up is only available for clients. If you are a client, please proceed with the signup."
-        title="Only for Clients"
-        mutationFn={() => navigate("/signup")}
-        isPending={false}
-        dialogOpen={openDialog}
-        setDialogOpen={setOpenDialog}
-      />
+      <div className="absolute">
+        <ThemedDialog
+          theme="info"
+          ctaText="Yes, Proceed"
+          message="Sign Up is only available for clients. If you are a client, please proceed with the signup."
+          title="Only for Clients"
+          mutationFn={() => navigate("/signup")}
+          isPending={false}
+          dialogOpen={openDialog}
+          setDialogOpen={setOpenDialog}
+        />
+      </div>
       <div className="flex gap-[42px] flex-col items-center w-full ">
         <div className="flex flex-col gap-3 items-center">
           <Heading variant={"quinary"} level={5}>
