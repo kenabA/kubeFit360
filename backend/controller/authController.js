@@ -123,7 +123,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   await user.save({ validateBeforeSave: false });
 
   // 3) Send it to the user's email
-  const resetUrl = `${process.env.CLIENT_URL}/resetPassword/${resetToken}`;
+  const resetUrl = `${process.env.PROD_URL}/resetPassword/${resetToken}`;
 
   try {
     await new Email(user, resetUrl).sendPasswordReset();

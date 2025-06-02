@@ -35,7 +35,7 @@ const createAndSendToken = async (user, statusCode, res) => {
 const createAndSendAndMailToken = async (user, statusCode, res, req) => {
   const { token, cookieOptions } = await setupCookie(user);
   try {
-    const loginURL = `${process.env.CLIENT_URL}/post-payment-login?token=${token}`;
+    const loginURL = `${process.env.PROD_URL}/post-payment-login?token=${token}`;
     await new Email(user, loginURL).sendWelcome();
   } catch {
     return new AppError(
