@@ -4,15 +4,15 @@ import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/heading/Heading";
 import useHandleNavigate from "@/hooks/useHandleNavigate";
 import { Link } from "react-scroll";
-import useUsersAnalytics from "@/system/features/users/members/useUsersAnalytics";
+// import useUsersAnalytics from "@/system/features/users/members/useUsersAnalytics";
 
 export default function Hero() {
   const handleNavigate = useHandleNavigate();
 
-  const { data } = useUsersAnalytics();
-  console.log(data);
-  const memberCount = data.data.filter((user) => user.role === "member");
-  const trainerCount = data.data.filter((user) => user.role === "trainer");
+  // const { data } = useUsersAnalytics();
+  // console.log(data);
+  // const memberCount = data.data.filter((user) => user.role === "member");
+  // const trainerCount = data.data.filter((user) => user.role === "trainer");
 
   return (
     <section
@@ -59,7 +59,8 @@ export default function Hero() {
                   <CountUp
                     startOnMount={false}
                     start={0}
-                    end={memberCount[0].total}
+                    end={50}
+                    // end={memberCount[0].total}
                     duration={2}
                   />
                   +
@@ -76,7 +77,8 @@ export default function Hero() {
                   <CountUp
                     startOnMount={false}
                     start={0}
-                    end={trainerCount[0].total}
+                    end={20}
+                    // end={trainerCount[0].total}
                     duration={2}
                   />
                   +
