@@ -16,16 +16,13 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const app = express();
 
-app.use(
-  cors({
-    origin: 'https://kube-fit-360-plum.vercel.app',
-    credentials: true,
-  }),
-);
+const corsOptions = {
+  origin: 'https://kube-fit-360-plum.vercel.app',
+  credentials: true,
+};
 
-app.options('*', cors());
-
-console.log(process.env.NODE_ENV);
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 
 // Middleware to get detailed info about the request on the console of the backend server
 if (process.env.NODE_ENV === 'development') {
