@@ -3,7 +3,7 @@ export const GLOBAL_CONTACTS: {
   companyEmail: string;
   companyAddress: string;
 } = {
-  companyNumber: "+977 9847162918",
+  companyNumber: "+977 9842742225",
   companyEmail: "kenabkc@gmail.com",
   companyAddress: "Kumarigal - 7, Kathmandu, Nepal",
 };

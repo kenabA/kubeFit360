@@ -57,7 +57,7 @@ export default function Footer() {
             {GLOBAL_CONTACTS.companyAddress}
           </a>
           <a
-            href={"tel:9847162918"}
+            href={"tel:9842742225"}
             className="para-xl text-gray-tertiary hover:text-gray-secondary"
           >
             {GLOBAL_CONTACTS.companyNumber}
