@@ -18,7 +18,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: [process.env.CLIENT_URL, process.env.PROD_URL],
+    origin: 'https://kube-fit-360-plum.vercel.app',
     credentials: true,
   }),
 );
