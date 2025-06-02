@@ -5,7 +5,7 @@ import { Heading } from "@/components/heading/Heading";
 import useHandleNavigate from "@/hooks/useHandleNavigate";
 import { capitalize } from "@/lib/utils";
 import { ArrowRight } from "lucide-react";
-import kubeFitLogo from "@/assets/shared/svg/kubeFitLogo/kubeFit360°-logo-white.svg";
+import kubeFitLogo from "@/assets/shared/svg/kubeFitLogo/kubeFit360-logo-white.svg";
 import { Link, useLocation } from "react-router";
 import { base64Decode } from "esewajs";
 

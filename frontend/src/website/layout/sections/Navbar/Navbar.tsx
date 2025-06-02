@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import kubeFitLogo from "@/assets/shared/svg/kubeFitLogo/kubeFit360°-logo-white.svg";
+import kubeFitLogo from "@/assets/shared/svg/kubeFitLogo/kubeFit360-logo-white.svg";
 
 import { navItems } from "./data";
 import { motion, useMotionValueEvent, useScroll } from "motion/react";

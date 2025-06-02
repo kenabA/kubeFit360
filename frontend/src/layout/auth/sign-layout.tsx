@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import kubeFitLogo from "@/assets/shared/svg/kubeFitLogo/kubeFit360°-logo-white.svg";
+import kubeFitLogo from "@/assets/shared/svg/kubeFitLogo/kubeFit360-logo-white.svg";
 import fitnessLady from "@/assets/website/images/About/rolling-woman.webp";
 import PrivacyPolicy from "@/components/legal/PrivacyPolicy";
 import TermsAndCondition from "@/components/legal/TermsAndCondition";

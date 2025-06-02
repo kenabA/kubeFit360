@@ -1,4 +1,4 @@
-import kf from "@/assets/shared/svg/kubeFitLogo/kubeFit360°-logo-black.svg";
+import kf from "@/assets/shared/svg/kubeFitLogo/kubeFit360-logo-black.svg";
 import { Icon } from "@iconify/react/dist/iconify.js";
 
 import { NavLink, useLocation } from "react-router";

@@ -1,6 +1,6 @@
 import { Link, NavLink } from "react-router";
 
-import kubeFitLogo from "@/assets/shared/svg/kubeFitLogo/kubeFit360°-logo-white.svg";
+import kubeFitLogo from "@/assets/shared/svg/kubeFitLogo/kubeFit360-logo-white.svg";
 import instagram from "@/assets/website/svg/Footer/instagram.svg";
 import facebook from "@/assets/website/svg/Footer/facebook.svg";
 import x from "@/assets/website/svg/Footer/x.svg";

@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import kubeFitLogo from "@/assets/shared/svg/kubeFitLogo/kubeFit360°-logo-white.svg";
+import kubeFitLogo from "@/assets/shared/svg/kubeFitLogo/kubeFit360-logo-white.svg";
 import alert from "@/assets/system/svg/alert.svg";
 import { Button } from "@/components";
 import { Heading } from "@/components/heading/Heading";
