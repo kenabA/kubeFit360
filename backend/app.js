@@ -30,8 +30,8 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // Middleware to parse the incoming JSON to object
-app.use(express.json());
 app.use(cookieParser());
+app.use(express.json());
 
 // Middleware to serve static files
 app.use(express.static(`${__dirname}/public`));
